@@ -1,0 +1,8 @@
+#summary Resumen de documentos de la Wiki.
+#labels Featured
+
+= KAFHE 3.0 =
+
+== Descripción general ==
+
+  # [Funcionamiento_Basico]
