@@ -1,6 +1,8 @@
 #summary Funcionamiento e idea básica de la aplicación.
 #labels Phase-Requirements
 
+#sidebar tocFuncionamiento
+
 <wiki:toc max_depth="2" />
 
 = Funcionamiento Básico =
