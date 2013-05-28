@@ -1,5 +1,5 @@
 #summary Funcionamiento e idea básica de la aplicación.
-#labels Featured,Phase-Requirements
+#labels Phase-Requirements
 
 = Funcionamiento Básico =
 
