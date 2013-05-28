@@ -65,4 +65,4 @@ Esto conlleva que los usuarios deberán recibir experiencia por dos motivos:
 
 Es decir, obtendrá ‘X’ puntos de experiencia por estar alistado en el bando ganador e ‘Y’ puntos de experiencia por no llamar.
 
-La experiencia ganada no repercutirá sobre el nivel del usuario, sino sobre la ganancia de un determinado número de azucarillos. De este modo, cada vez que se complete una determinada cantidad de XP se obtendrán un número de azucarillos que el usuario podrá emplear en mejorar sus [habilidades] y/o [talentos].
+La experiencia ganada no repercutirá sobre el nivel del usuario, sino sobre la ganancia de un determinado número de azucarillos. De este modo, cada vez que se complete una determinada cantidad de XP se obtendrán un número de azucarillos que el usuario podrá emplear en mejorar sus [habilidades] y/o [Talentos talentos].
