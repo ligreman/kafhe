@@ -6,15 +6,13 @@
 == Descripción general ==
 
   # [Funcionamiento_Basico]
-  # [La_Batalla]
-  # [Los_Bandos]
-  # [Habilidades]
-  # [Talentos]
-  # [Misiones]
 
 
 == Diseño ==
 
+  * [Habilidades]
+  * [Talentos]
+  * [Misiones]
   * [Notificaciones]
   * [Algoritmos]
   * [Estilos]
