@@ -15,8 +15,6 @@ Se establecerá una cantidad determinada de Gungubos inicial (por ejemplo 10.000
 
 IDEA: El número de Gungubos en cada momento podría afectar a la probabilidad de que en una criatura se esconda un Gungubo.
 
-[TODO]
-
 
 == La Experiencia ==
 
@@ -32,4 +30,4 @@ Esto conlleva que los usuarios deberán recibir experiencia por dos motivos:
 
 Es decir, obtendrá ‘X’ puntos de experiencia por estar alistado en el bando ganador e ‘Y’ puntos de experiencia por no llamar.
 
-La experiencia ganada no repercutirá sobre el nivel del usuario, sino sobre la ganancia de un determinado número de azucarillos. De este modo, cada vez que se complete una determinada cantidad de XP se obtendrán un número de azucarillos que el usuario podrá emplear en mejorar sus habilidades y/o [http://mail.com talentos].
+La experiencia ganada no repercutirá sobre el nivel del usuario, sino sobre la ganancia de un determinado número de azucarillos. De este modo, cada vez que se complete una determinada cantidad de XP se obtendrán un número de azucarillos que el usuario podrá emplear en mejorar sus [habilidades] y/o [talentos].
