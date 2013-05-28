@@ -1,13 +1,15 @@
 #summary Funcionamiento e idea básica de la aplicación.
 #labels Featured,Phase-Requirements
 
-= La base =
+= Funcionamiento Básico =
+
+== La base ==
 
 La aplicación permite a “n” usuarios participar en una batalla que finaliza con la elección de uno de ellos.
 La aplicación se orientará a la elección de un llamador para hacer un pedido de desayuno, aunque se intentará mantener un bajo grado acoplamiento para su mantenimiento y evolución en el futuro.
 
 
-= ¿Qué persigue el usuario? =
+== ¿Qué persigue el usuario? ==
 
 El objetivo del usuario es siempre no ser el elegido.
 
@@ -15,7 +17,7 @@ El usuario dispone de una serie de habilidades que modificarán su probabilidad 
 Adicionalmente, el usuario obtiene como beneficio de su actividad una serie de puntos de “Relanzamiento” que le permitirán escaquearse en el caso de que se le elija.
 
 
-= Flujo principal =
+== Flujo principal ==
 
 El periodo que dura una selección comprende todo el tiempo existente entre dos elecciones de usuario. Este periodo será normalmente de 1 semana, dado que las elecciones se realizarán los viernes (como norma general).
 
