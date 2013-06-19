@@ -1,5 +1,5 @@
 #summary Cómo preparar el entorno de desarrollo.
-#labels Phase-Implementation
+#labels Phase-Implementation,Featured
 
 = Preparación del entorno de desarrollo =
 
