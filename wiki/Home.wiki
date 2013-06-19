@@ -3,17 +3,12 @@
 
 = KAFHE 3.0 =
 
-== Descripción general ==
+== Fase de Desarrollo ==
 
-  # [Funcionamiento_Basico]
+  * [Entorno_de_Desarrollo]
 
 	
 
-== Diseño ==
+== Fase de Diseño ==
 
-  * [Habilidades]
-  * [Talentos]
-  * [Misiones]
-  * [Notificaciones]
-  * [Algoritmos]
-  * [Estilos]
+  *
