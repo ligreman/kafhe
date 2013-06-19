@@ -32,6 +32,6 @@ Para instalar plugins, ir a Help ->Install New Software
   * Abrir ventana de Tasks (Widnow -> Show View -> Other -> MyLyn -> Task Repositories.
   * Pulsar en Ass Task Repository...
   * Seleccionar el Google Code
-  * Project URL: https://code.google.com/p/kafhe/
+    * Project URL: https://code.google.com/p/kafhe/
     * Label: Kafhe 3.0
     * Usuario y contraseña los de la cuenta de gmail que vayáis a usar.
