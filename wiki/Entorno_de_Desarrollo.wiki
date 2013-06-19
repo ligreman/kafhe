@@ -1,0 +1,17 @@
+#summary Cómo preparar el entorno de desarrollo.
+#labels Phase-Implementation
+
+= Requisitos previos =
+  * [http://www.eclipse.org/downloads/packages/eclipse-php-developers/heliossr2 Eclipse Helios para PHP]
+  * [http://yiiclipse.maziarz.org/ YiiClipse]
+  * [http://www.apachefriends.org/en/xampp-windows.html#641 XAMPP]
+  * 
+  * 
+
+
+= Instalación =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
