@@ -1,17 +1,16 @@
 #summary Cómo preparar el entorno de desarrollo.
 #labels Phase-Implementation
 
-= Requisitos previos =
+= Preparación del entorno de desarrollo =
+
+== Requisitos previos ==
   * [http://www.eclipse.org/downloads/packages/eclipse-php-developers/heliossr2 Eclipse Helios para PHP]
   * [http://yiiclipse.maziarz.org/ YiiClipse]
   * [http://www.apachefriends.org/en/xampp-windows.html#641 XAMPP]
-  * 
-  * 
 
 
-= Instalación =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== Instalación ==
+  # Crear la carpeta "kafhe_3.0" en xampp/htdocs/
+  # Configurar el plugin SVN de Eclipse y hacer checkout del proyecto en la carpeta anterior (ver [https://code.google.com/p/kafhe/source/checkout datos del servidor SVN]).
+  # Crear un nuevo proyecto PHP en Eclipse, a partir del código fuente anterior.
+  # Marcar el proyecto como proyecto Yii
