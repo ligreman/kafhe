@@ -14,3 +14,24 @@
   # Configurar el plugin SVN de Eclipse y hacer checkout del proyecto en la carpeta anterior (ver [https://code.google.com/p/kafhe/source/checkout datos del servidor SVN]).
   # Crear un nuevo proyecto PHP en Eclipse, a partir del código fuente anterior.
   # Marcar el proyecto como proyecto Yii
+
+
+== Configurar Eclipse ==
+
+Para instalar plugins, ir a Help ->Install New Software
+
+=== SVN ===
+  * Instalar Subclipse: http://subclipse.tigris.org/update_1.10.x
+  * Botón derecho en el panel de proyectos PHP y dar New -> Other, checkout from SVN.
+  * Use existing repository: https://kafhe.googlecode.com/svn
+  * Seleccionar el directorio raíz (el https://kafhe.googlecode.com/svn)
+  * Seleccionar Checkout as a project in the workspace y poner de nombre kafhe_3,0, dar siguiente, luego indicar la carpeta htdocs del XAMPP. No hace falta crear una carpeta nueva ya que nos la creará automáticamente.
+
+=== MyLyn (bug tracker de Google Code) ===
+  * Instalar el conector para Google Code. Help -> Install New Software. Repositorio: http://knittig.de/googlecode-mylyn-connector/update/
+  * Abrir ventana de Tasks (Widnow -> Show View -> Other -> MyLyn -> Task Repositories.
+  * Pulsar en Ass Task Repository...
+  * Seleccionar el Google Code
+  * Project URL: https://code.google.com/p/kafhe/
+    * Label: Kafhe 3.0
+    * Usuario y contraseña los de la cuenta de gmail que vayáis a usar.
