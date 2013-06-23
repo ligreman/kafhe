@@ -19,6 +19,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+        'application.components.TXDB.*',
 		'application.extensions.yiidebugtb.*', //Yii debug
 		'application.modules.rights.*', 'application.modules.rights.components.*', //rights
 	),
