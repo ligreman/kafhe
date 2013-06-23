@@ -9,6 +9,12 @@ Para el entorno de desarrollo se puede utilizar cualquier IDE, aunque aquí pong
   * Instalar [http://www.apachefriends.org/en/xampp-windows.html#641 XAMPP]
   * Crear una base de datos con usuario kafhe y contraseña vacía.
 
+== Carga incial de datos ==
+
+Una vez esté instalado XAMPP, creada la base de datos, instalado el entorno de desarrollo y descargado el proyecto del repositorio; hay que proceder a cargar los datos iniciales del proyecto.
+
+Para ello cargamos el esquema SQL: ------
+
 == ECLIPSE ==
 === Instalación ===
   * [http://www.eclipse.org/downloads/packages/eclipse-php-developers/heliossr2 Eclipse Helios para PHP]
@@ -67,12 +73,12 @@ Para instalar plugins, ir a Help ->Install New Software
   # Activate Yii support in the project settings.
 
 
-=== SVN ===
+==== SVN ====
 
   * En la ventana de selección de proyecto elegir "checkout from CVS". Seleccionar Subversion.
   * Como URL poner: https://kafhe.googlecode.com/svn/
 
-=== BBDD ===
+==== BBDD ====
   * New DataSource
   * Driver: MySQL Connector 5.1.22
   * URL: jdbc:mysql://localhost:3306/{base de datos} -> se puede no poner la base de datos para ver todas
