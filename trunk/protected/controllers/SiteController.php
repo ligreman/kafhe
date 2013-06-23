@@ -18,6 +18,7 @@ class SiteController extends Controller
 			'page'=>array(
 				'class'=>'CViewAction',
 			),
+					        
 		);
 	}
 
