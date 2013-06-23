@@ -28,3 +28,9 @@
 
   * En la ventana de selección de proyecto elegir "checkout from CVS". Seleccionar Subversion.
   * Como URL poner: https://kafhe.googlecode.com/svn/
+
+== BBDD ==
+  * New DataSource
+  * Driver: MySQL Connector 5.1.22
+  * URL: jdbc:mysql://localhost:3306/{base de datos} -> se puede no poner la base de datos para ver todas
+  * User + password que corresponda
