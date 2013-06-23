@@ -19,6 +19,8 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.extensions.yiidebugtb.*', //Yii debug
+		'application.modules.rights.*', 'application.modules.rights.components.*', //rights
 	),
 
 	'modules'=>array(
@@ -32,18 +34,73 @@ return array(
 			'generatorPaths' => array('bootstrap.gii'),
 		),
 		
+		//Rights
+		'rights'=>array( 
+			'superuserName'=>'Admin', // Name of the role with super user privileges. 
+			'authenticatedName'=>'Authenticated', // Name of the authenticated user role. 
+			'userIdColumn'=>'id', // Name of the user id column in the database. 
+			'userNameColumn'=>'username', // Name of the user name column in the database. 
+			'enableBizRule'=>true, // Whether to enable authorization item business rules. 
+			'enableBizRuleData'=>false, // Whether to enable data for business rules. 
+			'displayDescription'=>true, // Whether to use item description instead of name. 
+			'flashSuccessKey'=>'RightsSuccess', // Key to use for setting success flash messages. 
+			'flashErrorKey'=>'RightsError', // Key to use for setting error flash messages.		
+			'baseUrl'=>'/rights', // Base URL for Rights. Change if module is nested. 
+			'layout'=>'rights.views.layouts.main', // Layout to use for displaying Rights. 
+			'appLayout'=>'application.views.layouts.main', // Application layout. 
+			'cssFile'=>'rights.css', // Style sheet file to use for Rights. 
+			'install'=>false, // Whether to enable installer. 
+			'debug'=>false,
+		),
+		
+		//Hybrid Auth
+		'hybridauth' => array(
+            'baseUrl' => 'http://localhost/kafhe_3.0/trunk/index.php/hybridauth', 
+            'withYiiUser' => false, // Set to true if using yii-user
+            "providers" => array ( 
+                "openid" => array (
+                    "enabled" => true
+                ),
+ 
+                "yahoo" => array ( 
+                    "enabled" => true 
+                ),
+ 
+                "google" => array ( 
+                    "enabled" => true,
+                    "keys"    => array ( "id" => "", "secret" => "" ),
+                    "scope"   => ""
+                ),
+ 
+                "facebook" => array ( 
+                    "enabled" => true,
+                    "keys"    => array ( "id" => "", "secret" => "" ),
+                    "scope"   => "email,publish_stream", 
+                    "display" => "" 
+                ),
+ 
+                "twitter" => array ( 
+                    "enabled" => true,
+                    "keys"    => array ( "key" => "", "secret" => "" ) 
+                )
+            )
+        ),
+		
 	),
 
 	// application components
 	'components'=>array(
+		'Randomness'=>array('class'=>'Randomness'),
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+			'class'=>'RWebUser', //rights
 		),
 		// uncomment the following to enable URLs in path-format
 		
 		'urlManager'=>array(
 			'urlFormat'=>'path',
+			'showScriptName'=>false,
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -51,9 +108,9 @@ return array(
 			),
 		),
 		
-		'db'=>array(
+		/*'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
+		),*/
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
@@ -63,6 +120,13 @@ return array(
 			'password' => '',
 			'charset' => 'utf8',
 		),
+		
+		'authManager'=>array(
+            //'class'=>'CDbAuthManager',
+            //'connectionID'=>'db',
+			'class'=>'RDbAuthManager', //rights
+        ),
+		
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -80,6 +144,13 @@ return array(
 				array(
 					'class'=>'CWebLogRoute',
 				),
+				
+				array( // configuration for the toolbar
+		          'class'=>'XWebDebugRouter',
+		          'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
+		          'levels'=>'error, warning, trace, profile, info',
+		          'allowedIPs'=>array('127.0.0.1','::1','192.168.1.54','192\.168\.1[0-5]\.[0-9]{3}'),
+		        ),
 				
 			),
 		),
