@@ -9,7 +9,7 @@ Para el entorno de desarrollo se puede utilizar cualquier IDE, aunque aquí pong
   * [http://www.apachefriends.org/en/xampp-windows.html#641 XAMPP]
 
 == ECLIPSE ==
-Instalar:
+=== Instalación ===
   * [http://www.eclipse.org/downloads/packages/eclipse-php-developers/heliossr2 Eclipse Helios para PHP]
   * [http://yiiclipse.maziarz.org/ YiiClipse]
 
@@ -36,7 +36,7 @@ Para instalar plugins, ir a Help ->Install New Software
 
 == PHPStorm ==
 
-Instalación:
+=== Instalación ===
   * Install PHPStorm trial: http://confluence.jetbrains.com/display/PhpStorm/PhpStorm+Early+Access+Program
   * Enter license
   * Install this plugin: http://plugins.jetbrains.com/plugin/7182?pr=phpStorm (Settings -> Plugins -> Install from disk)
