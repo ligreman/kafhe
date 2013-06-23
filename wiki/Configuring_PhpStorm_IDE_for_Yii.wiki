@@ -1,6 +1,11 @@
 #summary Configuring PhpStorm IDE for Yii.
 #labels Phase-Implementation
 
+== Install PHPStorm ==
+  * Install PHPStorm trial: http://confluence.jetbrains.com/display/PhpStorm/PhpStorm+Early+Access+Program
+  * Enter license
+  * Install this plugin: http://plugins.jetbrains.com/plugin/7182?pr=phpStorm (Settings -> Plugins -> Install from disk)
+
 == How to configure PHPStorm ==
 
   # Exclude yiilite.php from index:
