@@ -1,10 +1,10 @@
 <?php
 
-class m130617_204503_inicial extends CDbMigration
+class m130617_204503_inicial extends TXDbMigration
 {
 	public function safeUp()
 	{
-		 $this->createTable('group', array(
+		/*$this->createTable('group', array(
             'id' 		=> 'INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT',
             'name' 		=> 'VARCHAR(20) NOT NULL',
             'active' 	=> 'TINYINT(1) NOT NULL DEFAULT 0'
@@ -87,8 +87,41 @@ class m130617_204503_inicial extends CDbMigration
         	'dominio_bandos'		=> 'SMALLINT UNSIGNED NOT NULL DEFAULT 0',
         	'times'					=> 'SMALLINT UNSIGNED NOT NULL DEFAULT 0',
         	'calls'					=> 'SMALLINT UNSIGNED NOT NULL DEFAULT 0'
+        ));*/
+
+        $this->executeFile('data/carga_incial.sql');
+
+        $this->execute("INSERT INTO authitem VALUES ('Admin','2',NULL,NULL,'N;'),('Authenticated','2',NULL,NULL,'N;'),('Guest','2',NULL,NULL,'N;');");
+        $this->execute("INSERT INTO authassignment VALUES ('Admin','1',NULL,'N;');");
+
+        /*$this->insert('authassignment', array(
+            'itemname'=>'Admin',
+            'userid'=>'1',
+            'bizrule'=>NULL,
+            'data'=>'N;'
         ));
-        
+
+        $this->insert('authitem', array(
+            'name'=>'Admin',
+            'type'=>'2',
+            'description'=>NULL,
+            'bizrule'=>NULL,
+            'data'=>'N;'
+        ));
+        $this->insert('authitem', array(
+            'name'=>'Authenticated',
+            'type'=>'2',
+            'description'=>NULL,
+            'bizrule'=>NULL,
+            'data'=>'N;'
+        ));
+        $this->insert('authitem', array(
+            'name'=>'Guest',
+            'type'=>'2',
+            'description'=>NULL,
+            'bizrule'=>NULL,
+            'data'=>'N;'
+        ));*/
 
     }
  
@@ -103,6 +136,11 @@ class m130617_204503_inicial extends CDbMigration
         $this->dropTable('meal');
         $this->dropTable('drink');
         $this->dropTable('user');
+
+        $this->dropTable('authassignment');
+        $this->dropTable('authitemchild');
+        $this->dropTable('rights');
+        $this->dropTable('authitem');
 	}
 
 	/*

@@ -69,13 +69,13 @@ var_dump(Yii::app()->user->name);
         echo "<p>Tengo operacion</p>";
     }
 
-    if(Yii::app()->user->checkAccess('tasky'))
+    if(Yii::app()->user->checkAccess('task1'))
     {
-        echo "<p>Tengo tasky</p>";
+        echo "<p>Tengo task 1</p>";
     }
-    if(Yii::app()->user->checkAccess('toska'))
+    if(Yii::app()->user->checkAccess('task2'))
     {
-        echo "<p>Tengo toska</p>";
+        echo "<p>Tengo task 2</p>";
     }
 
  ?>
