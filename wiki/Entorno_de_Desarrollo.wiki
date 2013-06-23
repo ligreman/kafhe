@@ -13,7 +13,11 @@ Para el entorno de desarrollo se puede utilizar cualquier IDE, aunque aquí pong
 
 Una vez esté instalado XAMPP, creada la base de datos, instalado el entorno de desarrollo y descargado el proyecto del repositorio; hay que proceder a cargar los datos iniciales del proyecto.
 
-Para ello cargamos el esquema SQL: ------
+Para ello cargamos la migración inicial. En una consola del sistema vamos al directorio protect del proyecto y escribimos:
+`yiic migrate`
+
+Nos pedirá confirmación de la migración inicial. Le damos yes y debería crear toda la estructura en la base de datos.
+
 
 == ECLIPSE ==
 === Instalación ===
