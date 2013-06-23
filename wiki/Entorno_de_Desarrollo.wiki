@@ -6,7 +6,8 @@
 Para el entorno de desarrollo se puede utilizar cualquier IDE, aunque aquí pongo la configuración de Eclipse y de PHPStorm, que son los que más me convencen junto a NetBeans. Recomiendo PHPStorm por su integración con Yii.
 
 == Requisitos previos ==
-  * [http://www.apachefriends.org/en/xampp-windows.html#641 XAMPP]
+  * Instalar [http://www.apachefriends.org/en/xampp-windows.html#641 XAMPP]
+  * Crear una base de datos con usuario kafhe y contraseña vacía.
 
 == ECLIPSE ==
 === Instalación ===
