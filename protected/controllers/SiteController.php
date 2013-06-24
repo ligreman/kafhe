@@ -107,4 +107,16 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+
+	public function actionPrueba()
+    {
+        $this->render('prueba',null);
+    }
+    public function actionPruebaAjax()
+    {
+        $data = array();
+        $data["valor"] = 'Funciono con AJAX';
+        $this->renderPartial('_ajaxPrueba', $data, false, true);
+    }
 }
