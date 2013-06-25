@@ -1,0 +1,53 @@
+#summary Migraciones en Yii.
+#labels Phase-Implementation
+
+= Migraciones de BBDD =
+
+Las migraciones son un sistema como el SVN, pero para la base de datos. Cada archivo o migración contiene una serie de instrucciones SQL para crear tablas, actualizarlas, insertar o modificar datos... 
+
+Toda migración tiene dos operaciones: up y down. Las operaciones up se ejecutan al aplicar la migración y las down cuando se quiere revertir estos cambios (volver a una versión anterior).
+
+*OJO*: para usar las migraciones se debe configurar la base de datos en el archivo console.php, no vale el de main.php.
+
+== Crear una migración ==
+Para crear una nueva migración hay que usar la línea de comandos:
+
+`yiic migrate create <nombre migracion>`
+
+Las instrucciones CDbMigration están aquí explicadas: 
+http://www.yiiframework.com/doc/api/1.1/CDbMigration
+Transacciones en migraciones
+Se pueden crear transacciones para que si algo falla se pueda hacer rollback. Aunque se puede indicar explícitamente en código dónde empezar la transacción, dónde hacer el commit y dónde el rollback, lo más cómodo es usar las funciones safeUp y SafeDown (en lugar de up y down).
+Importar migraciones
+Si se quiere aplicar todas las migraciones existentes (actualizar nuestra BBDD), usaremos:
+yiic migrate
+Si queremos importar algunas migraciones y no todas, le podemos indicar el número de ellas que queremos cargar. Por ejemplo, para importar 3 migraciones:
+yiic migrate up 3
+Por último, podemos migrar la aplicación a una versión/fecha concreta, usando el timestamp de los archivos de migración:
+yiic migrate to 101129_185401
+Así se importarán todas las migraciones hasta esa fecha.
+Hacer rollback de migraciones
+Para eliminar los cambios hechos en las migraciones usaremos:
+yiic migrate down [step]
+El parámetro opcional step indica el número de migraciones a deshacer. Por defecto es 1, es decir, deshace la última migración importada.
+Rehacer migraciones
+Rehacer una migración implica hacer un rollback de la misma y volver a cargarla.
+yiic migrate redo [step]
+El parámetro opcional step indica el número de migraciones a rehacer. Por defecto es 1, es decir, deshace la última migración importada y luego la importa de nuevo.
+Historial de migraciones
+The migration tool can also display the migration history and the new migrations to be applied.
+yiic migrate history [limit]
+yiic migrate new [limit]
+where the optional parameter limit specifies the number of migrations to be displayed. If limit is not specified, all available migrations will be displayed.
+The first command shows the migrations that have been applied, while the second command shows the migrations that have not been applied.
+Ejemplo de migración
+  public function up() {
+$this->createTable('Employee', array(
+    'id' => 'MEDIUMINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT',
+    'firstName' => 'VARCHAR(20) NOT NULL',
+    'lastName' => 'VARCHAR(40) NOT NULL'
+  ));
+  }
+  public function down() {
+$this->dropTable('Employee');
+  }
