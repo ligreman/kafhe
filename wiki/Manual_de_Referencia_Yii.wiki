@@ -1,0 +1,6 @@
+#summary Manual de referencia de Yii.
+#labels Featured,Phase-Implementation
+
+= Manual de Referencia Yii =
+
+  # []
