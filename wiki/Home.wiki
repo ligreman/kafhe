@@ -12,3 +12,7 @@
 == Fase de Diseño ==
 
   *
+
+== Documentación ==
+
+  * [Manual_de_Referencia_Yii]
