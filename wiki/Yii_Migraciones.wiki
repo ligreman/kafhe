@@ -49,7 +49,7 @@ Rehacer una migración implica hacer un rollback de la misma y volver a cargarla
 
 El parámetro opcional step indica el número de migraciones a rehacer. Por defecto es 1, es decir, deshace la última migración importada y luego la importa de nuevo.
 
- == Historial de migraciones ==
+== Historial de migraciones ==
 The migration tool can also display the migration history and the new migrations to be applied.
 
     `yiic migrate history [limit]`
