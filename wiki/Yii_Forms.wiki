@@ -26,7 +26,7 @@ Below we create a LoginForm model class used to collect user input on a login pa
 
 Three attributes are declared in LoginForm: $username, $password and $rememberMe. They are used to keep the user-entered username and password, and the option whether the user wants to remember his login. Because $rememberMe has a default value false, the corresponding option when initially displayed in the login form will be unchecked.
 
-== Validando los datos del formulario ==
+=== Reglas de validación de los datos del formulario ===
 
 We specify the validation rules in the rules() method which should return an array of rule configurations.
 
@@ -79,7 +79,7 @@ There are three ways to specify Validator in a validation rule. First, Validator
 
 [Yii_Modelo#Las_reglas:_rules() Other way: Validator can be a predefined alias to a validator class.]
 
-== Campos seguros y "repopular formularios" ==
+=== Campos seguros y "repopular formularios" ===
 
 After a model instance is created, we often need to populate its attributes with the data submitted by end-users. This can be done conveniently using the following massive assignment:
 
@@ -106,7 +106,7 @@ To declare an attribute to be safe, even though we do not really have any specif
   array('content', 'safe')
 }}}
 
-== Validando los datos ==
+=== Validando los datos ===
 {{{
   // creates a User model in register scenario. It is equivalent to:
   // $model=new User;
@@ -138,3 +138,74 @@ The applicable scenarios that a rule is associated can be specified via the on o
 The first rule will be applied in all scenarios, while the next two rules will only be applied in the register scenario.
 
 Los errores se pueden obtener con CModel::getErrors();
+
+
+== Creando la acción asociada al formulario ==
+
+We place this logic inside a controller action.
+
+{{{
+  public function actionLogin() {
+    $model=new LoginForm;
+    if(isset($_POST['LoginForm']))
+    {
+        // collects user input data
+        $model->attributes=$_POST['LoginForm'];
+        // validates user input and redirect to previous page if validated
+        if($model->validate())
+            $this->redirect(Yii::app()->user->returnUrl);
+    }
+    // displays the login form
+    $this->render('login',array('model'=>$model));
+  }
+}}}
+
+In the above, we first create a LoginForm model instance; if the request is a POST request (meaning the login form is submitted), we populate $model with the submitted data $_POST['LoginForm']; we then validate the input and if successful, redirect the user browser to the page that previously needed authentication. If the validation fails, or if the action is initially accessed, we render the login view whose content is to be described in the next subsection.
+
+{{{ $model->attributes=$_POST['LoginForm']; }}}
+
+The above code is equivalent to:
+
+{{{
+  $model->username=$_POST['LoginForm']['username'];
+  $model->password=$_POST['LoginForm']['password'];
+  $model->rememberMe=$_POST['LoginForm']['rememberMe'];
+}}}
+
+
+== Creando la vista asociada al formulario ==
+
+We can use CHtml to create the login form. But a widget called CActiveForm is provided to facilitate form creation. The widget is capable of supporting seamless and consistent validation on both client and server sides.
+
+{{{
+  <div class="form">
+  <?php $form=$this->beginWidget('CActiveForm'); ?>
+ 
+    <?php echo $form->errorSummary($model); ?>
+ 
+    <div class="row">
+        <?php echo $form->label($model,'username'); ?>
+        <?php echo $form->textField($model,'username') ?>
+    </div>
+ 
+    <div class="row">
+        <?php echo $form->label($model,'password'); ?>
+        <?php echo $form->passwordField($model,'password') ?>
+    </div>
+ 
+    <div class="row rememberMe">
+        <?php echo $form->checkBox($model,'rememberMe'); ?>
+        <?php echo $form->label($model,'rememberMe'); ?>
+    </div>
+ 
+    <div class="row submit">
+        <?php echo CHtml::submitButton('Login'); ?>
+    </div>
+ 
+  <?php $this->endWidget(); ?>
+  </div><!-- form -->
+}}}
+
+TIP: The following code would generate a text input field which can trigger form submission if its value is changed by users.
+
+{{{ CHtml::textField($name,$value,array('submit'=>'')); }}}
