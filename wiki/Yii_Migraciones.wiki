@@ -1,6 +1,8 @@
 #summary Migraciones en Yii.
 #labels Phase-Implementation
 
+<wiki:toc max_depth="3" />
+
 = Migraciones de BBDD =
 
 Las migraciones son un sistema como el SVN, pero para la base de datos. Cada archivo o migración contiene una serie de instrucciones SQL para crear tablas, actualizarlas, insertar o modificar datos... 
