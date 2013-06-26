@@ -20,6 +20,13 @@ Yii::app()->name is the name of the Web application, as established in the confi
 El content es el contenido en sí de la página, y viene de un Controller: $this->render().
 
 {{{
+  $this->render('nombre_vista', array(
+    'content'=>$contenido
+  ));
+}}}
+
+
+{{{
   <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 }}} 
 
