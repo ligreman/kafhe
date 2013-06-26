@@ -1,6 +1,8 @@
 #summary Cosas interesantes sobre las vistas en Yii.
 #labels Phase-Implementation
 
+<wiki:toc max_depth="3" />
+
 = Vista (MVC) =
 
 Whenever you see Yii::app(), that refers to the Web application as a whole. You can access information about the user viewing a page, about the current or previously-viewed page, etc., there. Yii::app()->request specifically references the current page being accessed (or requested). The ->baseUrl part refers to the root URL for the application, like http://www.example.com. You should use Yii::app()->request->baseUrl for references to external files—CSS, JavaScript, images, and so forth—as the relative path to them can become muddled with the changed Yii URLs (like www.example.com/index.php/site/login).
