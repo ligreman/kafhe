@@ -1,0 +1,24 @@
+#summary Cosas interesantes sobre las vistas en Yii.
+#labels Phase-Implementation
+
+= Vista (MVC) =
+
+Whenever you see Yii::app(), that refers to the Web application as a whole. You can access information about the user viewing a page, about the current or previously-viewed page, etc., there. Yii::app()->request specifically references the current page being accessed (or requested). The ->baseUrl part refers to the root URL for the application, like http://www.example.com. You should use Yii::app()->request->baseUrl for references to external files—CSS, JavaScript, images, and so forth—as the relative path to them can become muddled with the changed Yii URLs (like www.example.com/index.php/site/login).
+
+{{{
+  <div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+}}}
+
+Yii::app()->name is the name of the Web application, as established in the config/main.php file. You may or may not want to use it in your Views, but that’s where the value comes from.
+
+{{{
+  <?php echo $content; ?>
+}}}
+
+El content es el contenido en sí de la página, y viene de un Controller: $this->render().
+
+{{{
+  <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+}}} 
+
+That code renders a partial View in that place, passing along the Model information to _form.php.
