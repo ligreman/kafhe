@@ -1,9 +1,9 @@
 #summary Introducción a Yii.
 #labels Phase-Implementation
 
-= Introduction =
-
 <wiki:toc max_depth="3" />
+
+= Introducción =
 
 == Crear un sitio web ==
 En línea de comandos ejecutar:
