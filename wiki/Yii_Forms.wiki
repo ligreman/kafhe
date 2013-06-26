@@ -56,4 +56,23 @@ We specify the validation rules in the rules() method which should return an arr
 
 The above code specifies that username and password are both required, password should be authenticated, and rememberMe should be a boolean.
 
-[Yii_Modelo#Las_reglas:_rules() Información sobre los filtros de las reglas.]
+List of scenarios (on and except parameters) could be specified in two different forms which means the same:
+
+{{{
+  // arbitary array with scenario names
+  'on'=>array('update', 'create'),
+  // string with scenario names separated with commas (spaces are ignored)
+  'except'=>'ignore, this, scenarios, at-all',
+}}}
+
+There are three ways to specify Validator in a validation rule. First, Validator can be the name of a method in the model class, like authenticate in the above example. The validator method must be of the following signature:
+
+{{{
+  /**
+   * @param string $attribute the name of the attribute to be validated
+   * @param array $params options specified in the validation rule
+   */
+  public function ValidatorName($attribute,$params) { ... }
+}}}
+
+[Yii_Modelo#Las_reglas:_rules() Other way: Validator can be a predefined alias to a validator class.]
