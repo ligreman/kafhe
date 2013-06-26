@@ -1,6 +1,8 @@
 #summary Lo básico de los formularios en Yii.
 #labels Phase-Implementation
 
+<wiki:toc max_depth="3" />
+
 = Formularios =
 
 The following steps are typically needed when dealing with forms in Yii:
@@ -95,4 +97,42 @@ The last statement is called massive assignment which assigns every entry in $_P
         $model->$name=$value;
   }
 }}}
+
 It is crucial to determine which attributes are safe. An attribute is considered safe if it appears in a validation rule that is applicable in the given scenario.
+
+To declare an attribute to be safe, even though we do not really have any specific rule for it:
+
+{{{
+  array('content', 'safe')
+}}}
+
+== Validando los datos ==
+{{{
+  // creates a User model in register scenario. It is equivalent to:
+  // $model=new User;
+  // $model->scenario='register';
+  $model=new User('register');
+ 
+  // populates the input values into the model
+  $model->attributes=$_POST['User'];
+ 
+  // performs the validation
+  if($model->validate())   // if the inputs are valid
+    ...
+  else
+    ...
+}}}
+
+The applicable scenarios that a rule is associated can be specified via the on option in the rule. If the on option is not set, it means the rule will be used for all scenarios. For example,
+
+{{{
+  public function rules() {
+    return array(
+        array('username, password', 'required'),
+        array('password_repeat', 'required', 'on'=>'register'),
+        array('password', 'compare', 'on'=>'register'),
+    );
+  }
+}}}
+
+The first rule will be applied in all scenarios, while the next two rules will only be applied in the register scenario.
