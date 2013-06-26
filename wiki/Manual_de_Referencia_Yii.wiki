@@ -1,7 +1,7 @@
-#summary Manual de referencia de Yii.
+#summary Este manual es un resumen del manual oficial de Yii.
 #labels Featured,Phase-Implementation
 
-= Manual de Referencia Yii =
+= Manual de Referencia Rápida Yii =
 
   # [Yii_Introduccion Introducción a Yii]
   # [Yii_Migraciones Migraciones de BBDD]
@@ -9,4 +9,10 @@
     * [Yii_Modelo Modelo]
     * [Yii_Vista Vista]
     * [Yii_Controlador Controlador]
+  # [Yii_Forms Formularios]
   # [Yii_Themes Themes]
+
+
+== Recursos ==
+  * [http://www.yiiframework.com/doc/guide/1.1/en/index Manual oficial Yii]
+  * [http://www.yiiframework.com/doc/api/ API]
