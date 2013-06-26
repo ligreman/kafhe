@@ -136,3 +136,5 @@ The applicable scenarios that a rule is associated can be specified via the on o
 }}}
 
 The first rule will be applied in all scenarios, while the next two rules will only be applied in the register scenario.
+
+Los errores se pueden obtener con CModel::getErrors();
