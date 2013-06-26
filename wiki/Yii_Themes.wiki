@@ -1,6 +1,8 @@
 #summary Cómo utilizar los themes de Yii.
 #labels Phase-Implementation
 
+<wiki:toc max_depth="3" />
+
 = Themes =
 
 To activate a theme, set the theme property of the Web application to be the name of the desired theme. This can be done either in the application configuration or during runtime in controller actions.
