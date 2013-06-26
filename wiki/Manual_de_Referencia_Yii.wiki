@@ -5,3 +5,8 @@
 
   # [Yii_Introduccion Introducción a Yii]
   # [Yii_Migraciones Migraciones de BBDD]
+  # MVC
+    * [Yii_Modelo Modelo]
+    * [Yii_Vista Vista]
+    * [Yii_Controlador Controlador]
+  # d
