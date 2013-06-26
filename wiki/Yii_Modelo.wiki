@@ -1,6 +1,8 @@
 #summary Cosas interesantes sobre los modelos en Yii.
 #labels Phase-Implementation
 
+<wiki:toc max_depth="3" />
+
 = Modelo (MVC) =
 
 Dentro de un modelo se definen unas funciones para crear reglas (rules), relaciones (relations) y etiquetas (attributeLabels).
