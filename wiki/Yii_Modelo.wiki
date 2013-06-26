@@ -59,6 +59,10 @@ Un escenario sirve para indicar que esta regla se aplicará sólo en dicho escen
 
 En el escenario login son obligatorios username y password, pero en el escenario register además también es obligatorio email.
 
+Each rule returned by rules() must be of the following format:
+
+  `array('AttributeList', 'Validator', 'on'=>'ScenarioList', ...additional options)`
+
 === Validando según las reglas ===
 Para lanzar la validación se hace lo siguiente:
 {{{
