@@ -76,3 +76,23 @@ There are three ways to specify Validator in a validation rule. First, Validator
 }}}
 
 [Yii_Modelo#Las_reglas:_rules() Other way: Validator can be a predefined alias to a validator class.]
+
+== Campos seguros y "repopular formularios" ==
+
+After a model instance is created, we often need to populate its attributes with the data submitted by end-users. This can be done conveniently using the following massive assignment:
+
+{{{
+  $model=new LoginForm;
+  if(isset($_POST['LoginForm']))
+    $model->attributes=$_POST['LoginForm'];
+}}}
+
+The last statement is called massive assignment which assigns every entry in $_POST['LoginForm'] to the corresponding model attribute. It is equivalent to the following assignments:
+
+{{{
+  foreach($_POST['LoginForm'] as $name=>$value) {
+    if($name is a safe attribute)
+        $model->$name=$value;
+  }
+}}}
+It is crucial to determine which attributes are safe. An attribute is considered safe if it appears in a validation rule that is applicable in the given scenario.
