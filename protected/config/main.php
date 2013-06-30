@@ -95,6 +95,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+			'loginUrl'=>array('site/index'),
 			'class'=>'RWebUser', //rights
 		),
 		// uncomment the following to enable URLs in path-format
