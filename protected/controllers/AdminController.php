@@ -2,6 +2,8 @@
 
 class AdminController extends Controller
 {
+    private $_notifications;
+
 	// Uncomment the following methods and override them if needed
     public function filters()
     {
@@ -43,8 +45,22 @@ class AdminController extends Controller
 	}
 	*/
 
+    /* Página principal, el muro */
     public function actionIndex()
     {
-        $this->render('index');
+        $data_notif = $this->loadNotifications();
+        $this->render('index', array('notifications'=>$data_notif));
+    }
+
+    public function loadNotifications() {
+    $this->_notifications = null;
+        if ($this->_notifications===null) {
+            //$this->_notifications = Notification::model()->findAll('sender=:sender', , array(':sender'=>1));//array('order'=>'??.timestamp DESC'));
+            $this->_notifications = Notification::model()->findAllByAttributes(array('sender'=>1), array('order'=>'timestamp DESC', 'limit'=>1));//array('order'=>'??.timestamp DESC'));
+        }
+        if($this->_notifications === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+
+        return $this->_notifications;
     }
 }
