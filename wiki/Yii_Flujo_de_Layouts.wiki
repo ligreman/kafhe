@@ -205,6 +205,6 @@ As we saw, the contact.php is rendered before the layout, so every field (aka cl
 And the main confusion:
 6) What is called before what? What the heck is going on there ? ;-)
 
-contact.php (passed as content)-> column1.php (passed as content)-> main.php
+[http://www.yiiframework.com/wiki/249/understanding-the-view-rendering-flow/ http://i30.fastpic.ru/big/2011/1007/21/6c07cda81e332dba19bd59a812abc121.png]
 
 That's it, you are now pro at layouts ;-)
