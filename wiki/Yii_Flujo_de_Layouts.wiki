@@ -79,32 +79,30 @@ The call to the view rendering in the contact looks like the following:
     }
 }}}
 
-The common questions and causes of confusion we will address: 
-1) Why, if I pass contact.php some $test variable like $this->render('contact',array('model'=>$model,'test' => 123)); and I echo it in the layout with echo $test, do I get error 500 undefind variable error?
+The common questions and causes of confusion we will address:
 
-2) I didn't pass any $content variable so what is
+  # Why, if I pass contact.php some $test variable like `$this->render('contact',array('model'=>$model,'test' => 123));` and I echo it in the layout with echo $test, do I get error 500 undefind variable error?
 
-<?php echo $content; ?>
-doing inside the beginContent tags of column1.php ?
+  # I didn't pass any $content variable so what is `<?php echo $content; ?>` doing inside the beginContent tags of column1.php ?
 
-3) What is $content in layouts/main.php?
+  # What is $content in layouts/main.php?
 
-<?php echo $content; ?>
-I didn't set this variable...
+    `<?php echo $content; ?>`
+    I didn't set this variable...
 
-4) Why do both column1.php and main.php echo $content?
+  # Why do both column1.php and main.php echo $content?
 
-5) Why does setting the title inside contact.php change the value of $this->title in main.php?
+  # Why does setting the title inside contact.php change the value of $this->title in main.php?
 
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 /* in contact.php $this->pageTitle=Yii::app()->name . ' - Contact Us'; */
 And the main confusion:
-6) What is called before what? What the heck is going on there? ;-)
+  # What is called before what? What the heck is going on there? ;-)
 
 Diving in the source code 
 You have two options:
-1) You can accept the rules and follow them without understanding
-2) You can understand and follow the rules...
+  # You can accept the rules and follow them without understanding
+  # You can understand and follow the rules...
 
 If you choose number 1, tutorial is over for you ;-) But if you really want to learn and understand, let's dive together...
 
