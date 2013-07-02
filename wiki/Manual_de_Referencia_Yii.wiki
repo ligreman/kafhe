@@ -11,7 +11,7 @@
     * [Yii_Controlador Controlador]
   # [Yii_Forms Formularios]
   # [Yii_Themes Themes]
-    * [Yii_Flujo_de_Layouts Flujo de un Layout]
+    * [Yii_Flujo_de_Layouts Flujo de los Layout]
 
 
 == Recursos ==
