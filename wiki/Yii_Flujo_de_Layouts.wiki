@@ -198,9 +198,9 @@ _Answer: If you understood answers to 1-3, you know the answer for this one... t
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 /* in contact.php $this->pageTitle=Yii::app()->name . ' - Contact Us'; */
 }}}
-_Answer:
+_Answer:_
 
-As we saw, the contact.php is rendered before the layout, so every field (aka class parameters), you change from the view file (contact.php) will effect the layout because it's rendered afterwards._
+_As we saw, the contact.php is rendered before the layout, so every field (aka class parameters), you change from the view file (contact.php) will effect the layout because it's rendered afterwards._
 
 *6)* What is called before what? What the heck is going on there ? ;-)
 
