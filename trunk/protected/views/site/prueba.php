@@ -2,7 +2,7 @@
 /* @var $this SiteController */
 ?>
 
-<p>Hola <?php echo CHtml::ajaxLink('Pincha', CController::createUrl('site/PruebaAjax'), array('update'=>'#div')); ?></p>
+<p>Hola <?php echo CHtml::ajaxLink('Pincha', CController::createUrl('site/pruebaajax'), array('update'=>'#div')); ?></p>
 
 <?php
     // the data received could look like: {"id":3, "msg":"No error found"}
