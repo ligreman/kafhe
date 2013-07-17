@@ -23,7 +23,9 @@ class AdminController extends Controller
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('index'),
-                'users'=>array('admin'),
+                //'users'=>array('jiji'),
+				'roles'=>array('Admin'),
+				//'expression'=>"Yii::app()->controller->isPostOwner()",
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
@@ -31,6 +33,15 @@ class AdminController extends Controller
         );
     }
 	/*
+
+	function isPostOwner() {
+        $post = Post::model()->findByPk($_GET['post_id']);
+        $owner_id = $post->owner_id;
+        if(Yii::app()->user->id === $owner_id)
+            return true;
+        return false;
+	}
+
 
 	public function actions()
 	{
@@ -48,19 +59,7 @@ class AdminController extends Controller
     /* Página principal, el muro */
     public function actionIndex()
     {
-        $data_notif = $this->loadNotifications();
-        $this->render('index', array('notifications'=>$data_notif));
-    }
-
-    public function loadNotifications() {
-    $this->_notifications = null;
-        if ($this->_notifications===null) {
-            //$this->_notifications = Notification::model()->findAll('sender=:sender', , array(':sender'=>1));//array('order'=>'??.timestamp DESC'));
-            $this->_notifications = Notification::model()->findAllByAttributes(array('sender'=>1), array('order'=>'timestamp DESC', 'limit'=>1));//array('order'=>'??.timestamp DESC'));
-        }
-        if($this->_notifications === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-
-        return $this->_notifications;
+        
+        $this->render('index', null);
     }
 }

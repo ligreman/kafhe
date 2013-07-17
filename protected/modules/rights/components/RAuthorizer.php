@@ -297,7 +297,7 @@ class RAuthorizer extends CApplicationComponent
 
 		$superusers = array();
 		foreach( $users as $user )
-			$superusers[] = $user->name;
+			$superusers[] = $user->username;
 
 		// Make sure that we have superusers, otherwise we would allow full access to Rights
 		// if there for some reason is not any superusers.

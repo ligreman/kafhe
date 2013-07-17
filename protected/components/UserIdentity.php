@@ -44,7 +44,12 @@ class UserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else {
 		    $this->_id = $user->id;
-		    $this->setState('email', $user->email);
+
+			//Otros campos a los que acceder. OJO no se actualizan dinámicamente, poner sólo campos estáticos
+		    $this->setState('username', $user->username);
+			$this->setState('email', $user->email);
+		    $this->setState('group_id', $user->group_id);
+
 			$this->errorCode=self::ERROR_NONE;
         }
 		return !$this->errorCode;

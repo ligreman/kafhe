@@ -2,6 +2,49 @@
 
 class SiteController extends Controller
 {
+    private $_notifications;
+
+	/************ FILTROS Y REGLAS DE ACCESO ****************/
+
+	/*public function filters()
+    {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }*/
+
+	/**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+    /*public function accessRules()
+    {
+        return array(
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions'=>array('alistamiento'),
+                //'users'=>array('admin'),
+				'roles'=>array('Admin', 'Authenticated'),
+				//'expression'=>"Yii::app()->controller->isPostOwner()",
+				//'expression'=>"Yii::app()->controller->puedo()",
+				'expression'=>"puedoAlistarme()", //Dejo entrar si hay evento abierto sólo
+            ),
+            array('deny',  // deny all users
+				'actions'=>array('alistamiento'),
+                'users'=>array('*'),
+            ),
+        );
+    }*/
+
+	/*public function puedoAlistarme() {
+		if (isset(Yii::app()->user->group_id))
+			return Event::model()->exists('group_id=:groupId AND open=1', array(':groupId'=>Yii::app()->user->group_id));
+		else return false;
+	}*/
+
+	
+	/************************ ACCIONES *******************/
+
 	/**
 	 * Declares class-based actions.
 	 */
@@ -51,7 +94,8 @@ class SiteController extends Controller
 		// using the default layout 'protected/views/layouts/main.php'
         if(Yii::app()->user->checkAccess('Authenticated')) {
             //Estoy identificado
-            $this->render('index', array('model'=>$model));
+            $data_notif = $this->loadNotifications();
+            $this->render('index', array('notifications'=>$data_notif));
         } else
 		    $this->render('login', array('model'=>$model));
 	}
@@ -141,5 +185,39 @@ class SiteController extends Controller
         $data = array();
         $data["valor"] = 'Funciono con AJAX';
         $this->renderPartial('_ajaxPrueba', $data, false, true);
+    }
+
+
+	/*public function actionAlistamiento()
+	{
+		$data = array();
+		
+		//Recojo los meals y drinks para pasarselo
+		$data['meals'] = Meal::model()->findAll(array('order'=>'type, name'));
+		$data['drinks'] = Drink::model()->findAll(array('order'=>'type, name'));
+		//findAll(array('order'=>'somefield', 'condition'=>'otherfield=:x', 'params'=>array(':x'=>$x)));
+
+		$this->render('alistamiento', $data);*/
+
+		/*$model = new LoginForm;
+    $form = new CForm('application.views.site.loginForm', $model);
+    if($form->submitted('login') && $form->validate())
+        $this->redirect(array('site/index'));
+    else
+        $this->render('login', array('form'=>$form));*/
+	//}
+
+
+    /******* Funciones auxiliares **********/
+    public function loadNotifications() {
+        $this->_notifications = null;
+        if ($this->_notifications===null) {
+            //$this->_notifications = Notification::model()->findAllByAttributes(array('sender'=>1), array('order'=>'timestamp DESC', 'limit'=>1));
+            $this->_notifications = Notification::model()->findAll(array('condition'=>'recipient_final IS NULL  OR  recipient_final=:recipient', 'params'=>array(':recipient'=>Yii::app()->user->id), 'order'=>'timestamp DESC'));
+        }
+        if($this->_notifications === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+
+        return $this->_notifications;
     }
 }
