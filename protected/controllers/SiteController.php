@@ -92,7 +92,9 @@ class SiteController extends Controller
 
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-        if(Yii::app()->user->checkAccess('Authenticated')) {
+        if(Yii::app()->user->checkAccess('Admin')) {
+            $this->redirect(array('admin/index'));
+        } else if(Yii::app()->user->checkAccess('Authenticated')) {
             //Estoy identificado
             $data_notif = $this->loadNotifications();
             $this->render('index', array('notifications'=>$data_notif));

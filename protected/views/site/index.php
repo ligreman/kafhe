@@ -4,8 +4,11 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
+<p>El html de esto, para modificarlo, está en views/site/index.php</p>
+
 <p>Notificaciones</p>
 <?php
+    //Ejemplo usando un widget
     foreach ($notifications as $notification) {
         //echo "Sender: ".$notification->sender."<br>";
         $this->widget('zii.widgets.CDetailView', array(
@@ -28,5 +31,14 @@ $this->pageTitle=Yii::app()->name;
 
 
 	//print_r(Yii::app()->usernames->users);
+
+    //Ejemplo a pelo
+    foreach ($notifications as $notification) {
+        echo Yii::app()->usernames->getAlias($notification->recipient_final)."<br>";
+        echo $notification->message."<br>";
+        echo $notification->timestamp."<br>";
+        echo $notification->type."<br>";
+        echo $notification->read."<br>";
+    }
 
 ?>
