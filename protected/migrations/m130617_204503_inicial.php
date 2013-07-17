@@ -132,7 +132,7 @@ class m130617_204503_inicial extends TXDbMigration
         $this->dropTable('rank');
         $this->dropTable('notification');
         $this->dropTable('event');
-        $this->dropTable('order');
+        $this->dropTable('enrollment');
         $this->dropTable('meal');
         $this->dropTable('drink');
         $this->dropTable('user');

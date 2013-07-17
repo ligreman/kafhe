@@ -49,7 +49,7 @@ return array(
 			'baseUrl'=>'/rights', // Base URL for Rights. Change if module is nested. 
 			'layout'=>'rights.views.layouts.main', // Layout to use for displaying Rights. 
 			'appLayout'=>'application.views.layouts.main', // Application layout. 
-			'cssFile'=>'rights.css', // Style sheet file to use for Rights. 
+			//'cssFile'=>'', // Style sheet file to use for Rights.
 			'install'=>false, // Whether to enable installer. 
 			'debug'=>false,
 		),
@@ -109,6 +109,9 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
+
+		'event'=>array('class'=>'EventSingleton'),
+		'usernames'=>array('class'=>'UsernamesSingleton'),
 		
 		/*'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
