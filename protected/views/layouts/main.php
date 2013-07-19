@@ -37,7 +37,8 @@
 				//array('label'=>'Contact', 'url'=>array('/site/contact')),
                 array('label'=>'Prueba', 'url'=>array('/site/prueba')),
 				//array('label'=>'Alistamiento', 'url'=>array('/site/alistamiento'), 'visible'=>Event::model()->exists('group_id=:groupId AND open=1', array(':groupId'=>Yii::app()->user->group_id)) ),
-				array('label'=>'Alistamiento', 'url'=>array('/enrollment'), 'visible'=>(isset(Yii::app()->event->model) && Yii::app()->event->model->status==1 && Yii::app()->event->model->type=='desayuno')),
+				array('label'=>'Alistamiento', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Authenticated') && isset(Yii::app()->event->model) && Yii::app()->event->model->status==1 && Yii::app()->event->model->type=='desayuno')),
+				array('label'=>'Character', 'url'=>array('/character'), 'visible'=>Yii::app()->user->checkAccess('Authenticated')),
 
 				//Admin pages
                 array('label'=>'Roles y permisos', 'url'=>array('/rights'), 'visible'=>Yii::app()->user->checkAccess('Admin')),
@@ -63,8 +64,7 @@
 
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> by Omelettus Roughware.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
+		All Rights Reserved.<br/>		
 	</div><!-- footer -->
 
 </div><!-- page -->

@@ -47,17 +47,16 @@ CREATE TABLE IF NOT EXISTS `drink` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `type` enum('cafe','infusion','zumo','otro') NOT NULL DEFAULT 'otro',
-  `price` int(11) NOT NULL,
   `ito` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `event` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
-  `caller_id` int(11) DEFAULT NULL,
-  `relauncher_id` int(11) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `group_id` int(11) unsigned NOT NULL,
+  `caller_id` int(11) unsigned NULL DEFAULT NULL,
+  `relauncher_id` int(11) unsigned NULL DEFAULT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `type` enum('desayuno') NOT NULL DEFAULT 'desayuno',
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
@@ -66,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `event` (
 CREATE TABLE IF NOT EXISTS `group` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '0',
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -74,31 +73,30 @@ CREATE TABLE IF NOT EXISTS `meal` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `type` enum('tostada','pulga','bolleria','otro') NOT NULL DEFAULT 'otro',
-  `price` int(11) NOT NULL,
-  `ito` tinyint(1) NOT NULL DEFAULT '0',
+  `ito` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `notification` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `sender` int(11) DEFAULT NULL,
-  `recipient_original` int(11) DEFAULT NULL,
-  `recipient_final` int(11) DEFAULT NULL,
+  `sender` int(11) unsigned NULL DEFAULT NULL,
+  `recipient_original` int(11) unsigned NULL DEFAULT NULL,
+  `recipient_final` int(11) unsigned NULL DEFAULT NULL,
   `message` text NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `type` enum('kafhe','achikhoria','omelettus','system') NOT NULL,
-  `read` tinyint(1) NOT NULL DEFAULT '0',
+  `read` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `enrollment` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `event_id` int(11) NOT NULL,
-  `meal_id` int(11) NOT NULL,
-  `drink_id` int(11) NOT NULL,
-  `ito` tinyint(1) NOT NULL DEFAULT '0',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int(11) unsigned NOT NULL,
+  `event_id` int(11) unsigned NOT NULL,
+  `meal_id` int(11) unsigned NOT NULL,
+  `drink_id` int(11) unsigned NOT NULL,
+  `ito` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -114,10 +112,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(128) NOT NULL,
   `alias` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
-  `birthdate` date DEFAULT NULL,
+  `birthdate` date NULL DEFAULT NULL,
   `role` enum('admin','moderator','user') NOT NULL DEFAULT 'user',
-  `group_id` int(10) unsigned DEFAULT NULL,
-  `side` enum('kafhe','achikhoria') DEFAULT NULL,
+  `group_id` int(10) unsigned NULL DEFAULT NULL,
+  `side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `rank` smallint(5) unsigned NOT NULL DEFAULT '0',
   `ptos_tueste` smallint(5) unsigned NOT NULL DEFAULT '0',
   `ptos_retueste` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -133,8 +132,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`, `role`, `group_id`, `side`, `rank`, `ptos_tueste`, `ptos_retueste`, `ptos_relanzamiento`, `ptos_talentos`, `tostolares`, `azucarillos`, `dominio_tueste`, `dominio_habilidades`, `dominio_bandos`, `times`, `calls`) VALUES
-(1, 'admin', '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe', 'Administrador', 'admin@mail.com', NULL, 'admin', 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`, `role`, `group_id`, `side`, `status`, `rank`, `ptos_tueste`, `ptos_retueste`, `ptos_relanzamiento`, `ptos_talentos`, `tostolares`, `azucarillos`, `dominio_tueste`, `dominio_habilidades`, `dominio_bandos`, `times`, `calls`) VALUES
+(1, 'admin', '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe', 'Administrador', 'admin@mail.com', NULL, 'admin', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 
 

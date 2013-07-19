@@ -145,25 +145,21 @@ class m130620_205405_dummy_data extends CDbMigration
         $this->insert('meal', array(
             'name'=>'Patata',
             'type'=>'tostada',
-            'price'=>'14',
             'ito'=>'0'
         ));
         $this->insert('meal', array(
             'name'=>'Perrito Frío',
             'type'=>'pulga',
-            'price'=>'34',
             'ito'=>'1'
         ));
         $this->insert('drink', array(
             'name'=>'Zumo de alcachofa',
             'type'=>'zumo',
-            'price'=>'51',
             'ito'=>'1'
         ));
         $this->insert('drink', array(
             'name'=>'Té azul',
             'type'=>'infusion',
-            'price'=>'42',
             'ito'=>'1'
         ));
 
