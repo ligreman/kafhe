@@ -7,11 +7,13 @@
  * @property string $id
  * @property string $username
  * @property string $password
+ * @property string $alias
  * @property string $email
  * @property string $birthdate
  * @property string $role
  * @property string $group_id
  * @property string $side
+ * @property integer $status
  * @property integer $rank
  * @property integer $ptos_tueste
  * @property integer $ptos_retueste
@@ -53,15 +55,15 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
-			array('username, password, email', 'length', 'max'=>128),
+			array('username, password, alias, email', 'required'),
+			array('status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
+			array('username, password, alias, email', 'length', 'max'=>128),
 			array('role', 'length', 'max'=>9),
 			array('group_id, side', 'length', 'max'=>10),
 			array('birthdate', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, password, email, birthdate, role, group_id, side, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'safe', 'on'=>'search'),
+			array('id, username, password, alias, email, birthdate, role, group_id, side, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,11 +87,13 @@ class User extends CActiveRecord
 			'id' => 'ID',
 			'username' => 'Username',
 			'password' => 'Password',
+			'alias' => 'Alias',
 			'email' => 'Email',
 			'birthdate' => 'Birthdate',
 			'role' => 'Role',
 			'group_id' => 'Group',
 			'side' => 'Side',
+			'status' => 'Status',
 			'rank' => 'Rank',
 			'ptos_tueste' => 'Ptos Tueste',
 			'ptos_retueste' => 'Ptos Retueste',
@@ -119,11 +123,13 @@ class User extends CActiveRecord
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password,true);
+		$criteria->compare('alias',$this->alias,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('birthdate',$this->birthdate,true);
 		$criteria->compare('role',$this->role,true);
 		$criteria->compare('group_id',$this->group_id,true);
 		$criteria->compare('side',$this->side,true);
+		$criteria->compare('status',$this->status);
 		$criteria->compare('rank',$this->rank);
 		$criteria->compare('ptos_tueste',$this->ptos_tueste);
 		$criteria->compare('ptos_retueste',$this->ptos_retueste);

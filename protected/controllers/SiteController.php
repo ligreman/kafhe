@@ -180,7 +180,7 @@ class SiteController extends Controller
 
 	public function actionPrueba()
     {
-        $this->render('prueba',null);
+        $this->render('prueba');
     }
     public function actionPruebaAjax()
     {

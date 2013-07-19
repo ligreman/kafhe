@@ -8,7 +8,8 @@
  * @property integer $group_id
  * @property integer $caller_id
  * @property integer $relauncher_id
- * @property integer $open
+ * @property integer $status
+ * @property string $type
  * @property string $date
  */
 class Event extends CActiveRecord
@@ -39,11 +40,12 @@ class Event extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('group_id, caller_id, relauncher_id, date', 'required'),
-			array('group_id, caller_id, relauncher_id, open', 'numerical', 'integerOnly'=>true),
+			array('group_id, date', 'required'),
+			array('group_id, caller_id, relauncher_id, status', 'numerical', 'integerOnly'=>true),
+			array('type', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, group_id, caller_id, relauncher_id, open, date', 'safe', 'on'=>'search'),
+			array('id, group_id, caller_id, relauncher_id, status, type, date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,7 +70,8 @@ class Event extends CActiveRecord
 			'group_id' => 'Group',
 			'caller_id' => 'Caller',
 			'relauncher_id' => 'Relauncher',
-			'open' => 'Open',
+			'status' => 'Status',
+			'type' => 'Type',
 			'date' => 'Date',
 		);
 	}
@@ -88,7 +91,8 @@ class Event extends CActiveRecord
 		$criteria->compare('group_id',$this->group_id);
 		$criteria->compare('caller_id',$this->caller_id);
 		$criteria->compare('relauncher_id',$this->relauncher_id);
-		$criteria->compare('open',$this->open);
+		$criteria->compare('status',$this->status);
+		$criteria->compare('type',$this->type,true);
 		$criteria->compare('date',$this->date,true);
 
 		return new CActiveDataProvider($this, array(
