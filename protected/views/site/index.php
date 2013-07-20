@@ -2,43 +2,33 @@
 /* @var $this SiteController */
 
 $this->pageTitle=Yii::app()->name;
+$nombres_tiempo=array('día','hora','minuto','segundo');
 ?>
-
-<p>El html de esto, para modificarlo, está en views/site/index.php</p>
 
 <p>Notificaciones</p>
-<?php
-    //Ejemplo usando un widget
-    foreach ($notifications as $notification) {
-        //echo "Sender: ".$notification->sender."<br>";
-        $this->widget('zii.widgets.CDetailView', array(
-            'data'=>$notification,
-            'attributes'=>array(
-                'id',             // title attribute (in plain text)
-                'sender',        // an attribute of the related object "owner"
-                'message:html',
-                'timestamp',  // description attribute in HTML
-            ),
-        ));
+    <?php foreach($notifications as $notification):?>
+        <article class="notification <?php echo $notification->type;?>"><?php //TODO: Obtener el bando para incluir la clase del article?>
+            <h1><?php echo Yii::app()->usernames->getAlias($notification->recipient_final); ?></h1>
+            <?php
+                //Calculamos el tiempo que hace
+                $fecha_noti = date_create($notification->timestamp);
+                $intervalo = date_diff(date_create(), $fecha_noti);
+                $tiempo = $intervalo->format("%d,%h,%i,%s");
+                $t = explode(',',$tiempo);
+                $i=0;
 
-        echo "<br>";
+                while($i<(count($t)-1) && !$t[$i]){
+                    $i++;
+                }
+                $plural = '';
+                if($t[$i]>1){
+                    $plural = 's';
+                }
+            ?>
+            <p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
+            <p class="notification_message"><?php echo $notification->message; ?></p>
+        </article>
 
-		//$user = User::model()->findByPk($notification->sender);
-		//echo $user->username;
-		echo Yii::app()->usernames->getAlias($notification->sender);
-		
-    }
+        <?php //echo $notification->read."<br>";?>
 
-
-	//print_r(Yii::app()->usernames->users);
-
-    //Ejemplo a pelo
-    foreach ($notifications as $notification) {
-        echo Yii::app()->usernames->getAlias($notification->recipient_final)."<br>";
-        echo $notification->message."<br>";
-        echo $notification->timestamp."<br>";
-        echo $notification->type."<br>";
-        echo $notification->read."<br>";
-    }
-
-?>
+    <?php endforeach;?>
