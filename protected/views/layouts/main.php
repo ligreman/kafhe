@@ -1,6 +1,6 @@
 <?php /* @var $this Controller */ ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
@@ -20,19 +20,32 @@
 
 <body>
 
-<div class="container" id="page">
+<div id="page">
 
-	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
+	<header>
+		<div>
+            <h1 id="logo"><?php
+                $img = CHtml::image(Yii::app()->request->baseUrl.'/images/kafhe3.png','kafhe');
+                echo CHtml::link($img,array('site/index'));
+                ?>
+            </h1>
+        </div>
+        <nav>
+            <?php
+                //$img = CHtml::image(Yii::app()->request->baseUrl.'/images/kafhe3.png','kafhe');
+                echo CHtml::link('Logout',array('site/logout'));
+            ?>
+        </nav>
 
-	<div id="mainmenu">
+	</header><!-- header -->
+
+	<nav id="secondary_nav">
 	  <?php
 
 	    //Si soy Admin tendré opciones nuevas en el menú
 		$this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')), //, 'active'=>true),
+				//array('label'=>'Home', 'url'=>array('/site/index')), //, 'active'=>true),
 				//array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				//array('label'=>'Contact', 'url'=>array('/site/contact')),
                 array('label'=>'Prueba', 'url'=>array('/site/prueba')),
@@ -47,25 +60,27 @@
 
 
 				//array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				//array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		));
 	  ?>
-	</div><!-- mainmenu -->
+	</nav><!-- mainmenu -->
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 
-	<?php echo $content; ?>
+    <section id="main">
+	    <?php echo $content; ?>
+    </section>
 
 	<div class="clear"></div>
 
-	<div id="footer">
+	<footer>
 		Copyright &copy; <?php echo date('Y'); ?> by Omelettus Roughware.<br/>
 		All Rights Reserved.<br/>		
-	</div><!-- footer -->
+	</footer>
 
 </div><!-- page -->
 
