@@ -33,7 +33,7 @@
         <nav>
             <?php
                 //$img = CHtml::image(Yii::app()->request->baseUrl.'/images/kafhe3.png','kafhe');
-                echo CHtml::link('Logout',array('site/logout'));
+                if (!Yii::app()->user->isGuest) echo CHtml::link('Logout',array('site/logout'));
             ?>
         </nav>
 
