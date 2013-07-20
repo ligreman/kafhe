@@ -11,8 +11,7 @@ return array(
 
 	// preloading 'log' component
 	'preload'=>array(
-		'log',
-		'bootstrap'
+		'log'
 	),
 
 	// autoloading model and component classes
@@ -158,10 +157,6 @@ return array(
 		        ),
 				
 			),
-		),
-		'bootstrap' => array(
-	    	'class' => 'ext.bootstrap.components.Bootstrap',
-	    	'responsiveCss' => true,
 		),
 	),
 
