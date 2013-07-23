@@ -15,10 +15,13 @@ class EnrollmentController extends Controller
     public function accessRules()
     {
         return array(
+			array('deny',
+				'roles'=>array('Admin'), //Prevenir que el admin no entre ya que no es jugador
+			),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('index'),
                 'roles'=>array('Authenticated'),
-                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->model->status==1 && Yii::app()->event->model->type=='desayuno')", //Dejo entrar si hay evento desayuno abierto sólo
+                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->status==1 && Yii::app()->event->type=='desayuno')", //Dejo entrar si hay evento desayuno abierto sólo
 
             ),
             array('deny',  // deny all users
@@ -48,7 +51,7 @@ class EnrollmentController extends Controller
         $data = array();
 
         //Primero comprobaré si ya he metido mi desayuno o no (si hay enrollment de mi usuario para este enveto)
-        $enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id=:event_id', 'params'=>array(':user_id'=>Yii::app()->user->id, 'event_id'=>Yii::app()->event->model->id)));
+        $enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id=:event_id', 'params'=>array(':user_id'=>Yii::app()->user->id, 'event_id'=>Yii::app()->event->id)));
 
         if ($enroll==null) {
             $enroll = new Enrollment;
@@ -90,16 +93,16 @@ class EnrollmentController extends Controller
                     //$this->redirect(Yii::app()->user->returnUrl);
                     if (!$enroll->isNewRecord) {
                         //Actualizo (cojo el enroll de antes)
-                        $enroll->meal_id = $model->mealId;
-                        $enroll->drink_id = $model->drinkId;
+                        $enroll->meal_id = $model->meal_id;
+                        $enroll->drink_id = $model->drink_id;
                         $enroll->ito = $model->ito;
                         //Yii::log('actualizo enroll', 'warning', 'ENROLL');
                     } else {
                         //Guardo campo nuevo
                         $enroll->user_id = Yii::app()->user->id;
-                        $enroll->event_id = Yii::app()->event->model->id;
-                        $enroll->meal_id = $model->mealId;
-                        $enroll->drink_id = $model->drinkId;
+                        $enroll->event_id = Yii::app()->event->id;
+                        $enroll->meal_id = $model->meal_id;
+                        $enroll->drink_id = $model->drink_id;
                         $enroll->ito = $model->ito;
                         //Yii::log('nuevo enroll', 'warning', 'ENROLL');
                     }
@@ -124,8 +127,8 @@ class EnrollmentController extends Controller
         else if (!$enroll->isNewRecord)
         {
             //Toy actualizando así que pongo los valores de BBDD para el formulario
-            $model->mealId = $enroll->meal_id;
-            $model->drinkId = $enroll->drink_id;
+            $model->meal_id = $enroll->meal_id;
+            $model->drink_id = $enroll->drink_id;
             $model->ito = $enroll->ito;
         }
 

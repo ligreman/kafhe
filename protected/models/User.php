@@ -4,14 +4,14 @@
  * This is the model class for table "user".
  *
  * The followings are the available columns in table 'user':
- * @property string $id
+ * @property integer $id
  * @property string $username
  * @property string $password
  * @property string $alias
  * @property string $email
  * @property string $birthdate
  * @property string $role
- * @property string $group_id
+ * @property integer $group_id
  * @property string $side
  * @property integer $status
  * @property integer $rank
@@ -56,10 +56,10 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password, alias, email', 'required'),
-			array('status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
+			array('group_id, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
 			array('username, password, alias, email', 'length', 'max'=>128),
 			array('role', 'length', 'max'=>9),
-			array('group_id, side', 'length', 'max'=>10),
+			array('side', 'length', 'max'=>10),
 			array('birthdate', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -120,14 +120,14 @@ class User extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('id',$this->id);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('alias',$this->alias,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('birthdate',$this->birthdate,true);
 		$criteria->compare('role',$this->role,true);
-		$criteria->compare('group_id',$this->group_id,true);
+		$criteria->compare('group_id',$this->group_id);
 		$criteria->compare('side',$this->side,true);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('rank',$this->rank);

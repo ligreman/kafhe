@@ -4,7 +4,7 @@
 /* @var $this EnrollmentController */
 
 $this->breadcrumbs=array(
-	'Enrollment',
+	'Alistamiento',
 );
 ?>
 <h1>Alistamiento</h1>
@@ -39,15 +39,15 @@ $this->breadcrumbs=array(
     <div class="centerContainer">
         <div class="blockCentered">
             <div id="drinks">
-                <?php echo $form->labelEx($model,'drinkId',array('class' => 'title')); ?>
-                <?php echo $form->radioButtonList($model,'drinkId', CHtml::listData($drinks, 'id', 'name'),array('container' => 'ul','template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
-                <?php echo $form->error($model,'drinkId'); ?>
+                <?php echo $form->labelEx($model,'drink_id',array('class' => 'title')); ?>
+                <?php echo $form->radioButtonList($model,'drink_id', CHtml::listData($drinks, 'id', 'name'),array('container' => 'ul','template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                <?php echo $form->error($model,'drink_id'); ?>
             </div>
 
             <div id="meals">
-                <?php echo $form->labelEx($model,'mealId',array('class' => 'title')); ?>
-                <?php echo $form->radioButtonList($model,'mealId', CHtml::listData($meals, 'id', 'name'),array('container' => 'ul','template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
-                <?php echo $form->error($model,'mealId'); ?>
+                <?php echo $form->labelEx($model,'meal_id',array('class' => 'title')); ?>
+                <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'),array('container' => 'ul','template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                <?php echo $form->error($model,'meal_id'); ?>
             </div>
         </div>
     </div>
