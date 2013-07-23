@@ -1,3 +1,5 @@
+<div id="menuContent">
+
 <?php
 /* @var $this EnrollmentController */
 
@@ -5,10 +7,9 @@ $this->breadcrumbs=array(
 	'Enrollment',
 );
 ?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
+<h1>Alistamiento</h1>
 
 
-<div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'enrollment-form',
 	'enableClientValidation'=>true,
@@ -29,26 +30,30 @@ $this->breadcrumbs=array(
 
 	<p class="note">Los campos marcados con <span class="required">*</span> son obligatorios.</p>
 
-  <div class="row rememberMe">
+  <div class="">
 		<?php echo $form->checkBox($model,'ito'); ?>
 		<?php echo $form->labelEx($model,'ito'); ?>
 		<?php echo $form->error($model,'ito'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'mealId'); ?>
-		<?php echo $form->radioButtonList($model,'mealId', CHtml::listData($meals, 'id', 'name')); ?>
-		<?php echo $form->error($model,'mealId'); ?>
-	</div>
+    <div class="centerContainer">
+        <div class="blockCentered">
+            <div id="drinks">
+                <?php echo $form->labelEx($model,'drinkId',array('class' => 'title')); ?>
+                <?php echo $form->radioButtonList($model,'drinkId', CHtml::listData($drinks, 'id', 'name'),array('container' => 'ul','template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                <?php echo $form->error($model,'drinkId'); ?>
+            </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'drinkId'); ?>
-		<?php echo $form->radioButtonList($model,'drinkId', CHtml::listData($drinks, 'id', 'name')); ?>
-		<?php echo $form->error($model,'drinkId'); ?>		
-	</div>
+            <div id="meals">
+                <?php echo $form->labelEx($model,'mealId',array('class' => 'title')); ?>
+                <?php echo $form->radioButtonList($model,'mealId', CHtml::listData($meals, 'id', 'name'),array('container' => 'ul','template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                <?php echo $form->error($model,'mealId'); ?>
+            </div>
+        </div>
+    </div>
 
-	<div class="row buttons">
-            <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit')); ?>
+	<div class="buttons">
+            <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn')); ?>
             <?php 
               if ($already_enroll) {
                 echo CHtml::submitButton('Darse de baja', array('name'=>'btn_cancel'));
@@ -58,7 +63,6 @@ $this->breadcrumbs=array(
 	</div>
 
 <?php $this->endWidget(); ?>
-
 </div>
 
 
