@@ -51,9 +51,9 @@ class EnrollmentForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'mealId'=>'Comida',
-                    'drinkId'=>'Bebida',
-                    'ito'=>'Desayuno ITO',
+			'mealId'=>'Comidas',
+            'drinkId'=>'Bebidas',
+            'ito'=>'Desayuno ITO',
 		);
 	}
 }
