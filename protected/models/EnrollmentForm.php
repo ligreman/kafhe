@@ -7,10 +7,10 @@
  */
 class EnrollmentForm extends CFormModel
 {
-	//public $userId;
-	//public $eventId;
-	public $mealId;
-	public $drinkId;
+	//public $user_id;
+	//public $event_id;
+	public $meal_id;
+	public $drink_id;
 	public $ito;
 
 	/**
@@ -19,9 +19,9 @@ class EnrollmentForm extends CFormModel
 	public function rules()
 	{
 		return array(			
-			array('mealId, drinkId', 'required', 'on'=>'create, update'), //no hace falta aquí el on, pero lo dejo como ejemplo
-                        array('mealId', 'exist', 'attributeName'=>'id', 'className'=>'Meal'),
-                        array('drinkId', 'exist', 'attributeName'=>'id', 'className'=>'Drink'),
+			array('meal_id, drink_id', 'required', 'on'=>'create, update'), //no hace falta aquí el on, pero lo dejo como ejemplo
+                        array('meal_id', 'exist', 'attributeName'=>'id', 'className'=>'Meal'),
+                        array('drink_id', 'exist', 'attributeName'=>'id', 'className'=>'Drink'),
                         array('ito', 'boolean'),
                         array('ito', 'esIto'),
 		);
@@ -29,17 +29,17 @@ class EnrollmentForm extends CFormModel
         
         public function esIto($attribute,$params)
         {
-            if ($this->ito && $this->mealId!=null && $this->drinkId!=null) 
+            if ($this->ito && $this->meal_id!=null && $this->drink_id!=null) 
             {
                 //Cojo la comida y bebida de BBDD
-                $meal = Meal::model()->findByPk($this->mealId);
-                $drink = Drink::model()->findByPk($this->drinkId);
+                $meal = Meal::model()->findByPk($this->meal_id);
+                $drink = Drink::model()->findByPk($this->drink_id);
 
                 //Compruebo que ambos son candidatos a ser ito
                 if($meal->ito!=1)
-                    $this->addError('mealId','La comida seleccionada no puede ser un ITO.');
+                    $this->addError('meal_id','La comida seleccionada no puede ser un ITO.');
                 else if($drink->ito!=1)
-                    $this->addError('drinkId','La bebida seleccionada no puede ser un ITO.');
+                    $this->addError('drink_id','La bebida seleccionada no puede ser un ITO.');
             }
         }
 
@@ -51,9 +51,9 @@ class EnrollmentForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'mealId'=>'Comidas',
-            'drinkId'=>'Bebidas',
-            'ito'=>'Desayuno ITO',
+			'meal_id'=>'Comidas',
+            'drink_id'=>'Bebidas',
+                    'ito'=>'Desayuno ITO',
 		);
 	}
 }
