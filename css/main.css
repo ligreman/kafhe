@@ -194,3 +194,102 @@ article.notification .timestamp{
     top: 3.7em;
     right: 2%;
 }
+
+#meals, #drinks{
+    float:left;
+}
+
+#drinks{
+    margin-right:2em;
+}
+
+#meals ul, #drinks ul{
+    padding: 1em 0;
+    overflow: hidden;
+    width:13em;
+}
+
+#meals li, #drinks li{
+    padding: .5em;
+}
+
+#meals label, #drinks label{
+    padding: .2em 0 .2em 2em;
+}
+
+#meals label:hover, #drinks label:hover, #drinks label.selected, #meals label.selected{
+    font-weight: bold;
+}
+
+#drinks label.selected{
+    background: url(../images/drink_meal_icons.png) no-repeat 0 0;
+}
+
+#meals label.selected{
+    background: url(../images/drink_meal_icons.png) no-repeat 0 -28px;
+}
+
+#meals input, #drinks input{
+    position: absolute;
+    left: -9999px;
+    overflow: hidden;
+}
+
+label.title{
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+#menuContent{
+    background-color: #ffffff;
+}
+
+.buttons{
+    clear: both;
+    text-align: center;
+    padding: 1em 0;
+}
+
+.btn{
+    border-style: solid;
+    border-radius: 3px;
+    border-width: 0 0 3px 0;
+    padding: .7em 1em;
+    background-color: #e0e0e0;
+    border-color: #c5c5c5;
+    cursor: pointer;
+    color:#363636;
+}
+
+.btn:hover, .btn:active{
+    border-width: 3px 0 0 0;
+}
+
+.btnKafhe{
+    background-color: #f0cc33;
+    border-color: #e2a30a;
+    color:#363636;
+}
+
+.btnAchikhoria{
+    background-color: #673c7d;
+    border-color: #2a0e3d;
+    color:#e0e0e0;
+}
+
+.btnCommon{
+    background-color: #00924a;
+    border-color: #005415;
+    color:#e0e0e0;
+}
+
+.centerContainer{
+    text-align: center;
+}
+
+.blockCentered{
+    display: inline-block;
+    width: 28em;
+    margin: 0 auto;
+    text-align: left;
+}
