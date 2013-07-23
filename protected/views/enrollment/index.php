@@ -13,18 +13,21 @@ $this->breadcrumbs=array(
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'enrollment-form',
 	'enableClientValidation'=>true,
-        //'enableAjaxValidation'=>true,
+
 	'clientOptions'=>array(
-              'validateOnSubmit'=>true,
-              'validateOnChange'=>false,
-            /*'afterValidate'=>"js:function(form, data, hasError) {
-                if (hasError) {
-                    alert('There were errors. Please correct them before submitting again.');
-                    return false; //<- normally not needed
-                }
-            }",*/
+        'validateOnSubmit'=>false,
+        'inputContainer'=>'ul',
+        //'validateOnChange'=>true,
+
+        /*'afterValidate'=>"js:function(form, data, hasError) {
+            if (hasError) {
+                alert('There were errors. Please correct them before submitting again.');
+                return false; //<- normally not needed
+            }
+        }",*/
 	),
-)); ?>
+));
+?>
     
     <?php echo $form->errorSummary($model); ?>
 
@@ -39,14 +42,18 @@ $this->breadcrumbs=array(
     <div class="centerContainer">
         <div class="blockCentered">
             <div id="drinks">
-                <?php echo $form->labelEx($model,'drink_id',array('class' => 'title')); ?>
-                <?php echo $form->radioButtonList($model,'drink_id', CHtml::listData($drinks, 'id', 'name'),array('container' => 'ul','template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                <?php echo $form->label($model,'drink_id',array('class' => 'title')); ?>
+                <ul>
+                    <?php echo $form->radioButtonList($model,'drink_id', CHtml::listData($drinks, 'id', 'name'), array('template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                </ul>
                 <?php echo $form->error($model,'drink_id'); ?>
             </div>
 
             <div id="meals">
-                <?php echo $form->labelEx($model,'meal_id',array('class' => 'title')); ?>
-                <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'),array('container' => 'ul','template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                <?php echo $form->label($model,'meal_id',array('class' => 'title')); ?>
+                <ul>
+                    <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'), array('template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                </ul>
                 <?php echo $form->error($model,'meal_id'); ?>
             </div>
         </div>
