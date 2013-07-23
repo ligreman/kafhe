@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `rights` (
 
 
 CREATE TABLE IF NOT EXISTS `configuration` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `param` varchar(50) NOT NULL,
   `value` varchar(250) NOT NULL,
   `category` varchar(50) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `configuration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `drink` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `type` enum('cafe','infusion','zumo','otro') NOT NULL DEFAULT 'otro',
   `ito` tinyint(1) NOT NULL DEFAULT '0',
@@ -52,83 +52,127 @@ CREATE TABLE IF NOT EXISTS `drink` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `event` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) unsigned NOT NULL,
-  `caller_id` int(11) unsigned NULL DEFAULT NULL,
-  `relauncher_id` int(11) unsigned NULL DEFAULT NULL,
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `caller_id` int(11) NULL DEFAULT NULL,
+  `relauncher_id` int(11) NULL DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   `type` enum('desayuno') NOT NULL DEFAULT 'desayuno',
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `group` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
-  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `meal` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `type` enum('tostada','pulga','bolleria','otro') NOT NULL DEFAULT 'otro',
-  `ito` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `ito` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `notification` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `sender` int(11) unsigned NULL DEFAULT NULL,
-  `recipient_original` int(11) unsigned NULL DEFAULT NULL,
-  `recipient_final` int(11) unsigned NULL DEFAULT NULL,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `sender` int(11) NULL DEFAULT NULL,
+  `recipient_original` int(11) NULL DEFAULT NULL,
+  `recipient_final` int(11) NULL DEFAULT NULL,
   `message` text NOT NULL,
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `type` enum('kafhe','achikhoria','omelettus','system') NOT NULL,
-  `read` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `read` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `enrollment` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL,
-  `event_id` int(11) unsigned NOT NULL,
-  `meal_id` int(11) unsigned NOT NULL,
-  `drink_id` int(11) unsigned NOT NULL,
-  `ito` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `meal_id` int(11) NOT NULL,
+  `drink_id` int(11) NOT NULL,
+  `ito` tinyint(1) NOT NULL DEFAULT '0',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `rank` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `username` varchar(128) NOT NULL,
   `password` varchar(128) NOT NULL,
   `alias` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `birthdate` date NULL DEFAULT NULL,
   `role` enum('admin','moderator','user') NOT NULL DEFAULT 'user',
-  `group_id` int(10) unsigned NULL DEFAULT NULL,
+  `group_id` int(10) NULL DEFAULT NULL,
   `side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `rank` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `ptos_tueste` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `ptos_retueste` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `ptos_relanzamiento` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `ptos_talentos` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `tostolares` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `azucarillos` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `dominio_tueste` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `dominio_habilidades` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `dominio_bandos` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `times` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `calls` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `rank` smallint(5) NOT NULL DEFAULT '0',
+  `ptos_tueste` smallint(5) NOT NULL DEFAULT '0',
+  `ptos_retueste` smallint(5) NOT NULL DEFAULT '0',
+  `ptos_relanzamiento` smallint(5) NOT NULL DEFAULT '0',
+  `ptos_talentos` smallint(5) NOT NULL DEFAULT '0',
+  `tostolares` smallint(5) NOT NULL DEFAULT '0',
+  `azucarillos` smallint(5) NOT NULL DEFAULT '0',
+  `dominio_tueste` smallint(5) NOT NULL DEFAULT '0',
+  `dominio_habilidades` smallint(5) NOT NULL DEFAULT '0',
+  `dominio_bandos` smallint(5) NOT NULL DEFAULT '0',
+  `times` smallint(5) NOT NULL DEFAULT '0',
+  `calls` smallint(5) NOT NULL DEFAULT '0',
+  `last_regen_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `skill` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `category` enum('gungubos','batalla','relanzamiento', 'ancestral') NOT NULL,
+  `type` enum('ofensiva','mejora','utilidad') NOT NULL,
+  `keyword` varchar(50) NOT NULL,
+  `duration` smallint(5) NOT NULL DEFAULT '0',
+  `duration_type` enum('horas','evento','usos') NOT NULL DEFAULT 'horas',
+  `critic` smallint(5) NOT NULL DEFAULT '0',
+  `fail` smallint(5) NOT NULL DEFAULT '0',
+  `cost_tueste` smallint(5) NULL DEFAULT NULL,
+  `cost_retueste` smallint(5) NULL DEFAULT NULL,
+  `cost_relanzamiento` smallint(5) NULL DEFAULT NULL,
+  `cost_tostolares` smallint(5) NULL DEFAULT NULL,
+  `is_cooperative` tinyint(1) NOT NULL DEFAULT '0',
+  `cost_tueste_cooperate` smallint(5) NULL DEFAULT NULL,
+  `cost_tostolares_cooperate` smallint(5) NULL DEFAULT NULL,
+  `cooperate_benefit` smallint(5) NULL DEFAULT NULL,
+  `require_target` tinyint(1) NOT NULL DEFAULT '0',
+  `require_target_side` enum('kafhe','achikhoria') NULL DEFAULT NULL,  
+  `require_caller` tinyint(1) NOT NULL DEFAULT '0',    
+  `require_user_side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
+  `require_user_min_rank` smallint(5) NOT NULL DEFAULT '0',
+  `require_user_status` tinyint(1) NULL DEFAULT NULL,
+  `talent_id_required` int(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `modifier` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `caster_id` int(10) NOT NULL,
+  `target_original_id` int(10) NOT NULL,
+  `target_final_id` int(10) NOT NULL,
+  `skill_id` int(10) NULL DEFAULT NULL,
+  `item_id` int(10) NULL DEFAULT NULL,
+  `keyword` varchar(50) NOT NULL,
+  `duration` smallint(5) NOT NULL DEFAULT '0',
+  `duration_type` enum('horas','evento') NOT NULL DEFAULT 'horas',
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

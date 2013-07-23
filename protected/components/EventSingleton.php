@@ -18,7 +18,7 @@ class EventSingleton extends CApplicationComponent
         if (!$this->_model)
         {
             $type = 'desayuno'; //Si no hay un modelo cargado, cargo el modelo de desayuno por defecto
-            Yii::log('Modelo Event', 'info', 'aa.yy.zz');
+            //Yii::log('Modelo Event', 'info', 'aa.yy.zz');
 
             if (!isset(Yii::app()->user->group_id))
                 return null;
@@ -42,8 +42,23 @@ class EventSingleton extends CApplicationComponent
         return $this->_model;
     }
 
-    /*public function ppp()
+	public function getId()
     {
-        return 'popo';
-    }*/
+        return $this->model->id;
+    }
+	
+    public function getStatus()
+    {
+        return $this->model->status;
+    }
+	
+	public function getCaller()
+	{
+		return $this->model->caller_id;
+	}
+	
+	public function getType()
+	{
+		return $this->model->type;
+	}
 }
