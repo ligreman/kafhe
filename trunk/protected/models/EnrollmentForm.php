@@ -18,18 +18,18 @@ class EnrollmentForm extends CFormModel
 	 */
 	public function rules()
 	{
-		return array(			
-			array('meal_id, drink_id', 'required', 'on'=>'create, update'), //no hace falta aquí el on, pero lo dejo como ejemplo
-                        array('meal_id', 'exist', 'attributeName'=>'id', 'className'=>'Meal'),
-                        array('drink_id', 'exist', 'attributeName'=>'id', 'className'=>'Drink'),
-                        array('ito', 'boolean'),
-                        array('ito', 'esIto'),
+		return array(
+			array('meal_id, drink_id', 'required', 'on'=>'create, update', 'message'=>'Debes elegir {attribute}.'), //no hace falta aquí el on, pero lo dejo como ejemplo
+            array('meal_id', 'exist', 'attributeName'=>'id', 'className'=>'Meal'),
+            array('drink_id', 'exist', 'attributeName'=>'id', 'className'=>'Drink'),
+            array('ito', 'boolean'),
+            array('ito', 'esIto'),
 		);
 	}
-        
+
         public function esIto($attribute,$params)
         {
-            if ($this->ito && $this->meal_id!=null && $this->drink_id!=null) 
+            if ($this->ito && $this->meal_id!=null && $this->drink_id!=null)
             {
                 //Cojo la comida y bebida de BBDD
                 $meal = Meal::model()->findByPk($this->meal_id);
@@ -53,7 +53,7 @@ class EnrollmentForm extends CFormModel
 		return array(
 			'meal_id'=>'Comidas',
             'drink_id'=>'Bebidas',
-                    'ito'=>'Desayuno ITO',
+            'ito'=>'Desayuno ITO',
 		);
 	}
 }

@@ -79,14 +79,13 @@ class EnrollmentController extends Controller
             Yii::app()->end();
         }*/
 
-
         //Si viene del formulario....
         if(isset($_POST['EnrollmentForm']))
         {
             if (isset($_POST['btn_submit'])) {
                 // collects user input data
                 $model->attributes=$_POST['EnrollmentForm'];
-    
+
                 // validates user input and redirect to previous page if validated
                 if($model->validate())
                 {
