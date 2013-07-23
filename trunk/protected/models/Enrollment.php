@@ -4,7 +4,7 @@
  * This is the model class for table "enrollment".
  *
  * The followings are the available columns in table 'enrollment':
- * @property string $id
+ * @property integer $id
  * @property integer $user_id
  * @property integer $event_id
  * @property integer $meal_id
@@ -87,7 +87,7 @@ class Enrollment extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('id',$this->id);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('event_id',$this->event_id);
 		$criteria->compare('meal_id',$this->meal_id);

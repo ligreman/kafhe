@@ -108,9 +108,13 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-
+	
+		//Librerías/Componentes
+		'SkillValidator'=>array('class'=>'SkillValidator'),
+		
+		//Singletons
 		'event'=>array('class'=>'EventSingleton'),
-		'usernames'=>array('class'=>'UsernamesSingleton'),
+		'usertools'=>array('class'=>'UserToolsSingleton'),		
 		
 		/*'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
@@ -124,6 +128,10 @@ return array(
 			'password' => '',
 			'charset' => 'utf8',
 		),
+		
+		'request'=>array(
+            'enableCsrfValidation'=>true,
+        ),
 		
 		'authManager'=>array(
             //'class'=>'CDbAuthManager',
@@ -147,12 +155,13 @@ return array(
 				
 				array(
 					'class'=>'CWebLogRoute',
+					'levels' =>'error, warning, profile, info' //trace
 				),
 				
 				array( // configuration for the toolbar
 		          'class'=>'XWebDebugRouter',
 		          'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
-		          'levels'=>'error, warning, trace, profile, info',
+		          'levels'=>'error, warning, profile, info, trace', //trace
 		          'allowedIPs'=>array('127.0.0.1','::1','192.168.1.54','192\.168\.1[0-5]\.[0-9]{3}'),
 		        ),
 				
@@ -162,8 +171,7 @@ return array(
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
-	'params'=>array(
-		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+	'params'=>array(		
+		//'tiempoRegeneracionTueste'=>600, //Segundos
 	),
 );

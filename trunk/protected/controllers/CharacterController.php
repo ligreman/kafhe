@@ -14,26 +14,31 @@ class CharacterController extends Controller
   public function accessRules()
   {
       return array(
-          array('allow', // allow admin user to perform 'admin' and 'delete' actions
-              'actions'=>array('index', 'skills'),
-              'roles'=>array('Authenticated'),
-          ),
-          array('deny',  // deny all users
-              'users'=>array('*'),
-          ),
+		array('deny',
+			'roles'=>array('Admin'), //Prevenir que el admin no entre ya que no es jugador
+		),
+		array('allow', 
+		  'actions'=>array('index', 'skills'),
+		  'roles'=>array('Authenticated'),
+		),
+		array('deny',  // deny all users
+		  'users'=>array('*'),
+		),
       );
   }
 
 	public function actionIndex()
 	{
-	   $data = array();
-	   $data['user'] = User::model()->findByPk(Yii::app()->user->id);
-		$this->render('index', $data);
+        $data = array();
+        $data['user'] = User::model()->findByPk(Yii::app()->user->id);
+        $this->render('index', $data);
 	}
 
 	public function actionSkills()
 	{
-		$this->render('skills');
+	    $data = array();
+	    $data['skills'] = Skill::model()->findAll(array('order'=>'category, type, name'));
+		$this->render('skills', $data);
 	}
 
 	// Uncomment the following methods and override them if needed

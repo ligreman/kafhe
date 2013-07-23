@@ -4,7 +4,7 @@
  * This is the model class for table "event".
  *
  * The followings are the available columns in table 'event':
- * @property string $id
+ * @property integer $id
  * @property integer $group_id
  * @property integer $caller_id
  * @property integer $relauncher_id
@@ -87,7 +87,7 @@ class Event extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('id',$this->id);
 		$criteria->compare('group_id',$this->group_id);
 		$criteria->compare('caller_id',$this->caller_id);
 		$criteria->compare('relauncher_id',$this->relauncher_id);

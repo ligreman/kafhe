@@ -2,13 +2,13 @@
 
 class m130620_205405_dummy_data extends CDbMigration
 {
-	public function up()
+	public function safeUp()
 	{
 		/*$this->insert('user', array(
 			'username' 	=> 'admin',
 			'password' 	=> '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe',
 			'email'		=> 'admin@mail.com',
-			'role'		=> 'admin',
+			'role'		=> 'admin',			
 			'group_id'	=> 0
 		));*/
 		$this->insert('user', array(
@@ -17,6 +17,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'alias' => 'Moderador',
 			'email'		=> 'mod@mail.com',
 			'role'		=> 'moderator',
+			'side'		=> 'kafhe',			
 			'group_id'	=> 1
 		));
 		
@@ -26,6 +27,8 @@ class m130620_205405_dummy_data extends CDbMigration
 			'alias' => 'Test 1',
 			'email'		=> 'test1@mail.com',
 			'role'		=> 'user',
+			'side'		=> 'kafhe',
+			'ptos_tueste' => 10000,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -34,6 +37,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'alias' => 'Test 2',
 			'email'		=> 'test2@mail.com',
 			'role'		=> 'user',
+			'side'		=> 'achikhoria',
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -42,6 +46,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'alias' => 'Test 3',
 			'email'		=> 'test3@mail.com',
 			'role'		=> 'user',
+			'side'		=> 'kafhe',
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -50,6 +55,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'alias' => 'Test 4',
 			'email'		=> 'test4@mail.com',
 			'role'		=> 'user',
+			'side'		=> 'achikhoria',
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -58,6 +64,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'alias' => 'Test 5',
 			'email'		=> 'test5@mail.com',
 			'role'		=> 'user',
+			'side'		=> 'achikhoria',
 			'group_id'	=> 1
 		));
 
@@ -65,21 +72,21 @@ class m130620_205405_dummy_data extends CDbMigration
 
         $this->insert('authitem', array(
             'name'=>'operacion',
-            'type'=>'0',
+            'type'=>0,
             'description'=>'Operación de prueba',
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authitem', array(
             'name'=>'task1',
-            'type'=>'1',
+            'type'=>1,
             'description'=>'Task de prueba 1',
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authitem', array(
             'name'=>'task2',
-            'type'=>'1',
+            'type'=>1,
             'description'=>'Task de prueba 2',
             'bizrule'=>NULL,
             'data'=>'N;'
@@ -87,57 +94,57 @@ class m130620_205405_dummy_data extends CDbMigration
 
         $this->insert('authassignment', array(
             'itemname'=>'Authenticated',
-            'userid'=>'3',
+            'userid'=>3,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
             'itemname'=>'Authenticated',
-            'userid'=>'4',
+            'userid'=>4,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
             'itemname'=>'Authenticated',
-            'userid'=>'5',
+            'userid'=>5,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
             'itemname'=>'Authenticated',
-            'userid'=>'6',
+            'userid'=>6,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
             'itemname'=>'Authenticated',
-            'userid'=>'7',
+            'userid'=>7,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
 		$this->insert('authassignment', array(
             'itemname'=>'operacion',
-            'userid'=>'1',
+            'userid'=>1,
             'bizrule'=>NULL,
             'data'=>'N;'
 		));
         $this->insert('authassignment', array(
             'itemname'=>'task1',
-            'userid'=>'1',
+            'userid'=>1,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
             'itemname'=>'task2',
-            'userid'=>'4',
+            'userid'=>4,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
 
 
 		$this->insert('event', array(
-            'group_id'=>'1',
-            'status'=>'1',
+            'group_id'=>1,
+            'status'=>1,
             'type'=>'desayuno',
             'date'=>date('Y-m-d')
         ));
@@ -145,42 +152,45 @@ class m130620_205405_dummy_data extends CDbMigration
         $this->insert('meal', array(
             'name'=>'Patata',
             'type'=>'tostada',
-            'ito'=>'0'
+            'ito'=>0
         ));
         $this->insert('meal', array(
             'name'=>'Perrito Frío',
             'type'=>'pulga',
-            'ito'=>'1'
+            'ito'=>1
         ));
         $this->insert('drink', array(
             'name'=>'Zumo de alcachofa',
             'type'=>'zumo',
-            'ito'=>'1'
+            'ito'=>1
         ));
         $this->insert('drink', array(
             'name'=>'Té azul',
             'type'=>'infusion',
-            'ito'=>'1'
+            'ito'=>1
         ));
 
 		$this->insert('notification', array(
-            'sender'=>'2',
-            'recipient_original'=>'3',
-			'recipient_final'=>'3',
+            'sender'=>2,
+            'recipient_original'=>3,
+			'recipient_final'=>3,
             'message'=>'Hola caracola!',
             'type'=>'kafhe'
         ));
 		$this->insert('notification', array(
-            'sender'=>'1',
-            'recipient_original'=>'3',
-			'recipient_final'=>'3',
+            'sender'=>1,
+            'recipient_original'=>3,
+			'recipient_final'=>3,
             'message'=>'Omeletus dice',
             'type'=>'omelettus'
         ));
 
+        $this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_caller`, `require_target_side`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `talent_id_required`) VALUES('Hidratar', 'Te hidratas', 'batalla', 'mejora', 'hidratar', 1, 'horas', 10, 15, 20, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL);");
+        $this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_caller`, `require_target_side`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `talent_id_required`) VALUES ('Disimular', 'Disimulas', 'batalla', 'utilidad', 'disimular', 1, 'usos', 5, 10, 10, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL);");
+
 	}
 
-	public function down()
+	public function safeDown()
 	{
 		$this->delete('user', "username='test1' OR username='test2' OR username='test3' OR username='test4' OR username='test5' OR username='mod'");
 
@@ -191,6 +201,8 @@ class m130620_205405_dummy_data extends CDbMigration
         $this->delete('meal', "1=1");
         $this->delete('drink', "1=1");
         $this->delete('notification', "1=1");
+        $this->delete('skill', "1=1");
+        $this->delete('modifier', "1=1");
 	}
 
 	/*

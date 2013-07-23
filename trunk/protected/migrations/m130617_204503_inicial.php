@@ -91,8 +91,8 @@ class m130617_204503_inicial extends TXDbMigration
 
         $this->executeFile('data/carga_incial.sql');
 
-        $this->execute("INSERT INTO authitem VALUES ('Admin','2',NULL,NULL,'N;'),('Authenticated','2',NULL,NULL,'N;'),('Guest','2',NULL,NULL,'N;');");
-        $this->execute("INSERT INTO authassignment VALUES ('Admin','1',NULL,'N;');");
+        $this->execute("INSERT INTO authitem VALUES ('Admin',2,NULL,NULL,'N;'),('Authenticated','2',NULL,NULL,'N;'),('Guest',2,NULL,NULL,'N;');");
+        $this->execute("INSERT INTO authassignment VALUES ('Admin',1,NULL,'N;');");
 
         /*$this->insert('authassignment', array(
             'itemname'=>'Admin',
@@ -136,6 +136,8 @@ class m130617_204503_inicial extends TXDbMigration
         $this->dropTable('meal');
         $this->dropTable('drink');
         $this->dropTable('user');
+        $this->dropTable('skill');
+        $this->dropTable('modifier');
 
         $this->dropTable('authassignment');
         $this->dropTable('authitemchild');

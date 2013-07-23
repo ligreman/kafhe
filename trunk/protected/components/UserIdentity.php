@@ -15,7 +15,7 @@ class UserIdentity extends CUserIdentity
 	 * against some persistent user identity storage (e.g. database).
 	 * @return boolean whether authentication succeeds.
 	 */
-	 private $_id;
+	private $_id;
 
 	public function authenticate()
 	{
@@ -45,10 +45,11 @@ class UserIdentity extends CUserIdentity
 		else {
 		    $this->_id = $user->id;
 
-			//Otros campos a los que acceder. OJO no se actualizan dinámicamente, poner sólo campos estáticos
+			//Otros campos a los que acceder. OJO no se actualizan dinámicamente (se cargan al identificarse, o de forma manual programandolo), poner sólo campos estáticos
 		    $this->setState('username', $user->username);
 			$this->setState('email', $user->email);
 		    $this->setState('group_id', $user->group_id);
+			$this->setState('side', $user->side);
 
 			$this->errorCode=self::ERROR_NONE;
         }
@@ -59,4 +60,5 @@ class UserIdentity extends CUserIdentity
     {
         return $this->_id;
     }
+	
 }

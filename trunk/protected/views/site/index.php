@@ -8,7 +8,7 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 <p>Notificaciones</p>
     <?php foreach($notifications as $notification):?>
         <article class="notification <?php echo $notification->type;?>"><?php //TODO: Obtener el bando para incluir la clase del article?>
-            <h1><?php echo Yii::app()->usernames->getAlias($notification->recipient_final); ?></h1>
+            <h1><?php echo Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
             <?php
                 //Calculamos el tiempo que hace
                 $fecha_noti = date_create($notification->timestamp);
@@ -24,6 +24,7 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
                 if($t[$i]>1){
                     $plural = 's';
                 }
+
             ?>
             <p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
             <p class="notification_message"><?php echo $notification->message; ?></p>

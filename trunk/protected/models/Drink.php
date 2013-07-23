@@ -4,10 +4,9 @@
  * This is the model class for table "drink".
  *
  * The followings are the available columns in table 'drink':
- * @property string $id
+ * @property integer $id
  * @property string $name
  * @property string $type
- * @property integer $price
  * @property integer $ito
  */
 class Drink extends CActiveRecord
@@ -38,13 +37,13 @@ class Drink extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, price', 'required'),
-			array('price, ito', 'numerical', 'integerOnly'=>true),
+			array('name', 'required'),
+			array('ito', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>50),
 			array('type', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, type, price, ito', 'safe', 'on'=>'search'),
+			array('id, name, type, ito', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,7 +67,6 @@ class Drink extends CActiveRecord
 			'id' => 'ID',
 			'name' => 'Name',
 			'type' => 'Type',
-			'price' => 'Price',
 			'ito' => 'Ito',
 		);
 	}
@@ -84,10 +82,9 @@ class Drink extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('type',$this->type,true);
-		$criteria->compare('price',$this->price);
 		$criteria->compare('ito',$this->ito);
 
 		return new CActiveDataProvider($this, array(
