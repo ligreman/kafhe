@@ -7,6 +7,7 @@ return array(
 	'name'=>'My Console Application',
 
 	'import'=>array(
+		'application.models.*',	
 	    'application.components.*',
         'application.components.TXDB.*',
 	),
@@ -38,5 +39,14 @@ return array(
 				),
 			),
 		),
+		
+		//Librerías/Componentes
+		//'SkillValidator'=>array('class'=>'SkillValidator'),
+		
+		//Singletons
+		//'event'=>array('class'=>'EventSingleton'),
+		//'usertools'=>array('class'=>'UserToolsSingleton'),
+		'tueste'=>array('class'=>'TuesteSingleton'),		
+		'config'=>array('class'=>'ConfigurationSingleton'),
 	),
 );

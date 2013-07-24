@@ -114,7 +114,10 @@ return array(
 		
 		//Singletons
 		'event'=>array('class'=>'EventSingleton'),
-		'usertools'=>array('class'=>'UserToolsSingleton'),		
+		'usertools'=>array('class'=>'UserToolsSingleton'),
+		'tueste'=>array('class'=>'TuesteSingleton'),		
+		'config'=>array('class'=>'ConfigurationSingleton'),
+
 		
 		/*'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
