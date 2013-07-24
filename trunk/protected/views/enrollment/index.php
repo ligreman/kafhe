@@ -15,7 +15,7 @@ $this->breadcrumbs=array(
 	'enableClientValidation'=>true,
 
 	'clientOptions'=>array(
-        'validateOnSubmit'=>false,
+        'validateOnSubmit'=>true,
         'inputContainer'=>'ul',
         //'validateOnChange'=>true,
 
@@ -27,6 +27,7 @@ $this->breadcrumbs=array(
         }",*/
 	),
 ));
+
 ?>
     
     <?php echo $form->errorSummary($model); ?>
