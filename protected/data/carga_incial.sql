@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `configuration` (
   `param` varchar(50) NOT NULL,
   `value` varchar(250) NOT NULL,
   `category` varchar(50) NOT NULL,
+  `description` TEXT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -179,5 +180,6 @@ CREATE TABLE IF NOT EXISTS `modifier` (
 INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`, `role`, `group_id`, `side`, `status`, `rank`, `ptos_tueste`, `ptos_retueste`, `ptos_relanzamiento`, `ptos_talentos`, `tostolares`, `azucarillos`, `dominio_tueste`, `dominio_habilidades`, `dominio_bandos`, `times`, `calls`) VALUES
 (1, 'admin', '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe', 'Administrador', 'admin@mail.com', NULL, 'admin', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-
+INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(1, 'tiempoRegeneracionTueste', '600', 'Juego', 'Intervalo de tiempo, en segundos, entre una regeneración automática de tueste y la siguiente.');
+INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(2, 'tuesteRegeneradoIntervalo', '100', 'Juego', 'Puntos de tueste regenerado en cada intervalo de regeneración.');
 

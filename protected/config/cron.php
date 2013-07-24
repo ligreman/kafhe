@@ -1,4 +1,5 @@
 <?php
+// ¿Needed?
 
 return array(
     // This path may be different. You can probably get it from `config/main.php`.
@@ -8,8 +9,9 @@ return array(
     'preload'=>array('log'),
  
     'import'=>array(
-        'application.components.*',
         'application.models.*',
+		'application.components.*',
+        'application.components.TXDB.*',
     ),
     // We'll log cron messages to the separate files
     'components'=>array(
@@ -28,6 +30,15 @@ return array(
                 ),
             ),
         ),
+		
+		//Librerías/Componentes
+		//'SkillValidator'=>array('class'=>'SkillValidator'),
+		
+		//Singletons
+		//'event'=>array('class'=>'EventSingleton'),
+		//'usertools'=>array('class'=>'UserToolsSingleton'),
+		'tueste'=>array('class'=>'TuesteSingleton'),		
+		'config'=>array('class'=>'ConfigurationSingleton'),
  
         // Your DB connection
         'db'=>array(
@@ -42,6 +53,7 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(		
-		'tiempoRegeneracionTueste'=>600, //Segundos
+		//'tiempoRegeneracionTueste'=>600, //Segundos
+		//'tuesteRegeneradoHora'=>100, //Puntos a la hora
 	),
 );

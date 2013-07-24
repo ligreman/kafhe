@@ -29,6 +29,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'role'		=> 'user',
 			'side'		=> 'kafhe',
 			'ptos_tueste' => 10000,
+			'rank' 		=> 1,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -38,6 +39,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test2@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
+			'rank' 		=> 1,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -47,6 +49,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test3@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'kafhe',
+			'rank' 		=> 2,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -56,6 +59,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test4@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
+			'rank' 		=> 3,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -65,6 +69,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test5@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
+			'rank' 		=> 1,
 			'group_id'	=> 1
 		));
 
@@ -140,6 +145,11 @@ class m130620_205405_dummy_data extends CDbMigration
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
+		
+		$this->insert('group', array(
+            'name'=>'Los Sobaos',
+            'active'=>1
+        ));
 
 
 		$this->insert('event', array(
@@ -197,7 +207,8 @@ class m130620_205405_dummy_data extends CDbMigration
 		$this->delete('authassignment', "itemname='Authenticated' OR itemname='operacion' OR itemname='task1' OR itemname='task2'");
         $this->delete('authitem', "name='operacion' OR name='task1' OR name='task2'");
 
-		$this->delete('event', "group_id='1'");
+		$this->delete('event', "1=1");
+		$this->delete('group', "1=1");
         $this->delete('meal', "1=1");
         $this->delete('drink', "1=1");
         $this->delete('notification', "1=1");
