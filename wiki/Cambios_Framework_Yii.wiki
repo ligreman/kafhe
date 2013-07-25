@@ -1,0 +1,16 @@
+#summary Cambios realizados en archivos del framework de Yii.
+#labels Phase-Implementation
+
+= Cambios Yii v1.1.13 =
+
+== framework\web\js\source\jquery.yiiactiveform.js ==
+
+{{{
+Línea 23
+
+ Original:
+  `if (o[0].tagName.toLowerCase() === 'span') {`
+
+ Modificado:
+  `if (o[0].tagName.toLowerCase() === 'span' || o[0].tagName.toLowerCase() === 'ul') {`
+}}}
