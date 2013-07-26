@@ -1,13 +1,22 @@
 <?php
 /* @var $this SiteController */
 
+define('KAFHE','kafhe');
+define('ACHIKHORIA','achikhoria');
+
 $this->pageTitle=Yii::app()->name;
 $nombres_tiempo=array('día','hora','minuto','segundo');
 ?>
-
-<p>Notificaciones</p>
+<div id="muro">
+<h1 class="oculto">Notificaciones</h1>
+    <?php $last_type = ""; ?>
     <?php foreach($notifications as $notification):?>
-        <article class="notification <?php echo $notification->type;?>"><?php //TODO: Obtener el bando para incluir la clase del article?>
+        <article class="notification <?php echo $notification->type;?> <?php
+            if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
+                echo 'first';
+                $last_type = $notification->type;
+            }
+            ?>">
             <h1><?php echo Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
             <?php
                 //Calculamos el tiempo que hace
@@ -33,3 +42,5 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
         <?php //echo $notification->read."<br>";?>
 
     <?php endforeach;?>
+    <div class="clear"></div>
+</div>
