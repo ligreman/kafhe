@@ -1,13 +1,6 @@
 <div id="menuContent">
 
-<?php
-/* @var $this EnrollmentController */
-
-$this->breadcrumbs=array(
-	'Alistamiento',
-);
-?>
-<h1>Alistamiento</h1>
+<h1 class="oculto">Alistamiento</h1>
 
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -32,10 +25,10 @@ $this->breadcrumbs=array(
     
     <?php echo $form->errorSummary($model); ?>
 
-	<p class="note">Los campos marcados con <span class="required">*</span> son obligatorios.</p>
+	<p>Comienza a formar parte del bando de Kafhe. Alístate diciendo que vas a tomar en el próximo desayuno:</p>
 
-  <div class="">
-		<?php echo $form->checkBox($model,'ito'); ?>
+  <div class="itoSelect">
+		<?php echo $form->checkBox($model,'ito',array('class' => 'oculto')); ?>
 		<?php echo $form->labelEx($model,'ito'); ?>
 		<?php echo $form->error($model,'ito'); ?>
 	</div>
@@ -61,10 +54,10 @@ $this->breadcrumbs=array(
     </div>
 
 	<div class="buttons">
-            <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn')); ?>
+            <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn btn'.Yii::app()->user->side)); ?>
             <?php 
               if ($already_enroll) {
-                echo CHtml::submitButton('Darse de baja', array('name'=>'btn_cancel'));
+                echo CHtml::submitButton('Darse de baja', array('name'=>'btn_cancel', 'class' => 'btn'));
                 }
             ?>
 		<?php //echo CHtml::submitButton($model->isNewRecord ? 'Guardar' : 'Modificar'); ?>

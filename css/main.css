@@ -48,7 +48,14 @@ table {
 
 /*BASIC STYLE FONT*/
 
-* {font-family: 'Lato', sans-serif !important;}
+* {font-family: 'Lato', sans-serif !important; color:#363636;}
+html, body, #page, #main{
+    min-height:100%;
+}
+
+p{
+    padding:1em;
+}
 
 /*Header with vertical align*/
 header {
@@ -120,13 +127,13 @@ body
 	padding: 0;
 }
 
-p{
-    margin:0;
-}
-
 #page
 {
     padding:0;
+}
+
+#content{
+    height:100%;
 }
 
 nav ul{
@@ -141,6 +148,18 @@ footer
 {
 	background-color:#202020;
     color:#e0e0e0;
+    padding:5em 0;
+    text-align: center;
+}
+
+footer li{
+    display:inline-block;
+    width:25%;
+}
+
+footer a{
+    color:#e1e1e1;
+    text-decoration: none;
 }
 
 section#main
@@ -148,6 +167,7 @@ section#main
     background-color: #e1e1e1;
     width:85%;
     float:left;
+    padding: 0;
 }
 
 section#main h1{
@@ -156,10 +176,11 @@ section#main h1{
 }
 
 #secondary_nav{
-    padding:1em 0;
+    padding:0;
     background:#333333;
     float:left;
     width:15%;
+    height:100%;
 }
 
 #secondary_nav a{
@@ -173,26 +194,65 @@ article.notification{
     width: 45%;
     display: block;
     background-color: white;
-    margin:1em;
-    position:relative;
+    margin:0 3% 25px;
+    position: relative;
+}
+
+article.kafhe{
+    float: left;
+}
+
+article.achikhoria{
+    float:right;
+    margin-left:5%;
+}
+
+article.first{
+    margin-top:-3.4em;
+}
+
+article.system, article.omelettus{
+    clear:both;
+    margin: 1em auto;
 }
 
 article.notification h1{
     padding:.5em 2%;
+    background-color:#363636;
+    color:#ffffff;
+}
+
+article.kafhe h1{
     background-color:#f0cc33;
+    color:#363636;
+}
+
+article.achikhoria h1{
+    background-color:#673c7d;
+}
+
+article.omelettus h1{
+    background-color:#00924a;
+    color:#ffffff;
 }
 
 article.notification .notification_message{
     color: #363636;
-    padding:1.2em 2%;
+    padding:1.2em 6em 1.2em 2%;
 }
 
 article.notification .timestamp{
     color:#363636;
     font-size: .6em;
     position:absolute;
-    top: 3.7em;
+    top: 3.3em;
     right: 2%;
+}
+
+#muro{
+    background: url(../images/timeline.png) repeat-y center top;
+    padding:5em 0 5em;
+    height:100%;
 }
 
 #meals, #drinks{
@@ -235,6 +295,30 @@ article.notification .timestamp{
     overflow: hidden;
 }
 
+.itoSelect{
+    text-align: center;
+    margin: 0 0 1em 0;
+}
+
+.itoSelect label.selected{
+    background-color: #00924a;
+    border-color: transparent transparent #005415;
+    color:#ffffff;
+}
+
+.itoSelect label{
+    display: inline-block;
+    border-style: solid;
+    border-radius: 3px;
+    border-width: 3px 0 3px 0;
+    padding: .7em 1em;
+    background-color: #363636;
+    border-color: #0b0b0b transparent transparent;
+    cursor: pointer;
+    color:#e0e0e0;
+    margin:0.5em;
+}
+
 label.title{
     font-size: 1.25em;
     font-weight: bold;
@@ -253,34 +337,52 @@ label.title{
 .btn{
     border-style: solid;
     border-radius: 3px;
-    border-width: 0 0 3px 0;
+    border-width: 3px 0 3px 0;
     padding: .7em 1em;
     background-color: #e0e0e0;
-    border-color: #c5c5c5;
+    border-color: transparent transparent #c5c5c5;
     cursor: pointer;
     color:#363636;
+    margin:0.5em;
 }
 
 .btn:hover, .btn:active{
-    border-width: 3px 0 0 0;
+    border-width: 3px 0 3px 0;
+    border-color:#c5c5c5 transparent transparent;
+;
 }
 
-.btnKafhe{
+.btnkafhe{
     background-color: #f0cc33;
-    border-color: #e2a30a;
+    border-color: transparent transparent #e2a30a;
     color:#363636;
 }
 
-.btnAchikhoria{
+.btnkafhe:hover, .btnkafhe:active{
+    border-width: 3px 0 3px 0;
+    border-color: #e2a30a transparent transparent;
+}
+
+.btnachikhoria{
     background-color: #673c7d;
-    border-color: #2a0e3d;
+    border-color: transparent transparent #2a0e3d;
     color:#e0e0e0;
 }
 
-.btnCommon{
+.btnachikhoria:hover, .btnachikhoria:active{
+    border-width: 3px 0 3px 0;
+    border-color:#2a0e3d transparent transparent;
+}
+
+.btncommon{
     background-color: #00924a;
-    border-color: #005415;
+    border-color: transparent transparent #005415;
     color:#e0e0e0;
+}
+
+.btncommon:hover, .btncommon:active{
+    border-width: 3px 0 3px 0;
+    border-color: #005415 transparent transparent;
 }
 
 .centerContainer{
@@ -292,4 +394,14 @@ label.title{
     width: 28em;
     margin: 0 auto;
     text-align: left;
+}
+
+.oculto{
+    position: absolute;
+    left: -9999px;
+    overflow: hidden;
+}
+
+.clear{
+    clear:both;
 }

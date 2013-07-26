@@ -16,7 +16,8 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
     <?php
-        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/main.js');
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.js');
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/main.js');
     ?>
 
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -37,7 +38,7 @@
         </div>
         <nav>
             <?php
-                echo Yii::app()->user->name.' ';
+                //echo Yii::app()->user->name.' ';
                 if (!Yii::app()->user->isGuest) echo CHtml::link('Logout',array('site/logout'));
             ?>
         </nav>
@@ -85,8 +86,9 @@
 	<div class="clear"></div>
 
 	<footer>
-		Copyright &copy; <?php echo date('Y'); ?> by Omelettus Roughware.<br/>
-		All Rights Reserved.<br/>		
+		<ul>
+            <li><a href="<?php echo Yii::app()->request->baseUrl.'/wiki'?>">kafhe wiki</a></li>
+		</ul>
 	</footer>
 
 </div><!-- page -->
