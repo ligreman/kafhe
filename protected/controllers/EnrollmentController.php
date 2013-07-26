@@ -62,7 +62,6 @@ class EnrollmentController extends Controller
             $model = new EnrollmentForm('update');
         }
 
-
         $data['output'] = 'nada';
 
         //Recojo los meals y drinks para pasarselo a la vista
