@@ -8,8 +8,9 @@
 	'enableClientValidation'=>true,
 
 	'clientOptions'=>array(
-        'validateOnSubmit'=>true,
         'inputContainer'=>'ul',
+		'validateOnSubmit'=>true,
+        
         //'validateOnChange'=>true,
 
         /*'afterValidate'=>"js:function(form, data, hasError) {
@@ -36,18 +37,14 @@
     <div class="centerContainer">
         <div class="blockCentered">
             <div id="drinks">
-                <?php echo $form->label($model,'drink_id',array('class' => 'title')); ?>
-                <ul>
-                    <?php echo $form->radioButtonList($model,'drink_id', CHtml::listData($drinks, 'id', 'name'), array('template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
-                </ul>
+                <?php echo $form->label($model,'drink_id',array('class' => 'title')); ?>                
+                <?php echo $form->radioButtonList($model,'drink_id', CHtml::listData($drinks, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>                
                 <?php echo $form->error($model,'drink_id'); ?>
             </div>
 
             <div id="meals">
-                <?php echo $form->label($model,'meal_id',array('class' => 'title')); ?>
-                <ul>
-                    <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'), array('template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
-                </ul>
+                <?php echo $form->label($model,'meal_id',array('class' => 'title')); ?>                
+                <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>                
                 <?php echo $form->error($model,'meal_id'); ?>
             </div>
         </div>

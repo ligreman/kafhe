@@ -91,8 +91,16 @@ class m130617_204503_inicial extends TXDbMigration
 
         $this->executeFile('data/carga_incial.sql');
 
-        $this->execute("INSERT INTO authitem VALUES ('Admin',2,NULL,NULL,'N;'),('Authenticated','2',NULL,NULL,'N;'),('Guest',2,NULL,NULL,'N;');");
-        $this->execute("INSERT INTO authassignment VALUES ('Admin',1,NULL,'N;');");
+        $this->execute("INSERT INTO authitem VALUES ('Administrador',2,NULL,NULL,'N;'),('Usuario','2',NULL,NULL,'N;'),('Invitado',2,NULL,NULL,'N;');");
+        $this->execute("INSERT INTO authassignment VALUES ('Administrador',1,NULL,'N;');");
+		
+		$this->insert('authitem', array(
+            'name'=>'lanzar_evento',
+            'type'=>0,
+            'description'=>'Lanzar un evento para elegir al llamador',
+            'bizrule'=>NULL,
+            'data'=>'N;'
+        ));
 
         /*$this->insert('authassignment', array(
             'itemname'=>'Admin',

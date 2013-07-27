@@ -36,8 +36,8 @@ return array(
 		
 		//Rights
 		'rights'=>array( 
-			'superuserName'=>'Admin', // Name of the role with super user privileges. 
-			'authenticatedName'=>'Authenticated', // Name of the authenticated user role. 
+			'superuserName'=>'Administrador', // Name of the role with super user privileges. 
+			'authenticatedName'=>'Usuario', // Name of the authenticated user role. 
 			'userIdColumn'=>'id', // Name of the user id column in the database. 
 			'userNameColumn'=>'username', // Name of the user name column in the database. 
 			'enableBizRule'=>true, // Whether to enable authorization item business rules. 
@@ -116,6 +116,7 @@ return array(
 		'event'=>array('class'=>'EventSingleton'),
 		'usertools'=>array('class'=>'UserToolsSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),		
+		'skill'=>array('class'=>'SkillSingleton'),
 		'config'=>array('class'=>'ConfigurationSingleton'),
 
 		

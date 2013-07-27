@@ -24,7 +24,7 @@ class SiteController extends Controller
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('alistamiento'),
                 //'users'=>array('admin'),
-				'roles'=>array('Admin', 'Authenticated'),
+				'roles'=>array('Administrador', 'Usuario'),
 				//'expression'=>"Yii::app()->controller->isPostOwner()",
 				//'expression'=>"Yii::app()->controller->puedo()",
 				'expression'=>"puedoAlistarme()", //Dejo entrar si hay evento abierto sólo
@@ -92,9 +92,9 @@ class SiteController extends Controller
 
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-        if(Yii::app()->user->checkAccess('Admin')) {
+        if(Yii::app()->user->checkAccess('Administrador')) {
             $this->redirect(array('admin/index'));
-        } else if(Yii::app()->user->checkAccess('Authenticated')) {
+        } else if(Yii::app()->user->checkAccess('Usuario')) {
             //Estoy identificado
             $data_notif = $this->loadNotifications();
             $this->render('index', array('notifications'=>$data_notif));

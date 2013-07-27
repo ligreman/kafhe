@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `alias` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `birthdate` date NULL DEFAULT NULL,
-  `role` enum('admin','moderator','user') NOT NULL DEFAULT 'user',
+  `role` enum('admin','user') NOT NULL DEFAULT 'user',
   `group_id` int(10) NULL DEFAULT NULL,
   `side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
@@ -171,6 +171,7 @@ CREATE TABLE IF NOT EXISTS `modifier` (
   `skill_id` int(10) NULL DEFAULT NULL,
   `item_id` int(10) NULL DEFAULT NULL,
   `keyword` varchar(50) NOT NULL,
+  `value` int(10) NULL DEFAULT NULL,
   `duration` smallint(5) NOT NULL DEFAULT '0',
   `duration_type` enum('horas','evento') NOT NULL DEFAULT 'horas',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -182,4 +183,5 @@ INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`,
 
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(1, 'tiempoRegeneracionTueste', '600', 'Juego', 'Intervalo de tiempo, en segundos, entre una regeneración automática de tueste y la siguiente.');
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(2, 'tuesteRegeneradoIntervalo', '100', 'Juego', 'Puntos de tueste regenerado en cada intervalo de regeneración.');
+INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(3, 'maxTuesteUsuario', '1000', 'Juego', 'Máximo puntos de tueste que puede tener un usuario.');
 
