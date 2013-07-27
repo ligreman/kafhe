@@ -6,7 +6,7 @@
  */
 class SkillValidator
 {	
-	public $lastError = '';
+	private $_lastError = '';
 	
 	/**
 	* $is_executing: indica si la función se está llamando desde una ejecución de una habilidad o sólo es para comprobar si se podría ejecutar la misma (para la lista de habilidades)
@@ -64,6 +64,10 @@ class SkillValidator
 	public function canCooperate() {
 	}
 	
+	public function getLastError()
+	{
+		return $this->_lastError;
+	}
 	
 	/************************************** CHECKS ******************************************/
 	/****************************************************************************************/
@@ -72,7 +76,7 @@ class SkillValidator
 		if ($skill->cost_tueste == null) return true;
 		else if ($skill->cost_tueste <= $user->ptos_tueste) return true;
 		else {
-			$this->lastError = 'No tienes suficiente tueste.'.'Coste: '.$skill->cost_tueste.' // Tueste: '.$user->ptos_tueste.' -- '.$skill->name;
+			$this->_lastError = 'No tienes suficiente tueste.'.'Coste: '.$skill->cost_tueste.' // Tueste: '.$user->ptos_tueste.' -- '.$skill->name;
 			return false;
 		}
 	}
@@ -81,7 +85,7 @@ class SkillValidator
 		if ($skill->cost_retueste == null) return true;
 		else if ($skill->cost_retueste <= $user->ptos_retueste) return true;
 		else {
-			$this->lastError = 'No tienes suficiente ReTueste.';
+			$this->_lastError = 'No tienes suficiente ReTueste.';
 			return false;
 		}
 	}
@@ -90,7 +94,7 @@ class SkillValidator
 		if ($skill->cost_relanzamiento == null) return true;
 		else if ($skill->cost_relanzamiento <= $user->ptos_relanzamiento) return true;
 		else {
-			$this->lastError = 'No tienes suficientes Puntos de Relanzamiento.';
+			$this->_lastError = 'No tienes suficientes Puntos de Relanzamiento.';
 			return false;
 		}
 	}
@@ -99,7 +103,7 @@ class SkillValidator
 		if ($skill->cost_tostolares == null) return true;
 		else if ($skill->cost_tostolares <= $user->tostolares) return true;
 		else {
-			$this->lastError = 'No tienes suficientes Tostólares.';
+			$this->_lastError = 'No tienes suficientes Tostólares.';
 			return false;
 		}
 	}
@@ -108,7 +112,7 @@ class SkillValidator
 		if ($skill->require_user_status == null) return true;
 		else if ($skill->require_user_status == $user->status) return true;
 		else {
-			$this->lastError = 'No tienes el estado requerido por la habilidad (alistado, no alistado, etc).';
+			$this->_lastError = 'No tienes el estado requerido por la habilidad (alistado, no alistado, etc).';
 			return false;
 		}
 	}
@@ -117,7 +121,7 @@ class SkillValidator
 		if ($skill->require_user_side == null) return true;
 		else if ($skill->require_user_side == $user->side) return true;
 		else {
-			$this->lastError = 'No estás en el bando requerido por la habilidad.';
+			$this->_lastError = 'No estás en el bando requerido por la habilidad.';
 			return false;
 		}
 	}
@@ -126,7 +130,7 @@ class SkillValidator
 		if ($skill->require_user_min_rank == null) return true;
 		else if ($skill->require_user_min_rank <= $user->rank) return true;
 		else {
-			$this->lastError = 'No tienes el rango necesario para ejecutar esta habilidad.';
+			$this->_lastError = 'No tienes el rango necesario para ejecutar esta habilidad.';
 			return false;
 		}
 	}
@@ -136,7 +140,7 @@ class SkillValidator
 		else if ( TalentUser::model()->exists('user_id=:userId AND talent_id=:talentId', array(':userId'=>$user->id, ':talentId'=>$skill->talent_id_required)) )
 			return true;
 		else {
-			$this->lastError = 'No tienes el Talento requerido para ejecutar esta habilidad.';
+			$this->_lastError = 'No tienes el Talento requerido para ejecutar esta habilidad.';
 			return false;
 		}*/
 	}
@@ -150,11 +154,11 @@ class SkillValidator
 		else if (isset(Yii::app()->event->model)) {
 			if (Yii::app()->event->caller!=null && Yii::app()->event->caller==$user->id) return true;
 			else {
-				$this->lastError = 'No eres el actual llamador del evento.';
+				$this->_lastError = 'No eres el actual llamador del evento.';
 				return false;
 			}
 		} else {
-			$this->lastError = 'Error: no hay ningún evento iniciado.';
+			$this->_lastError = 'Error: no hay ningún evento iniciado.';
 			return false;
 		}
 	}
@@ -165,19 +169,19 @@ class SkillValidator
 		else {			
 			//Si no hay objetivo
 			if ($target == null) {
-				$this->lastError = 'No se ha seleccionado un objetivo para la habilidad.';
+				$this->_lastError = 'No se ha seleccionado un objetivo para la habilidad.';
 				return false;
 			}
 			
 			//Compruebo que sea objetivo del mismo grupo que el usuario
 			if ($user->group_id != $target->group_id) {
-				$this->lastError = 'El objetivo seleccionado no es válido.';
+				$this->_lastError = 'El objetivo seleccionado no es válido.';
 				return false;
 			}
 			
 			//Compruebo que si requería que el objetivo sea de un bando, lo sea
 			if ($skill->require_target_side!=null && $skill->require_target_side!=$target->side) {
-				$this->lastError = 'El objetivo seleccionado no pertenece al bando requerido por la habilidad.';
+				$this->_lastError = 'El objetivo seleccionado no pertenece al bando requerido por la habilidad.';
 				return false;
 			}
 		}

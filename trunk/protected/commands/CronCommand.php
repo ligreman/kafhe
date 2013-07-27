@@ -48,14 +48,28 @@ class CronCommand extends CConsoleCommand {
 				echo "  Usuarios del grupo ".$grupo->name." (".$grupo->id.").\n";
 				$usuarios = User::model()->findAll(array('condition'=>'group_id=:groupId', 'params'=>array(':groupId'=>$grupo->id)));
 				
-				foreach ($usuarios as $usuario) {
+				foreach ($usuarios as $usuario) {					
+					$regenerado = Yii::app()->tueste->getTuesteRegenerado($usuario);
+					
+					if ($regenerado !== false) {
+						$usuario->ptos_tueste = min( intval(Yii::app()->config->getParam('maxTuesteUsuario')), ($usuario->ptos_tueste+$regenerado) );
+						$usuario->last_regen_timestamp = date('Y-m-d H:i:s');
+						$usuario->save();
+					}
+					
 					echo "    Usuario ".$usuario->username."\n";
-					echo "     - Tueste regenerado: " . Yii::app()->tueste->getTuesteRegenerado($usuario)."\n";
+					echo "     - Tueste regenerado: " . $regenerado."\n";
 				}
 			}
 			
 		}
 		
+		/*$time = time();
+		echo date('d-m-Y H:m:s')."\n";
+		echo $time."\n";
+		echo date('d-m-Y H:m:s', $time)."\n";
+		echo print_r(getdate($time),true)."\n";
+		echo print_r(getdate(strtotime(date('d-m-Y H:i:s'))),true);*/
 		return 0;
 	}
 }

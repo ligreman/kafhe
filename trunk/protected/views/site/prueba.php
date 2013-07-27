@@ -55,11 +55,11 @@ foreach ($data as $k=>$d) {
     echo "<p>Task: $k + $d</p>";
 }
 
-if(Yii::app()->user->checkAccess('Admin'))
+if(Yii::app()->user->checkAccess('Administrador'))
 {
     echo "<p>Tengo acceso admin</p>";
 }
-if(Yii::app()->user->checkAccess('Authenticated'))
+if(Yii::app()->user->checkAccess('Usuario'))
 {
     echo "<p>Tengo acceso autenticado</p>";
 }
