@@ -11,6 +11,7 @@
  * @property integer $skill_id
  * @property integer $item_id
  * @property string $keyword
+ * @property integer $value
  * @property integer $duration
  * @property string $duration_type
  * @property string $timestamp
@@ -44,13 +45,13 @@ class Modifier extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('caster_id, target_original_id, target_final_id, keyword', 'required'),
-			array('caster_id, target_original_id, target_final_id, skill_id, item_id, duration', 'numerical', 'integerOnly'=>true),
+			array('caster_id, target_original_id, target_final_id, skill_id, item_id, value, duration', 'numerical', 'integerOnly'=>true),
 			array('keyword', 'length', 'max'=>50),
 			array('duration_type', 'length', 'max'=>6),
 			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, caster_id, target_original_id, target_final_id, skill_id, item_id, keyword, duration, duration_type, timestamp', 'safe', 'on'=>'search'),
+			array('id, caster_id, target_original_id, target_final_id, skill_id, item_id, keyword, value, duration, duration_type, timestamp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,6 +79,7 @@ class Modifier extends CActiveRecord
 			'skill_id' => 'Skill',
 			'item_id' => 'Item',
 			'keyword' => 'Keyword',
+			'value' => 'Value',
 			'duration' => 'Duration',
 			'duration_type' => 'Duration Type',
 			'timestamp' => 'Timestamp',
@@ -102,6 +104,7 @@ class Modifier extends CActiveRecord
 		$criteria->compare('skill_id',$this->skill_id);
 		$criteria->compare('item_id',$this->item_id);
 		$criteria->compare('keyword',$this->keyword,true);
+		$criteria->compare('value',$this->value);
 		$criteria->compare('duration',$this->duration);
 		$criteria->compare('duration_type',$this->duration_type,true);
 		$criteria->compare('timestamp',$this->timestamp,true);

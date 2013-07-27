@@ -59,7 +59,7 @@ class User extends CActiveRecord
 			array('username, password, alias, email', 'required'),
 			array('group_id, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
 			array('username, password, alias, email', 'length', 'max'=>128),
-			array('role', 'length', 'max'=>9),
+			array('role', 'length', 'max'=>5),
 			array('side', 'length', 'max'=>10),
 			array('birthdate, last_regen_timestamp', 'safe'),
 			// The following rule is used by search().
