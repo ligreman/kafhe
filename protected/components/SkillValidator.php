@@ -12,7 +12,9 @@ class SkillValidator
 	* $is_executing: indica si la función se está llamando desde una ejecución de una habilidad o sólo es para comprobar si se podría ejecutar la misma (para la lista de habilidades)
 	*/
 	public function canExecute($skill, $user, $target=null, $is_executing=false)	
-	{			
+	{
+	    $this->_lastError = '';
+
 		//¿Tengo tueste suficiente?
 		if ($skill->cost_tueste!=null && !$this->checkTueste($skill, $user))			
 			return false;		
