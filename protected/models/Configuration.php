@@ -8,6 +8,7 @@
  * @property string $param
  * @property string $value
  * @property string $category
+ * @property string $description
  */
 class Configuration extends CActiveRecord
 {
@@ -37,12 +38,12 @@ class Configuration extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('param, value, category', 'required'),
+			array('param, value, category, description', 'required'),
 			array('param, category', 'length', 'max'=>50),
 			array('value', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, param, value, category', 'safe', 'on'=>'search'),
+			array('id, param, value, category, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,6 +68,7 @@ class Configuration extends CActiveRecord
 			'param' => 'Param',
 			'value' => 'Value',
 			'category' => 'Category',
+			'description' => 'Description',
 		);
 	}
 
@@ -85,6 +87,7 @@ class Configuration extends CActiveRecord
 		$criteria->compare('param',$this->param,true);
 		$criteria->compare('value',$this->value,true);
 		$criteria->compare('category',$this->category,true);
+		$criteria->compare('description',$this->description,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
