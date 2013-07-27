@@ -2,7 +2,7 @@
 
 class SiteController extends Controller
 {
-    private $_notifications;
+    //private $_notifications;
 
 	/************ FILTROS Y REGLAS DE ACCESO ****************/
 
@@ -95,7 +95,7 @@ class SiteController extends Controller
         if(Yii::app()->user->checkAccess('Administrador')) {
             $this->redirect(array('admin/index'));
         } else if(Yii::app()->user->checkAccess('Usuario')) {
-            //Estoy identificado
+            //Estoy identificado, muestro el Muro
             $data_notif = $this->loadNotifications();
             $this->render('index', array('notifications'=>$data_notif));
         } else
@@ -212,14 +212,8 @@ class SiteController extends Controller
 
     /******* Funciones auxiliares **********/
     public function loadNotifications() {
-        $this->_notifications = null;
-        if ($this->_notifications===null) {
-            //$this->_notifications = Notification::model()->findAllByAttributes(array('sender'=>1), array('order'=>'timestamp DESC', 'limit'=>1));
-            $this->_notifications = Notification::model()->findAll(array('condition'=>'recipient_final IS NULL  OR  recipient_final=:recipient', 'params'=>array(':recipient'=>Yii::app()->user->id), 'order'=>'timestamp DESC'));
-        }
-        if($this->_notifications === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
+        $notifications = Notification::model()->findAll(array('condition'=>'type!=:type OR (type=:type AND recipient_final=:recipient)', 'params'=>array(':type'=>'system', ':recipient'=>Yii::app()->user->id), 'order'=>'timestamp DESC'));
 
-        return $this->_notifications;
+        return $notifications;
     }
 }

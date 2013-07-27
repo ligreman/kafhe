@@ -106,7 +106,9 @@ class EnrollmentController extends Controller
                     }
     
                     //Yii::log(print_r($enroll, true), 'error', 'ENROLL');
-                    $enroll->save();
+                    if (!$enroll->save())
+                        throw new CHttpException(400, 'Error al guardar o actualizar el pedido.');
+
                     $data['already_enroll'] = true;
                     //var_dump($enroll->errors);
     
@@ -118,7 +120,7 @@ class EnrollmentController extends Controller
                     $enroll->delete();
                     $data['already_enroll'] = false;
                 } else
-                    throw new CHttpException(404,'Error al darse de baja: No se han encontrado tus datos de alistamiento.');
+                    throw new CHttpException(400,'Error al darse de baja: No se han encontrado tus datos de alistamiento.');
             }
         }
         //Si el usuario simplemente accede a la página...
