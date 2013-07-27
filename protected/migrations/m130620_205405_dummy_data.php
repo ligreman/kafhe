@@ -16,7 +16,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'password' 	=> '$2a$10$3z0vZnmZxN0tE49uV0J8Ju5udzy3fkbFETVoSOxmlCTEli3R5mlsW',
 			'alias' => 'Moderador',
 			'email'		=> 'mod@mail.com',
-			'role'		=> 'moderator',
+			'role'		=> 'user',
 			'side'		=> 'kafhe',			
 			'group_id'	=> 1
 		));
@@ -98,31 +98,31 @@ class m130620_205405_dummy_data extends CDbMigration
         ));
 
         $this->insert('authassignment', array(
-            'itemname'=>'Authenticated',
+            'itemname'=>'Usuario',
             'userid'=>3,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
-            'itemname'=>'Authenticated',
+            'itemname'=>'Usuario',
             'userid'=>4,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
-            'itemname'=>'Authenticated',
+            'itemname'=>'Usuario',
             'userid'=>5,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
-            'itemname'=>'Authenticated',
+            'itemname'=>'Usuario',
             'userid'=>6,
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
         $this->insert('authassignment', array(
-            'itemname'=>'Authenticated',
+            'itemname'=>'Usuario',
             'userid'=>7,
             'bizrule'=>NULL,
             'data'=>'N;'
@@ -145,6 +145,12 @@ class m130620_205405_dummy_data extends CDbMigration
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
+		$this->insert('authassignment', array(
+            'itemname'=>'lanzar_evento',
+            'userid'=>2,
+            'bizrule'=>NULL,
+            'data'=>'N;'
+		));
 		
 		$this->insert('group', array(
             'name'=>'Los Sobaos',
@@ -204,7 +210,7 @@ class m130620_205405_dummy_data extends CDbMigration
 	{
 		$this->delete('user', "username='test1' OR username='test2' OR username='test3' OR username='test4' OR username='test5' OR username='mod'");
 
-		$this->delete('authassignment', "itemname='Authenticated' OR itemname='operacion' OR itemname='task1' OR itemname='task2'");
+		$this->delete('authassignment', "itemname='Usuario' OR itemname='operacion' OR itemname='task1' OR itemname='task2'");
         $this->delete('authitem', "name='operacion' OR name='task1' OR name='task2'");
 
 		$this->delete('event', "1=1");

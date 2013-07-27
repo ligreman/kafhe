@@ -15,11 +15,11 @@ class CharacterController extends Controller
   {
       return array(
 		array('deny',
-			'roles'=>array('Admin'), //Prevenir que el admin no entre ya que no es jugador
+			'roles'=>array('Administrador'), //Prevenir que el admin no entre ya que no es jugador
 		),
 		array('allow', 
 		  'actions'=>array('index', 'skills'),
-		  'roles'=>array('Authenticated'),
+		  'roles'=>array('Usuario'),
 		),
 		array('deny',  // deny all users
 		  'users'=>array('*'),

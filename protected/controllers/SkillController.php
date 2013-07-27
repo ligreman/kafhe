@@ -14,11 +14,11 @@ class SkillController extends Controller
 	{
 		return array(
 			array('deny',
-				'roles'=>array('Admin'), //Prevenir que el admin no entre ya que no es jugador
+				'roles'=>array('Administrador'), //Prevenir que el admin no entre ya que no es jugador
 			),
 			array('allow', 
 			  'actions'=>array('execute', 'cooperate'),
-			  'roles'=>array('Authenticated'), 
+			  'roles'=>array('Usuario'), 
 			),
 			array('deny',  // deny all users
 			  'users'=>array('*'),
@@ -39,11 +39,13 @@ class SkillController extends Controller
 		
 		if ($validator->canExecute($skill, $user, $target, true)) {
 			//Ejecuto la habilidad
+			Yii::app()->skill->executeSkill($skill, $user, $target);
+			$msg = "Mensaje: ".Yii::app()->skill->resultMessage;
 			
-			Yii::app()->user->setFlash('success', "Habilidad ejecutada con éxito.");
+			Yii::app()->user->setFlash('success', "Habilidad ejecutada con éxito. ".$msg);
 		}
 		else {			
-			Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".$validator->lastError);
+			Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".$validator->getLastError());
 		}
 		
 		

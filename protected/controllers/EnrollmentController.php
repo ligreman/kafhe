@@ -16,11 +16,11 @@ class EnrollmentController extends Controller
     {
         return array(
 			array('deny',
-				'roles'=>array('Admin'), //Prevenir que el admin no entre ya que no es jugador
+				'roles'=>array('Administrador'), //Prevenir que el admin no entre ya que no es jugador
 			),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('index'),
-                'roles'=>array('Authenticated'),
+                'roles'=>array('Usuario'),
                 'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->status==1 && Yii::app()->event->type=='desayuno')", //Dejo entrar si hay evento desayuno abierto sólo
 
             ),
