@@ -40,9 +40,25 @@ class SkillController extends Controller
 		if ($validator->canExecute($skill, $user, $target, true)) {
 			//Ejecuto la habilidad
 			Yii::app()->skill->executeSkill($skill, $user, $target);
-			$msg = "Mensaje: ".Yii::app()->skill->resultMessage;
-			
-			Yii::app()->user->setFlash('success', "Habilidad ejecutada con éxito. ".$msg);
+
+			//Feedback para el usuario
+			switch(Yii::app()->skill->result) {
+                case 'fail': $feedback = 'Has pifiado al ejecutar '.$skill->name.'.'; break;
+                case 'normal': $feedback = 'Has ejecutado '.$skill->name.' correctamente.'; break;
+                case 'critic': $feedback = '¡Has hecho un crítico al ejecutar '.$skill->name.'!'; break;
+			}
+			Yii::app()->user->setFlash(Yii::app()->skill->result, $feedback);
+
+			//Creo la notificación
+			$nota = new Notification;
+			$nota->sender = Yii::app()->skill->caster;
+			$nota->recipient_original = Yii::app()->skill->originalTarget;
+			$nota->recipient_final = Yii::app()->skill->finalTarget;
+			$nota->message = Yii::app()->skill->resultMessage; //Mensaje para el muro
+			$nota->type = $user->side;
+
+            if (!$nota->save())
+                throw new CHttpException(400, 'Error al guardar una notificación por habilidad ('.$skill_id.').');
 		}
 		else {			
 			Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".$validator->getLastError());

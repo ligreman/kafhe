@@ -57,8 +57,7 @@ class CronCommand extends CConsoleCommand {
 						$usuario->save();
 					}
 					
-					echo "    Usuario ".$usuario->username."\n";
-					echo "     - Tueste regenerado: " . $regenerado."\n";
+					echo "    Usuario ".$usuario->username." - Tueste regenerado: " . $regenerado."\n";
 				}
 			}
 			

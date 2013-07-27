@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `message` text NOT NULL,
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `type` enum('kafhe','achikhoria','omelettus','system') NOT NULL,
-  `read` tinyint(1) NOT NULL DEFAULT '0',
+  `read` tinyint(1) NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -166,7 +166,6 @@ CREATE TABLE IF NOT EXISTS `skill` (
 CREATE TABLE IF NOT EXISTS `modifier` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `caster_id` int(10) NOT NULL,
-  `target_original_id` int(10) NOT NULL,
   `target_final_id` int(10) NOT NULL,
   `skill_id` int(10) NULL DEFAULT NULL,
   `item_id` int(10) NULL DEFAULT NULL,

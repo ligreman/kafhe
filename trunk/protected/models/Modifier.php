@@ -6,7 +6,6 @@
  * The followings are the available columns in table 'modifier':
  * @property integer $id
  * @property integer $caster_id
- * @property integer $target_original_id
  * @property integer $target_final_id
  * @property integer $skill_id
  * @property integer $item_id
@@ -44,14 +43,14 @@ class Modifier extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('caster_id, target_original_id, target_final_id, keyword', 'required'),
-			array('caster_id, target_original_id, target_final_id, skill_id, item_id, value, duration', 'numerical', 'integerOnly'=>true),
+			array('caster_id, target_final_id, keyword', 'required'),
+			array('caster_id, target_final_id, skill_id, item_id, value, duration', 'numerical', 'integerOnly'=>true),
 			array('keyword', 'length', 'max'=>50),
 			array('duration_type', 'length', 'max'=>6),
 			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, caster_id, target_original_id, target_final_id, skill_id, item_id, keyword, value, duration, duration_type, timestamp', 'safe', 'on'=>'search'),
+			array('id, caster_id, target_final_id, skill_id, item_id, keyword, value, duration, duration_type, timestamp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,7 +73,6 @@ class Modifier extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'caster_id' => 'Caster',
-			'target_original_id' => 'Target Original',
 			'target_final_id' => 'Target Final',
 			'skill_id' => 'Skill',
 			'item_id' => 'Item',
@@ -99,7 +97,6 @@ class Modifier extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('caster_id',$this->caster_id);
-		$criteria->compare('target_original_id',$this->target_original_id);
 		$criteria->compare('target_final_id',$this->target_final_id);
 		$criteria->compare('skill_id',$this->skill_id);
 		$criteria->compare('item_id',$this->item_id);
