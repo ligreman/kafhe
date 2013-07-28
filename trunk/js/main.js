@@ -1,10 +1,11 @@
 $(document).ready(function() {
     resizeNavBar();
-    prepareEnrollmentForm();
+
+    bindCloseLinks();
 });
 
 function resizeNavBar(){
-    $('#secondary_nav').height($('#main').height());
+    $('#secondary_nav, #content').height($('#main').height());
 }
 
 function prepareEnrollmentForm(){
@@ -26,5 +27,12 @@ function prepareEnrollmentForm(){
         }else{
             $(this).addClass('selected');
         }
+    });
+}
+
+function bindCloseLinks(){
+    $('#submenuBlock').on('click','.closeSubmenuLink',function(event){
+        $('#submenuBlock').hide();
+        return false;
     });
 }
