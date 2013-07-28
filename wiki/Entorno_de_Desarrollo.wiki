@@ -83,6 +83,8 @@ Para instalar plugins, ir a Help ->Install New Software
   * En la ventana de selección de proyecto elegir "checkout from CVS". Seleccionar Subversion.
   * Como URL poner: https://kafhe.googlecode.com/svn/
 
+*NOTA:* si creas un nuevo fichero sin usar el interface de PHPStorm no se añade al svn automáticamente y por lo tanto no se sube. Lo mejor es usar Tortoise para manejar el SVN independientemente de PHPStorm, o si no pues estar atentos a los ficheros que no están versionados (en PHPStorm salen en rojo) y darle a "add" dentro de la opción subversion.
+
 ==== BBDD ====
   * New DataSource
   * Driver: MySQL Connector 5.1.22
