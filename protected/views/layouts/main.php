@@ -73,6 +73,11 @@
 				//array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		));
+
+        if(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->model->status==1 && Yii::app()->event->model->type=='desayuno'){
+            echo CHtml::ajaxLink('Alistamiento (ajax)', CController::createUrl('enrollment/ajaxIndex'), array('update'=>'#submenuBlock'));
+        }
+
 	  ?>
 	</nav><!-- mainmenu -->
 	<?php if(isset($this->breadcrumbs)):?>
@@ -81,8 +86,10 @@
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 
+    <section id="submenuBlock">
+    </section>
     <section id="main">
-	    <?php echo $content; ?>
+        <?php echo $content; ?>
     </section>
 
 	<div class="clear"></div>

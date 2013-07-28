@@ -135,6 +135,6 @@ class EnrollmentController extends Controller
         $data['model'] = $model;
 
         // displays the login form
-        $this->render('index', $data);
+        $this->renderPartial('index', $data);
 	}
 }
