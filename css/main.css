@@ -49,7 +49,12 @@ table {
 /*BASIC STYLE FONT*/
 
 * {font-family: 'Lato', sans-serif !important; color:#363636;}
-html, body, #page, #main{
+
+html, body, #page{
+    height:100%;
+}
+
+#main{
     min-height:100%;
 }
 
@@ -150,6 +155,9 @@ footer
     color:#e0e0e0;
     padding:5em 0;
     text-align: center;
+    z-index: 99999;
+    position: relative;
+
 }
 
 footer li{
@@ -404,4 +412,17 @@ label.title{
 
 .clear{
     clear:both;
+}
+
+#submenuBlock{
+    width: 85%;
+    position: absolute;
+    left: 15%;
+    background: white;
+    z-index: 1000;
+}
+
+.floatedLink{
+    float:right;
+    display: inline;
 }

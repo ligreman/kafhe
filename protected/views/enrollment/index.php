@@ -23,9 +23,8 @@
 ));
 
 ?>
-    
     <?php echo $form->errorSummary($model); ?>
-
+    <p class="floatedLink"><a href="#" class="closeSubmenuLink">Cerrar</a></p>
 	<p>Comienza a formar parte del bando de Kafhe. Alístate diciendo que vas a tomar en el próximo desayuno:</p>
 
   <div class="itoSelect">
@@ -44,7 +43,7 @@
 
             <div id="meals">
                 <?php echo $form->label($model,'meal_id',array('class' => 'title')); ?>                
-                <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>                
+                <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
                 <?php echo $form->error($model,'meal_id'); ?>
             </div>
         </div>
@@ -61,9 +60,8 @@
 	</div>
 
 <?php $this->endWidget(); ?>
+    <script type="text/javascript">prepareEnrollmentForm();</script>
 </div>
-
-
 <?php
 
 
