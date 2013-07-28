@@ -87,7 +87,15 @@ class CJavaScript
 		elseif(is_array($value))
 		{
 			$es=array();
-			if(($n=count($value))>0 && array_keys($value)!==range(0,$n-1))
+			//if(($n=count($value))>0 && array_keys($value)!==range(0,$n-1))
+            $n=count($value);
+            try {
+                $range = @range(0, $n-1);
+            } catch (Exception $e) {
+                $range = range(0.0, $n-1);
+            }
+
+            if(($n)>0 && array_keys($value)!==$range)
 			{
 				foreach($value as $k=>$v)
 					$es[]="'".self::quote($k)."':".self::encode($v,$safe);
