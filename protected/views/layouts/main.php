@@ -75,7 +75,7 @@
 		));
 
         if(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->model->status==1 && Yii::app()->event->model->type=='desayuno'){
-            echo CHtml::ajaxLink('Alistamiento (ajax)', CController::createUrl('enrollment/ajaxIndex'), array('update'=>'#submenuBlock'));
+            echo CHtml::ajaxLink('Alistamiento (ajax)', CController::createUrl('enrollment/index'), array('update'=>'#submenuBlock'));
         }
 
 	  ?>
