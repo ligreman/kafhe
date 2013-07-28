@@ -14,3 +14,23 @@ Línea 23
  Modificado:
   `if (o[0].tagName.toLowerCase() === 'span' || o[0].tagName.toLowerCase() === 'ul') {`
 }}}
+
+
+== framework\web\helpers\CJavaScript.php ==
+
+{{{
+Línea 90
+
+ Original:
+  `if(($n=count($value))>0 && array_keys($value)!==range(0,$n-1))`
+
+ Modificado:
+  `$n=count($value);
+   try {
+     $range = @range(0, $n-1);
+   } catch (Exception $e) {
+     $range = range(0.0, $n-1);
+   }
+
+   if(($n)>0 && array_keys($value)!==$range)`
+}}}
