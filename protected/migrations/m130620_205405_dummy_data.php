@@ -39,6 +39,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test2@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
+            'ptos_tueste' => 10000,
 			'rank' 		=> 1,
 			'group_id'	=> 1
 		));
@@ -49,6 +50,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test3@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'kafhe',
+            'ptos_tueste' => 10000,
 			'rank' 		=> 2,
 			'group_id'	=> 1
 		));
@@ -59,6 +61,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test4@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
+            'ptos_tueste' => 10000,
 			'rank' 		=> 3,
 			'group_id'	=> 1
 		));
@@ -69,6 +72,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test5@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
+            'ptos_tueste' => 10000,
 			'rank' 		=> 1,
 			'group_id'	=> 1
 		));
@@ -210,8 +214,8 @@ class m130620_205405_dummy_data extends CDbMigration
 	{
 		$this->delete('user', "username='test1' OR username='test2' OR username='test3' OR username='test4' OR username='test5' OR username='mod'");
 
-		$this->delete('authassignment', "itemname='Usuario' OR itemname='operacion' OR itemname='task1' OR itemname='task2'");
-        $this->delete('authitem', "name='operacion' OR name='task1' OR name='task2'");
+		$this->delete('authassignment', "itemname!='Administrador'");
+        $this->delete('authitem', "name!='Administrador' AND name!='Invitado' AND name!='Usuario'");
 
 		$this->delete('event', "1=1");
 		$this->delete('group', "1=1");

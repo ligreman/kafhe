@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
 
-//TODO en el mensaje de las notificaciones poder meter iconitos, con palabras clave tipo smilies de foros->  :hidratar:  y eso se sustituye por el HTML correspondiente luego
+///TODO en el mensaje de las notificaciones poder meter iconitos, con palabras clave tipo smilies de foros->  :hidratar:  y eso se sustituye por el HTML correspondiente luego
 
 define('KAFHE','kafhe');
 define('ACHIKHORIA','achikhoria');

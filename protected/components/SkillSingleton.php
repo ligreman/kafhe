@@ -43,7 +43,7 @@ class SkillSingleton extends CApplicationComponent
 				$this->_result = 'critic'; //Crítico
 			
 			//Pago el coste
-			if ($this->paySkillCosts($skill, $user) === false)
+			if ($this->paySkillCosts($skill, $user, $this->_result) === false)
                 throw new CHttpException(400, $this->_error);
 			
 			//Ejecuto la skill
@@ -54,7 +54,7 @@ class SkillSingleton extends CApplicationComponent
 		}
 		
 		//Mensaje
-		//TODO comprobar si tiene modificador de disimular o de impersonar
+		///TODO comprobar si tiene modificador de disimular o de impersonar
 		if ($this->_finalTarget == $this->_caster) $finalName = 'sí mismo';
 		else $finalName = Yii::app()->usertools->getAlias($this->_finalTarget);
 
@@ -71,13 +71,19 @@ class SkillSingleton extends CApplicationComponent
 	/************* SKILLS ************/
 	// Crea un modificador de "hidratado"
 	private function hidratar($skill, $user, $target) {
-	    $modificador = new Modifier;
+	    //si ya tengo hidratar, lo que hago es actualizar sus datos, ya que solo puede haber uno
+        $modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND skill_id=:skill', 'params'=>array(':target'=>$target->id, ':skill'=>$skill->id)));
+
+        if ($modificador == null)
+            $modificador = new Modifier;
+
 	    $modificador->caster_id = $user->id;
 	    $modificador->target_final_id = $target->id;
 	    $modificador->skill_id = $skill->id;
 	    $modificador->keyword = 'hidratado';
 	    $modificador->duration = $skill->duration;
 	    $modificador->duration_type = $skill->duration_type;
+	    $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
 	    if (!$modificador->save())
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
@@ -87,7 +93,7 @@ class SkillSingleton extends CApplicationComponent
 	
 	
 	/************** FUNCIONES AUXILIARES *************/
-	public function paySkillCosts($skill, $user) {
+	public function paySkillCosts($skill, $user, $executionResult) {
 	    //Compruebo si tengo tueste
 	    if ($skill->cost_tueste !== null  &&  $skill->cost_tueste > $user->ptos_tueste) {
             $this->_error = 'No tienes suficiente Tueste.';
@@ -112,21 +118,27 @@ class SkillSingleton extends CApplicationComponent
             return false;
         }
 
+        //Si ha sido crítico, cuesta menos
+        $criticModificator = array('tueste'=>1, 'retueste'=>1, 'tostolares'=>1, 'relanzamiento'=>1);
+        if ($executionResult == 'critic') {
+            $criticModificator = array('tueste'=>0.5, 'retueste'=>0.75, 'tostolares'=>0.5, 'relanzamiento'=>1);
+        }
+
         //Pago el tueste
         if ($skill->cost_tueste !== null)
-            $user->ptos_tueste = $user->ptos_tueste - $skill->cost_tueste;
+            $user->ptos_tueste = $user->ptos_tueste - round($skill->cost_tueste * $criticModificator['tueste']);
 
 	    //Pago el restueste
         if ($skill->cost_retueste !== null)
-            $user->ptos_retueste = $user->ptos_retueste - $skill->cost_retueste;
+            $user->ptos_retueste = $user->ptos_retueste - round($skill->cost_retueste * $criticModificator['retueste']);
 
 	    //Pago los tostólares
         if ($skill->cost_tostolares !== null)
-            $user->tostolares = $user->tostolares - $skill->cost_tostolares;
+            $user->tostolares = $user->tostolares - round($skill->cost_tostolares * $criticModificator['tostolares']);
 
 	    //Pago los puntos de relanzamiento
         if ($skill->cost_relanzamiento !== null)
-            $user->ptos_relanzamiento = $user->ptos_relanzamiento - $skill->cost_relanzamiento;
+            $user->ptos_relanzamiento = $user->ptos_relanzamiento - round($skill->cost_relanzamiento * $criticModificator['relanzamiento']);
 
         //Salvo todo
 	    if (!$user->save())
@@ -151,7 +163,7 @@ class SkillSingleton extends CApplicationComponent
 			return $user; //Si no hay objetivo, es que el objetivo es uno mismo
 		}
 
-		//TODO calculo del finalTarget
+		///TODO calculo del finalTarget
 		$finalTarget = $target;
 		$this->_finalTarget = $finalTarget->id;
 

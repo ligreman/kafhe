@@ -171,8 +171,8 @@ CREATE TABLE IF NOT EXISTS `modifier` (
   `item_id` int(10) NULL DEFAULT NULL,
   `keyword` varchar(50) NOT NULL,
   `value` int(10) NULL DEFAULT NULL,
-  `duration` smallint(5) NOT NULL DEFAULT '0',
-  `duration_type` enum('horas','evento') NOT NULL DEFAULT 'horas',
+  `duration` smallint(5) NULL DEFAULT '0',
+  `duration_type` enum('horas','evento') NULL DEFAULT 'horas',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
