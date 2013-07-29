@@ -11,6 +11,28 @@
 	
 	//parametros globales
 	tiic test index --global_param=8
+	
+	--------------------------------------------------------------------------------------------------------------------------
+	
+	Run yiic migrate in an action 
+	Code
+	private function runMigrationTool() {
+		$commandPath = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'commands';
+		$runner = new CConsoleCommandRunner();
+		$runner->addCommands($commandPath);
+		$commandPath = Yii::getFrameworkPath() . DIRECTORY_SEPARATOR . 'cli' . DIRECTORY_SEPARATOR . 'commands';
+		$runner->addCommands($commandPath);
+		$args = array('yiic', 'migrate', '--interactive=0');
+		ob_start();
+		$runner->run($args);
+		echo htmlentities(ob_get_clean(), null, Yii::app()->charset);
+	}
+	How to use
+	You can call it from a controller action like this:
+
+	actionMigrate() {
+		$this->runMigrationTool();
+	}
 
 */
 
@@ -39,6 +61,9 @@ class CronCommand extends CConsoleCommand {
 	*/
 	public function actionRegenerarTueste ($user=null)	
 	{
+		echo "Compruebo caducidad de modificadores.\n";
+		Yii::app()->usertools->checkModifiersExpiration();
+		
 		echo "Iniciando regeneracion.\n";
 		if ($user === null) {
 			echo "Regenero a todos los usuarios.\n";

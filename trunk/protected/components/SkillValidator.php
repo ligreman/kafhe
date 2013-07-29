@@ -50,6 +50,8 @@ class SkillValidator
 		//¿Tengo algún modificador que me impida ejecutar esta habilidad?
 		if (!$this->checkModifiers($user))
 			return false;
+			
+		///TODO ¿Hay una batalla iniciada (evento.status=2)?
 		
 		
 		//Comprobaciones sólo si estoy intentando ejecutar una habilidad

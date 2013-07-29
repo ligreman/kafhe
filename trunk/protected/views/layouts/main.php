@@ -33,13 +33,20 @@
             <h1 id="logo"><?php
                 $img = CHtml::image(Yii::app()->request->baseUrl.'/images/kafhe3.png','kafhe');
                 echo CHtml::link($img,array('site/index'));
+				
+				//Modificadores (provisional)
+				if (Yii::app()->user->checkAccess('Usuario')) {
+					foreach(Yii::app()->usertools->modifiers as $modifier) {
+						echo ' '.$modifier->keyword.', ';
+					}
+				}
                 ?>
             </h1>
         </div>
         <nav>
             <?php                
                 if (!Yii::app()->user->isGuest) {
-					//echo Yii::app()->user->name.' ';
+					echo Yii::app()->user->name.' ';
 					echo CHtml::link('Logout',array('/site/logout'));
 				}
             ?>

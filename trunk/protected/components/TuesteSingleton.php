@@ -21,9 +21,27 @@ class TuesteSingleton extends CApplicationComponent
 		//Calculo el tueste que regenera en función de su rango
 		$porcentajePorRango = ($user->rank-1) * 10; //10% por cada rango
 		$tuesteExtraPorRango = round(intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) * $porcentajePorRango / 100);
-		$tuesteRegenerado = intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + $tuesteExtraPorRango;
+				
+		///TODO Aplico los talentos, modificadores y demás correspondientes. Los talentos crean modificadores con duración null
 		
-		//Aplico los talentos, modificadores y demás correspondientes
+		//Tueste extra por modificadores
+		$porcentajePorModificadores = 0;
+		$hasHidratado = false;
+		
+		if (isset(Yii::app()->user) && isset(Yii::app()->user->id) && $user->id == Yii::app()->user->id) {
+			//Es el usuario activo
+			if(Yii::app()->usertools->inModifiers('hidratado'))
+				$hasHidratado = true;
+		} else {
+			$mods = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>$user->id)));
+			if($mods!==null  &&  Yii::app()->usertools->inModifiers('hidratado', $mods))
+				$hasHidratado = true;
+		}
+		
+		if($hasHidratado) $porcentajePorModificadores = 25; //25% más rápido por estar hidratado			
+		$tuesteExtraPorModificadores = round(intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) * $porcentajePorModificadores / 100);
+
+		$tuesteRegenerado = intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + $tuesteExtraPorRango + $tuesteExtraPorModificadores;
 		
 		//Devuelvo el tueste regenerado
 		return $tuesteRegenerado;

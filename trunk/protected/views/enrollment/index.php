@@ -25,7 +25,7 @@
 ?>
     <?php echo $form->errorSummary($model); ?>
     <p class="floatedLink"><a href="#" class="closeSubmenuLink">Cerrar</a></p>
-	<p>Comienza a formar parte del bando de Kafhe. Alístate diciendo que vas a tomar en el próximo desayuno:</p>
+	<p>Comienza a formar parte del bando de Kafhe. Alístate diciendo qué vas a tomar en el próximo desayuno:</p>
 
   <div class="itoSelect">
 		<?php echo $form->checkBox($model,'ito',array('class' => 'oculto')); ?>
