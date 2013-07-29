@@ -4,7 +4,7 @@
 // Any writable CConsoleApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Console Application',
+	'name'=>'Kafhe Console Application',
 
 	'import'=>array(
 		'application.models.*',	
@@ -14,13 +14,9 @@ return array(
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-
+	
 	// application components
-	'components'=>array(
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		// uncomment the following to use a MySQL database
+	'components'=>array(		
 		
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=kafhe_refactor',
@@ -40,12 +36,13 @@ return array(
 			),
 		),
 		
+				
 		//Librerías/Componentes
 		//'SkillValidator'=>array('class'=>'SkillValidator'),
 		
 		//Singletons
 		//'event'=>array('class'=>'EventSingleton'),
-		//'usertools'=>array('class'=>'UserToolsSingleton'),
+		'usertools'=>array('class'=>'UserToolsSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),		
 		'config'=>array('class'=>'ConfigurationSingleton'),
 	),
