@@ -51,7 +51,9 @@ class SkillValidator
 		if (!$this->checkModifiers($user))
 			return false;
 			
-		///TODO ¿Hay una batalla iniciada (evento.status=2)?
+		//¿Hay una batalla iniciada (event.status=2)?
+		if ($skill->require_event_status && !$this->checkEventStatus($skill))
+		    return false;
 		
 		
 		//Comprobaciones sólo si estoy intentando ejecutar una habilidad
@@ -148,7 +150,22 @@ class SkillValidator
 			return false;
 		}*/
 	}
-	
+
+    public function checkEventStatus($skill) {
+        if ($skill->require_event_status == null) return true;
+        else if (isset(Yii::app()->event->model)) {
+            if ($skill->require_event_status == Yii::app()->event->status) return true;
+            else {
+                $this->_lastError = 'No puedes ejecutar la habilidad en este momento.';
+                return false;
+            }
+        } else {
+            $this->_lastError = 'Error: no hay ningún evento iniciado.';
+            return false;
+        }
+    }
+
+	///TODO checkmodifiers (algún mod que no me deje ejecutar esta habilidad)
 	public function checkModifiers($user) {
 		return true;
 	}
