@@ -49,15 +49,8 @@ class SkillController extends Controller
 			}
 			Yii::app()->user->setFlash(Yii::app()->skill->result, $feedback);
 
-			//Creo la notificación
-			$nota = new Notification;
-			$nota->sender = Yii::app()->skill->caster;
-			$nota->recipient_original = Yii::app()->skill->originalTarget;
-			$nota->recipient_final = Yii::app()->skill->finalTarget;
-			$nota->message = Yii::app()->skill->resultMessage; //Mensaje para el muro
-			$nota->type = $user->side;
-
-            if (!$nota->save())
+			//Creo la notificación si no es la skill Disimular o tengo ésta activa
+            if (!$this->skillNotification(Yii::app()->skill, $user))
                 throw new CHttpException(400, 'Error al guardar una notificación por habilidad ('.$skill_id.').');
 		}
 		else {			
@@ -70,5 +63,29 @@ class SkillController extends Controller
 
 	public function actionCooperate($skill_id)
 	{
+	}
+	
+	
+	private function skillNotification($skill, $user) 
+	{
+		//Si es la habilidad Disimular, no la muestro
+		if ($skill->keyword == 'disimular') return true;
+		
+		//Si el usuario tiene el modificador "disimulando" activo, resto usos y no muestro la notificación
+		if (Yii::app()->usertools->inModifiers('disimulando')) {			
+			if (!Yii::app()->usertools->reduceModifierUses('disimulando'))
+				throw new CHttpException(400, 'Error al reducir los usos de un modificador ('.$modifier.').');
+			return true;
+		}				
+		
+		//Si no, pues creo la notificación
+		$nota = new Notification;
+		$nota->sender = $skill->caster;
+		$nota->recipient_original = $skill->originalTarget;
+		$nota->recipient_final = $skill->finalTarget;
+		$nota->message = $skill->resultMessage; //Mensaje para el muro
+		$nota->type = $user->side;
+
+		return $nota->save();
 	}
 }

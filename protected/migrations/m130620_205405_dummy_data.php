@@ -101,6 +101,12 @@ class m130620_205405_dummy_data extends CDbMigration
             'data'=>'N;'
         ));
 
+		$this->insert('authassignment', array(
+            'itemname'=>'Usuario',
+            'userid'=>2,
+            'bizrule'=>NULL,
+            'data'=>'N;'
+        ));
         $this->insert('authassignment', array(
             'itemname'=>'Usuario',
             'userid'=>3,
@@ -205,8 +211,8 @@ class m130620_205405_dummy_data extends CDbMigration
             'type'=>'omelettus'
         ));
 
-        $this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_caller`, `require_target_side`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `talent_id_required`) VALUES('Hidratar', 'Te hidratas', 'batalla', 'mejora', 'hidratar', 1, 'horas', 10, 15, 20, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL);");
-        $this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_caller`, `require_target_side`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `talent_id_required`) VALUES ('Disimular', 'Disimulas', 'batalla', 'utilidad', 'disimular', 1, 'usos', 5, 10, 10, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL);");
+        $this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `modifier_keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_caller`, `require_target_side`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `require_event_status`, `talent_id_required`) VALUES ('Hidratar', 'Te hidratas', 'batalla', 'mejora', 'hidratar', 'hidratado', 1, 'horas', 10, 15, 20, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL, NULL);");
+        $this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `modifier_keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_caller`, `require_target_side`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `require_event_status`, `talent_id_required`) VALUES ('Disimular', 'Disimulas', 'batalla', 'utilidad', 'disimular', 'disimulando', 1, 'usos', 5, 10, 10, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL, NULL);");
 
 	}
 

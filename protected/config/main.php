@@ -153,7 +153,21 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
+					'logPath'=>'logs',
+					'logFile'=>date('Y-m-d').'-error.log',
 					'levels'=>'error, warning',
+				),
+				array(
+					'class'=>'CFileLogRoute',
+					'logPath'=>'logs',
+					'logFile'=>date('Y-m-d').'-trace.log',
+					'levels'=>'profile, trace',
+				),
+				array(
+					'class'=>'CFileLogRoute',
+					'logPath'=>'logs',
+					'logFile'=>date('Y-m-d').'-info.log',
+					'levels'=>'info',
 				),
 				// uncomment the following to show log messages on web pages
 				

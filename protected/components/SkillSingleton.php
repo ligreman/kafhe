@@ -10,6 +10,7 @@ class SkillSingleton extends CApplicationComponent
 	private $_caster; //ID
 	private $_originalTarget; //ID
 	private $_finalTarget;  //ID
+	private $_keyword = '';
 	private $_result = '';
 	private $_resultMessage = '';
 	private $_error = '';
@@ -17,6 +18,7 @@ class SkillSingleton extends CApplicationComponent
     public function executeSkill($skill, $user, $target)
     {
         $this->_error = '';
+		$this->_keyword = $skill->keyword;
 
         //Saco los nombres de los que intervienen
 		$this->_caster = $user->id;
@@ -49,6 +51,7 @@ class SkillSingleton extends CApplicationComponent
 			//Ejecuto la skill
 			switch ($skill->keyword) {
 				case 'hidratar': $this->hidratar($skill, $user, $finalTarget); break;
+				case 'disimular': $this->disimular($skill, $user, $finalTarget); break;
 			}
 			
 		}
@@ -59,20 +62,21 @@ class SkillSingleton extends CApplicationComponent
 		else $finalName = Yii::app()->usertools->getAlias($this->_finalTarget);
 
 		if ($this->_result == 'fail')
-			$this->_resultMessage = 'Ha pifiado al intentar ejecutar la habilidad '.$skill->name.' sobre '.$finalName.'.';
+			$this->_resultMessage = ':'.$skill->keyword.': Ha pifiado al intentar ejecutar la habilidad '.$skill->name.' sobre '.$finalName.'.';
 		else if ($this->_result == 'normal')
-			$this->_resultMessage = 'Ha ejecutado la habilidad '.$skill->name.' sobre '.$finalName.'.';
+			$this->_resultMessage = ':'.$skill->keyword.': Ha ejecutado la habilidad '.$skill->name.' sobre '.$finalName.'.';
 		else if ($this->_result == 'critic')
-			$this->_resultMessage = 'Ha hecho un crítico ejecutando la habilidad '.$skill->name.' sobre '.$finalName.'.';
+			$this->_resultMessage = ':'.$skill->keyword.': Ha hecho un crítico ejecutando la habilidad '.$skill->name.' sobre '.$finalName.'.';
 			
 		return true;
     }
 	
 	/************* SKILLS ************/
 	// Crea un modificador de "hidratado"
-	private function hidratar($skill, $user, $target) {
-	    //si ya tengo hidratar, lo que hago es actualizar sus datos, ya que solo puede haber uno
-        $modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND skill_id=:skill', 'params'=>array(':target'=>$target->id, ':skill'=>$skill->id)));
+	private function hidratar($skill, $user, $target) 
+	{
+	    //si ya tengo hidratar, lo que hago es actualizar sus datos, ya que solo puede haber uno (busco por keyword porque puede estar creado por diferentes fuentes)
+        $modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
 
         if ($modificador == null)
             $modificador = new Modifier;
@@ -80,7 +84,7 @@ class SkillSingleton extends CApplicationComponent
 	    $modificador->caster_id = $user->id;
 	    $modificador->target_final_id = $target->id;
 	    $modificador->skill_id = $skill->id;
-	    $modificador->keyword = 'hidratado';
+	    $modificador->keyword = $skill->modifier_keyword;
 	    $modificador->duration = $skill->duration;
 	    $modificador->duration_type = $skill->duration_type;
 	    $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
@@ -91,9 +95,33 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 	
+	private function disimular($skill, $user, $target)
+	{
+		//Si ya tengo disimular lo que haré será sumar 1 uso
+		$modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
+
+        if ($modificador == null) {
+            $modificador = new Modifier;
+			$modificador->duration = $skill->duration;
+		} else
+			$modificador->duration += $skill->duration;
+		
+		$modificador->caster_id = $user->id;
+	    $modificador->target_final_id = $target->id;
+	    $modificador->skill_id = $skill->id;
+	    $modificador->keyword = $skill->modifier_keyword;	    
+	    $modificador->duration_type = $skill->duration_type;
+		$modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
+
+	    if (!$modificador->save())
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
+
+		return true;
+	}
 	
 	/************** FUNCIONES AUXILIARES *************/
-	public function paySkillCosts($skill, $user, $executionResult) {
+	public function paySkillCosts($skill, $user, $executionResult) 
+	{
 	    //Compruebo si tengo tueste
 	    if ($skill->cost_tueste !== null  &&  $skill->cost_tueste > $user->ptos_tueste) {
             $this->_error = 'No tienes suficiente Tueste.';
@@ -173,24 +201,13 @@ class SkillSingleton extends CApplicationComponent
 	
 	
 	/******** GETTERS **********/
-	public function getCaster() {
-		return $this->_caster;
-	}
-	public function getOriginalTarget() {
-		return $this->_originalTarget;
-	}
-	public function getFinalTarget() {
-		return $this->_finalTarget;
-	}
-	public function getResult() {
-		return $this->_result;
-	}
-	public function getResultMessage() {
-		return $this->_resultMessage;
-	}
-	public function getError() {
-		return $this->_error;
-	}
+	public function getCaster() { return $this->_caster; }
+	public function getOriginalTarget() { return $this->_originalTarget; }
+	public function getFinalTarget() { return $this->_finalTarget; }
+	public function getKeyword() { return $this->_keyword; }
+	public function getResult() { return $this->_result; }
+	public function getResultMessage() { return $this->_resultMessage; }
+	public function getError() { return $this->_error; }
 
 	
 }
