@@ -58,6 +58,9 @@ CREATE TABLE IF NOT EXISTS `event` (
   `caller_id` int(11) NULL DEFAULT NULL,
   `relauncher_id` int(11) NULL DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
+  `gungubos_kafhe` int(11) NOT NULL DEFAULT '0',
+  `gungubos_achikhoria` int(11) NOT NULL DEFAULT '0',
+  `last_gungubos_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `type` enum('desayuno') NOT NULL DEFAULT 'desayuno',
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
@@ -141,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `category` enum('gungubos','batalla','relanzamiento', 'ancestral') NOT NULL,
   `type` enum('ofensiva','mejora','utilidad') NOT NULL,
   `keyword` varchar(50) NOT NULL,
+  `modifier_keyword` varchar(50) NOT NULL,
   `duration` smallint(5) NOT NULL DEFAULT '0',
   `duration_type` enum('horas','evento','usos') NOT NULL DEFAULT 'horas',
   `critic` smallint(5) NOT NULL DEFAULT '0',
@@ -159,6 +163,7 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `require_user_side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
   `require_user_min_rank` smallint(5) NOT NULL DEFAULT '0',
   `require_user_status` tinyint(1) NULL DEFAULT NULL,
+  `require_event_status` tinyint(1) NULL DEFAULT NULL,
   `talent_id_required` int(10) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -172,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `modifier` (
   `keyword` varchar(50) NOT NULL,
   `value` int(10) NULL DEFAULT NULL,
   `duration` smallint(5) NULL DEFAULT '0',
-  `duration_type` enum('horas','evento') NULL DEFAULT 'horas',
+  `duration_type` enum('horas','evento', 'usos') NULL DEFAULT 'horas',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

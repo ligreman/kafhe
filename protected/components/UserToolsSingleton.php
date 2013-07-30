@@ -52,8 +52,8 @@ class UserToolsSingleton extends CApplicationComponent
     }
 
 
-    ///TODO checkModifierExpiration
-    //Al expirar hidratar a lo mejor podía dar el tueste extra regenerado entre el momento de expiración y el lastRegenerationTime para ser justos.
+
+    ///IDEA Al expirar hidratar a lo mejor podía dar el tueste extra regenerado entre el momento de expiración y el lastRegenerationTime para ser justos.
 	
 	//Compruebo si han expirado modificadores de todo el mundo
 	public function checkModifiersExpiration()
@@ -69,20 +69,50 @@ class UserToolsSingleton extends CApplicationComponent
 					//Lo borro en ese caso
 					$modifier->delete();
 				}
+				
+				//Compruebo si caduca por usos (usos=0)
+				if ($modifier->duration_type=='usos' && $modifier->duration<=0) {
+					$modifier->delete();
+				}
 			}
 		}		
 	}
+	
+	//Reduce los usos de un modificador del jugador
+	public function reduceModifierUses($mod_keyword, $userId=null)
+	{
+		if ($userId == null) {
+			if (isset(Yii::app()->user->id))
+				$userId = Yii::app()->user->id;
+			else
+				return false;
+		}
+		
+		$mod = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$userId, ':keyword'=>$mod_keyword)));
+		
+		if ($mod==null  ||  $mod->duration_type!='usos') return false;
+		
+		if ($mod->duration <= 0)
+			return false;
+		
+		$mod->duration--;
+		
+		if ($mod->duration <= 0)
+			return $mod->delete();
+		else
+			return $mod->save();
+	}
+	
+	
 
     /* Compruebo si tiene un modificador. Esto lo que hace sólo es buscar dentro del grupo de modificadores uno concreto, como un "in_array"
 	 * Si el haystack es nulo considero que quiero comprobar los modificadores del usuario activo
 	 */
     public function inModifiers($needle, $haystack=null)
     {
-		if($haystack == null)
-			$haystack = $this->_modifiers;
-
-		if($haystack == null) 
-			return false;
+		if($haystack == null) {			
+			$haystack = $this->getModifiers();
+		}
 		
         foreach ($haystack as $modifier) {
             if ($needle == $modifier->keyword)
@@ -102,14 +132,22 @@ class UserToolsSingleton extends CApplicationComponent
 	
 	//Carga los modificadores en variable sólo una vez por carga de página
 	public function getModifiers() 
-	{
+	{	
 		if (!$this->_modifiers) {
-			 if (!isset(Yii::app()->user->id))
-                return null;
+			if (!isset(Yii::app()->user->id))
+				return null;
 				
 			$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->user->id)));
 		}		
 		
 		return $this->_modifiers;
 	}
+	
+	/*public function updateModifiers()
+	{
+		if (!isset(Yii::app()->user->id))
+				return null;
+				
+		$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->user->id)));
+	}*/
 }

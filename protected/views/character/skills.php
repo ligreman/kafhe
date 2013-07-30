@@ -33,7 +33,7 @@ if ($flashMessages) {
 				'attributes'=>array(
 					'id',             // title attribute (in plain text)
 					'name',        // an attribute of the related object "owner"
-					'critic','category'
+					'category', 'cost_tueste', 'cost_retueste', 'cost_relanzamiento', 'cost_tostolares'
 				),
 			));
 		}
