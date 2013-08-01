@@ -30,6 +30,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'side'		=> 'kafhe',
 			'ptos_tueste' => 10000,
 			'rank' 		=> 1,
+			'status'	=> 2,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -52,6 +53,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'side'		=> 'kafhe',
             'ptos_tueste' => 10000,
 			'rank' 		=> 2,
+			'status'	=> 2,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -63,6 +65,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'side'		=> 'achikhoria',
             'ptos_tueste' => 10000,
 			'rank' 		=> 3,
+			'status'	=> 2,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -172,6 +175,8 @@ class m130620_205405_dummy_data extends CDbMigration
             'group_id'=>1,
             'status'=>1,
             'type'=>'desayuno',
+			'gungubos_kafhe'=>150,
+			'gungubos_achikhoria'=>200,
             'date'=>date('Y-m-d')
         ));
 

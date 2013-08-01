@@ -50,6 +50,7 @@ class UserIdentity extends CUserIdentity
 			$this->setState('email', $user->email);
 		    $this->setState('group_id', $user->group_id);
 			$this->setState('side', $user->side);
+			$this->setState('status', $user->status);
 
 			$this->errorCode=self::ERROR_NONE;
         }
