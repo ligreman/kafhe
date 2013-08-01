@@ -33,26 +33,40 @@
             <h1 id="logo"><?php
                 $img = CHtml::image(Yii::app()->request->baseUrl.'/images/kafhe3.png','kafhe');
                 echo CHtml::link($img,array('site/index'));
-				
-				//Modificadores (provisional)
-				if (Yii::app()->user->checkAccess('Usuario')) {
-					foreach(Yii::app()->usertools->modifiers as $modifier) {
-						echo ' '.$modifier->keyword.', ';
-					}
-				}
                 ?>
             </h1>
         </div>
         <nav>
-            <?php                
-                if (!Yii::app()->user->isGuest) {
-					echo Yii::app()->user->name.' ';
-					echo CHtml::link('Logout',array('/site/logout'));
-				}
-            ?>
+            <?php if (!Yii::app()->user->isGuest): ?>
+                <ul id="mainActionsList">
+                    <li>
+                    <?php //echo Yii::app()->user->name.' ';
+                        $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
+                        echo CHtml::link($img,array('#'),array('title' => 'Enséñame las notificaciones, Oh! Gran Omelettus!'));
+                    ?>
+                    </li>
+                    <li>
+                    <?php
+                        $img = CHtml::image(Yii::app()->request->baseUrl.'/images/showUserBlock.png','Abrir panel de usuario');
+                        echo CHtml::link($img,array('#'), array('title' => 'Quiero ver el panel de usuario'));
+                    ?>
+                    </li>
+                    <li>
+                    <?php
+                        $img = CHtml::image(Yii::app()->request->baseUrl.'/images/logoutIcon.png','Salir');
+                        echo CHtml::link($img,array('/site/logout'), array('Me voy pitando'));
+                    ?>
+                    </li>
+                </ul>
+			<?php endif;?>
         </nav>
 
 	</header><!-- header -->
+    <section id="userPanel">
+        <?php if (!Yii::app()->user->isGuest){
+            $this->widget('application.components.UserPanel');
+        }?>
+    </section>
 
 	<nav id="secondary_nav">
 	  <?php
