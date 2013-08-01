@@ -191,6 +191,7 @@ section#main h1{
     float:left;
     width:15%;
     height:100%;
+    position: relative;
 }
 
 #secondary_nav a{
@@ -336,6 +337,8 @@ label.title{
 
 #menuContent{
     background-color: #ffffff;
+    position: relative;
+    z-index: 500;
 }
 
 .buttons{
@@ -539,6 +542,7 @@ label.title{
     background: #363636;
     position: absolute;
     bottom: 0;
+    z-index: 9999;
 }
 
 #xp{
