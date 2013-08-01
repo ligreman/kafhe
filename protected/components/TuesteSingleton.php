@@ -19,7 +19,7 @@ class TuesteSingleton extends CApplicationComponent
         }
 
 		//Calculo el tueste que regenera en función de su rango
-		$porcentajePorRango = ($user->rank-1) * 10; //10% por cada rango
+		$porcentajePorRango = ($user->rank-1) * 10; //10% por cada rango a partir del 2
 		$tuesteExtraPorRango = round(intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) * $porcentajePorRango / 100);
 				
 		///IDEA Los talentos crean modificadores con duración null

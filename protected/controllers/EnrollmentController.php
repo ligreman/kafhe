@@ -21,7 +21,7 @@ class EnrollmentController extends Controller
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('index'),
                 'roles'=>array('Usuario'),
-                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->status==1 && Yii::app()->event->type=='desayuno')", //Dejo entrar si hay evento desayuno abierto sólo
+                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusPreparativos || Yii::app()->event->status==Yii::app()->params->statusBatalla))", //Dejo entrar si hay evento desayuno abierto sólo
 
             ),
             array('deny',  // deny all users
@@ -106,12 +106,20 @@ class EnrollmentController extends Controller
                     }
     
                     //Yii::log(print_r($enroll, true), 'error', 'ENROLL');
+					//Le alisto
                     if (!$enroll->save())
                         throw new CHttpException(400, 'Error al guardar o actualizar el pedido.');
 
                     $data['already_enroll'] = true;
                     //var_dump($enroll->errors);
-    
+					
+					//Si el estado del usuario cambia (no es una actualización del pedido) le pongo alistado
+					if (Yii::app()->user->status != Yii::app()->params->statusAlistado) {
+						Yii::app()->user->setState('status', Yii::app()->params->statusAlistado);
+						
+						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusAlistado)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->user->id.') a Alistado.');
+					}
                 }
             }
             else if (isset($_POST['btn_cancel'])) {                
@@ -119,6 +127,12 @@ class EnrollmentController extends Controller
                 if (!$enroll->isNewRecord) {
                     $enroll->delete();
                     $data['already_enroll'] = false;
+					
+					//Actualizao mi estado a Baja
+					Yii::app()->user->setState('status', Yii::app()->params->statusBaja);
+						
+					if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusBaja)))
+						throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->user->id.') a Baja.');
                 } else
                     throw new CHttpException(400,'Error al darse de baja: No se han encontrado tus datos de alistamiento.');
             }

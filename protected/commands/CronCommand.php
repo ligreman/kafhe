@@ -44,7 +44,7 @@ class CronCommand extends CConsoleCommand {
 	{
 		echo "Index";
 		return 0;
-	}*/
+	}
 	
 	//Acción por defecto: index
     public function actionParams ($param1, $param2='default', array $param3)
@@ -52,20 +52,20 @@ class CronCommand extends CConsoleCommand {
         // here we are doing what we need to do
 		echo "ok";
 		return 0;
-    }
+    }*/
 	
 	
 	
 	/*
-	*	Regenera el tueste del usuario $user (Object User). Si $user es nulo regenera el tueste de todos los usuarios de grupos activos.
+	*	Regenera el tueste del usuario $userId (ID User). Si $userId es nulo regenera el tueste de todos los usuarios de grupos activos.
 	*/
-	public function actionRegenerarTueste ($user=null)	
+	public function actionRegenerarTueste($userId=null)	
 	{
 		echo "Compruebo caducidad de modificadores.\n";
 		Yii::app()->usertools->checkModifiersExpiration();
 		
 		echo "Iniciando regeneracion.\n";
-		if ($user === null) {
+		if ($userId === null) {
 			echo "Regenero a todos los usuarios.\n";
 			$grupos = Group::model()->findAll(array('condition'=>'active=1'));
 			
@@ -79,13 +79,17 @@ class CronCommand extends CConsoleCommand {
 					if ($regenerado !== false) {
 						$usuario->ptos_tueste = min( intval(Yii::app()->config->getParam('maxTuesteUsuario')), ($usuario->ptos_tueste+$regenerado) );
 						$usuario->last_regen_timestamp = date('Y-m-d H:i:s');
-						$usuario->save();
-					}
-					
-					echo "    Usuario ".$usuario->username." - Tueste regenerado: " . $regenerado."\n";
+						if (!$usuario->save())
+							echo "** ERROR al guardar el usuario (".$usuario->id.") regenerando su tueste.\n";
+						
+						echo "    Usuario ".$usuario->username." - Tueste regenerado: " . $regenerado."\n";
+					} else
+						echo "    Usuario ".$usuario->username." - Todavia no puede regenerar tueste.\n";
 				}
 			}
 			
+		} else {
+			///TODO regenero a un usuario concreto
 		}
 		
 		/*$time = time();
@@ -94,6 +98,36 @@ class CronCommand extends CConsoleCommand {
 		echo date('d-m-Y H:m:s', $time)."\n";
 		echo print_r(getdate($time),true)."\n";
 		echo print_r(getdate(strtotime(date('d-m-Y H:i:s'))),true);*/
+		return 0;
+	}
+	
+	/*
+	*	Cría gungubos cada hora para el bando
+	*/
+	public function actionCriarGungubos($eventId=null)
+	{
+		if ($eventId === null) {
+			//Para todos los eventos de estado "batalla en preparativos" (1)
+		} else {		
+			//Para el evento concreto. Compruebo que está en estado (1) antes
+			$event = Event::model()->findByPk($eventId);
+			$criados = Yii::app()->gungubos->getGungubosCriados($event);
+			
+			if ($criados !== false) {
+				//Guardo el evento
+				$event->gungubos_kafhe += $criados['kafhe'];
+				$event->gungubos_achikhoria += $criados['achikhoria'];
+				$event->last_gungubos_timestamp = date('Y-m-d H:i:s');
+				
+				if (!$event->save())
+					echo "** ERROR al guardar el evento (".$event->id.") criando gungubos.\n";
+				
+				echo "Criados ".$criados['kafhe']." gungubos para Kafhe.\n";
+				echo "Criados ".$criados['achikhoria']." gungubos para Achikhoria.\n";
+			} else
+				echo "Todavia no puede criar gungubos.\n";
+		}
+				
 		return 0;
 	}
 }

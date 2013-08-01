@@ -10,6 +10,7 @@
  * @property string $category
  * @property string $type
  * @property string $keyword
+ * @property string $modifier_keyword
  * @property integer $duration
  * @property string $duration_type
  * @property integer $critic
@@ -59,18 +60,18 @@ class Skill extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, category, type, keyword', 'required'),
+			array('name, description, category, type, keyword, modifier_keyword', 'required'),
 			array('duration, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target, require_caller, require_user_min_rank, require_user_status, require_event_status, talent_id_required', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>128),
 			array('description', 'length', 'max'=>255),
 			array('category', 'length', 'max'=>13),
 			array('type', 'length', 'max'=>8),
-			array('keyword', 'length', 'max'=>50),
+			array('keyword, modifier_keyword', 'length', 'max'=>50),
 			array('duration_type', 'length', 'max'=>6),
 			array('require_target_side, require_user_side', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description, category, type, keyword, duration, duration_type, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_status, require_event_status, talent_id_required', 'safe', 'on'=>'search'),
+			array('id, name, description, category, type, keyword, modifier_keyword, duration, duration_type, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_status, require_event_status, talent_id_required', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -97,6 +98,7 @@ class Skill extends CActiveRecord
 			'category' => 'Category',
 			'type' => 'Type',
 			'keyword' => 'Keyword',
+			'modifier_keyword' => 'Modifier Keyword',
 			'duration' => 'Duration',
 			'duration_type' => 'Duration Type',
 			'critic' => 'Critic',
@@ -137,6 +139,7 @@ class Skill extends CActiveRecord
 		$criteria->compare('category',$this->category,true);
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('keyword',$this->keyword,true);
+		$criteria->compare('modifier_keyword',$this->modifier_keyword,true);
 		$criteria->compare('duration',$this->duration);
 		$criteria->compare('duration_type',$this->duration_type,true);
 		$criteria->compare('critic',$this->critic);
