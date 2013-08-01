@@ -28,7 +28,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test1@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'kafhe',
-			'ptos_tueste' => 10000,
+			'ptos_tueste' => 990,
 			'rank' 		=> 1,
 			'status'	=> 2,
 			'group_id'	=> 1
@@ -40,7 +40,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test2@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
-            'ptos_tueste' => 10000,
+            'ptos_tueste' => 1000,
 			'rank' 		=> 1,
 			'group_id'	=> 1
 		));
@@ -51,7 +51,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test3@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'kafhe',
-            'ptos_tueste' => 10000,
+            'ptos_tueste' => 1000,
 			'rank' 		=> 2,
 			'status'	=> 2,
 			'group_id'	=> 1
@@ -63,7 +63,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test4@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
-            'ptos_tueste' => 10000,
+            'ptos_tueste' => 1000,
 			'rank' 		=> 3,
 			'status'	=> 2,
 			'group_id'	=> 1
@@ -75,7 +75,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'email'		=> 'test5@mail.com',
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
-            'ptos_tueste' => 10000,
+            'ptos_tueste' => 1000,
 			'rank' 		=> 1,
 			'group_id'	=> 1
 		));

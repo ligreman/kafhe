@@ -1,6 +1,6 @@
 <?php
 
-define("MAXTUESTE",10000);
+define("MAXTUESTE", Yii::app()->config->getParam('maxTuesteUsuario'));
 
 ?>
 <div id="content">
