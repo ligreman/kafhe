@@ -29,7 +29,7 @@ class UserToolsSingleton extends CApplicationComponent
 		}
     }
 	
-	//Esta función la coge automáticamente
+	//Esta función la coge automáticamente. Coge usuarios del grupo actual
     public function getUsers()
     {
         if (!$this->_users)
@@ -150,4 +150,50 @@ class UserToolsSingleton extends CApplicationComponent
 				
 		$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->user->id)));
 	}*/
+	
+	//Calculo las probabilidades para cada usuario del grupo
+	public function calculateProbabilities($groupId, $soloAlistados=true, $side=null)
+	{
+		$users = $this->getUsers();
+		
+		$valores = array();
+		$suma = 0;
+		$xProporcion = 1;
+		$xRango = 10;		
+		
+		foreach($users as $user) {
+			if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
+			if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
+			
+			$proporcion = $user->times / ($user->calls + 1);			
+			$valor = ($xProporcion * $proporcion) + ( pow($user->rank, 2) * $xRango );
+			$suma += $valor;
+			$valores[$user->id] = $valor;
+		}
+		
+		$finales = array();
+		//Segunda pasada, calculando ya el valor final
+		foreach($users as $user) {
+			if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
+			if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
+			
+			$finales[$user->id] = round( ($valores[$user->id] / $suma) * 100, 2);
+		}
+		
+		if (empty($finales)) return null;
+		return $finales;
+	}
+	
+	public function calculateSideProbabilities($kafhe, $achikhoria)
+	{
+		//La probabilidad es inversa al número de gungubos que tengas, así que doy la vuelta a los valores
+		$totalGungubos = $kafhe + $achikhoria;
+		$kafhe = $totalGungubos - $kafhe;
+		$achikhoria = $totalGungubos - $achikhoria;
+		
+		$bando['kafhe'] = round( ($kafhe / ($kafhe + $achikhoria)) * 100 , 2);
+		$bando['achikhoria'] = round( ($achikhoria / ($kafhe + $achikhoria)) * 100 , 2);
+		return $bando;
+	}	
+	
 }

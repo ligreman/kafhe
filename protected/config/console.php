@@ -43,7 +43,20 @@ return array(
 		//Singletons
 		//'event'=>array('class'=>'EventSingleton'),
 		'usertools'=>array('class'=>'UserToolsSingleton'),
+		'gungubos'=>array('class'=>'GungubosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),		
 		'config'=>array('class'=>'ConfigurationSingleton'),
+	),
+	
+	'params'=>array(		
+		'adminEmail'=>'email@mail.com',
+		'statusCriador'=>0,
+		'statusCazador'=>1,
+		'statusAlistado'=>2,
+		'statusBaja'=>3,
+		'statusCerrado'=>0,
+		'statusPreparativos'=>1,
+		'statusBatalla'=>2,
+		
 	),
 );

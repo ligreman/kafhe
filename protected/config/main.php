@@ -21,6 +21,7 @@ return array(
         'application.components.TXDB.*',
 		'application.extensions.yiidebugtb.*', //Yii debug
 		'application.modules.rights.*', 'application.modules.rights.components.*', //rights
+		'ext.YiiMailer.YiiMailer',
 	),
 
 	'modules'=>array(
@@ -115,7 +116,8 @@ return array(
 		//Singletons
 		'event'=>array('class'=>'EventSingleton'),
 		'usertools'=>array('class'=>'UserToolsSingleton'),
-		'tueste'=>array('class'=>'TuesteSingleton'),		
+		'gungubos'=>array('class'=>'GungubosSingleton'),
+		'tueste'=>array('class'=>'TuesteSingleton'),
 		'skill'=>array('class'=>'SkillSingleton'),
 		'config'=>array('class'=>'ConfigurationSingleton'),
 
@@ -188,8 +190,16 @@ return array(
 	),
 
 	// application-level parameters that can be accessed
-	// using Yii::app()->params['paramName']
+	// using Yii::app()->params['paramName'] ó Yii::app()->params->paramName
 	'params'=>array(		
-		//'tiempoRegeneracionTueste'=>600, //Segundos
+		'adminEmail'=>'email@mail.com',
+		'statusCriador'=>0,
+		'statusCazador'=>1,
+		'statusAlistado'=>2,
+		'statusBaja'=>3,
+		'statusCerrado'=>0,
+		'statusPreparativos'=>1,
+		'statusBatalla'=>2,
+		
 	),
 );

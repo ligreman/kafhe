@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
   `caller_id` int(11) NULL DEFAULT NULL,
+  `caller_side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
   `relauncher_id` int(11) NULL DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `gungubos_kafhe` int(11) NOT NULL DEFAULT '0',
@@ -120,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
   `group_id` int(10) NULL DEFAULT NULL,
   `side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `rank` smallint(5) NOT NULL DEFAULT '0',
   `ptos_tueste` smallint(5) NOT NULL DEFAULT '0',
   `ptos_retueste` smallint(5) NOT NULL DEFAULT '0',
@@ -188,4 +189,6 @@ INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`,
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(1, 'tiempoRegeneracionTueste', '600', 'Juego', 'Intervalo de tiempo, en segundos, entre una regeneración automática de tueste y la siguiente.');
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(2, 'tuesteRegeneradoIntervalo', '100', 'Juego', 'Puntos de tueste regenerado en cada intervalo de regeneración.');
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(3, 'maxTuesteUsuario', '1000', 'Juego', 'Máximo puntos de tueste que puede tener un usuario.');
+INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(4, 'tiempoCriaGungubos', '3600', 'Juego', 'Intervalo de tiempo, en segundos, entre una cría de gungubos y la siguiente.');
+INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(5, 'gungubosCriadosIntervalo', '100', 'Juego', 'Cantidad de gungubos criados a la hora por un bando.');
 

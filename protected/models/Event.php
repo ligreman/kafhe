@@ -9,6 +9,9 @@
  * @property integer $caller_id
  * @property integer $relauncher_id
  * @property integer $status
+ * @property integer $gungubos_kafhe
+ * @property integer $gungubos_achikhoria
+ * @property string $last_gungubos_timestamp
  * @property string $type
  * @property string $date
  */
@@ -41,11 +44,12 @@ class Event extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('group_id, date', 'required'),
-			array('group_id, caller_id, relauncher_id, status', 'numerical', 'integerOnly'=>true),
+			array('group_id, caller_id, relauncher_id, status, gungubos_kafhe, gungubos_achikhoria', 'numerical', 'integerOnly'=>true),
 			array('type', 'length', 'max'=>8),
+			array('last_gungubos_timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, group_id, caller_id, relauncher_id, status, type, date', 'safe', 'on'=>'search'),
+			array('id, group_id, caller_id, relauncher_id, status, gungubos_kafhe, gungubos_achikhoria, last_gungubos_timestamp, type, date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +75,9 @@ class Event extends CActiveRecord
 			'caller_id' => 'Caller',
 			'relauncher_id' => 'Relauncher',
 			'status' => 'Status',
+			'gungubos_kafhe' => 'Gungubos Kafhe',
+			'gungubos_achikhoria' => 'Gungubos Achikhoria',
+			'last_gungubos_timestamp' => 'Last Gungubos Timestamp',
 			'type' => 'Type',
 			'date' => 'Date',
 		);
@@ -92,6 +99,9 @@ class Event extends CActiveRecord
 		$criteria->compare('caller_id',$this->caller_id);
 		$criteria->compare('relauncher_id',$this->relauncher_id);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('gungubos_kafhe',$this->gungubos_kafhe);
+		$criteria->compare('gungubos_achikhoria',$this->gungubos_achikhoria);
+		$criteria->compare('last_gungubos_timestamp',$this->last_gungubos_timestamp,true);
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('date',$this->date,true);
 
