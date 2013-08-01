@@ -42,19 +42,19 @@
                     <li>
                     <?php //echo Yii::app()->user->name.' ';
                         $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
-                        echo CHtml::link($img,array('#'),array('title' => 'Enséñame las notificaciones, Oh! Gran Omelettus!'));
+                        echo CHtml::link($img,array('#'),array('title' => 'Enséñame las notificaciones, Oh! Gran Omelettus!','id' => 'notificationsMainLink'));
                     ?>
                     </li>
                     <li>
                     <?php
-                        $img = CHtml::image(Yii::app()->request->baseUrl.'/images/showUserBlock.png','Abrir panel de usuario');
-                        echo CHtml::link($img,array('#'), array('title' => 'Quiero ver el panel de usuario'));
+                        $img = CHtml::image(Yii::app()->request->baseUrl.'/images/hideUserBlock.png','Abrir panel de usuario');
+                        echo CHtml::link($img,array('#'), array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
                     ?>
                     </li>
                     <li>
                     <?php
                         $img = CHtml::image(Yii::app()->request->baseUrl.'/images/logoutIcon.png','Salir');
-                        echo CHtml::link($img,array('/site/logout'), array('Me voy pitando'));
+                        echo CHtml::link($img,array('/site/logout'), array('title' => 'Me voy pitando', 'id'=>'logoutMainLink'));
                     ?>
                     </li>
                 </ul>
