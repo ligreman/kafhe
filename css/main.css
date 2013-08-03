@@ -175,7 +175,7 @@ footer a{
 section#main
 {
     background-color: #e1e1e1;
-    width:85%;
+    width:80%;
     float:left;
     padding: 0;
 }
@@ -189,7 +189,7 @@ section#main h1{
     padding:0;
     background:#333333;
     float:left;
-    width:15%;
+    width:20%;
     height:100%;
     position: relative;
 }
@@ -357,11 +357,13 @@ label.title{
     cursor: pointer;
     color:#363636;
     margin:0.5em;
+    text-decoration: none;
 }
 
 .btn:hover, .btn:active{
     border-width: 3px 0 3px 0;
     border-color:#c5c5c5 transparent transparent;
+    color: #363636;
 ;
 }
 
@@ -374,6 +376,7 @@ label.title{
 .btnkafhe:hover, .btnkafhe:active{
     border-width: 3px 0 3px 0;
     border-color: #e2a30a transparent transparent;
+    color: #363636;
 }
 
 .btnachikhoria{
@@ -385,17 +388,19 @@ label.title{
 .btnachikhoria:hover, .btnachikhoria:active{
     border-width: 3px 0 3px 0;
     border-color:#2a0e3d transparent transparent;
+    color: #ffffff;
 }
 
 .btncommon{
     background-color: #00924a;
     border-color: transparent transparent #005415;
-    color:#e0e0e0;
+    color:#ffffff;
 }
 
 .btncommon:hover, .btncommon:active{
     border-width: 3px 0 3px 0;
     border-color: #005415 transparent transparent;
+    color: #ffffff;
 }
 
 .centerContainer{
@@ -450,7 +455,8 @@ label.title{
 #user{
     width: 10%;
     float:left;
-    padding:.8em 0;
+    padding: .8em 0 0;
+    overflow: hidden;
 }
 
 #userName{
@@ -469,7 +475,7 @@ label.title{
 
 #energia{
     float: left;
-    width: 30%;
+    width: 35%;
     padding: 2.2em 0 0 0;
     margin-right: 2%;
 }
@@ -570,9 +576,11 @@ label.title{
 
 .dato{
     display: inline-block;
-    width:4%;
-    margin-left: 2%;
-    float:left;
+    width: 7%;
+    margin: 1.2em 0 0 2%;
+    float: left;
+    overflow: hidden;
+    padding: 0;
 }
 
 .dato .numero, .dato .concepto{
@@ -585,6 +593,117 @@ label.title{
 .dato .numero{
     font-weight: bold;
     font-size: 1.5em;
+}
+
+#skillsIcon{
+    float: right;
+    padding: 1.5em 0 0;
+}
+
+#skillsIcon a{
+    cursor: pointer;
+}
+
+.skillLink{
+    cursor: pointer;
+}
+
+#skillsUserBlock{
+    display: none;
+}
+
+#skillsUserBlock ul{
+    text-align: center;
+}
+
+#skillsUserBlock li{
+    list-style: none;
+    display: inline-block;
+    padding: 6px 0 0 0;
+    width: 6em;
+}
+
+.skillDescription{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.4);
+    z-index: 99999;
+}
+
+.sdcontent{
+    width: 25em;
+    margin: 6% auto;
+    background: white;
+    padding: 1em 2em;
+}
+
+.sdcontent h1{
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: left;
+}
+
+.sdcontent h1 span{
+    line-height: 64px;
+    display: inline-block;
+}
+
+.sdcontent h1 img{
+    float: right;
+}
+
+.sdcontent .skillDesc{
+    padding: .7em 2em .7em 2em;
+    margin: .9em -2em;
+    background: #00924a;
+    color: #ffffff;
+    font-style: italic;
+    text-align: left;
+}
+
+.sdcontent dl{
+    text-align: left;
+}
+
+.sdcontent dt{
+    font-weight: bold;
+    float: left;
+    clear: both;
+    margin: 1em 0 0;
+}
+
+.sdcontent dd{
+    float: left;
+    margin: 1em 0 0 1ex;
+}
+
+.sdcontent .skillButtons{
+    clear: both;
+    padding-top: 2em;
+}
+#skillsUserBlock .sdcontent dd ul{
+    margin: 1em 0 0 0em;
+    text-align: center;
+}
+
+#skillsUserBlock .sdcontent dd li{
+    display: inline-block;
+    width:40%;
+    float:left;
+    text-align: left;
+}
+
+#skillsUserBlock .sdcontent dd li.selected{
+    font-weight: bold;
+}
+
+#skillsUserBlock .targetList{
+    clear: both;
+    margin:0 0 1em 6em;
 }
 
 .w0{width:0%;}

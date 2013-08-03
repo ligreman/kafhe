@@ -56,9 +56,9 @@ class SkillController extends Controller
 		else {			
 			Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".$validator->getLastError());
 		}
-		
-		
-		$this->redirect(array('character/skills'));		
+
+
+        $this->redirect(Yii::app()->getRequest()->getUrlReferrer());
 	}
 
 	public function actionCooperate($skill_id)
