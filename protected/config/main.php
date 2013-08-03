@@ -120,6 +120,7 @@ return array(
 		'tueste'=>array('class'=>'TuesteSingleton'),
 		'skill'=>array('class'=>'SkillSingleton'),
 		'config'=>array('class'=>'ConfigurationSingleton'),
+        'mail'=>array('class'=>'MailSingleton'),
 
 		
 		/*'db'=>array(
@@ -192,7 +193,9 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName'] ó Yii::app()->params->paramName
 	'params'=>array(		
-		'adminEmail'=>'email@mail.com',
+		'adminEmail'=>'omelettus@gmail.com',
+		'mailServerUsername'=>'omelettus@gmail.com',
+		'mailServerPassword'=>'om3l3ttus',
 		'statusCriador'=>0,
 		'statusCazador'=>1,
 		'statusAlistado'=>2,
