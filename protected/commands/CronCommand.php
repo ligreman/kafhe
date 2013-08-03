@@ -107,7 +107,7 @@ class CronCommand extends CConsoleCommand {
 	public function actionCriarGungubos($eventId=null)
 	{
 		if ($eventId === null) {
-			//Para todos los eventos de estado "batalla en preparativos" (1)
+			///TODO Para todos los eventos de estado "batalla en preparativos" (1)
 		} else {		
 			//Para el evento concreto. Compruebo que está en estado (1) antes
 			$event = Event::model()->findByPk($eventId);

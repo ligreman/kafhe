@@ -64,11 +64,39 @@ class EventController extends Controller
 		//Guardo el evento
 		if (!$event->save())
 			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.'.');
-			
+
+
 		//Aviso al llamador
-		
-		//Aviso a los demás usuarios de que se inicia la batalla
-		Yii::app()->user->setFlash('success', 'Comienza la batalla');
+		$caller = User::model()->findByPk($event->caller_id);
+		$sent = Yii::app()->mail->sendEmail(array(
+		    'to'=>$caller->email,
+		    'subject'=>'¡A llamar!',
+		    'body'=>'El gran omelettus ha decidido que te toca llamar.'
+		    ));
+		if ($sent !== true)
+            throw new CHttpException(400, $sent);
+
+
+		//Aviso a los demás usuarios alistados en el evento de que se inicia la batalla
+		$sql = 'SELECT u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
+        $users = Yii::app()->db->createCommand($sql)->queryAll();
+        if (count($users)>0) {
+            foreach($users as $user) {
+                if ($user['id'] != $event->caller_id)
+                    $emails[] = $user['email'];
+            }
+
+            $sent = Yii::app()->mail->sendEmail(array(
+                'to'=>$emails,
+                'subject'=>'¡Comienza la batalla!',
+                'body'=>'El gran omelettus te informa de que se ha iniciado la batalla.'
+            ));
+            if ($sent !== true)
+                throw new CHttpException(400, $sent);
+        }
+
+
+        Yii::app()->user->setFlash('success', '¡Ha comenzado la batalla!');
 		$this->redirect(array('event/index'));
 		//$this->render('start');
 	}
