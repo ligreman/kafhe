@@ -30,11 +30,11 @@ class TuesteSingleton extends CApplicationComponent
 
         //Si es el usuario activo me ahorro una consulta a BBDD
 		if (isset(Yii::app()->user) && isset(Yii::app()->user->id) && $user->id == Yii::app()->user->id) {
-			if(Yii::app()->usertools->inModifiers('hidratado'))
+			if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado))
 				$hasHidratado = true;
 		} else {
 			$mods = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>$user->id)));
-			if($mods!==null  &&  Yii::app()->usertools->inModifiers('hidratado', $mods))
+			if($mods!==null  &&  Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado, $mods))
 				$hasHidratado = true;
 		}
 		

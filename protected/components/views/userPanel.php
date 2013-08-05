@@ -72,7 +72,7 @@ $maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
         <?php
         //Validador de habilidades
         $validator = new SkillValidator;
-        $user = User::model()->findByPk(Yii::app()->user->id);
+        //$user = User::model()->findByPk(Yii::app()->user->id); //viene del controlador
         ?>
         <ul>
             <?php foreach($skills as $skill):?>
@@ -88,39 +88,45 @@ $maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
                                 <dl>
                                     <dt>Coste: </dt>
                                     <dd><?php
-                                        if($skill->cost_tueste != null && $skill->cost_tueste > 0) echo ' '.$skill->cost_tueste.' (tueste)';
-                                        if($skill->cost_retueste != null && $skill->cost_retueste > 0) echo ' '.$skill->cost_retueste.' (retueste)';
-                                        if($skill->cost_relanzamiento != null && $skill->cost_relanzamiento > 0) echo ' '.$skill->cost_relanzamiento.' (relanzamiento)';
-                                        if($skill->cost_tostolares != null && $skill->cost_tostolares > 0) echo ' '.$skill->cost_tostolares.' (tostólares)';
+                                        if($skill->cost_tueste!==null && $skill->cost_tueste > 0) echo ' '.$skill->cost_tueste.' (tueste)';
+                                        if($skill->cost_retueste!==null && $skill->cost_retueste > 0) echo ' '.$skill->cost_retueste.' (retueste)';
+                                        if($skill->cost_relanzamiento!==null && $skill->cost_relanzamiento > 0) echo ' '.$skill->cost_relanzamiento.' (relanzamiento)';
+                                        if($skill->cost_tostolares!==null && $skill->cost_tostolares > 0) echo ' '.$skill->cost_tostolares.' (tostólares)';
                                         ?></dd>
                                     <dt>Probabilidad de Crítico:</dt>
                                     <dd><?php echo $skill->critic; ?></dd>
                                     <dt>Probabilidad de Pifia:</dt>
                                     <dd><?php echo $skill->fail; ?></dd>
-                                    <?php if($skill->require_target): ?>
-                                        <dt>Objetivo</dt>
+                                    
+									<?php if($skill->require_target): ?>
+                                    
+										<dt>Objetivo</dt>
                                         <dd class="targetList">
                                             <ul>
                                                 <?php
-                                                $targets = User::model()->findAll('group_id = '.$user->group_id);
-                                                foreach($targets as $target):
-                                                    ?>
-                                                    <li class="<?php echo $target->side;?>" target_id="<?php echo $target->id;?>"><?php echo $target->alias;?></li>
-                                                <?php endforeach; ?>
+												//Objetivo concreto, de todos los bandos o de uno concreto según require_target_side
+												foreach($targets as $target){
+													if($skill->require_target_side===null || $target->side == $skill->require_target_side){ ?>
+														<li class="<?php echo $target->side;?>" target_id="<?php echo $target->id;?>"><?php echo $target->alias;?></li>
+													<?php 
+													}
+												}
+												?>																								
                                             </ul>
                                         </dd>
-                                    <?php elseif($skill->require_target_side != null): ?>
+										
+                                    <?php elseif($skill->require_target_side !== null): 
+										//El objetivo será un bando u el otro									
+										?>
+									
                                         <dt>Objetivo</dt>
                                         <dd class="targetList">
                                             <ul>
-                                                <?php
-                                                $targets = User::model()->findAll('side = "'.$skill->require_target_side.'" AND group_id = '.$user->group_id);
-                                                foreach($targets as $target):
-                                                    ?>
-                                                    <li class="<?php echo $target->side;?>" target_id="<?php echo $target->id;?>"><?php echo $target->alias;?></li>
-                                                <?php endforeach; ?>
+												<li class="kafhe" target_id="kafhe">Kafheítas</li>
+                                                <li class="achikhoria" target_id="achikhoria">Achikhoritas</li>
                                             </ul>
                                         </dd>
+										
                                     <?php endif; ?>
                                 </dl>
                                 <p class="skillButtons">

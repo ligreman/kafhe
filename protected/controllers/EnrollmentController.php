@@ -21,7 +21,7 @@ class EnrollmentController extends Controller
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('index'),
                 'roles'=>array('Usuario'),
-                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusPreparativos || Yii::app()->event->status==Yii::app()->params->statusBatalla))", //Dejo entrar si hay evento desayuno abierto sólo
+                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusBatalla))", //Dejo entrar si hay evento desayuno abierto sólo
 
             ),
             array('deny',  // deny all users

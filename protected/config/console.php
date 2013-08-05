@@ -48,15 +48,15 @@ return array(
 		'config'=>array('class'=>'ConfigurationSingleton'),
 	),
 	
-	'params'=>array(		
-		'adminEmail'=>'email@mail.com',
-		'statusCriador'=>0,
-		'statusCazador'=>1,
-		'statusAlistado'=>2,
-		'statusBaja'=>3,
-		'statusCerrado'=>0,
-		'statusPreparativos'=>1,
-		'statusBatalla'=>2,
-		
+	'params'=>array(
+        'adminEmail'=>'omelettus@gmail.com',
+        'statusCriador'=>0,
+        'statusCazador'=>1,
+        'statusAlistado'=>2,
+        'statusBaja'=>3,
+        'statusCerrado'=>0,
+        'statusIniciado'=>1,
+        'statusBatalla'=>2,
+        'statusFinalizado'=>3,
 	),
 );
