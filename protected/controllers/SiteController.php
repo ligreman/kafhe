@@ -98,8 +98,10 @@ class SiteController extends Controller
             //Estoy identificado, muestro el Muro
             $data_notif = $this->loadNotifications();
             $this->render('index', array('notifications'=>$data_notif));
-        } else
+        } else{
+            $this->layout = 'guest';
 		    $this->render('login', array('model'=>$model));
+        }
 	}
 
 	/**
