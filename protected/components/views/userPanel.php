@@ -1,9 +1,9 @@
 <?php
 
-define("MAXTUESTE", Yii::app()->config->getParam('maxTuesteUsuario'));
+$maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
 
 ?>
-<div id="content">
+<div id="upContent">
     <div id="mainUserBlock">
         <p id="user">
 
@@ -13,7 +13,7 @@ define("MAXTUESTE", Yii::app()->config->getParam('maxTuesteUsuario'));
                 //Modificadores (provisional)
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     foreach(Yii::app()->usertools->modifiers as $modifier) {
-                        echo ' '.$modifier->keyword.', ';
+                        echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => $modifier->keyword.': '.$modifier->duration.' '.$modifier->duration_type));
                     }
                 }
                 ?>
@@ -21,14 +21,14 @@ define("MAXTUESTE", Yii::app()->config->getParam('maxTuesteUsuario'));
         </p>
         <div id="energia">
             <div id="tuesteRetueste">
-                <span id="tueste" class="w<?php echo floor(($user->ptos_tueste/MAXTUESTE)*100); ?>">
+                <span id="tueste" class="w<?php echo floor(($user->ptos_tueste/$maxTueste)*100); ?>">
                     <?php if($user->ptos_tueste > 0):?>
                         <span class="pin">
                             <span class="title"><?php echo $user->ptos_tueste; ?> puntos de tueste</span>
                         </span>
                     <?php endif; ?>
                 </span>
-                <span id="retueste" class="w<?php echo floor(($user->ptos_retueste/MAXTUESTE)*100); ?>">
+                <span id="retueste" class="w<?php echo floor(($user->ptos_retueste/$maxTueste)*100); ?>">
                     <?php if($user->ptos_retueste > 0):?>
                         <span class="pin">
                             <span class="title"><?php echo $user->ptos_retueste; ?> puntos de retueste</span>
@@ -61,12 +61,13 @@ define("MAXTUESTE", Yii::app()->config->getParam('maxTuesteUsuario'));
             <span class="numero"><?php echo $user->ptos_relanzamiento; ?></span>
             <span class="concepto">p. relance</span>
         </p>
+
+        <p id="skillsIcon">
+            <a>
+                <img src="<?php echo Yii::app()->baseUrl?>/images/skillsIcon.png">
+            </a>
+        </p>
     </div>
-    <p id="skillsIcon">
-        <a>
-            <img src="<?php echo Yii::app()->baseUrl?>/images/skillsIcon.png">
-        </a>
-    </p>
     <div id="skillsUserBlock">
         <?php
         //Validador de habilidades
@@ -78,7 +79,7 @@ define("MAXTUESTE", Yii::app()->config->getParam('maxTuesteUsuario'));
                 <?php if ($validator->canExecute($skill, $user)): ?>
                     <li><?php
                         $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png");
-                        echo CHtml::link($img, null, array('class' => 'skillLink'));
+                        echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.$skill->description));
                         ?>
                         <section class="skillDescription">
                             <div class="sdcontent">

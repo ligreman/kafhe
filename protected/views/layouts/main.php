@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
     <?php
-        //Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.js'); //<- En teoría ya se está cargando jquery que viene integrado en Yii
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.js'); //<- En teoría ya se está cargando jquery que viene integrado en Yii
         Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/main.js');
     ?>
 
@@ -59,8 +59,27 @@
                     </li>
                 </ul>
 			<?php endif;?>
-        </nav>
 
+            <?php
+            $battle = Yii::app()->event->model;
+            $totalGungubos = $battle->gungubos_kafhe + $battle->gungubos_achikhoria;
+            $pkafhe = floor(($battle->gungubos_kafhe/$totalGungubos)*100);
+
+            ?>
+        </nav>
+        <div id="battleStatus">
+                <span id="batteStatusKafhe" class="w<?php echo $pkafhe;?>">
+                    <span class="<?php echo Yii::app()->user->side;?>pin">
+                            <span class="title"><?php
+                                if(Yii::app()->user->side == "kafhe"){
+                                    echo $battle->gungubos_kafhe;
+                                }else{
+                                    echo $battle->gungubos_achikhoria;
+                                }
+                                ?> Gungubos</span>
+                    </span>
+                </span>
+        </div>
 	</header><!-- header -->
     <section id="userPanel">
         <?php if (!Yii::app()->user->isGuest){
@@ -100,9 +119,9 @@
 			),
 		));
 
-        if(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && (Yii::app()->event->status==Yii::app()->params->statusPreparativos || Yii::app()->event->status==Yii::app()->params->statusBatalla) && Yii::app()->event->type=='desayuno'){
+        /*if(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && (Yii::app()->event->status==Yii::app()->params->statusPreparativos || Yii::app()->event->status==Yii::app()->params->statusBatalla) && Yii::app()->event->type=='desayuno'){
             echo CHtml::ajaxLink('Alistamiento (ajax)', CController::createUrl('enrollment/index'), array('update'=>'#submenuBlock'));
-        }
+        }*/
 
 	  ?>
 	</nav><!-- mainmenu -->
