@@ -25,6 +25,9 @@ class SkillSingleton extends CApplicationComponent
 		if ($target === null) $this->_originalTarget = $user->id;
 		else $this->_originalTarget = $target->id;
 
+		//compruebo caducidad de modificadores		
+		Yii::app()->usertools->checkModifiersExpiration();
+
         //Calculo cuál es el objetivo final, por si hay escudos y demás cosas por ahí
         $finalTarget = $this->calculateFinalTarget($skill, $user, $target);
 
@@ -50,24 +53,23 @@ class SkillSingleton extends CApplicationComponent
 			
 			//Ejecuto la skill
 			switch ($skill->keyword) {
-				case 'hidratar': $this->hidratar($skill, $user, $finalTarget); break;
-				case 'disimular': $this->disimular($skill, $user, $finalTarget); break;
+				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $user, $finalTarget); break;
+				case Yii::app()->params->skillDisimular: $this->disimular($skill, $user, $finalTarget); break;
 			}
 			
 		}
 		
 		//Mensaje
-		///TODO comprobar si tiene modificador de disimular o de impersonar
-		if ($this->_finalTarget == $this->_caster) $finalName = 'sí mismo';
-		else $finalName = Yii::app()->usertools->getAlias($this->_finalTarget);
+        if ($this->_finalTarget == $this->_caster) $finalName = 'sí mismo';
+        else $finalName = Yii::app()->usertools->getAlias($this->_finalTarget);
 
-		if ($this->_result == 'fail')
-			$this->_resultMessage = ':'.$skill->keyword.': Ha pifiado al intentar ejecutar la habilidad '.$skill->name.' sobre '.$finalName.'.';
-		else if ($this->_result == 'normal')
-			$this->_resultMessage = ':'.$skill->keyword.': Ha ejecutado la habilidad '.$skill->name.' sobre '.$finalName.'.';
-		else if ($this->_result == 'critic')
-			$this->_resultMessage = ':'.$skill->keyword.': Ha hecho un crítico ejecutando la habilidad '.$skill->name.' sobre '.$finalName.'.';
-			
+        if ($this->_result == 'fail')
+            $this->_resultMessage = ':'.$skill->keyword.': Ha pifiado al intentar ejecutar la habilidad '.$skill->name.' sobre '.$finalName.'.';
+        else if ($this->_result == 'normal')
+            $this->_resultMessage = ':'.$skill->keyword.': Ha ejecutado la habilidad '.$skill->name.' sobre '.$finalName.'.';
+        else if ($this->_result == 'critic')
+            $this->_resultMessage = ':'.$skill->keyword.': Ha hecho un crítico ejecutando la habilidad '.$skill->name.' sobre '.$finalName.'.';
+
 		return true;
     }
 	

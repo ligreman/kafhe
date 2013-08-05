@@ -17,6 +17,8 @@ class m130620_205405_dummy_data extends CDbMigration
 			'alias' => 'Moderador',
 			'email'		=> 'mod@mail.com',
 			'role'		=> 'user',
+            'rank' 		=> 1,
+            'experience'=>0,
 			'side'		=> 'kafhe',			
 			'group_id'	=> 1
 		));
@@ -30,6 +32,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'side'		=> 'kafhe',
 			'ptos_tueste' => 990,
 			'rank' 		=> 1,
+            'experience'=>0,
 			'status'	=> 2,
 			'group_id'	=> 1
 		));
@@ -42,6 +45,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'side'		=> 'achikhoria',
             'ptos_tueste' => 1000,
 			'rank' 		=> 1,
+			'experience'=>0,
 			'group_id'	=> 1
 		));
 		$this->insert('user', array(
@@ -53,6 +57,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'side'		=> 'kafhe',
             'ptos_tueste' => 1000,
 			'rank' 		=> 2,
+            'experience'=>59,
 			'status'	=> 2,
 			'group_id'	=> 1
 		));
@@ -65,6 +70,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'side'		=> 'achikhoria',
             'ptos_tueste' => 1000,
 			'rank' 		=> 3,
+            'experience'=>0,
 			'status'	=> 2,
 			'group_id'	=> 1
 		));
@@ -76,6 +82,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'role'		=> 'user',
 			'side'		=> 'achikhoria',
             'ptos_tueste' => 1000,
+            'experience'=>0,
 			'rank' 		=> 1,
 			'group_id'	=> 1
 		));

@@ -68,23 +68,30 @@ class SkillController extends Controller
 	
 	private function skillNotification($skill, $user) 
 	{
-		//Si es la habilidad Disimular, no la muestro
-		if ($skill->keyword == 'disimular') return true;
+		//Si es la habilidad Disimular o Impersonar, no la muestro
+		if ($skill->keyword=='disimular' || $skill->keyword=='impersonar') return true;
 		
 		//Si el usuario tiene el modificador "disimulando" activo, resto usos y no muestro la notificación
-		if (Yii::app()->usertools->inModifiers('disimulando')) {			
-			if (!Yii::app()->usertools->reduceModifierUses('disimulando'))
+		if (Yii::app()->usertools->inModifiers(Yii::app()->params->modifierDisimulando)) {			
+			if (!Yii::app()->usertools->reduceModifierUses(Yii::app()->params->modifierDisimulando))
 				throw new CHttpException(400, 'Error al reducir los usos de un modificador ('.$modifier.').');
 			return true;
-		}				
-		
-		//Si no, pues creo la notificación
+		}
+
+        //Si no, pues creo la notificación
 		$nota = new Notification;
-		$nota->sender = $skill->caster;
-		$nota->recipient_original = $skill->originalTarget;
-		$nota->recipient_final = $skill->finalTarget;
-		$nota->message = $skill->resultMessage; //Mensaje para el muro
-		$nota->type = $user->side;
+        $nota->recipient_original = $skill->originalTarget;
+        $nota->recipient_final = $skill->finalTarget;
+        $nota->message = $skill->resultMessage; //Mensaje para el muro
+        $nota->type = $user->side;
+
+        //Si el usuario está impersonando, cambio el objetivo original
+        if (Yii::app()->usertools->inModifiers('impersonando')) {
+            $alt_sender = Yii::app()->usertools->randomUser(null, array($skill->caster, $skill->finalTarget));
+            if ($alt_sender===null) $nota->sender = $skill->caster;
+            $nota->sender = $alt_sender->id;
+        } else
+            $nota->sender = $skill->caster;
 
 		return $nota->save();
 	}
