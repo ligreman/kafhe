@@ -3,10 +3,17 @@ $(document).ready(function() {
     prepareUserPanel();
     bindCloseLinks();
     prepareHabilities();
+    $(window).resize(function(){
+        resizeNavBar();
+    });
 });
 
 function resizeNavBar(){
     $('#secondary_nav, #content').height($('#main').height());
+    oldH = $('#vResponsiveContent').height();
+
+    newH = $(window).height()-($('header').outerHeight()+$('footer').outerHeight());
+    if(newH > oldH) $('#guest').height(newH);
 }
 
 function prepareEnrollmentForm(){
@@ -56,12 +63,7 @@ function prepareUserPanel(){
 function prepareHabilities(){
     //Boton para mostrar habilidades
     $('#skillsIcon a').click(function(){
-        $('#mainUserBlock, #skillsUserBlock').toggle();
-        if($('#mainUserBlock').is(':visible')){
-            $('#skillsIcon').css('float','right');
-        }else{
-            $('#skillsIcon').css('float','left');
-        }
+        $('#skillsUserBlock').slideToggle();
 
     });
 
@@ -88,5 +90,14 @@ function prepareHabilities(){
             }
             $(this).parent().parent().parent().siblings('.skillButtons').children('.acceptButton').attr('href', destino);
         }
+    });
+
+    $('.sdcontent').click(function(e){
+        e.stopImmediatePropagation();
+    });
+
+    $('.skillDescription').click(function(){
+        $('.skillDescription').hide();
+        return false;
     });
 }
