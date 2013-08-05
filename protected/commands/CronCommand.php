@@ -104,8 +104,11 @@ class CronCommand extends CConsoleCommand {
 	/*
 	*	Cría gungubos cada hora para el bando
 	*/
-	public function actionCriarGungubos($eventId=null)
+	public function actionCriarGungubos($eventId=null)	
 	{
+		echo "Compruebo caducidad de modificadores.\n";
+		Yii::app()->usertools->checkModifiersExpiration();
+		
 		if ($eventId === null) {
 			///TODO Para todos los eventos de estado "batalla en preparativos" (1)
 		} else {		

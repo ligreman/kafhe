@@ -59,8 +59,8 @@ CREATE TABLE IF NOT EXISTS `event` (
   `caller_side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
   `relauncher_id` int(11) NULL DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
-  `gungubos_kafhe` int(11) NOT NULL DEFAULT '0',
-  `gungubos_achikhoria` int(11) NOT NULL DEFAULT '0',
+  `gungubos_kafhe` int(11) NULL DEFAULT '0',
+  `gungubos_achikhoria` int(11) NULL DEFAULT '0',
   `last_gungubos_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `type` enum('desayuno') NOT NULL DEFAULT 'desayuno',
   `date` date NOT NULL,
@@ -128,6 +128,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `ptos_relanzamiento` smallint(5) NOT NULL DEFAULT '0',
   `ptos_talentos` smallint(5) NOT NULL DEFAULT '0',
   `tostolares` smallint(5) NOT NULL DEFAULT '0',
+  `experience` int(10) NOT NULL DEFAULT '0',
   `azucarillos` smallint(5) NOT NULL DEFAULT '0',
   `dominio_tueste` smallint(5) NOT NULL DEFAULT '0',
   `dominio_habilidades` smallint(5) NOT NULL DEFAULT '0',
@@ -183,8 +184,8 @@ CREATE TABLE IF NOT EXISTS `modifier` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`, `role`, `group_id`, `side`, `status`, `rank`, `ptos_tueste`, `ptos_retueste`, `ptos_relanzamiento`, `ptos_talentos`, `tostolares`, `azucarillos`, `dominio_tueste`, `dominio_habilidades`, `dominio_bandos`, `times`, `calls`) VALUES
-(1, 'admin', '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe', 'Administrador', 'admin@mail.com', NULL, 'admin', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`, `role`, `group_id`, `side`, `status`, `rank`, `experience`, `ptos_tueste`, `ptos_retueste`, `ptos_relanzamiento`, `ptos_talentos`, `tostolares`, `azucarillos`, `dominio_tueste`, `dominio_habilidades`, `dominio_bandos`, `times`, `calls`) VALUES
+(1, 'admin', '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe', 'Administrador', 'admin@mail.com', NULL, 'admin', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(1, 'tiempoRegeneracionTueste', '600', 'Juego', 'Intervalo de tiempo, en segundos, entre una regeneración automática de tueste y la siguiente.');
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(2, 'tuesteRegeneradoIntervalo', '100', 'Juego', 'Puntos de tueste regenerado en cada intervalo de regeneración.');

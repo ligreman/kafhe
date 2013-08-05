@@ -164,7 +164,7 @@ class SkillValidator
             return false;
         }
     }
-
+	
 	///TODO checkmodifiers (algún mod que no me deje ejecutar esta habilidad)
 	public function checkModifiers($user) {
 		return true;
@@ -186,8 +186,16 @@ class SkillValidator
 	
 	//Comprueba el objetivo y su bando si fuera necesario
 	public function checkTarget($skill, $user, $target) {
-		if (!$skill->require_target) return true;
-		else {			
+		if (!$skill->require_target) {
+			if ($skill->require_target_side===null)
+				return true;
+			elseif ($target=='kafhe' || $target=='achikhoria')
+				return true;
+			else {
+				$this->_lastError = 'No se ha seleccionado un bando objetivo para la habilidad.';
+				return false;
+			}
+		} else {			
 			//Si no hay objetivo
 			if ($target == null) {
 				$this->_lastError = 'No se ha seleccionado un objetivo para la habilidad.';
@@ -201,10 +209,12 @@ class SkillValidator
 			}
 			
 			//Compruebo que si requería que el objetivo sea de un bando, lo sea
-			if ($skill->require_target_side!=null && $skill->require_target_side!=$target->side) {
+			if ($skill->require_target_side!==null && $skill->require_target_side!=$target->side) {
 				$this->_lastError = 'El objetivo seleccionado no pertenece al bando requerido por la habilidad.';
 				return false;
 			}
+			
+			return true;
 		}
 	}
 	

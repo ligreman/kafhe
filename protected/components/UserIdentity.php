@@ -47,6 +47,7 @@ class UserIdentity extends CUserIdentity
 
 			//Otros campos a los que acceder. OJO no se actualizan dinámicamente (se cargan al identificarse, o de forma manual programandolo), poner sólo campos estáticos
 		    $this->setState('username', $user->username);
+            $this->setState('alias', $user->alias);
 			$this->setState('email', $user->email);
 		    $this->setState('group_id', $user->group_id);
 			$this->setState('side', $user->side);

@@ -189,20 +189,28 @@ return array(
 			),
 		),
 	),
-
+    
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName'] ó Yii::app()->params->paramName
 	'params'=>array(		
 		'adminEmail'=>'omelettus@gmail.com',
 		'mailServerUsername'=>'omelettus@gmail.com',
-		'mailServerPassword'=>'om3l3ttus',
+		'mailServerPassword'=>'',
 		'statusCriador'=>0,
 		'statusCazador'=>1,
 		'statusAlistado'=>2,
 		'statusBaja'=>3,
 		'statusCerrado'=>0,
-		'statusPreparativos'=>1,
+		'statusIniciado'=>1,
 		'statusBatalla'=>2,
+		'statusFinalizado'=>3,
 		
+		//Modificadores. Están aquí y en BBDD
+		'modifierHidratado'=>'hidratado',
+		'modifierDisimulando'=>'disimulando',
+		
+		//Habilidades. Están aquí y en BBDD
+		'skillHidratar'=>'hidratar',
+		'skillDisimular'=>'disimular',
 	),
 );

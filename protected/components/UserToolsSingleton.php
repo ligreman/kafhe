@@ -34,13 +34,13 @@ class UserToolsSingleton extends CApplicationComponent
     {
         if (!$this->_users)
         {
-            if (!isset(Yii::app()->user->group_id))
-                return null;
+            /*if (!isset(Yii::app()->user->group_id))
+                return null;*/
 
             $criteria = New CDbCriteria;
 
             //Si es admin tendrá grupo null y cogeré todos los usuarios
-            if (Yii::app()->user->group_id != null) {
+            if (Yii::app()->user->group_id !== null) {
                 $criteria->condition = 'group_id=:groupId';
                 $criteria->params = array(':groupId'=>Yii::app()->user->group_id);
             }
@@ -51,12 +51,38 @@ class UserToolsSingleton extends CApplicationComponent
         return $this->_users;
     }
 
+    ///TODO poner comentarios a las funciones, que el PHPStorm te lo saca todo facilmente
+
+    /**
+     * @param null $groupId: grupo dentro del que buscar, si es null se coge el activo
+     * @param null $exclude: array de id de usuario a excluir
+     * @return CActiveRecord. Usuario encontrado o null si no hay resultados.
+     */
+    public function randomUser($groupId=null, $exclude=null)
+    {
+        $criteria = New CDbCriteria;
+
+        if ($groupId == null) $groupId = Yii::app()->user->group_id;
+
+        if ($exclude !== null)
+            $criteria->condition = 'id NOT IN ('.implode(',', $exclude).') ';
+
+            //$excluidos = ' WHERE id NOT IN ('.implode(',', $exclude).') ';
+
+        //$sql = 'SELECT id FROM user '.$excluidos.' ORDER BY RAND() LIMIT 1';
+
+        $criteria->order = 'BY RAND()';
+        $criteria->limit = '1';
+
+        $user = User::model()->find($criteria);
+        return $user;
+    }
 
 
     ///IDEA Al expirar hidratar a lo mejor podía dar el tueste extra regenerado entre el momento de expiración y el lastRegenerationTime para ser justos.
 	
 	//Compruebo si han expirado modificadores de todo el mundo
-	public function checkModifiersExpiration()
+	public function checkModifiersExpiration($finEvento=false)
 	{
 		$modifiers = Modifier::model()->findAll(array('condition'=>'duration IS NOT NULL AND duration_type IS NOT NULL'));
 		if($modifiers !== null) 
@@ -74,14 +100,23 @@ class UserToolsSingleton extends CApplicationComponent
 				if ($modifier->duration_type=='usos' && $modifier->duration<=0) {
 					$modifier->delete();
 				}
+				
+				//Compruebo si caduca por fin de evento
+				if ($finEvento && $modifier->duration_type=='evento' && $modifier->duration<=0) {
+					$modifier->delete();
+				}
 			}
 		}		
 	}
-	
-	//Reduce los usos de un modificador del jugador
-	public function reduceModifierUses($mod_keyword, $userId=null)
+
+    /** Reduce los usos de un modificador del jugador
+     * @param $mod_keyword
+     * @param null $userId
+     * @return bool
+     */
+    public function reduceModifierUses($mod_keyword, $userId=null)
 	{
-		if ($userId == null) {
+		if ($userId === null) {
 			if (isset(Yii::app()->user->id))
 				$userId = Yii::app()->user->id;
 			else
@@ -90,7 +125,7 @@ class UserToolsSingleton extends CApplicationComponent
 		
 		$mod = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$userId, ':keyword'=>$mod_keyword)));
 		
-		if ($mod==null  ||  $mod->duration_type!='usos') return false;
+		if ($mod===null  ||  $mod->duration_type!='usos') return false;
 		
 		if ($mod->duration <= 0)
 			return false;
@@ -103,6 +138,34 @@ class UserToolsSingleton extends CApplicationComponent
 			return $mod->save();
 	}
 	
+	public function reduceEventModifiers($groupId=null)
+	{
+		if ($groupId === null) {
+			if (isset(Yii::app()->user->gropu_id))
+				$groupId = Yii::app()->user->gropu_id;
+			else
+				return false;
+		}
+		
+		$mods = Modifier::model()->findAll(array('condition'=>'duration_type=:type AND group_id=:group', 'params'=>array(':type'=>'evento', ':group'=>$groupId)));
+		
+		if ($mods === null)
+			return false;
+		else {
+			foreach($mods as $mod) {
+				$mod->duration--;
+		
+				if ($mod->duration <= 0) {
+					if(!$mod->delete())
+						Yii::log('Error al eliminar el modificador de evento '.$mod->id.'.', 'error', 'reduceEventModifiers');
+				} else {
+					if(!$mod->save())
+						Yii::log('Error al reducir el modificador de evento '.$mod->id.'.', 'error', 'reduceEventModifiers');
+				}
+			}
+		}
+		return true;
+	}
 	
 
     /* Compruebo si tiene un modificador. Esto lo que hace sólo es buscar dentro del grupo de modificadores uno concreto, como un "in_array"
@@ -123,7 +186,7 @@ class UserToolsSingleton extends CApplicationComponent
         return false;
     }
 
-	//Compruebo un modificador en tiempo real
+	//Compruebo un modificador en tiempo real. No sé si tendrá uso ya que el getModifiers se actualiza en cada carga de página
 	public function hasModifier($modifier, $userId)
 	{
 		return Modifier::model()->exists(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$userId, ':keyword'=>$modifier)));		
