@@ -9,7 +9,13 @@ $(document).ready(function() {
 });
 
 function resizeNavBar(){
-    $('#secondary_nav, #content').height($('#main').height());
+    if($('#main').height() > $('#content').children().height()){
+        $('#secondary_nav').height($('#main').height());
+        $('#content').height($('#main').height());
+    }else{
+        $('#secondary_nav').height($('#content').children().height());
+        $('#content').height($('#content').children().height());
+    }
     oldH = $('#vResponsiveContent').height();
 
     newH = $(window).height()-($('header').outerHeight()+$('footer').outerHeight());
@@ -52,9 +58,11 @@ function prepareUserPanel(){
         if(src.indexOf('show') != -1){
             $(this).children('img').attr('src',src.replace('show','hide'));
             $(this).children('img').attr('title', 'No quiero ver mi panel de usuario');
+            $.cookie('userPanelHidden','0');
         }else{
             $(this).children('img').attr('src',src.replace('hide','show'));
             $(this).children('img').attr('title','Quiero ver mi panel de usuario');
+            $.cookie('userPanelHidden','1');
         }
         return false;
     });
@@ -64,7 +72,13 @@ function prepareHabilities(){
     //Boton para mostrar habilidades
     $('#skillsIcon a').click(function(){
         $('#skillsUserBlock').slideToggle();
-
+        if($('#skillsUserBlock').is('.visible')){
+            $('#skillsUserBlock').removeClass('visible')
+            $.cookie('skillsHidden','1');
+        }else{
+            $('#skillsUserBlock').addClass('visible')
+            $.cookie('skillsHidden','0');
+        }
     });
 
     //Div de detalle de habilidades
