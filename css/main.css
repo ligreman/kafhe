@@ -630,7 +630,6 @@ label.title{
 }
 
 #skillsUserBlock{
-    display: none;
     height: 5em;
     padding: 0 3em;
     background: #9acfad;
@@ -854,6 +853,63 @@ label.title{
     text-align: center;
     padding: 4px;
     border-radius: 3px;
+}
+
+.paddedContent{
+    padding:1em;
+}
+
+#main h1.battle {
+    text-transform: lowercase;
+    font-weight: bold;
+    font-size: 1.4em;
+    text-align: center;
+    margin: 1em 0 0;
+    color: #363636;
+}
+
+#battleStatusChart{
+    float:right;
+}
+
+#bandoAchikhoria,#bandoKafhe{
+    margin-left: 2em;
+}
+
+#bandoAchikhoria h2,#bandoKafhe h2{
+    font-weight: bold;
+    margin: 2em 0 .5em 0;
+    font-size: 1.2em;
+    color:#363636;
+}
+
+#bandoAchikhoria ul,#bandoKafhe ul{
+    padding-left: 1em;
+}
+
+#bandoAchikhoria li,#bandoKafhe li{
+    padding: .5em 0;
+}
+
+#generalProbs{
+    clear:both;
+    margin-left: 2em;
+    float:left;
+}
+
+#generalProbs h2, #sideProbs h2{
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #363636;
+}
+
+#sideProbs{
+    float:right;
+}
+
+#userProbabilities{
+    margin-top: 2em;
 }
 
 .w0{width:0%;}

@@ -1,4 +1,6 @@
-<?php /* @var $this Controller */ ?>
+<?php
+$userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii::app()->request->cookies['userPanelHidden']->value : '1';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,8 +19,11 @@
 
     <?php
         Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.js'); //<- En teoría ya se está cargando jquery que viene integrado en Yii
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.cookie.js');
         Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/main.js');
     ?>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -47,7 +52,12 @@
                     </li>
                     <li>
                     <?php
-                        $img = CHtml::image(Yii::app()->request->baseUrl.'/images/hideUserBlock.png','Abrir panel de usuario');
+                        if($userPanelHidden=="1"){
+                            $img = CHtml::image(Yii::app()->request->baseUrl.'/images/showUserBlock.png','Quiero ver el panel de usuario');
+                        }else{
+                            $img = CHtml::image(Yii::app()->request->baseUrl.'/images/hideUserBlock.png','No quiero ver el panel de usuario');
+                        }
+
                         echo CHtml::link($img,array('#'), array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
                     ?>
                     </li>
@@ -81,7 +91,7 @@
                 </span>
         </div>
 	</header><!-- header -->
-    <section id="userPanel">
+    <section id="userPanel" <?php if($userPanelHidden=="1") echo 'style="display:none;"'; ?>>
         <?php if (!Yii::app()->user->isGuest){
             $this->widget('application.components.UserPanel');
         }?>
