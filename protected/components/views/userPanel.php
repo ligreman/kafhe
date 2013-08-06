@@ -1,6 +1,7 @@
 <?php
 
 $maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
+$skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()->request->cookies['skillsHidden']->value : '1';
 
 ?>
 <div id="upContent">
@@ -11,6 +12,7 @@ $maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
             <span id="modificadores">
                 <?php
                 //Modificadores (provisional)
+                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",$user->side,array('class' => 'modifier','title' => 'Perteneces al bando de '.$user->side));
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     foreach(Yii::app()->usertools->modifiers as $modifier) {
                         echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => $modifier->keyword.': '.$modifier->duration.' '.$modifier->duration_type));
@@ -68,7 +70,7 @@ $maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
             </a>
         </p>
     </div>
-    <div id="skillsUserBlock">
+    <div id="skillsUserBlock" <?php if($skillsHidden=="1"){echo 'style="display:none;"';}else{echo 'class="visible"';} ?>>
         <?php
         //Validador de habilidades
         $validator = new SkillValidator;
