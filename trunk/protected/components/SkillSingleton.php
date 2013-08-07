@@ -97,6 +97,7 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 	
+	//Crea un modificador de "disimulando"
 	private function disimular($skill, $user, $target)
 	{
 		//Si ya tengo disimular lo que haré será sumar 1 uso
@@ -120,6 +121,12 @@ class SkillSingleton extends CApplicationComponent
 
 		return true;
 	}
+	
+	//Cría gungubos y me pone como Cazador si estaba como Criador
+	private function criarGungubos($skill, $user)
+	{
+	}
+	
 	
 	/************** FUNCIONES AUXILIARES *************/
 	public function paySkillCosts($skill, $user, $executionResult) 
@@ -192,8 +199,7 @@ class SkillSingleton extends CApplicationComponent
 			$this->_finalTarget = $this->_caster;
 			return $user; //Si no hay objetivo, es que el objetivo es uno mismo
 		}
-
-		///TODO calculo del finalTarget
+		
 		$finalTarget = $target;
 		$this->_finalTarget = $finalTarget->id;
 

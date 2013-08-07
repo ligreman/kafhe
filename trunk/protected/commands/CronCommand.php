@@ -89,7 +89,19 @@ class CronCommand extends CConsoleCommand {
 			}
 			
 		} else {
-			///TODO regenero a un usuario concreto
+			//Regenero a un usuario concreto
+			$usuario = User::model()->findByPk($userId);
+			$regenerado = Yii::app()->tueste->getTuesteRegenerado($usuario);
+			
+			if ($regenerado !== false) {
+				$usuario->ptos_tueste = min( intval(Yii::app()->config->getParam('maxTuesteUsuario')), ($usuario->ptos_tueste+$regenerado) );
+				$usuario->last_regen_timestamp = date('Y-m-d H:i:s');
+				if (!$usuario->save())
+					echo "** ERROR al guardar el usuario (".$usuario->id.") regenerando su tueste.\n";
+				
+				echo "    Usuario ".$usuario->username." - Tueste regenerado: " . $regenerado."\n";
+			} else
+				echo "    Usuario ".$usuario->username." - Todavia no puede regenerar tueste.\n";
 		}
 		
 		/*$time = time();
@@ -110,12 +122,32 @@ class CronCommand extends CConsoleCommand {
 		Yii::app()->usertools->checkModifiersExpiration();
 		
 		if ($eventId === null) {
-			///TODO Para todos los eventos de estado "batalla en preparativos" (1)
+			//Para todos los eventos de estado "iniciado" (1)
+			$events = Event::model()->findAll(array('condition'=>'status=:status', 'params'=>array(':status'=>Yii::app()->params->statusIniciado)));
+			if ($events !== null) {
+				foreach($events as $event) {
+					$criados = Yii::app()->gungubos->getGungubosCriados($event);			
+					if ($criados !== false) {
+						//Guardo el evento
+						$event->gungubos_kafhe += $criados['kafhe'];
+						$event->gungubos_achikhoria += $criados['achikhoria'];
+						$event->last_gungubos_timestamp = date('Y-m-d H:i:s');
+						
+						if (!$event->save())
+							echo "** ERROR al guardar el evento (".$event->id.") criando gungubos.\n";
+						
+						echo "Criados ".$criados['kafhe']." gungubos para Kafhe. Evento ".$event->id.".\n";
+						echo "Criados ".$criados['achikhoria']." gungubos para Achikhoria. Evento ".$event->id.".\n";
+					} else
+						echo "Todavia no puede criar gungubos.\n";
+				}
+			}
 		} else {		
 			//Para el evento concreto. Compruebo que está en estado (1) antes
 			$event = Event::model()->findByPk($eventId);
-			$criados = Yii::app()->gungubos->getGungubosCriados($event);
+			if ($event->status != Yii::app()->params->statusIniciado) return 0;
 			
+			$criados = Yii::app()->gungubos->getGungubosCriados($event);			
 			if ($criados !== false) {
 				//Guardo el evento
 				$event->gungubos_kafhe += $criados['kafhe'];

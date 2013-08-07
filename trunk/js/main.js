@@ -25,21 +25,29 @@ function resizeNavBar(){
 function prepareEnrollmentForm(){
     $('input:checked').siblings('label').addClass('selected');
 
-    $('#meals ul label,#drinks ul label').click(function(){
+    $('#meals ul label,#drinks ul label').click(function(e){
         $(this).parent().siblings().children('label').removeClass('selected');
         if($(this).hasClass('selected')){
+			e.preventDefault(); //para que no me marque de nuevo el sólo el radiobutton
             $(this).removeClass('selected');
+			$(this).siblings(':radio').prop('checked', false);			
         }else{
             $(this).addClass('selected');
         }
     });
+	
+	//ITOS
+	if ($("div.itoSelect input[type='checkbox']").is(':checked'))
+		$('input[rel-ito="no"]').parents('li.radio_row').hide();
 
     $('.itoSelect label,.itoSelect label').click(function(){
         $(this).parent().siblings().children('label').removeClass('selected');
         if($(this).hasClass('selected')){
             $(this).removeClass('selected');
+			$('input[rel-ito="no"]').parents('li.radio_row').show();
         }else{
             $(this).addClass('selected');
+			$('input[rel-ito="no"]').parents('li.radio_row').hide();
         }
     });
 }

@@ -32,7 +32,8 @@
 		<?php echo $form->labelEx($model,'ito'); ?>
 		<?php echo $form->error($model,'ito'); ?>
 	</div>
-
+	
+	
     <div class="centerContainer">
         <div class="blockCentered">
             <div id="drinks">
@@ -60,7 +61,24 @@
 	</div>
 
 <?php $this->endWidget(); ?>
-    <script type="text/javascript">prepareEnrollmentForm();</script>
+    <script type="text/javascript">
+		<!--
+			//Pongo los itos para filtrarlos
+			<?php foreach($drinks as $drink) {			
+				if (!$drink->ito): ?>
+					$('#drinks input[value='+<?php echo intval($drink->id); ?>+']').attr('rel-ito', 'no');
+				<?php endif;
+			}?>
+			
+			<?php foreach($meals as $meal) {			
+				if (!$meal->ito): ?>
+					$('#meals input[value='+<?php echo intval($meal->id); ?>+']').attr('rel-ito', 'no');
+				<?php endif;
+			}?>
+			
+			prepareEnrollmentForm();
+		//-->
+	</script>
 </div>
 <?php
 

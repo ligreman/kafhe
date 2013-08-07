@@ -165,7 +165,7 @@ class SkillValidator
         }
     }
 	
-	///TODO checkmodifiers (algún mod que no me deje ejecutar esta habilidad)
+	//Compruebo si algún mod no me deja ejecutar esta habilidad
 	public function checkModifiers($user) {
 		return true;
 	}

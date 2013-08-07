@@ -53,6 +53,61 @@ class EventSingleton extends CApplicationComponent
 	}
 	
 	
+	public function getOrders($eventId=null)
+	{
+		if ($eventId === null)
+			$eventId = Yii::app()->event->id;
+			
+		$orders = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$eventId)));
+		
+		$noitos = array('comidas'=>array(), 'bebidas'=>array());
+		$itos = array('comidas'=>array(), 'bebidas'=>array());
+		
+		//Nombres de comidas y bebidas
+		$arr_comidas = Meal::model()->findAll();
+		$arr_bebidas = Drink::model()->findAll();
+		
+		foreach($arr_comidas as $comida) {
+			$comidas[$comida->id] = $comida->name;
+		}
+		foreach($arr_bebidas as $bebida) {
+			$bebidas[$bebida->id] = $bebida->name;
+		}
+		
+		//Arrejunto los pedidos
+		foreach($orders as $order) {
+			if ($order->ito) {
+				if ($order->meal_id !== null) {
+					if (isset($itos['comidas'][$order->meal_id])) $itos['comidas'][$order->meal_id]++;
+					else $itos['comidas'][$order->meal_id] = 1;				
+				}
+				
+				if ($order->drink_id !== null) {
+					if (isset($itos['bebidas'][$order->drink_id])) $itos['bebidas'][$order->drink_id]++;
+					else $itos['bebidas'][$order->drink_id] = 1;				
+				}
+			} else {
+				if ($order->meal_id !== null) {
+					if (isset($noitos['comidas'][$order->meal_id])) $noitos['comidas'][$order->meal_id]++;
+					else $noitos['comidas'][$order->meal_id] = 1;				
+				}
+				
+				if ($order->drink_id !== null) {
+					if (isset($noitos['bebidas'][$order->drink_id])) $noitos['bebidas'][$order->drink_id]++;
+					else $noitos['bebidas'][$order->drink_id] = 1;
+				}
+			}
+		}
+		
+		return array('itos'=>$itos, 'noitos'=>$noitos, 'comidas'=>$comidas, 'bebidas'=>$bebidas);
+	}
+	
+	//Coge el array de usuarios y los distribuye en bandos, cambiando los $usuario->side como corresponda
+	public function createSides($usuarios)
+	{
+		return $usuarios;
+	}
+	
 	/** GETTERS Y SETTERS GENERALES **/
 
 	public function setModel($id)
