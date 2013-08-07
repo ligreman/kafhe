@@ -43,6 +43,7 @@ class UserToolsSingleton extends CApplicationComponent
             if (Yii::app()->user->group_id !== null) {
                 $criteria->condition = 'group_id=:groupId';
                 $criteria->params = array(':groupId'=>Yii::app()->user->group_id);
+                $criteria->order = 'rank DESC';
             }
 
             $this->_users = User::model()->findAll($criteria);
@@ -199,9 +200,9 @@ class UserToolsSingleton extends CApplicationComponent
 		if (!$this->_modifiers) {
 			if (!isset(Yii::app()->user->id))
 				return null;
-				
+
 			$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->user->id)));
-		}		
+		}
 		
 		return $this->_modifiers;
 	}

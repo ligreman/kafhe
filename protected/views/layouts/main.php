@@ -80,13 +80,15 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
         <div id="battleStatus">
                 <span id="batteStatusKafhe" class="w<?php echo $pkafhe;?>">
                     <span class="<?php echo Yii::app()->user->side;?>pin">
-                            <span class="title"><?php
-                                if(Yii::app()->user->side == "kafhe"){
+                            <span class="title battleTitle"><?php
+                                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/kafhe.png",'Kafhe',array('height' => 16, 'class' => 'scoreSide'));
+                                ?><span class="score"><?php
                                     echo $battle->gungubos_kafhe;
-                                }else{
+                                    echo ' - ';
                                     echo $battle->gungubos_achikhoria;
-                                }
-                                ?> Gungubos</span>
+                                ?></span><?php
+                                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/achikhoria.png",'Achikhoria',array('height' => 16, 'class' => 'scoreSide'));
+                                ?></span>
                     </span>
                 </span>
         </div>
@@ -106,13 +108,13 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
 				//array('label'=>'Home', 'url'=>array('/site/index')), //, 'active'=>true),
 				//array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				//array('label'=>'Contact', 'url'=>array('/site/contact')),
-                array('label'=>'Prueba', 'url'=>array('/site/prueba')),
+                //array('label'=>'Prueba', 'url'=>array('/site/prueba')),
 				//array('label'=>'Alistamiento', 'url'=>array('/site/alistamiento'), 'visible'=>Event::model()->exists('group_id=:groupId AND open=1', array(':groupId'=>Yii::app()->user->group_id)) ),
 				array('label'=>'Alistamiento', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusBatalla))),
                 array('label'=>'Batalla', 'url'=>array('/event'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->status!=Yii::app()->params->statusCerrado)),
 
-				array('label'=>'Personaje', 'url'=>array('/character'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador'))),
-                array('label'=>'Habilidades', 'url'=>array('/character/skills'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador'))),
+				//array('label'=>'Personaje', 'url'=>array('/character'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador'))),
+                //array('label'=>'Habilidades', 'url'=>array('/character/skills'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador'))),
 				
 				//Enalces de batalla
 				array('label'=>'Iniciar batalla', 'url'=>array('/event/start'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && Yii::app()->user->checkAccess('lanzar_evento') && !Yii::app()->user->checkAccess('Administrador') && isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusIniciado)),
