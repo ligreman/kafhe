@@ -53,7 +53,7 @@ class EnrollmentForm extends CFormModel
 		return array(
 			'meal_id'=>'Comidas',
             'drink_id'=>'Bebidas',
-            'ito'=>'Solo ITO',
+            'ito'=>'ito',
 		);
 	}
 }

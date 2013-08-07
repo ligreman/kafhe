@@ -45,17 +45,16 @@
             }
         }
     ?>
-    <div id="bandoAchikhoria">
-        <h2>bando de Achikhoria</h2>
-        <?php
-            echo $achikhoriaMembers;
-        ?>
-    </div>
-
     <div id="bandoKafhe">
         <h2>bando de Kafhe</h2>
         <?php
             echo $kafheMembers;
+        ?>
+    </div>
+    <div id="bandoAchikhoria">
+        <h2>bando de Achikhoria</h2>
+        <?php
+        echo $achikhoriaMembers;
         ?>
     </div>
     <?php
