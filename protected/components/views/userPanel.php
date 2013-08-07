@@ -41,7 +41,7 @@ $skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()
         </div>
         <p class="dato">
             <span class="numero"><?php echo $user->rank; ?></span>
-            <span class="concepto">escaqueos</span>
+            <span class="concepto">rango</span>
         </p>
 
         <p class="dato">

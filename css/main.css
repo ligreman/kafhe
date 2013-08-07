@@ -611,6 +611,10 @@ label.title{
     width: 100%;
 }
 
+.dato .concepto{
+    padding: 0 0 .2em 0;
+}
+
 .dato .numero{
     font-weight: bold;
     font-size: 1.5em;
@@ -855,6 +859,17 @@ label.title{
     border-radius: 3px;
 }
 
+.score{
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 3px;
+}
+
+.scoreSide{
+    padding: 0 10px;
+}
+
 .paddedContent{
     padding:1em;
 }
@@ -874,17 +889,30 @@ label.title{
 
 #bandoAchikhoria,#bandoKafhe{
     margin-left: 2em;
+    float:left;
+}
+
+#bandoKafhe{
+    clear:left;
 }
 
 #bandoAchikhoria h2,#bandoKafhe h2{
     font-weight: bold;
-    margin: 2em 0 .5em 0;
+    padding: 2em 0 .5em 24px;
     font-size: 1.2em;
     color:#363636;
 }
 
+#bandoAchikhoria h2{
+    background: url('../images/modifiers/achikhoria.png') no-repeat left 1.9em;
+}
+
+#bandoKafhe h2{
+    background: url('../images/modifiers/kafhe.png') no-repeat left 1.9em;
+}
+
 #bandoAchikhoria ul,#bandoKafhe ul{
-    padding-left: 1em;
+    padding: .5em 0 0 3em;
 }
 
 #bandoAchikhoria li,#bandoKafhe li{
