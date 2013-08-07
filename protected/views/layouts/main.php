@@ -17,8 +17,8 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
-    <?php
-        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.js'); //<- En teoría ya se está cargando jquery que viene integrado en Yii
+    <?php        
+		Yii::app()->clientScript->registerCoreScript('jquery'); //JQuery viene con Yii, simplemente lo cojo del Core para no duplicarlo
         Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.cookie.js');
         Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/main.js');
     ?>
@@ -73,7 +73,9 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
             <?php
             $battle = Yii::app()->event->model;
             $totalGungubos = $battle->gungubos_kafhe + $battle->gungubos_achikhoria;
-            $pkafhe = floor(($battle->gungubos_kafhe/$totalGungubos)*100);
+			if ($totalGungubos == 0) $pkafhe = 50;
+			else
+				$pkafhe = floor(($battle->gungubos_kafhe/$totalGungubos)*100);
 
             ?>
         </nav>

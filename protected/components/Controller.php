@@ -20,4 +20,14 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+	
+	//Para evitar cargar 2 veces los JS en peticiones ajax
+	protected function beforeAction($action) {
+        if( Yii::app()->request->isAjaxRequest ) {
+            Yii::app()->clientScript->scriptMap['jquery.js'] = false;
+			Yii::app()->clientScript->scriptMap['main.js'] = false;
+		}
+
+        return parent::beforeAction($action);
+  }
 }

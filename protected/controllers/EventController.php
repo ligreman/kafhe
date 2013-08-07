@@ -52,6 +52,7 @@ class EventController extends Controller
 		$this->render('index', array('battle'=>$battle, 'users'=>$users));
 	}
 
+	//Da comienzo a la batalla. Pasa el evento de Iniciado a Batalla
 	public function actionStart()
 	{
 		//Cambio el evento a estado 2 (batalla!!)
@@ -76,17 +77,17 @@ class EventController extends Controller
 		$sent = Yii::app()->mail->sendEmail(array(
 		    'to'=>$caller->email,
 		    'subject'=>'¡A llamar!',
-		    'body'=>'Ha dado inicio la batalla y el gran omelettus ha decidido que te toca llamar.'
+		    'body'=>'Ha dado inicio la batalla y el Gran Omelettus ha decidido que te toca llamar.'
 		    ));
 		if ($sent !== true)
             throw new CHttpException(400, $sent);
 
 
 		//Aviso a los demás usuarios alistados en el evento de que se inicia la batalla
-		$sql = 'SELECT u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
+		$sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
         $users = Yii::app()->db->createCommand($sql)->queryAll();
         if (count($users)>0) {
-            foreach($users as $user) {
+            foreach($users as $user) {			
                 if ($user['id'] != $event->caller_id)
                     $emails[] = $user['email'];
             }
@@ -94,7 +95,7 @@ class EventController extends Controller
             $sent = Yii::app()->mail->sendEmail(array(
                 'to'=>$emails,
                 'subject'=>'¡Comienza la batalla!',
-                'body'=>'El gran omelettus te informa de que se ha iniciado la batalla.'
+                'body'=>'El Gran Omelettus te informa de que se ha iniciado la batalla.'
             ));
             if ($sent !== true)
                 throw new CHttpException(400, $sent);
@@ -121,7 +122,7 @@ class EventController extends Controller
             throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
 
         //Aviso a todos de que asumo mi derrota
-        $sql = 'SELECT u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
+        $sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
         $users = Yii::app()->db->createCommand($sql)->queryAll();
         if (count($users)>0) {
             foreach($users as $user) {
@@ -131,20 +132,24 @@ class EventController extends Controller
 
             $sent = Yii::app()->mail->sendEmail(array(
                 'to'=>$emails,
-                'subject'=>Yii::app()->user->alias.' ha aceptado su derrota',
-                'body'=>Yii::app()->user->alias.' ha asumido los designios del Gran Omelettus y derrotado procederá a llamar en los próximos minutos.'
+                'subject'=>Yii::app()->usertools->getAlias($user['id']).' ha aceptado su derrota',
+                'body'=>Yii::app()->usertools->getAlias($user['id']).' ha asumido los designios del Gran Omelettus y derrotado procederá a llamar en los próximos minutos.'
             ));
             if ($sent !== true)
                 throw new CHttpException(400, $sent);
         }
+		
+		//Saco los pedidos de este evento
+		//$orders = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$event->id)));
+		$orders = Yii::app()->event->getOrders($event->id);
 
-		$this->render('finish'); //mostraré el pedido y un botón de ya he llamado, aunque el mismo enlace salga en el menú
+		$this->render('finish', array('orders'=>$orders)); //mostraré el pedido y un botón de ya he llamado, aunque el mismo enlace salga en el menú
 	}
 
-	//Cerrar el evento
+	//Cerrar el evento al pulsar en Ya he llamado
 	public function actionClose()
     {
-        //Cambio el evento a estado 3 de "asumo mi derrota"
+        //Cambio el evento a estado 4 de "cerrado"
         if (!isset(Yii::app()->event->model))
             throw new CHttpException(400, 'Error al cerrar la batalla tras haber llamado el usuario '.Yii::app()->user->id);
 
@@ -155,15 +160,30 @@ class EventController extends Controller
         if (!$event->save())
             throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
 
-        $sql = 'SELECT u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
-        $users = Yii::app()->db->createCommand($sql)->queryAll();
+        //$sql = 'SELECT u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
+        //$users = Yii::app()->db->createCommand($sql)->queryAll();
 
         //Caducidad de modificadores de evento		
 		Yii::app()->usertools->reduceEventModifiers($event->group_id);
 
-        ///TODO doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
-        //si suben de nivel ganan azucarillo
-
+        //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
+		$usuarios = Yii::app()->usertools->getUsers();
+		$new_usuarios = array();
+		foreach($usuarios as $usuario) {
+			$usuario->times++;
+			$usuario->ptos_relanzamiento = 0;			
+			
+			//¿es el llamador?
+			if ($usuario->id == $event->caller_id) {
+				$usuario->calls++;
+				$usuario->rank = 1;
+			} elseif ($usuario->status == Yii::app()->params->statusAlistado) {
+				$usuario->rank++;
+			}
+			
+			$usuario->status = Yii::app()->params->statusCazador;
+			$new_usuarios[$usuario->id] = $usuario;
+		}
 
         //Abro un evento nuevo de desayuno
         $nuevoEvento = new Event;
@@ -178,21 +198,24 @@ class EventController extends Controller
         if (!$nuevoEvento->save())
             throw new CHttpException(400, 'Error al crear un nuevo evento.');
 
-        ///TODO creo los bandos aleatoriamente
-        //Yii::app()->event->createSides($goupId);
+        //creo los bandos aleatoriamente
+        $final_users = Yii::app()->event->createSides($new_usuarios);  //le paso el array de objetos usuarios
 
-
-        //Aviso a todos de que ya he llamado
-        if (count($users)>0) {
-            foreach($users as $user) {
-                if ($user['id'] != $event->caller_id)
-                    $emails[] = $user['email'];
+        //Salvo usuarios y les aviso a todos de que ya he llamado
+        if (count($final_users)>0) {
+            foreach($final_users as $id=>$user) {
+                if ($id != $event->caller_id)
+                    $emails[] = $user->email;
+					
+				//Salvo
+				if (!$user->save())
+					throw new CHttpException(400, 'Error al actualizar al usuario '.$id.' al cerrar el evento '.$event->id.'.');
             }
 
             $sent = Yii::app()->mail->sendEmail(array(
                 'to'=>$emails,
-                'subject'=>Yii::app()->user->alias.' ya ha llamado',
-                'body'=>Yii::app()->user->alias.' ha realizado la pertinente llamada para solicitar las delicias y manjares que has pedido. Por favor, procede a reunirte cuanto antes con el resto de comensales para asistir al banquete.'
+                'subject'=>Yii::app()->usertools->getAlias($user->id).' ya ha llamado',
+                'body'=>Yii::app()->usertools->getAlias($user->id).' ha realizado la pertinente llamada para solicitar las delicias y manjares que has pedido. Por favor, procede a reunirte cuanto antes con el resto de comensales para asistir al banquete.'
             ));
             if ($sent !== true)
                 throw new CHttpException(400, $sent);
