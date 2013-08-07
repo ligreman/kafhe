@@ -8,7 +8,48 @@ $this->breadcrumbs=array(
 ?>
 <h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
 
-<p>
-	You may change the content of this page by modifying
-	the file <tt><?php echo __FILE__; ?></tt>.
-</p>
+<?php
+	$itos = $orders['itos'];
+	$noitos = $orders['noitos'];
+	$bebidas = $orders['bebidas'];
+	$comidas = $orders['comidas'];
+?>
+
+<p>Pedidos ITO</p>
+	<ul>
+		<li>Bebidas
+			<ul>
+				<?php foreach($itos['bebidas'] as $id=>$cantidad): ?>
+					<li><?php echo $cantidad.'x '.$bebidas[$id]; ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</li>
+		<li>Comidas
+			<ul>
+				<?php foreach($itos['comidas'] as $id=>$cantidad): ?>
+					<li><?php echo $cantidad.'x '.$comidas[$id]; ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</li>
+	</ul>
+
+<p>Pedidos normales</p>
+	<ul>
+		<li>Bebidas
+			<ul>
+				<?php foreach($noitos['bebidas'] as $id=>$cantidad): ?>
+					<li><?php echo $cantidad.'x '.$bebidas[$id]; ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</li>
+		<li>Comidas
+			<ul>
+				<?php foreach($noitos['comidas'] as $id=>$cantidad): ?>
+					<li><?php echo $cantidad.'x '.$comidas[$id]; ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</li>
+	</ul>
+	
+<p>Ya he llamado!</p>
+	

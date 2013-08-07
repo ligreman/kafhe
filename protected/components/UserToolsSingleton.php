@@ -51,8 +51,7 @@ class UserToolsSingleton extends CApplicationComponent
 
         return $this->_users;
     }
-
-    ///TODO poner comentarios a las funciones, que el PHPStorm te lo saca todo facilmente
+   
 
     /**
      * @param null $groupId: grupo dentro del que buscar, si es null se coge el activo
@@ -78,9 +77,6 @@ class UserToolsSingleton extends CApplicationComponent
         $user = User::model()->find($criteria);
         return $user;
     }
-
-
-    ///IDEA Al expirar hidratar a lo mejor podía dar el tueste extra regenerado entre el momento de expiración y el lastRegenerationTime para ser justos.
 	
 	//Compruebo si han expirado modificadores de todo el mundo
 	public function checkModifiersExpiration($finEvento=false)
@@ -142,18 +138,22 @@ class UserToolsSingleton extends CApplicationComponent
 	public function reduceEventModifiers($groupId=null)
 	{
 		if ($groupId === null) {
-			if (isset(Yii::app()->user->gropu_id))
-				$groupId = Yii::app()->user->gropu_id;
+			if (isset(Yii::app()->user->group_id))
+				$groupId = Yii::app()->user->group_id;
 			else
 				return false;
-		}
-		
-		$mods = Modifier::model()->findAll(array('condition'=>'duration_type=:type AND group_id=:group', 'params'=>array(':type'=>'evento', ':group'=>$groupId)));
+		}	
+					
+		$sql = 'SELECT m.* FROM modifier m, user u WHERE u.group_id='.$groupId.' AND m.target_final_id=u.id AND m.duration_type="desayuno";';
+		//$mods = Modifier::model()->findAll(array('condition'=>'duration_type=:type AND group_id=:group', 'params'=>array(':type'=>'evento', ':group'=>$groupId)));
+		$mods = Yii::app()->db->createCommand($sql)->queryAll();
 		
 		if ($mods === null)
 			return false;
 		else {
 			foreach($mods as $mod) {
+				if ($mod->duration_type != 'desayuno') continue;
+			
 				$mod->duration--;
 		
 				if ($mod->duration <= 0) {

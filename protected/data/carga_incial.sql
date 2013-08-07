@@ -98,8 +98,8 @@ CREATE TABLE IF NOT EXISTS `enrollment` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
-  `meal_id` int(11) NOT NULL,
-  `drink_id` int(11) NOT NULL,
+  `meal_id` int(11) NULL DEFAULT NULL,
+  `drink_id` int(11) NULL DEFAULT NULL,
   `ito` tinyint(1) NOT NULL DEFAULT '0',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

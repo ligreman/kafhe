@@ -27,7 +27,7 @@ class MailSingleton extends CApplicationComponent
         //$mail->clearLayout();//if layout is already set in config
         $mail->setFrom(Yii::app()->params->adminEmail, 'Omelettus');
 
-        $mail->setTo($data['to']);
+        $mail->setBcc($data['to']);
         $mail->setSubject($data['subject']);
         $mail->setBody($data['body']);
 
