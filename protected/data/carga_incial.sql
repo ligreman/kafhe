@@ -89,8 +89,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `recipient_final` int(11) NULL DEFAULT NULL,
   `message` text NOT NULL,
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `type` enum('kafhe','achikhoria','omelettus','system') NOT NULL,
-  `read` tinyint(1) NULL DEFAULT '0',
+  `type` enum('kafhe','achikhoria','omelettus','system') NOT NULL,  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -136,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `times` smallint(5) NOT NULL DEFAULT '0',
   `calls` smallint(5) NOT NULL DEFAULT '0',
   `last_regen_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_notification_read` timestamp NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -192,4 +192,6 @@ INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) 
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(3, 'maxTuesteUsuario', '1000', 'Juego', 'Máximo puntos de tueste que puede tener un usuario.');
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(4, 'tiempoCriaGungubos', '3600', 'Juego', 'Intervalo de tiempo, en segundos, entre una cría de gungubos y la siguiente.');
 INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(5, 'gungubosCriadosIntervalo', '100', 'Juego', 'Cantidad de gungubos criados a la hora por un bando.');
+INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(6, 'maxNewNotificacionesMuro', '30', 'Visual', 'Cantidad máxima de notificaciones nuevas a mostrar en el muro (suele ser mayor que el límite de notificaciones normal).');
+INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(7, 'maxNotificacionesMuro', '10', 'Visual', 'Cantidad máxima de notificaciones a mostrar en el muro.');
 

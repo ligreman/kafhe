@@ -87,7 +87,12 @@ class EventController extends Controller
 		$sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
         $users = Yii::app()->db->createCommand($sql)->queryAll();
         if (count($users)>0) {
-            foreach($users as $user) {			
+            foreach($users as $user) {
+				///TODO eliminar esto: le doy 5 ptos relance a todos los usuarios
+				$us = User::model()->findByPk($user['id']);
+				$us->ptos_relanzamiento+=4;
+				$us->save();
+			
                 if ($user['id'] != $event->caller_id)
                     $emails[] = $user['email'];
             }
@@ -141,7 +146,7 @@ class EventController extends Controller
 		
 		//Saco los pedidos de este evento
 		//$orders = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$event->id)));
-		$orders = Yii::app()->event->getOrders($event->id);
+		$orders = Yii::app()->event->getOrder($event->id);
 
 		$this->render('finish', array('orders'=>$orders)); //mostraré el pedido y un botón de ya he llamado, aunque el mismo enlace salga en el menú
 	}
@@ -221,7 +226,7 @@ class EventController extends Controller
                 throw new CHttpException(400, $sent);
         }
 
-        $this->redirect(array('event/index'));
+        $this->redirect(array('enrollment/index'));
     }
 
 }
