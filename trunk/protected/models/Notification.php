@@ -11,7 +11,6 @@
  * @property string $message
  * @property string $timestamp
  * @property string $type
- * @property integer $read
  */
 class Notification extends CActiveRecord
 {
@@ -42,12 +41,12 @@ class Notification extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('message, type', 'required'),
-			array('sender, recipient_original, recipient_final, read', 'numerical', 'integerOnly'=>true),
+			array('sender, recipient_original, recipient_final', 'numerical', 'integerOnly'=>true),
 			array('type', 'length', 'max'=>10),
 			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, sender, recipient_original, recipient_final, message, timestamp, type, read', 'safe', 'on'=>'search'),
+			array('id, sender, recipient_original, recipient_final, message, timestamp, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -75,7 +74,6 @@ class Notification extends CActiveRecord
 			'message' => 'Message',
 			'timestamp' => 'Timestamp',
 			'type' => 'Type',
-			'read' => 'Read',
 		);
 	}
 
@@ -97,7 +95,6 @@ class Notification extends CActiveRecord
 		$criteria->compare('message',$this->message,true);
 		$criteria->compare('timestamp',$this->timestamp,true);
 		$criteria->compare('type',$this->type,true);
-		$criteria->compare('read',$this->read);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

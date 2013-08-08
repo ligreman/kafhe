@@ -97,6 +97,8 @@ class SiteController extends Controller
         } else if(Yii::app()->user->checkAccess('Usuario')) {
             //Estoy identificado, muestro el Muro
             $data_notif = $this->loadNotifications();
+			if($data_notif!==null) $data_notif = $this->processNotifications($data_notif, Yii::app()->user->id);
+			
             $this->render('index', array('notifications'=>$data_notif));
         } else{
             $this->layout = 'guest';
@@ -214,8 +216,46 @@ class SiteController extends Controller
 
     /******* Funciones auxiliares **********/
     public function loadNotifications() {
-        $notifications = Notification::model()->findAll(array('condition'=>'type!=:type OR (type=:type AND recipient_final=:recipient)', 'params'=>array(':type'=>'system', ':recipient'=>Yii::app()->user->id), 'order'=>'timestamp DESC'));
+        $notifications = Notification::model()->findAll(array('condition'=>'type!=:type OR (type=:type AND recipient_final=:recipient)', 'params'=>array(':type'=>'system', ':recipient'=>Yii::app()->user->id), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNewNotificacionesMuro')));
 
         return $notifications;
     }
+	
+	public function processNotifications($data_notif, $userId)
+	{
+		$user = User::model()->findByPk($userId);
+		
+		$last_read = $user->last_notification_read;
+		if($last_read===null || $last_read=='')
+			$last_read = date('Y-m-d H:i:s');
+						
+		//Proceso las notificaciones
+		$nuevas = $viejas_aux = $viejas = array();
+
+		foreach($data_notif as $noti) {
+			if(strtotime($last_read) <= strtotime($noti->timestamp))
+				array_push($nuevas, $noti);
+			else
+				array_push($viejas_aux, $noti);
+		}
+		
+		$user->last_notification_read = date('Y-m-d H:i:s');
+		///TODO activar esto de nuevo
+		//if (!$user->save())
+			//throw new CHttpException(400, 'Error al guardar el usuario '.$user->id.' procesando las notificaciones.');
+
+		//Si con las nuevas no lleno el cupo de notificaciones del muro, cojo algunas viejas
+		if (count($nuevas) < Yii::app()->config->getParam('maxNotificacionesMuro'))	{		
+			$cantidad = intval(Yii::app()->config->getParam('maxNotificacionesMuro')) - count($nuevas);
+			for($i=1; $i<=$cantidad; $i++) {
+				$not = array_shift($viejas_aux);
+				if($not===null)
+					continue;
+				else
+					array_push($viejas, $not);
+			}
+		}
+
+		return array('new'=>$nuevas, 'old'=>$viejas);
+	}
 }

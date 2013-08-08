@@ -20,7 +20,8 @@ class m130620_205405_dummy_data extends CDbMigration
             'rank' 		=> 1,
             'experience'=>0,
 			'side'		=> 'kafhe',			
-			'group_id'	=> 1
+			'group_id'	=> 1,
+			'last_notification_read' => '2013-08-08 12:20:38'
 		));
 		
 		$this->insert('user', array(
@@ -34,7 +35,8 @@ class m130620_205405_dummy_data extends CDbMigration
 			'rank' 		=> 1,
             'experience'=>0,
 			'status'	=> 2,
-			'group_id'	=> 1
+			'group_id'	=> 1,
+			'last_notification_read' => '2013-08-08 12:20:38'
 		));
 		$this->insert('user', array(
 			'username' 	=> 'test2',
@@ -46,7 +48,8 @@ class m130620_205405_dummy_data extends CDbMigration
             'ptos_tueste' => 1000,
 			'rank' 		=> 1,
 			'experience'=>0,
-			'group_id'	=> 1
+			'group_id'	=> 1,
+			'last_notification_read' => '2013-08-08 12:20:38'
 		));
 		$this->insert('user', array(
 			'username' 	=> 'test3',
@@ -59,7 +62,8 @@ class m130620_205405_dummy_data extends CDbMigration
 			'rank' 		=> 2,
             'experience'=>59,
 			'status'	=> 2,
-			'group_id'	=> 1
+			'group_id'	=> 1,
+			'last_notification_read' => '2013-08-08 12:20:38'
 		));
 		$this->insert('user', array(
 			'username' 	=> 'test4',
@@ -72,7 +76,8 @@ class m130620_205405_dummy_data extends CDbMigration
 			'rank' 		=> 3,
             'experience'=>0,
 			'status'	=> 2,
-			'group_id'	=> 1
+			'group_id'	=> 1,
+			'last_notification_read' => '2013-08-08 12:20:38'
 		));
 		$this->insert('user', array(
 			'username' 	=> 'test5',
@@ -84,7 +89,8 @@ class m130620_205405_dummy_data extends CDbMigration
             'ptos_tueste' => 1000,
             'experience'=>0,
 			'rank' 		=> 1,
-			'group_id'	=> 1
+			'group_id'	=> 1,
+			'last_notification_read' => '2013-08-08 12:20:38'
 		));
 
 
@@ -213,19 +219,30 @@ class m130620_205405_dummy_data extends CDbMigration
             'recipient_original'=>3,
 			'recipient_final'=>3,
             'message'=>'Hola caracola!',
-            'type'=>'kafhe'
+            'type'=>'kafhe',
+			'timestamp' => '2013-08-08 11:20:38'
         ));
 		$this->insert('notification', array(
             'sender'=>1,
             'recipient_original'=>3,
 			'recipient_final'=>3,
             'message'=>'Omeletus dice',
-            'type'=>'omelettus'
+            'type'=>'omelettus',
+			'timestamp' => '2013-08-08 11:20:38'
+        ));
+		$this->insert('notification', array(
+            'sender'=>1,
+            'recipient_original'=>3,
+			'recipient_final'=>3,
+            'message'=>'Notificación nueva',
+            'type'=>'achikhoria',
+			'timestamp' => '2013-08-08 13:20:38'
         ));
 
         $this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `modifier_keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_caller`, `require_target_side`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `require_event_status`, `talent_id_required`) VALUES ('Hidratar', 'Te hidratas', 'batalla', 'mejora', 'hidratar', 'hidratado', 1, 'horas', 10, 15, 20, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL, NULL);");
         $this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `modifier_keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_caller`, `require_target_side`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `require_event_status`, `talent_id_required`) VALUES ('Disimular', 'Disimulas', 'batalla', 'utilidad', 'disimular', 'disimulando', 1, 'usos', 5, 10, 10, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL, NULL);");
-
+		$this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `modifier_keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_target_side`, `require_caller`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `require_event_status`, `talent_id_required`) VALUES ('Cazar gungubos', 'Caza gungubos salvajes', 'gungubos', 'utilidad', 'cazarGungubos', '', '0', 'horas', '5', '5', '12', NULL, NULL, NULL, '0', NULL, NULL, NULL, '0', NULL, '0', NULL, '0', NULL, NULL, NULL);");
+		$this->execute("INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `modifier_keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target`, `require_target_side`, `require_caller`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `require_event_status`, `talent_id_required`) VALUES ('Escaquearse', 'Te escaqueas de llamar', 'relanzamiento', 'mejora', 'escaquearse', '', '0', 'horas', '10', '10', NULL, NULL, '1', NULL, '0', NULL, NULL, NULL, '0', NULL, '1', NULL, '0', NULL, NULL, NULL);");
 	}
 
 	public function safeDown()
