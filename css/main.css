@@ -264,6 +264,10 @@ article.notification .notification_message{
     padding:1.2em 6em 1.2em 2%;
 }
 
+.notification_message img{
+    margin: -.8em .5em -.8em 0em;
+}
+
 article.notification .timestamp{
     color:#363636;
     font-size: .6em;
@@ -272,9 +276,24 @@ article.notification .timestamp{
     right: 2%;
 }
 
+.categoriaNotif{
+    clear: both;
+    margin: 1em auto 5em;
+    text-align: center;
+    background: #e0e0e0;
+    color: #363636;
+}
+
+.categoriaNotif span{
+    background: #ffffff;
+    padding: 0.5em;
+    width: 15em;
+    display: inline-block;
+}
+
 #muro{
     background: url(../images/timeline.png) repeat-y center top;
-    padding:5em 0 5em;
+    padding:1em 0 5em;
     height:100%;
 }
 
@@ -780,7 +799,7 @@ label.title{
 .flashes div{
     padding: 1.5em;
     text-align: center;
-    margin: .5em .5em 0;
+    margin: 1em 3em 0;
     color: #ffffff;
     border:1px solid #ffffff;
 }
