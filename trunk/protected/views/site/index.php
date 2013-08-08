@@ -21,7 +21,7 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 			
 			
 			if (count($nuevas)>0): ?>
-				<p class="">Nuevas:</p>
+				<p class="categoriaNotif"><span>notificaciones sin leer</span></p>
 				
 				<?php foreach($nuevas as $notification):?>				
 					<article id="noti_<?php echo $notification->id; ?>" class="notification <?php echo $notification->type;?> <?php
@@ -49,7 +49,11 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 
 						?>
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
-						<p class="notification_message"><?php echo $notification->message; ?></p>
+                        <p class="notification_message"><?php
+                            $pattern = '/:+([a-z]+):+/i';
+                            echo preg_replace('/:+([a-z]+):+/i', '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('width' => '48')).'</span>', $notification->message);
+                            //echo $notification->message;
+                            ?></p>
 					</article>
 
 				<?php //echo $notification->read."<br>";?>
@@ -60,7 +64,7 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 			
 			
 			if (count($viejas)>0): ?>
-				<p class="">Viejas:</p>
+				<p class="categoriaNotif"><span>notificaciones leídas</span></p>
 				<?php foreach($viejas as $notification): Yii::log('Noti ');?>					
 					<article id="noti_<?php echo $notification->id; ?>" class="notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
@@ -87,7 +91,11 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 
 						?>
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
-						<p class="notification_message"><?php echo $notification->message; ?></p>
+						<p class="notification_message"><?php
+                            $pattern = '/:+([a-z]+):+/i';
+                            print_r(preg_replace('/:+([a-z]+):+/i', CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png"), $notification->message));
+                            //echo $notification->message;
+                            ?></p>
 					</article>
 
 				<?php //echo $notification->read."<br>";?>

@@ -71,11 +71,12 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
 			<?php endif;?>
 
             <?php
-            $battle = Yii::app()->event->model;
-            $totalGungubos = $battle->gungubos_kafhe + $battle->gungubos_achikhoria;
-			if ($totalGungubos == 0) $pkafhe = 50;
-			else
-				$pkafhe = floor(($battle->gungubos_kafhe/$totalGungubos)*100);
+            if(Yii::app()->user->checkAccess('Usuario')&&!Yii::app()->user->checkAccess('Administrador')){
+                $battle = Yii::app()->event->model;
+                $totalGungubos = $battle->gungubos_kafhe + $battle->gungubos_achikhoria;
+                if ($totalGungubos == 0) $pkafhe = 50;
+                else
+                    $pkafhe = floor(($battle->gungubos_kafhe/$totalGungubos)*100);
 
             ?>
         </nav>
@@ -94,9 +95,12 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
                     </span>
                 </span>
         </div>
+        <?php
+            }
+        ?>
 	</header><!-- header -->
     <section id="userPanel" <?php if($userPanelHidden=="1") echo 'style="display:none;"'; ?>>
-        <?php if (!Yii::app()->user->isGuest){
+        <?php if (!Yii::app()->user->isGuest && !Yii::app()->user->checkAccess('Administrador')){
             $this->widget('application.components.UserPanel');
         }?>
     </section>
