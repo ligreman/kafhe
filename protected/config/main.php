@@ -196,10 +196,14 @@ return array(
 		'adminEmail'=>'omelettus@gmail.com',
 		'mailServerUsername'=>'omelettus@gmail.com',
 		'mailServerPassword'=>'',
+		
+		//Estados de Usuario
 		'statusCriador'=>0,
 		'statusCazador'=>1,
 		'statusAlistado'=>2,
 		'statusBaja'=>3,
+		
+		//Estados de Eventos
 		'statusCerrado'=>0,
 		'statusIniciado'=>1,
 		'statusBatalla'=>2,
@@ -212,5 +216,8 @@ return array(
 		//Habilidades. Están aquí y en BBDD
 		'skillHidratar'=>'hidratar',
 		'skillDisimular'=>'disimular',
+		'skillCazarGungubos'=>'cazarGungubos',
+		'skillEscaquearse'=>'escaquearse',
+		'skillVendetta'=>'vendetta',
 	),
 );

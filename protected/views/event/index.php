@@ -4,7 +4,7 @@
     }
 ?>
 <div id="menuContent" class="paddedContent">
-    <h1 class="battle">Estado de la batalla</h1>
+    <h1 class="battle">Estado de la batalla *</h1>
 
     <div id="battleStatusChart"></div>
 
@@ -67,6 +67,8 @@
          $arr = Yii::app()->usertools->calculateProbabilities(Yii::app()->user->group_id, true);
         /*print_r($arr);*/
     ?>
+	
+	<p class="clear">*Nota: las probabilidades de un bando de salir elegido son inversamente proporcionales al porcentaje de gungubos que tiene.</p>
 
     <div id="generalProbs">
         <h2>Probabilidad por usuario</h2>

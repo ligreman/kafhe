@@ -52,8 +52,8 @@ class EventSingleton extends CApplicationComponent
 		return array('side'=>$bandoPerdedor, 'userId'=>$caller);
 	}
 	
-	
-	public function getOrders($eventId=null)
+	//Obtiene el pedido del evento actual o del que le pases
+	public function getOrder($eventId=null)
 	{
 		if ($eventId === null)
 			$eventId = Yii::app()->event->id;
@@ -102,7 +102,17 @@ class EventSingleton extends CApplicationComponent
 		return array('itos'=>$itos, 'noitos'=>$noitos, 'comidas'=>$comidas, 'bebidas'=>$bebidas);
 	}
 	
+	//Obtiene el pedido del evento de la semana pasada... el último evento cerrado
+	public function getPastOrder() 
+	{
+		$group_id = Yii::app()->user->group_id;
+		$event = Event::model()->findAll(array( 'condition'=>'status=:status AND group_id=:group', 'params'=>array(':status'=>Yii::app()->params->statusCerrado, ':group'=>$group_id), 'order'=>'date DESC', 'limit'=>1) );
+		
+		return $this->getOrder($event->id);
+	}
+	
 	//Coge el array de usuarios y los distribuye en bandos, cambiando los $usuario->side como corresponda
+	//* $usuarios[$usuario->id] = $usuario;
 	public function createSides($usuarios)
 	{
 		return $usuarios;

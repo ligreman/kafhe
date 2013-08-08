@@ -55,6 +55,8 @@ class SkillSingleton extends CApplicationComponent
 			switch ($skill->keyword) {
 				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $user, $finalTarget); break;
 				case Yii::app()->params->skillDisimular: $this->disimular($skill, $user, $finalTarget); break;
+				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill, $user); break;
+				case Yii::app()->params->skillEscaquearse: $this->escaquearse($skill, $user); break;
 			}
 			
 		}
@@ -122,9 +124,61 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 	
-	//Cría gungubos y me pone como Cazador si estaba como Criador
-	private function criarGungubos($skill, $user)
+	//Caza gungubos y me pone como Cazador si estaba como Criador
+	private function cazarGungubos($skill, $user)
 	{
+		$cantidad = 100;
+	
+		//Cambio al usuario a Cazador si era criador
+		if ($user->status == Yii::app()->params->statusCriador) {
+			$user->status = Yii::app()->params->statusCazador;
+		
+			if (!$user->save())
+				throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador.');
+		}
+			
+		$event = Yii::app()->event->model;
+		if($user->side == 'kafhe') {
+			$event->gungubos_kafhe += $cantidad;
+		} else if($user->side == 'achikhoria') {
+			$event->gungubos_achikhoria += $cantidad;
+		}
+		
+		if (!$event->save())
+            throw new CHttpException(400, 'Error al sumar gungubos al bando '.$user->side.' del evento ('.$event->id.').');
+		
+		return true;
+	}
+	
+	//Relanza el evento
+	public function escaquearse($skill, $user)
+	{
+		//Lanzo de nuevo el evento
+		$event = Yii::app()->event->model;
+		if ($event === null)
+			throw new CHttpException(400, 'Error al cargar el evento Escaqueandose.');
+		
+		//Elijo al llamador
+		$battleResult = Yii::app()->event->selectCaller();
+		$event->caller_id = $battleResult['userId'];
+		$event->caller_side = $battleResult['side'];
+		
+		//Guardo el evento
+		if (!$event->save())
+			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
+
+
+		//Aviso al llamador
+		$caller = User::model()->findByPk($event->caller_id);
+		$sent = Yii::app()->mail->sendEmail(array(
+		    'to'=>$caller->email,
+		    'subject'=>'¡A llamar!',
+		    'body'=>'El Gran Omelettus dictamina que te toca llamar.'
+		    ));
+		if ($sent !== true)
+            throw new CHttpException(400, $sent);
+		
+		return true;
 	}
 	
 	
