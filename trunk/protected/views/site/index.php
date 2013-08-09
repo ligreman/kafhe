@@ -23,7 +23,7 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 			if (count($nuevas)>0): ?>
 				<p class="categoriaNotif"><span>notificaciones sin leer</span></p>
 				
-				<?php foreach($nuevas as $notification):?>				
+				<?php foreach($nuevas as $notification):?>
 					<article id="noti_<?php echo $notification->id; ?>" class="notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
 							echo 'first';
