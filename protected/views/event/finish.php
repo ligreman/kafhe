@@ -1,55 +1,52 @@
-<?php
-/* @var $this EventController */
+<div id="menuContent" class="paddedContent">
+    <h1 class="battle">pedido</h1>
 
-$this->breadcrumbs=array(
-	'Event'=>array('/event'),
-	'Finish',
-);
-?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
+    <?php
+        $itos = $orders['itos'];
+        $noitos = $orders['noitos'];
+        $bebidas = $orders['bebidas'];
+        $comidas = $orders['comidas'];
+    ?>
+    <div id="pedidoCentrado">
+        <div class="tipoPedido">
+            <h2 class="pedido">pedidos ITO</h2>
+            <ul class="pedido">
+                <li><p class="bebida">bebidas</p>
+                    <ul class="bebida">
+                        <?php foreach($itos['bebidas'] as $id=>$cantidad): ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> X </span>'.$bebidas[$id]; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+                <li><p class="comida">comidas</p>
+                    <ul class="comida">
+                        <?php foreach($itos['comidas'] as $id=>$cantidad): ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> X </span>'.$comidas[$id]; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
-<?php
-	$itos = $orders['itos'];
-	$noitos = $orders['noitos'];
-	$bebidas = $orders['bebidas'];
-	$comidas = $orders['comidas'];
-?>
-
-<p>Pedidos ITO</p>
-	<ul>
-		<li>Bebidas
-			<ul>
-				<?php foreach($itos['bebidas'] as $id=>$cantidad): ?>
-					<li><?php echo $cantidad.'x '.$bebidas[$id]; ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</li>
-		<li>Comidas
-			<ul>
-				<?php foreach($itos['comidas'] as $id=>$cantidad): ?>
-					<li><?php echo $cantidad.'x '.$comidas[$id]; ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</li>
-	</ul>
-
-<p>Pedidos normales</p>
-	<ul>
-		<li>Bebidas
-			<ul>
-				<?php foreach($noitos['bebidas'] as $id=>$cantidad): ?>
-					<li><?php echo $cantidad.'x '.$bebidas[$id]; ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</li>
-		<li>Comidas
-			<ul>
-				<?php foreach($noitos['comidas'] as $id=>$cantidad): ?>
-					<li><?php echo $cantidad.'x '.$comidas[$id]; ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</li>
-	</ul>
-	
-<p>Ya he llamado!</p>
-	
+        <div class="tipoPedido">
+            <h2 class="pedido">pedidos normales</h2>
+            <ul  class="pedido">
+                <li><p class="bebida">bebidas</p>
+                    <ul class="bebida">
+                        <?php foreach($noitos['bebidas'] as $id=>$cantidad): ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> X </span>'.$bebidas[$id]; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+                <li><p class="comida">comidas</p>
+                    <ul class="comida">
+                        <?php foreach($noitos['comidas'] as $id=>$cantidad): ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> X </span>'.$comidas[$id]; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

@@ -1,9 +1,14 @@
-<?php
-    foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
-    }
-?>
 <div id="menuContent" class="paddedContent">
+    <?php
+    $flashMessages = Yii::app()->user->getFlashes();
+    if ($flashMessages) {
+        echo '<ul class="flashes">';
+        foreach($flashMessages as $key => $message) {
+            echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+        }
+        echo '</ul>';
+    }
+    ?>
     <h1 class="battle">Estado de la batalla *</h1>
 
     <div id="battleStatusChart"></div>
@@ -226,22 +231,22 @@
 
 
      echo "<br><br>EMAIL: ";
-    /*
-        $data['to'] = array('lomas.garcia@gmail.com', 'cgoo85@gmail.com');
+    */
+        $data['to'] = array('cgoo85@gmail.com');
         $data['subject'] = 'Email de prueba desde Kafhe 3.0';
         $data['body'] = 'Hola caracola. Esta es la plantilla por defecto de los emails.';
         $sent = Yii::app()->mail->sendEmail($data);
         if ($sent !== true)
-            echo $sent;*/
+            echo $sent;
 
 
          //envio mails
-        /* $mail = new YiiMailer();
+        /*$mail = new YiiMailer();
         //$mail->clearLayout();//if layout is already set in config
         $mail->setFrom('omelettus@gmail.com', 'John Doe');
         $mail->setTo('omelettus@gmail.com');
         $mail->setSubject('Mail subject');
-        $mail->setBody('Simple message');*/
+        $mail->setBody('Simple message');
 
 
         /*Setting addresses
@@ -255,7 +260,7 @@
 
         /*$mail->IsSMTP();                                      // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';  // Specify main and backup server
-        $mail->Port = 465;
+        $mail->Port = 587;
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = 'omelettus@gmail.com';                            // SMTP username
         $mail->Password = 'om3l3ttus';                           // SMTP password
@@ -267,8 +272,8 @@
         } else {
             echo "Error enviando email: ".$mail->getError();
             //Yii::app()->user->setFlash('error','Error while sending email: '.$mail->getError());
-        }*/
-
+        }
+*/
 
      ?>
 </div>
