@@ -6,7 +6,7 @@
 	<tbody>
 		<tr>
             <td style="background-color:#00924a;font-size:22px;text-align: left;">
-                <?php echo CHtml::image(Yii::app()->baseUrl.'/images/kafhe3.png'); ?>
+                <?php echo CHtml::image(Yii::app()->getBaseUrl(true).'/images/kafhe3.png'); ?>
             </td>
 		</tr>
 		<tr>
@@ -19,6 +19,11 @@
 				<?php echo $content ?>
             </td>
 		</tr>
+        <tr>
+            <td>
+                <p>No lo pienses mas y entra directamente a <?php Chtml::link('kafhe',Yii::app()->getBaseUrl(true));?></p>
+            </td>
+        </tr>
 	</tbody>
 </table>
 </body>

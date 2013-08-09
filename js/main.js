@@ -6,6 +6,7 @@ $(document).ready(function() {
     $(window).resize(function(){
         resizeNavBar();
     });
+    prepareOrder();
 });
 
 function resizeNavBar(){
@@ -40,7 +41,7 @@ function prepareEnrollmentForm(){
 	if ($("div.itoSelect input[type='checkbox']").is(':checked'))
 		$('input[rel-ito="no"]').parents('li.radio_row').hide();
 
-    $('.itoSelect label,.itoSelect label').click(function(){
+    $('.itoSelect label').click(function(){
         $(this).parent().siblings().children('label').removeClass('selected');
         if($(this).hasClass('selected')){
             $(this).removeClass('selected');
@@ -48,6 +49,8 @@ function prepareEnrollmentForm(){
         }else{
             $(this).addClass('selected');
 			$('input[rel-ito="no"]').parents('li.radio_row').hide();
+            $('input[rel-ito="no"]:checked').siblings('label').removeClass('selected');
+            $('input[rel-ito="no"]:checked').attr('checked' , 'false');
         }
     });
 }
@@ -120,6 +123,14 @@ function prepareHabilities(){
 
     $('.skillDescription').click(function(){
         $('.skillDescription').hide();
+        return false;
+    });
+}
+
+function prepareOrder(){
+    $('.tipoPedido ul.comida li, .tipoPedido ul.bebida li').append(' <a href="#">Oído Cocina</a>');
+    $('.tipoPedido ul.comida li a, .tipoPedido ul.bebida li a').click(function(){
+        $(this).parent().css('text-decoration','line-through');
         return false;
     });
 }

@@ -19,8 +19,8 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
 
     <?php        
 		Yii::app()->clientScript->registerCoreScript('jquery'); //JQuery viene con Yii, simplemente lo cojo del Core para no duplicarlo
-        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.cookie.js');
-        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/main.js');
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.cookie.js');
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/main.js');
     ?>
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -37,7 +37,7 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
 		<div>
             <h1 id="logo"><?php
                 $img = CHtml::image(Yii::app()->request->baseUrl.'/images/kafhe3.png','kafhe');
-                echo CHtml::link($img,array('site/index'));
+                echo CHtml::link($img,Yii::app()->homeUrl);
                 ?>
             </h1>
         </div>
@@ -78,10 +78,13 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
                 else
                     $pkafhe = floor(($battle->gungubos_kafhe/$totalGungubos)*100);
 
+                if($pkafhe > 0) $side = 'Kafhe';
+                else $side = 'Achikhoria';
+
             ?>
         </nav>
         <div id="battleStatus">
-                <span id="batteStatusKafhe" class="w<?php echo $pkafhe;?>">
+                <span id="batteStatus<?php echo $side; ?>" class="w<?php echo $pkafhe;?>">
                     <span class="<?php echo Yii::app()->user->side;?>pin">
                             <span class="title battleTitle"><?php
                                 echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/kafhe.png",'Kafhe',array('height' => 16, 'class' => 'scoreSide'));

@@ -147,8 +147,12 @@ nav ul{
     margin: 0;
 }
 
-a{
+#secondary_nav a,#secondary_nav a:hover{
     color: #e0e0e0;
+}
+
+a, a:hover{
+    color: #00924a;
 }
 
 footer
@@ -816,6 +820,10 @@ label.title{
     background-color: #bf3950;
 }
 
+.flash-success{
+    background-color: #00924a;
+}
+
 #battleStatus{
     display: block;
     height: 5px;
@@ -832,9 +840,18 @@ label.title{
     height: 100%;
     background: #f0cc33;
     float: left;
+    position: absolute;
 }
 
-#batteStatusKafhe .kafhepin{
+#batteStatusAchikhoria{
+    box-shadow: 0 3px 2px rgba(0,0,0,.15);
+    height: 100%;
+    float: left;
+    width:16px;
+    position: absolute;
+}
+
+#batteStatusKafhe .kafhepin, #batteStatusAchikhoria .kafhepin{
     box-shadow: 0 3px 2px rgba(0,0,0,.15);
     height: 10px;
     width: 10px;
@@ -846,7 +863,7 @@ label.title{
     float: right;
 }
 
-#batteStatusKafhe .achikhoriapin{
+#batteStatusKafhe .achikhoriapin, #batteStatusAchikhoria .achikhoriapin{
     box-shadow: 0 3px 2px rgba(0,0,0,.15);
     height: 10px;
     width: 10px;
@@ -944,12 +961,6 @@ label.title{
     float:left;
 }
 
-#generalProbs h2, #sideProbs h2{
-    text-align: center;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #363636;
-}
 
 #sideProbs{
     float:right;
@@ -957,6 +968,58 @@ label.title{
 
 #userProbabilities{
     margin-top: 2em;
+}
+
+h2.pedido{
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #363636;
+}
+
+ul.pedido, ul.comida, ul.bebida{
+    margin: .5em 1em;
+}
+
+ul.comida li,  ul.bebida li {
+    padding: 0.3em 0 0.3em .5em;
+    font-style: italic;
+}
+
+ul.comida p,  ul.bebida p {
+    padding: 0.5em;
+}
+
+p.comida, p.bebida{
+    padding: .5em;
+    margin: 1.3em 0 .8em;
+    font-weight: bold;
+    padding-left: 28px;
+}
+
+p.comida{
+    background: url(../images/drink_meal_icons.png) no-repeat 0 -24px;
+}
+
+p.bebida{
+    background: url(../images/drink_meal_icons.png) no-repeat 0 4px;
+}
+
+.veces{
+    font-weight: bold;
+    color: #00924a;
+    text-decoration: inherit;
+}
+
+#pedidoCentrado{
+    width:60%;
+    margin: 3em auto 0 ;
+}
+
+.tipoPedido{
+    float: left;
+    width: 35%;
+    padding-left: 15%;
+    min-width: 10em;
 }
 
 .w0{width:0%;}
