@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `recipient_final` int(11) NULL DEFAULT NULL,
   `message` text NOT NULL,
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `type` enum('kafhe','achikhoria','omelettus','system') NOT NULL,  
+  `type` enum('kafhe','achikhoria','omelettus','system','libre') NOT NULL,  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `birthdate` date NULL DEFAULT NULL,
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
   `group_id` int(10) NULL DEFAULT NULL,
-  `side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
+  `side` enum('kafhe','achikhoria','libre') NULL DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `rank` smallint(5) NOT NULL DEFAULT '0',
   `ptos_tueste` smallint(5) NOT NULL DEFAULT '0',
@@ -160,11 +160,11 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `cost_tostolares_cooperate` smallint(5) NULL DEFAULT NULL,
   `cooperate_benefit` smallint(5) NULL DEFAULT NULL,
   `require_target` tinyint(1) NOT NULL DEFAULT '0',
-  `require_target_side` enum('kafhe','achikhoria') NULL DEFAULT NULL,  
+  `require_target_side` varchar(255) NULL DEFAULT NULL,  
   `require_caller` tinyint(1) NOT NULL DEFAULT '0',    
-  `require_user_side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
+  `require_user_side` varchar(255) NULL DEFAULT NULL,
   `require_user_min_rank` smallint(5) NOT NULL DEFAULT '0',
-  `require_user_status` tinyint(1) NULL DEFAULT NULL,
+  `require_user_status` varchar(255) NULL DEFAULT NULL,
   `require_event_status` tinyint(1) NULL DEFAULT NULL,
   `talent_id_required` int(10) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)

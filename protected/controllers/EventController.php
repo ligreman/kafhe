@@ -28,7 +28,7 @@ class EventController extends Controller
 			array('allow', 
 				'actions'=>array('finish'),
 				'roles'=>array('Usuario'),
-				'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusBatalla && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->user->id)", //Dejo entrar 
+				'expression'=>"(isset(Yii::app()->event->model) && (Yii::app()->event->status==Yii::app()->params->statusFinalizado || Yii::app()->event->status==Yii::app()->params->statusBatalla) && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->user->id )", //Dejo entrar
 			),
             array('allow',
                 'actions'=>array('close'),
@@ -84,7 +84,7 @@ class EventController extends Controller
 
 
 		//Aviso a los demás usuarios alistados en el evento de que se inicia la batalla
-		$sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
+		$sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibre.' );';
         $users = Yii::app()->db->createCommand($sql)->queryAll();
         if (count($users)>0) {
             foreach($users as $user) {
@@ -120,32 +120,35 @@ class EventController extends Controller
             throw new CHttpException(400, 'Error al finalizar la batalla asumiendo la derrota del usuario '.Yii::app()->user->id);
 
         $event = Yii::app()->event->model;
-        $event->status = Yii::app()->params->statusFinalizado;
 
-        //Guardo el evento
-        if (!$event->save())
-            throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
+        //Si es la primera vez que entro hago todo el proceso
+        if($event->status != Yii::app()->params->statusFinalizado) {
+            $event->status = Yii::app()->params->statusFinalizado;
 
-        //Aviso a todos de que asumo mi derrota
-        $sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND u.status='.Yii::app()->params->statusAlistado.';';
-        $users = Yii::app()->db->createCommand($sql)->queryAll();
-        if (count($users)>0) {
-            foreach($users as $user) {
-                if ($user['id'] != $event->caller_id)
-                    $emails[] = $user['email'];
+            //Guardo el evento
+            if (!$event->save())
+                throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
+
+            //Aviso a todos de que asumo mi derrota
+            $sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibre.');';
+            $users = Yii::app()->db->createCommand($sql)->queryAll();
+            if (count($users)>0) {
+                foreach($users as $user) {
+                    if ($user['id'] != $event->caller_id)
+                        $emails[] = $user['email'];
+                }
+
+                $sent = Yii::app()->mail->sendEmail(array(
+                    'to'=>$emails,
+                    'subject'=>Yii::app()->usertools->getAlias($user['id']).' ha aceptado su derrota',
+                    'body'=>Yii::app()->usertools->getAlias($user['id']).' ha asumido los designios del Gran Omelettus y derrotado procederá a llamar en los próximos minutos.'
+                ));
+                if ($sent !== true)
+                    throw new CHttpException(400, $sent);
             }
-
-            $sent = Yii::app()->mail->sendEmail(array(
-                'to'=>$emails,
-                'subject'=>Yii::app()->usertools->getAlias($user['id']).' ha aceptado su derrota',
-                'body'=>Yii::app()->usertools->getAlias($user['id']).' ha asumido los designios del Gran Omelettus y derrotado procederá a llamar en los próximos minutos.'
-            ));
-            if ($sent !== true)
-                throw new CHttpException(400, $sent);
         }
 		
 		//Saco los pedidos de este evento
-		//$orders = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$event->id)));
 		$orders = Yii::app()->event->getOrder($event->id);
 
 		$this->render('finish', array('orders'=>$orders)); //mostraré el pedido y un botón de ya he llamado, aunque el mismo enlace salga en el menú
@@ -174,21 +177,43 @@ class EventController extends Controller
         //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
 		$usuarios = Yii::app()->usertools->getUsers();
 		$new_usuarios = array();
-		foreach($usuarios as $usuario) {
-			$usuario->times++;
+		$anterior_llamador = null;
+		foreach($usuarios as $usuario) {			
 			$usuario->ptos_relanzamiento = 0;			
 			
-			//¿es el llamador?
+			//Al llamador le pongo rango 0 y estado desertor
 			if ($usuario->id == $event->caller_id) {
 				$usuario->calls++;
-				$usuario->rank = 1;
-			} elseif ($usuario->status == Yii::app()->params->statusAlistado) {
+				$usuario->times++;
+				$usuario->rank = 0;
+				$usuario->status = Yii::app()->params->statusDesertor;
+				//Salvo
+				if (!$usuario->save())
+					throw new CHttpException(400, 'Error al actualizar al usuario '.$usuario->id.' llamador, al cerrar el evento '.$event->id.'.');
+			} elseif ($usuario->status==Yii::app()->params->statusAlistado) {
+				//A los alistados les pongo como cazadores
 				$usuario->rank++;
+				$usuario->times++;
+				$usuario->status = Yii::app()->params->statusCazador;
+				$new_usuarios[$usuario->id] = $usuario;
+			} elseif ($usuario->status==Yii::app()->params->statusDesertor) {
+				//Si era "libre" pero no fue al desayuno
+				$usuario->rank++;				
+				$usuario->status = Yii::app()->params->statusCazador;
+				$anterior_llamador = $usuario;
+			} elseif ($usuario->status==Yii::app()->params->statusLibre) {
+				//Al anterior libre le pongo como cazador también
+				$usuario->rank++;
+				$usuario->times++;
+				$usuario->status = Yii::app()->params->statusCazador;
+				$anterior_llamador = $usuario;
+			} elseif ($usuario->status==Yii::app()->params->statusCriador  ||  $usuario->status==Yii::app()->params->statusCazador) {
+				//Al resto sólo les pongo de cazadores
+				$usuario->status = Yii::app()->params->statusCazador;
 			}
-			
-			$usuario->status = Yii::app()->params->statusCazador;
-			$new_usuarios[$usuario->id] = $usuario;
 		}
+		
+		//Al usuario actual, que ha dado a "Ya llamo yo"
 
         //Abro un evento nuevo de desayuno
         $nuevoEvento = new Event;
@@ -204,7 +229,7 @@ class EventController extends Controller
             throw new CHttpException(400, 'Error al crear un nuevo evento.');
 
         //creo los bandos aleatoriamente
-        $final_users = Yii::app()->event->createSides($new_usuarios);  //le paso el array de objetos usuarios
+        $final_users = Yii::app()->event->createSides($new_usuarios, $anterior_llamador);  //le paso el array de objetos usuarios y el objeto usuario anterior-llamador que no está en la lista
 
         //Salvo usuarios y les aviso a todos de que ya he llamado
         if (count($final_users)>0) {

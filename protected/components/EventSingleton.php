@@ -113,7 +113,7 @@ class EventSingleton extends CApplicationComponent
 	
 	//Coge el array de usuarios y los distribuye en bandos, cambiando los $usuario->side como corresponda
 	//* $usuarios[$usuario->id] = $usuario;
-	public function createSides($usuarios)
+	public function createSides($usuarios, $llamador)
 	{
 		return $usuarios;
 	}

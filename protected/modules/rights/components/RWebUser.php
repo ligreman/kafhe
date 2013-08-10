@@ -82,4 +82,17 @@ class RWebUser extends CWebUser
 		
 		return $returnUrl!==null ? CHtml::normalizeUrl($returnUrl) : CHtml::normalizeUrl($defaultUrl);
 	}
+	
+	
+	public function getSide()
+	{
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		return $user->side;
+	}
+	
+	public function getStatus()
+	{
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		return $user->status;
+	}
 }

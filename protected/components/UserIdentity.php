@@ -15,7 +15,7 @@ class UserIdentity extends CUserIdentity
 	 * against some persistent user identity storage (e.g. database).
 	 * @return boolean whether authentication succeeds.
 	 */
-	private $_id;
+	private $_id;	
 
 	public function authenticate()
 	{
@@ -50,8 +50,8 @@ class UserIdentity extends CUserIdentity
             $this->setState('alias', $user->alias);
 			$this->setState('email', $user->email);
 		    $this->setState('group_id', $user->group_id);
-			$this->setState('side', $user->side);
-			$this->setState('status', $user->status);
+			//$this->setState('side', $user->side);
+			//$this->setState('status', $user->status);
 
 			$this->errorCode=self::ERROR_NONE;
         }
@@ -62,5 +62,19 @@ class UserIdentity extends CUserIdentity
     {
         return $this->_id;
     }
+	
+	
+	//El side y status etc... se cogen de modules/rights/components/RWebUser.php
+	/*public function getSide()
+	{
+		$user = User::model()->findByPk($this->_id);
+		return $user->side;
+	}
+	
+	public function getStatus()
+	{
+		$user = User::model()->findByPk($this->_id);
+		return $user->status;
+	}*/
 	
 }

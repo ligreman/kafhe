@@ -114,13 +114,13 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
 	    //Si soy Admin tendré opciones nuevas en el menú
 		$this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				//array('label'=>'Home', 'url'=>array('/site/index')), //, 'active'=>true),
+				array('label'=>'Notificaciones', 'url'=>array('/site/index'), 'active'=>$this->id=='site'?true:false),
 				//array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				//array('label'=>'Contact', 'url'=>array('/site/contact')),
                 //array('label'=>'Prueba', 'url'=>array('/site/prueba')),
 				//array('label'=>'Alistamiento', 'url'=>array('/site/alistamiento'), 'visible'=>Event::model()->exists('group_id=:groupId AND open=1', array(':groupId'=>Yii::app()->user->group_id)) ),
-				array('label'=>'Alistamiento', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusBatalla))),
-                array('label'=>'Batalla', 'url'=>array('/event'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->status!=Yii::app()->params->statusCerrado)),
+				array('label'=>'Alistamiento', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusBatalla)), 'active'=>$this->id=='enrollment'?true:false),
+                array('label'=>'Batalla', 'url'=>array('/event'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->status!=Yii::app()->params->statusCerrado), 'active'=>($this->id=='event' && $this->action->id=='index')?true:false),
 
 				//array('label'=>'Personaje', 'url'=>array('/character'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador'))),
                 //array('label'=>'Habilidades', 'url'=>array('/character/skills'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador'))),
@@ -128,12 +128,13 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
 				//Enalces de batalla
 				array('label'=>'Iniciar batalla', 'url'=>array('/event/start'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && Yii::app()->user->checkAccess('lanzar_evento') && !Yii::app()->user->checkAccess('Administrador') && isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusIniciado)),
 				array('label'=>'Aceptar derrota', 'url'=>array('/event/finish'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador') && isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusBatalla && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->user->id)),
+                array('label'=>'Pedido actual', 'url'=>array('/event/finish'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador') && isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusFinalizado && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->user->id), 'active'=>($this->id=='event' && $this->action->id=='finish')?true:false),
                 array('label'=>'Ya he llamado', 'url'=>array('/event/close'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador') && isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusFinalizado && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->user->id)),
 
 				//Admin pages
-                array('label'=>'Roles y permisos', 'url'=>array('/rights'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
-                array('label'=>'Usuarios', 'url'=>array('/user'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
-                array('label'=>'Administration', 'url'=>array('/admin/index'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
+                array('label'=>'Roles y permisos', 'url'=>array('/rights'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='rights'?true:false),
+                array('label'=>'Usuarios', 'url'=>array('/user'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='user'?true:false),
+                array('label'=>'Administration', 'url'=>array('/admin/index'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='admin'?true:false),
 
 
 				//array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),

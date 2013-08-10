@@ -49,14 +49,31 @@ return array(
 	),
 	
 	'params'=>array(
-        'adminEmail'=>'omelettus@gmail.com',
-        'statusCriador'=>0,
-        'statusCazador'=>1,
-        'statusAlistado'=>2,
-        'statusBaja'=>3,
-        'statusCerrado'=>0,
-        'statusIniciado'=>1,
-        'statusBatalla'=>2,
-        'statusFinalizado'=>3,
+        'adminEmail'=>'omelettus@gmail.com',		
+		
+		//Estados de Usuario
+		'statusCriador'=>0,
+		'statusCazador'=>1,
+		'statusAlistado'=>2,
+		'statusBaja'=>3,
+		'statusDesertor'=>4,
+		'statusLibre'=>5,
+		
+		//Estados de Eventos
+		'statusCerrado'=>0,
+		'statusIniciado'=>1,
+		'statusBatalla'=>2,
+		'statusFinalizado'=>3,
+		
+		//Modificadores. Están aquí y en BBDD
+		'modifierHidratado'=>'hidratado',
+		'modifierDisimulando'=>'disimulando',
+		
+		//Habilidades. Están aquí y en BBDD
+		'skillHidratar'=>'hidratar',
+		'skillDisimular'=>'disimular',
+		'skillCazarGungubos'=>'cazarGungubos',
+		'skillEscaquearse'=>'escaquearse',
+		'skillVendetta'=>'vendetta',
 	),
 );

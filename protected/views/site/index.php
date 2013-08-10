@@ -65,7 +65,7 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 			
 			if (count($viejas)>0): ?>
 				<p class="categoriaNotif"><span>notificaciones leídas</span></p>
-				<?php foreach($viejas as $notification): Yii::log('Noti ');?>					
+				<?php foreach($viejas as $notification): ?>
 					<article id="noti_<?php echo $notification->id; ?>" class="notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
 							echo 'first';
