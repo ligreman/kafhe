@@ -116,7 +116,10 @@ class SkillValidator
 	
 	public function checkUserStatus($skill, $user) {
 		if ($skill->require_user_status == null) return true;
-		else if ($skill->require_user_status == $user->status) return true;
+		
+		$estados = explode(',', $skill->require_user_status);
+		
+		if (in_array($user->status, $estados)) return true;
 		else {
 			$this->_lastError = 'No tienes el estado requerido por la habilidad (alistado, no alistado, etc).';
 			return false;
@@ -125,7 +128,10 @@ class SkillValidator
 	
 	public function checkUserSide($skill, $user) {
 		if ($skill->require_user_side == null) return true;
-		else if ($skill->require_user_side == $user->side) return true;
+		
+		$sides = explode(',', $skill->require_user_side);
+		
+		if (in_array($user->require_user_side, $sides)) return true;
 		else {
 			$this->_lastError = 'No estás en el bando requerido por la habilidad.';
 			return false;
@@ -189,7 +195,7 @@ class SkillValidator
 		if (!$skill->require_target) {
 			if ($skill->require_target_side===null)
 				return true;
-			elseif ($target=='kafhe' || $target=='achikhoria')
+			elseif ($target=='kafhe' || $target=='achikhoria') //si el target es un bando completo.
 				return true;
 			else {
 				$this->_lastError = 'No se ha seleccionado un bando objetivo para la habilidad.';
@@ -209,9 +215,13 @@ class SkillValidator
 			}
 			
 			//Compruebo que si requería que el objetivo sea de un bando, lo sea
-			if ($skill->require_target_side!==null && $skill->require_target_side!=$target->side) {
-				$this->_lastError = 'El objetivo seleccionado no pertenece al bando requerido por la habilidad.';
-				return false;
+			if ($skill->require_target_side!==null) {
+				$sides = explode(',', $skill->require_target_side);
+
+				if (!in_array($skill->require_target_side, $sides)) {
+					$this->_lastError = 'El objetivo seleccionado no pertenece al bando requerido por la habilidad.';
+					return false;
+				}
 			}
 			
 			return true;
