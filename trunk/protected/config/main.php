@@ -202,6 +202,8 @@ return array(
 		'statusCazador'=>1,
 		'statusAlistado'=>2,
 		'statusBaja'=>3,
+		'statusDesertor'=>4,
+		'statusLibre'=>5,
 		
 		//Estados de Eventos
 		'statusCerrado'=>0,

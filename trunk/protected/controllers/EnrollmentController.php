@@ -114,7 +114,13 @@ class EnrollmentController extends Controller
                     //var_dump($enroll->errors);
 					
 					//Si el estado del usuario cambia (no es una actualización del pedido) le pongo alistado
-					if (Yii::app()->user->status != Yii::app()->params->statusAlistado) {
+					if (Yii::app()->user->status==Yii::app()->params->statusDesertor) {
+						Yii::app()->user->setState('status', Yii::app()->params->statusLibre);
+						
+						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusLibre)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario desertor ('.Yii::app()->user->id.') a Libre.');
+							
+					} elseif (Yii::app()->user->status!=Yii::app()->params->statusLibre  &&  Yii::app()->user->status!=Yii::app()->params->statusAlistado) {
 						Yii::app()->user->setState('status', Yii::app()->params->statusAlistado);
 						
 						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusAlistado)))
@@ -128,11 +134,18 @@ class EnrollmentController extends Controller
                     $enroll->delete();
                     $data['already_enroll'] = false;
 					
-					//Actualizao mi estado a Baja
-					Yii::app()->user->setState('status', Yii::app()->params->statusBaja);
+					//Actualizao mi estado a Baja/Desertor
+					if (Yii::app()->user->status==Yii::app()->params->statusLibre) {
+						Yii::app()->user->setState('status', Yii::app()->params->statusDesertor);
 						
-					if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusBaja)))
-						throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->user->id.') a Baja.');
+						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusDesertor)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->user->id.') a Desertor.');
+					} else {
+						Yii::app()->user->setState('status', Yii::app()->params->statusBaja);
+						
+						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusBaja)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->user->id.') a Baja.');
+					}
                 } else
                     throw new CHttpException(400,'Error al darse de baja: No se han encontrado tus datos de alistamiento.');
             }

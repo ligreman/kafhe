@@ -151,6 +151,10 @@ nav ul{
     color: #e0e0e0;
 }
 
+#secondary_nav li.active a {
+    font-weight: bold;
+}
+
 a, a:hover{
     color: #00924a;
 }

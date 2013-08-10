@@ -176,7 +176,8 @@ class SkillSingleton extends CApplicationComponent
 		    'body'=>'El Gran Omelettus dictamina que te toca llamar.'
 		    ));
 		if ($sent !== true)
-            throw new CHttpException(400, $sent);
+		    Yii::log($sent, 'error', 'Email escaqueo');
+            //throw new CHttpException(400, $sent);
 		
 		return true;
 	}
