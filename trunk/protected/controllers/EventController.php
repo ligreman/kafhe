@@ -28,12 +28,12 @@ class EventController extends Controller
 			array('allow', 
 				'actions'=>array('finish'),
 				'roles'=>array('Usuario'),
-				'expression'=>"(isset(Yii::app()->event->model) && (Yii::app()->event->status==Yii::app()->params->statusFinalizado || Yii::app()->event->status==Yii::app()->params->statusBatalla) && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->user->id )", //Dejo entrar
+				'expression'=>"(isset(Yii::app()->event->model) && (Yii::app()->event->status==Yii::app()->params->statusFinalizado || Yii::app()->event->status==Yii::app()->params->statusBatalla) && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->currentUser->id )", //Dejo entrar
 			),
             array('allow',
                 'actions'=>array('close'),
                 'roles'=>array('Usuario'),
-                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusFinalizado && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->user->id)", //Dejo entrar
+                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusFinalizado && isset(Yii::app()->event->caller) && Yii::app()->event->caller==Yii::app()->currentUser->id)", //Dejo entrar
             ),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -117,7 +117,7 @@ class EventController extends Controller
 	{
         //Cambio el evento a estado 3 de "asumo mi derrota"
         if (!isset(Yii::app()->event->model))
-            throw new CHttpException(400, 'Error al finalizar la batalla asumiendo la derrota del usuario '.Yii::app()->user->id);
+            throw new CHttpException(400, 'Error al finalizar la batalla asumiendo la derrota del usuario '.Yii::app()->currentUser->id);
 
         $event = Yii::app()->event->model;
 
@@ -159,7 +159,7 @@ class EventController extends Controller
     {
         //Cambio el evento a estado 4 de "cerrado"
         if (!isset(Yii::app()->event->model))
-            throw new CHttpException(400, 'Error al cerrar la batalla tras haber llamado el usuario '.Yii::app()->user->id);
+            throw new CHttpException(400, 'Error al cerrar la batalla tras haber llamado el usuario '.Yii::app()->currentUser->id);
 
         $event = Yii::app()->event->model;
         $event->status = Yii::app()->params->statusCerrado;
@@ -175,7 +175,7 @@ class EventController extends Controller
 		Yii::app()->usertools->reduceEventModifiers($event->group_id);
 
         //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
-		$usuarios = Yii::app()->usertools->getUsers();
+		$usuarios = Yii::app()->usertools->users;
 		$new_usuarios = array();
 		$anterior_llamador = null;
 		foreach($usuarios as $usuario) {			

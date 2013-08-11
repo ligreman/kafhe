@@ -15,9 +15,9 @@
 
 
 <?php
-$uss = Yii::app()->user->id;
+$uss = Yii::app()->currentUser->id;
 var_dump($uss);
-var_dump(Yii::app()->user->name);
+var_dump(Yii::app()->currentUser->alias);
 
 //Yii::log('patata', 'info', 'aa.yy.zz');
 
@@ -29,7 +29,7 @@ var_dump(function_exists('openssl_random_pseudo_bytes'));
 
 if (Yii::app()->user->isSuperuser) {
     echo "SUPERGUAY";
-    var_dump(Yii::app()->user->email);
+    var_dump(Yii::app()->currentUser->email);
 }
 
 if ($uss !== NULL) {

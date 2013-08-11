@@ -29,8 +29,8 @@ class EnrollmentController extends Controller
             ),
         );
     }
-/*        if (isset(Yii::app()->user->group_id))
-			return Event::model()->exists('group_id=:groupId AND open=1', array(':groupId'=>Yii::app()->user->group_id));
+/*        if (isset(Yii::app()->currentUser->groupId))
+			return Event::model()->exists('group_id=:groupId AND open=1', array(':groupId'=>Yii::app()->currentUser->groupId));
 		else return false;
         /*
 	public function actions()
@@ -51,7 +51,7 @@ class EnrollmentController extends Controller
         $data = array();
 
         //Primero comprobaré si ya he metido mi desayuno o no (si hay enrollment de mi usuario para este enveto)
-        $enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id=:event_id', 'params'=>array(':user_id'=>Yii::app()->user->id, 'event_id'=>Yii::app()->event->id)));
+        $enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id=:event_id', 'params'=>array(':user_id'=>Yii::app()->currentUser->id, 'event_id'=>Yii::app()->event->id)));
 
         if ($enroll==null) {
             $enroll = new Enrollment;
@@ -97,7 +97,7 @@ class EnrollmentController extends Controller
                         //Yii::log('actualizo enroll', 'warning', 'ENROLL');
                     } else {
                         //Guardo campo nuevo
-                        $enroll->user_id = Yii::app()->user->id;
+                        $enroll->user_id = Yii::app()->currentUser->id;
                         $enroll->event_id = Yii::app()->event->id;
                         $enroll->meal_id = $model->meal_id;
                         $enroll->drink_id = $model->drink_id;
@@ -114,17 +114,16 @@ class EnrollmentController extends Controller
                     //var_dump($enroll->errors);
 					
 					//Si el estado del usuario cambia (no es una actualización del pedido) le pongo alistado
-					if (Yii::app()->user->status==Yii::app()->params->statusDesertor) {
-						Yii::app()->user->setState('status', Yii::app()->params->statusLibre);
-						
-						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusLibre)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario desertor ('.Yii::app()->user->id.') a Libre.');
+					if (Yii::app()->currentUser->status==Yii::app()->params->statusDesertor) {
+
+						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusLibre)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario desertor ('.Yii::app()->currentUser->id.') a Libre.');
 							
-					} elseif (Yii::app()->user->status!=Yii::app()->params->statusLibre  &&  Yii::app()->user->status!=Yii::app()->params->statusAlistado) {
-						Yii::app()->user->setState('status', Yii::app()->params->statusAlistado);
+					} elseif (Yii::app()->currentUser->status!=Yii::app()->params->statusLibre  &&  Yii::app()->currentUser->status!=Yii::app()->params->statusAlistado) {
+
 						
-						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusAlistado)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->user->id.') a Alistado.');
+						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusAlistado)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
 					}
                 }
             }
@@ -135,16 +134,16 @@ class EnrollmentController extends Controller
                     $data['already_enroll'] = false;
 					
 					//Actualizao mi estado a Baja/Desertor
-					if (Yii::app()->user->status==Yii::app()->params->statusLibre) {
-						Yii::app()->user->setState('status', Yii::app()->params->statusDesertor);
-						
-						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusDesertor)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->user->id.') a Desertor.');
+					if (Yii::app()->currentUser->status==Yii::app()->params->statusLibre) {
+
+						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusDesertor)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Desertor.');
+
 					} else {
-						Yii::app()->user->setState('status', Yii::app()->params->statusBaja);
-						
-						if (!User::model()->updateByPk(Yii::app()->user->id, array('status'=>Yii::app()->params->statusBaja)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->user->id.') a Baja.');
+
+						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
+
 					}
                 } else
                     throw new CHttpException(400,'Error al darse de baja: No se han encontrado tus datos de alistamiento.');

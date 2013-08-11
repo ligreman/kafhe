@@ -37,7 +37,7 @@ class AdminController extends Controller
 	function isPostOwner() {
         $post = Post::model()->findByPk($_GET['post_id']);
         $owner_id = $post->owner_id;
-        if(Yii::app()->user->id === $owner_id)
+        if(Yii::app()->currentUser->id === $owner_id)
             return true;
         return false;
 	}

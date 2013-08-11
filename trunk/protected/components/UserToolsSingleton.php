@@ -34,15 +34,15 @@ class UserToolsSingleton extends CApplicationComponent
     {
         if (!$this->_users)
         {
-            /*if (!isset(Yii::app()->user->group_id))
+            /*if (!isset(Yii::app()->currentUser->groupId))
                 return null;*/
 
             $criteria = New CDbCriteria;
 
             //Si es admin tendrá grupo null y cogeré todos los usuarios
-            if (Yii::app()->user->group_id !== null) {
+            if (Yii::app()->currentUser->groupId !== null) {
                 $criteria->condition = 'group_id=:groupId';
-                $criteria->params = array(':groupId'=>Yii::app()->user->group_id);
+                $criteria->params = array(':groupId'=>Yii::app()->currentUser->groupId);
                 $criteria->order = 'rank DESC';
             }
 
@@ -62,7 +62,7 @@ class UserToolsSingleton extends CApplicationComponent
     {
         $criteria = New CDbCriteria;
 
-        if ($groupId == null) $groupId = Yii::app()->user->group_id;
+        if ($groupId == null) $groupId = Yii::app()->currentUser->groupId;
 
         if ($exclude !== null)
             $criteria->condition = 'id NOT IN ('.implode(',', $exclude).') ';
@@ -114,8 +114,8 @@ class UserToolsSingleton extends CApplicationComponent
     public function reduceModifierUses($mod_keyword, $userId=null)
 	{
 		if ($userId === null) {
-			if (isset(Yii::app()->user->id))
-				$userId = Yii::app()->user->id;
+			if (isset(Yii::app()->currentUser->id))
+				$userId = Yii::app()->currentUser->id;
 			else
 				return false;
 		}
@@ -138,8 +138,8 @@ class UserToolsSingleton extends CApplicationComponent
 	public function reduceEventModifiers($groupId=null)
 	{
 		if ($groupId === null) {
-			if (isset(Yii::app()->user->group_id))
-				$groupId = Yii::app()->user->group_id;
+			if (isset(Yii::app()->currentUser->groupId))
+				$groupId = Yii::app()->currentUser->groupId;
 			else
 				return false;
 		}	
@@ -198,10 +198,10 @@ class UserToolsSingleton extends CApplicationComponent
 	public function getModifiers() 
 	{	
 		if (!$this->_modifiers) {
-			if (!isset(Yii::app()->user->id))
+			if (!isset(Yii::app()->currentUser->id))
 				return null;
 
-			$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->user->id)));
+			$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->currentUser->id)));
 		}
 		
 		return $this->_modifiers;
@@ -209,10 +209,10 @@ class UserToolsSingleton extends CApplicationComponent
 	
 	/*public function updateModifiers()
 	{
-		if (!isset(Yii::app()->user->id))
+		if (!isset(Yii::app()->currentUser->id))
 				return null;
 				
-		$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->user->id)));
+		$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->currentUser->id)));
 	}*/
 	
 	//Calculo las probabilidades para cada usuario del grupo

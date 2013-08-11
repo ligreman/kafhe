@@ -29,7 +29,7 @@ class TuesteSingleton extends CApplicationComponent
 		$hasHidratado = false;
 
         //Si es el usuario activo me ahorro una consulta a BBDD
-		if (isset(Yii::app()->user) && isset(Yii::app()->user->id) && $user->id == Yii::app()->user->id) {
+		if (isset(Yii::app()->currentUser) && isset(Yii::app()->currentUser->id) && $user->id == Yii::app()->currentUser->id) {
 			if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado))
 				$hasHidratado = true;
 		} else {

@@ -37,8 +37,8 @@ class SiteController extends Controller
     }*/
 
 	/*public function puedoAlistarme() {
-		if (isset(Yii::app()->user->group_id))
-			return Event::model()->exists('group_id=:groupId AND open=1', array(':groupId'=>Yii::app()->user->group_id));
+		if (isset(Yii::app()->currentUser->groupId))
+			return Event::model()->exists('group_id=:groupId AND open=1', array(':groupId'=>Yii::app()->currentUser->groupId));
 		else return false;
 	}*/
 
@@ -97,7 +97,7 @@ class SiteController extends Controller
         } else if(Yii::app()->user->checkAccess('Usuario')) {
             //Estoy identificado, muestro el Muro
             $data_notif = $this->loadNotifications();
-			if($data_notif!==null) $data_notif = $this->processNotifications($data_notif, Yii::app()->user->id);
+			if($data_notif!==null) $data_notif = $this->processNotifications($data_notif);
 			
             $this->render('index', array('notifications'=>$data_notif));
         } else{
@@ -216,14 +216,15 @@ class SiteController extends Controller
 
     /******* Funciones auxiliares **********/
     public function loadNotifications() {
-        $notifications = Notification::model()->findAll(array('condition'=>'type!=:type OR (type=:type AND recipient_final=:recipient)', 'params'=>array(':type'=>'system', ':recipient'=>Yii::app()->user->id), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNewNotificacionesMuro')));
+        $notifications = Notification::model()->findAll(array('condition'=>'type!=:type OR (type=:type AND recipient_final=:recipient)', 'params'=>array(':type'=>'system', ':recipient'=>Yii::app()->currentUser->id), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNewNotificacionesMuro')));
 
         return $notifications;
     }
-	
-	public function processNotifications($data_notif, $userId)
+
+	//Separa las notificaciones en nuevas y viejas
+	public function processNotifications($data_notif)
 	{
-		$user = User::model()->findByPk($userId);
+		$user = Yii::app()->currentUser->model;
 		
 		$last_read = $user->last_notification_read;
 		if($last_read===null || $last_read=='')
