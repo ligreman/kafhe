@@ -116,6 +116,7 @@ return array(
 		//Singletons
 		'event'=>array('class'=>'EventSingleton'),
 		'usertools'=>array('class'=>'UserToolsSingleton'),
+        'currentUser'=>array('class'=>'UserSingleton'),
 		'gungubos'=>array('class'=>'GungubosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),
 		'skill'=>array('class'=>'SkillSingleton'),

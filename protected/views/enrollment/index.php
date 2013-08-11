@@ -51,7 +51,7 @@
     </div>
 
 	<div class="buttons">
-            <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn btn'.Yii::app()->user->side)); ?>
+            <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn btn'.Yii::app()->currentUser->side)); ?>
             <?php 
               if ($already_enroll) {
                 echo CHtml::submitButton('Darse de baja', array('name'=>'btn_cancel', 'class' => 'btn'));

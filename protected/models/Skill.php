@@ -63,12 +63,11 @@ class Skill extends CActiveRecord
 			array('name, description, category, type, keyword, modifier_keyword', 'required'),
 			array('duration, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target, require_caller, require_user_min_rank, require_event_status, talent_id_required', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>128),
-			array('description, require_user_status', 'length', 'max'=>255),
+			array('description, require_target_side, require_user_side, require_user_status', 'length', 'max'=>255),
 			array('category', 'length', 'max'=>13),
 			array('type', 'length', 'max'=>8),
 			array('keyword, modifier_keyword', 'length', 'max'=>50),
 			array('duration_type', 'length', 'max'=>6),
-			array('require_target_side, require_user_side', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, name, description, category, type, keyword, modifier_keyword, duration, duration_type, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_status, require_event_status, talent_id_required', 'safe', 'on'=>'search'),

@@ -10,7 +10,7 @@ class EventSingleton extends CApplicationComponent
 	
 	public function selectCaller()
 	{
-		if (!isset(Yii::app()->user->group_id))
+		if (!isset(Yii::app()->currentUser->groupId))
             return null;
 				
 		$this->getModel(); //Por si acaso
@@ -28,7 +28,7 @@ class EventSingleton extends CApplicationComponent
 		else  $bandoPerdedor = 'achikhoria';
 		
 		//Preparo un array con las probabilidades de cada uno de los usuarios del bando perdedor
-		$probabilidades = Yii::app()->usertools->calculateProbabilities(Yii::app()->user->group_id, true, $bandoPerdedor);
+		$probabilidades = Yii::app()->usertools->calculateProbabilities(Yii::app()->currentUser->groupId, true, $bandoPerdedor);
 		if ($probabilidades === null) return false;
 		
 		//Elijo llamador "ganador" dentro de ese bando
@@ -105,7 +105,7 @@ class EventSingleton extends CApplicationComponent
 	//Obtiene el pedido del evento de la semana pasada... el último evento cerrado
 	public function getPastOrder() 
 	{
-		$group_id = Yii::app()->user->group_id;
+		$group_id = Yii::app()->currentUser->groupId;
 		$event = Event::model()->findAll(array( 'condition'=>'status=:status AND group_id=:group', 'params'=>array(':status'=>Yii::app()->params->statusCerrado, ':group'=>$group_id), 'order'=>'date DESC', 'limit'=>1) );
 		
 		return $this->getOrder($event->id);
@@ -120,10 +120,10 @@ class EventSingleton extends CApplicationComponent
 	
 	/** GETTERS Y SETTERS GENERALES **/
 
-	public function setModel($id)
+	/*public function setModel($id)
     {
         $this->_model = Event::model()->findByPk($id);
-    }
+    }*/
 
     //Esta función la coge automáticamente
     public function getModel()
@@ -133,7 +133,7 @@ class EventSingleton extends CApplicationComponent
             $type = 'desayuno'; //Si no hay un modelo cargado, cargo el modelo de desayuno por defecto
             //Yii::log('Modelo Event', 'info', 'aa.yy.zz');
 
-            if (!isset(Yii::app()->user->group_id))
+            if (!isset(Yii::app()->currentUser->groupId))
                 return null;
 
             //Aquí se podría mirar la sesión también para tomar de allí el evento actualmente cargado. Yii::app()->session['var'] = 'value';
@@ -145,7 +145,7 @@ class EventSingleton extends CApplicationComponent
             //Cargo el último evento por fecha, del tipo seleccionado
             $criteria = New CDbCriteria;
             $criteria->condition = 'group_id=:groupId AND type=:type';
-            $criteria->params = array(':groupId'=>Yii::app()->user->group_id, ':type'=>$type);
+            $criteria->params = array(':groupId'=>Yii::app()->currentUser->groupId, ':type'=>$type);
             $criteria->order = 'date DESC';
             $criteria->limit = '1';
 
