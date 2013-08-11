@@ -40,7 +40,7 @@
             <?php if (!Yii::app()->user->isGuest): ?>
                 <ul id="mainActionsList">
                     <li>
-                    <?php //echo Yii::app()->user->name.' ';
+                    <?php
                         $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
                         echo CHtml::link($img,array('#'),array('title' => 'Enséñame las notificaciones, Oh! Gran Omelettus!','id' => 'notificationsMainLink'));
                     ?>

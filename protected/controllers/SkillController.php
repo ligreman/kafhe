@@ -30,7 +30,7 @@ class SkillController extends Controller
 	{	
 		//Obtengo la skill y mi usuario
 		$skill = Skill::model()->findByPk($skill_id);
-		$user = User::model()->findByPk(Yii::app()->user->id);
+		$user = Yii::app()->currentUser->model; ///TODO este se puede prescindir de él pero hay que modificar el resto de funciones
 		if ($target_id!==null) $target = User::model()->findByPk($target_id);
 		else $target = null;
 		

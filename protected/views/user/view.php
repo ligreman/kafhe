@@ -35,7 +35,7 @@ $this->menu=array(
 		'ptos_relanzamiento',
 		'ptos_talentos',
 		'tostolares',
-		'azucarillos',
+		'sugarcubes',
 		'dominio_tueste',
 		'dominio_habilidades',
 		'dominio_bandos',

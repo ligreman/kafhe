@@ -131,7 +131,7 @@ class SkillValidator
 		
 		$sides = explode(',', $skill->require_user_side);
 		
-		if (in_array($user->require_user_side, $sides)) return true;
+		if (in_array($user->side, $sides)) return true;
 		else {
 			$this->_lastError = 'No estás en el bando requerido por la habilidad.';
 			return false;

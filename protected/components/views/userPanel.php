@@ -1,14 +1,14 @@
 <?php
 
-$maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
-$skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()->request->cookies['skillsHidden']->value : '1';
+//$maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
+//$skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()->request->cookies['skillsHidden']->value : '1';
 
 ?>
 <div id="upContent">
     <div id="mainUserBlock">
         <p id="user">
 
-            <span id="userName"><?php echo $user->alias?></span>
+            <span id="userName"><?php echo $user->alias; ?></span>
             <span id="modificadores">
                 <?php
                 //Modificadores (provisional)
@@ -55,7 +55,7 @@ $skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()
         </p>
 
         <p class="dato">
-            <span class="numero"><?php echo $user->azucarillos; ?></span>
+            <span class="numero"><?php echo $user->sugarcubes; ?></span>
             <span class="concepto">azucarillos</span>
         </p>
 
@@ -74,7 +74,7 @@ $skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()
         <?php
         //Validador de habilidades
         $validator = new SkillValidator;
-        //$user = User::model()->findByPk(Yii::app()->user->id); //viene del controlador
+        //$user = User::model()->findByPk(Yii::app()->currentUser->id); //viene del controlador
         ?>
         <ul>
             <?php foreach($skills as $skill):?>

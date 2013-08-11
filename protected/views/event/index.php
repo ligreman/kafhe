@@ -69,7 +69,7 @@
 
          echo "<br><br>";*/
 
-         $arr = Yii::app()->usertools->calculateProbabilities(Yii::app()->user->group_id, true);
+         $arr = Yii::app()->usertools->calculateProbabilities(Yii::app()->currentUser->groupId, true);
         /*print_r($arr);*/
     ?>
 	

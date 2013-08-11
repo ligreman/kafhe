@@ -21,7 +21,7 @@
  * @property integer $ptos_talentos
  * @property integer $tostolares
  * @property integer $experience
- * @property integer $azucarillos
+ * @property integer $sugarcubes
  * @property integer $dominio_tueste
  * @property integer $dominio_habilidades
  * @property integer $dominio_bandos
@@ -59,14 +59,14 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password, alias, email', 'required'),
-			array('group_id, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
+			array('group_id, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
 			array('username, password, alias, email', 'length', 'max'=>128),
 			array('role', 'length', 'max'=>5),
 			array('side', 'length', 'max'=>10),
 			array('birthdate, last_regen_timestamp, last_notification_read', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, password, alias, email, birthdate, role, group_id, side, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, azucarillos, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls, last_regen_timestamp, last_notification_read', 'safe', 'on'=>'search'),
+			array('id, username, password, alias, email, birthdate, role, group_id, side, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls, last_regen_timestamp, last_notification_read', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -104,7 +104,7 @@ class User extends CActiveRecord
 			'ptos_talentos' => 'Ptos Talentos',
 			'tostolares' => 'Tostolares',
 			'experience' => 'Experience',
-			'azucarillos' => 'Azucarillos',
+			'sugarcubes' => 'Sugarcubes',
 			'dominio_tueste' => 'Dominio Tueste',
 			'dominio_habilidades' => 'Dominio Habilidades',
 			'dominio_bandos' => 'Dominio Bandos',
@@ -143,7 +143,7 @@ class User extends CActiveRecord
 		$criteria->compare('ptos_talentos',$this->ptos_talentos);
 		$criteria->compare('tostolares',$this->tostolares);
 		$criteria->compare('experience',$this->experience);
-		$criteria->compare('azucarillos',$this->azucarillos);
+		$criteria->compare('sugarcubes',$this->sugarcubes);
 		$criteria->compare('dominio_tueste',$this->dominio_tueste);
 		$criteria->compare('dominio_habilidades',$this->dominio_habilidades);
 		$criteria->compare('dominio_bandos',$this->dominio_bandos);
