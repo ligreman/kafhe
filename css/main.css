@@ -851,6 +851,28 @@ label.title{
     background-color: #00924a;
 }
 
+.formErrors{
+    padding: 1.5em;
+    margin: 0 3em;
+    color: #ffffff;
+    border:1px solid #ffffff;
+}
+
+.errorSummary{
+    background-color: #bf3950;
+    padding: 0 1em 1em;
+}
+
+.errorSummary p{
+    color: #ffffff;
+}
+
+.errorSummary li{
+    list-style: disc;
+    color: #ffffff;
+    margin-left:4em;
+}
+
 #battleStatus{
     display: block;
     height: 5px;
@@ -1097,6 +1119,11 @@ p.bebida{
     position: absolute;
     top: 25px;
     left: 58px;
+}
+
+.errorMessage{
+    color: #ff2c61;
+    margin: 0.5em 31%;
 }
 
 .w0{width:0%;}
