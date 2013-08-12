@@ -28,6 +28,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'alias'); ?>
+		<?php echo $form->textField($model,'alias',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'alias'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'email'); ?>
@@ -41,13 +47,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'role'); ?>
-		<?php echo $form->textField($model,'role',array('size'=>9,'maxlength'=>9)); ?>
+		<?php echo $form->textField($model,'role',array('size'=>5,'maxlength'=>5)); ?>
 		<?php echo $form->error($model,'role'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'group_id'); ?>
-		<?php echo $form->textField($model,'group_id',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->textField($model,'group_id'); ?>
 		<?php echo $form->error($model,'group_id'); ?>
 	</div>
 
@@ -55,6 +61,12 @@
 		<?php echo $form->labelEx($model,'side'); ?>
 		<?php echo $form->textField($model,'side',array('size'=>10,'maxlength'=>10)); ?>
 		<?php echo $form->error($model,'side'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'status'); ?>
+		<?php echo $form->textField($model,'status'); ?>
+		<?php echo $form->error($model,'status'); ?>
 	</div>
 
 	<div class="row">
@@ -94,9 +106,15 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'azucarillos'); ?>
-		<?php echo $form->textField($model,'azucarillos'); ?>
-		<?php echo $form->error($model,'azucarillos'); ?>
+		<?php echo $form->labelEx($model,'experience'); ?>
+		<?php echo $form->textField($model,'experience'); ?>
+		<?php echo $form->error($model,'experience'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'sugarcubes'); ?>
+		<?php echo $form->textField($model,'sugarcubes'); ?>
+		<?php echo $form->error($model,'sugarcubes'); ?>
 	</div>
 
 	<div class="row">
@@ -127,6 +145,18 @@
 		<?php echo $form->labelEx($model,'calls'); ?>
 		<?php echo $form->textField($model,'calls'); ?>
 		<?php echo $form->error($model,'calls'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'last_regen_timestamp'); ?>
+		<?php echo $form->textField($model,'last_regen_timestamp'); ?>
+		<?php echo $form->error($model,'last_regen_timestamp'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'last_notification_read'); ?>
+		<?php echo $form->textField($model,'last_notification_read'); ?>
+		<?php echo $form->error($model,'last_notification_read'); ?>
 	</div>
 
 	<div class="row buttons">

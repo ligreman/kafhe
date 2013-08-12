@@ -6,12 +6,13 @@
 class UserSingleton extends CApplicationComponent
 {
 	private $_model = null;
-
+	
 	/*public function setModel($id)
     {
         $this->_model = User::model()->findByPk($id);
     }*/
-
+	
+	
     //Esta función la coge automáticamente
     public function getModel()
     {

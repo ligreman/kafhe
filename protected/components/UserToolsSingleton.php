@@ -7,6 +7,7 @@ class UserToolsSingleton extends CApplicationComponent
 {
 	private $_users = null;
 	private $_modifiers = null;
+	private $_statuses = null;
 
 	/*public function setModel($id)
     {
@@ -14,7 +15,7 @@ class UserToolsSingleton extends CApplicationComponent
     }*/
 
     //Cojo el alias de sesión si ya está cargado, porque no es algo que cambie
-    public function getAlias($userId)
+    public function getAlias($userId=null)
     {
 		if (!$this->_users) {
 			//Yii::log('user: '.$userId, 'error', 'No existe, los cargo');
@@ -23,11 +24,33 @@ class UserToolsSingleton extends CApplicationComponent
 			//return null;
 
 		//Yii::log('user: '.$userId, 'error', 'Cojo nombre');
+		$aliases = array();
         foreach($this->_users as $user) {
-			if ($user->id == $userId)
-				return $user->alias;
+			if ($userId!==null  &&  $user->id == $userId)
+				return $user->alias;			
+			else
+				$aliases[$user->id] = $user->alias;
 		}
+		
+		return $aliases;
     }
+	
+	public function getStatusName($status_id)
+	{
+		if (!$this->_statuses) {
+			$estados = array(
+				Yii::app()->params->statusCriador => 'Criador',
+				Yii::app()->params->statusCazador => 'Cazador',
+				Yii::app()->params->statusAlistado => 'Alistado',
+				Yii::app()->params->statusBaja => 'Baja',
+				Yii::app()->params->statusDesertor => 'Desertor',
+				Yii::app()->params->statusLibre => 'Agente libre',
+			);
+			$this->_statuses = $estados;
+		}
+		
+		return $this->_statuses[$status_id];
+	}
 	
 	//Esta función la coge automáticamente. Coge usuarios del grupo actual
     public function getUsers()
@@ -258,6 +281,18 @@ class UserToolsSingleton extends CApplicationComponent
 		$bando['kafhe'] = round( ($kafhe / ($kafhe + $achikhoria)) * 100 , 2);
 		$bando['achikhoria'] = round( ($achikhoria / ($kafhe + $achikhoria)) * 100 , 2);
 		return $bando;
-	}	
+	}
+
+
+    /** He de encontrar el bando de este usuario en el evento anterior al actual
+     * @param $exAgenteLibre: objeto User
+     */
+    public function getPreviousSide($exAgenteLibre)
+    {
+        $eventoPasado = Event::model()->find(array('condition'=>'id!=:id AND group_id=:grupo AND status=:estado', 'params'=>array(':id'=>Yii::app()->event->id, ':grupo'=>Yii::app()->event->groupId, ':estado'=>Yii::app()->params->statusCerrado), 'order'=>'date DESC', 'limit'=>1));
+		
+		if($eventoPasado == null) return null;
+        else return $eventoPasado->caller_side;
+    }
 	
 }
