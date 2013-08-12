@@ -62,15 +62,16 @@ class SkillSingleton extends CApplicationComponent
 		}
 		
 		//Mensaje
-        if ($this->_finalTarget == $this->_caster) $finalName = 'sí mismo';
-        else $finalName = Yii::app()->usertools->getAlias($this->_finalTarget);
+		if ($target===null) $finalName = '';  //si venía nulo, es porque no tiene objetivo y no pongo nada
+        elseif ($this->_finalTarget == $this->_caster) $finalName = ' sobre sí mismo';
+        else $finalName = ' sobre '.Yii::app()->usertools->getAlias($this->_finalTarget);
 
         if ($this->_result == 'fail')
-            $this->_resultMessage = ':'.$skill->keyword.': Ha pifiado al intentar ejecutar la habilidad '.$skill->name.' sobre '.$finalName.'.';
+            $this->_resultMessage = ':'.$skill->keyword.': Ha pifiado al intentar ejecutar la habilidad '.$skill->name.$finalName.'.';
         else if ($this->_result == 'normal')
-            $this->_resultMessage = ':'.$skill->keyword.': Ha ejecutado la habilidad '.$skill->name.' sobre '.$finalName.'.';
+            $this->_resultMessage = ':'.$skill->keyword.': Ha ejecutado la habilidad '.$skill->name.$finalName.'.';
         else if ($this->_result == 'critic')
-            $this->_resultMessage = ':'.$skill->keyword.': Ha hecho un crítico ejecutando la habilidad '.$skill->name.' sobre '.$finalName.'.';
+            $this->_resultMessage = ':'.$skill->keyword.': Ha hecho un crítico ejecutando la habilidad '.$skill->name.$finalName.'.';
 
 		return true;
     }

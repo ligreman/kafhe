@@ -17,6 +17,10 @@
 	<?php echo CHtml::encode($data->password); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('alias')); ?>:</b>
+	<?php echo CHtml::encode($data->alias); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
 	<?php echo CHtml::encode($data->email); ?>
 	<br />
@@ -29,13 +33,17 @@
 	<?php echo CHtml::encode($data->role); ?>
 	<br />
 
+	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('group_id')); ?>:</b>
 	<?php echo CHtml::encode($data->group_id); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('side')); ?>:</b>
 	<?php echo CHtml::encode($data->side); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
+	<?php echo CHtml::encode($data->status); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('rank')); ?>:</b>
@@ -62,8 +70,12 @@
 	<?php echo CHtml::encode($data->tostolares); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('azucarillos')); ?>:</b>
-	<?php echo CHtml::encode($data->azucarillos); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('experience')); ?>:</b>
+	<?php echo CHtml::encode($data->experience); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('sugarcubes')); ?>:</b>
+	<?php echo CHtml::encode($data->sugarcubes); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('dominio_tueste')); ?>:</b>
@@ -84,6 +96,14 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('calls')); ?>:</b>
 	<?php echo CHtml::encode($data->calls); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('last_regen_timestamp')); ?>:</b>
+	<?php echo CHtml::encode($data->last_regen_timestamp); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('last_notification_read')); ?>:</b>
+	<?php echo CHtml::encode($data->last_notification_read); ?>
 	<br />
 
 	*/ ?>

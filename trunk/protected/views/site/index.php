@@ -3,9 +3,12 @@
 
 define('KAFHE','kafhe');
 define('ACHIKHORIA','achikhoria');
+define('OMELETTUS','omelettus');
+define('SYSTEM','system');
 
 $this->pageTitle=Yii::app()->name;
 $nombres_tiempo=array('día','hora','minuto','segundo');
+$aliases = Yii::app()->usertools->getAlias();
 ?>
 <div id="muro">
 <h1 class="oculto">Notificaciones</h1>
@@ -24,13 +27,18 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 				<p class="categoriaNotif"><span>notificaciones sin leer</span></p>
 				
 				<?php foreach($nuevas as $notification):?>
-					<article id="noti_<?php echo $notification->id; ?>" class="notification <?php echo $notification->type;?> <?php
+					<article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
 							echo 'first';
 							$last_type = $notification->type;
 						}
 						?>">
-						<h1><?php echo Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
+						<?php //Calculo el nombre a mostrar 
+							if($notification->type == OMELETTUS) $nombre = 'Omelettus';
+							elseif($notification->type == SYSTEM) $nombre = 'System';
+							else $nombre = $aliases[$notification->sender];
+						?>
+						<h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
 						<?php
 							//Calculamos el tiempo que hace
 							$fecha_noti = date_create($notification->timestamp);
@@ -66,13 +74,18 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 			if (count($viejas)>0): ?>
 				<p class="categoriaNotif"><span>notificaciones leídas</span></p>
 				<?php foreach($viejas as $notification): ?>
-					<article id="noti_<?php echo $notification->id; ?>" class="notification <?php echo $notification->type;?> <?php
+					<article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
 							echo 'first';
 							$last_type = $notification->type;
 						}
 						?>">
-						<h1><?php echo Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
+						<?php //Calculo el nombre a mostrar 
+							if($notification->type == OMELETTUS) $nombre = 'Omelettus';
+							elseif($notification->type == SYSTEM) $nombre = 'System';
+							else $nombre = $aliases[$notification->sender];
+						?>
+						<h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
 						<?php
 							//Calculamos el tiempo que hace
 							$fecha_noti = date_create($notification->timestamp);

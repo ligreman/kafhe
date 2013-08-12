@@ -19,6 +19,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'role'		=> 'user',
             'rank' 		=> 1,
             'experience'=>0,
+			'status'	=> 2,
 			'side'		=> 'kafhe',			
 			'group_id'	=> 1,
 			'last_notification_read' => '2013-08-08 12:20:38'
@@ -48,6 +49,7 @@ class m130620_205405_dummy_data extends CDbMigration
             'ptos_tueste' => 1000,
 			'rank' 		=> 1,
 			'experience'=>0,
+			'status'	=> 2,
 			'group_id'	=> 1,
 			'last_notification_read' => '2013-08-08 12:20:38'
 		));
@@ -89,7 +91,7 @@ class m130620_205405_dummy_data extends CDbMigration
             'ptos_tueste' => 1000,
             'experience'=>0,
 			'rank' 		=> 1,
-			'status'	=> 4,
+			'status'	=> 5,
 			'group_id'	=> 1,
 			'last_notification_read' => '2013-08-08 12:20:38'
 		));
@@ -187,6 +189,16 @@ class m130620_205405_dummy_data extends CDbMigration
 
 		$this->insert('event', array(
             'group_id'=>1,
+            'status'=>0,
+			'caller_id'=>7,
+			'caller_side'=>'kafhe',
+            'type'=>'desayuno',
+			'gungubos_kafhe'=>150,
+			'gungubos_achikhoria'=>200,
+            'date'=>date('2013-05-20')
+        ));
+		$this->insert('event', array(
+            'group_id'=>1,
             'status'=>1,
             'type'=>'desayuno',
 			'gungubos_kafhe'=>150,
@@ -214,6 +226,49 @@ class m130620_205405_dummy_data extends CDbMigration
             'type'=>'infusion',
             'ito'=>1
         ));
+		
+		$this->insert('enrollment', array(
+			'user_id'=>2,
+			'event_id'=>2,
+			'meal_id'=>2,
+			'drink_id'=>2,            
+            'ito'=>0
+        ));
+		$this->insert('enrollment', array(
+			'user_id'=>3,
+			'event_id'=>2,
+			'meal_id'=>NULL,
+			'drink_id'=>1,            
+            'ito'=>0
+        ));
+		$this->insert('enrollment', array(
+			'user_id'=>4,
+			'event_id'=>2,
+			'meal_id'=>1,
+			'drink_id'=>1,            
+            'ito'=>0
+        ));
+		$this->insert('enrollment', array(
+			'user_id'=>5,
+			'event_id'=>2,
+			'meal_id'=>2,
+			'drink_id'=>2,            
+            'ito'=>1
+        ));
+		$this->insert('enrollment', array(
+			'user_id'=>6,
+			'event_id'=>2,
+			'meal_id'=>1,
+			'drink_id'=>NULL,            
+            'ito'=>0
+        ));
+		$this->insert('enrollment', array(
+			'user_id'=>7,
+			'event_id'=>2,
+			'meal_id'=>2,
+			'drink_id'=>2,            
+            'ito'=>0
+        ));
 
 		$this->insert('notification', array(
             'sender'=>2,
@@ -232,7 +287,7 @@ class m130620_205405_dummy_data extends CDbMigration
 			'timestamp' => '2013-08-08 11:20:38'
         ));
 		$this->insert('notification', array(
-            'sender'=>1,
+            'sender'=>4,
             'recipient_original'=>3,
 			'recipient_final'=>3,
             'message'=>'Notificación nueva',
