@@ -2,6 +2,13 @@
 
 <h1 class="oculto">Alistamiento</h1>
 
+    <?php
+        if($model->hasErrors()){
+            echo '<div class="formErrors">';
+            echo CHtml::errorSummary($model);
+            echo '</div>';
+        }
+    ?>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'enrollment-form',
@@ -23,9 +30,8 @@
 ));
 
 ?>
-    <?php echo $form->errorSummary($model); ?>
     <!--<p class="floatedLink"><a href="#" class="closeSubmenuLink">Cerrar</a></p>-->
-	<p>Alístate diciendo qué vas a tomar en el próximo desayuno:</p>
+	<p>Alístate eligiendo tu próximo desayuno:</p>
 
   <div class="itoSelect">
 		<?php echo $form->checkBox($model,'ito',array('class' => 'oculto')); ?>

@@ -1,5 +1,5 @@
 <?php
-$userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii::app()->request->cookies['userPanelHidden']->value : '1';
+    $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii::app()->request->cookies['userPanelHidden']->value : '1';
 ?>
 <!DOCTYPE html>
 <html>
