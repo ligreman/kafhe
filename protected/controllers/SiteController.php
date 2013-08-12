@@ -193,6 +193,13 @@ class SiteController extends Controller
         $this->renderPartial('_ajaxPrueba', $data, false, true);
     }
 
+    public function actionRead($date) {
+        $d = date_parse($date);
+        if($d != false){
+            $notifications = User::model()->updateByPk(Yii::app()->currentUser->id,array("last_notification_read" => $date));
+        }
+    }
+
 
 	/*public function actionAlistamiento()
 	{
@@ -234,7 +241,7 @@ class SiteController extends Controller
 		$nuevas = $viejas_aux = $viejas = array();
 
 		foreach($data_notif as $noti) {
-			if(strtotime($last_read) <= strtotime($noti->timestamp))
+			if(strtotime($last_read) < strtotime($noti->timestamp))
 				array_push($nuevas, $noti);
 			else
 				array_push($viejas_aux, $noti);
