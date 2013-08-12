@@ -51,7 +51,7 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
                         <p class="notification_message"><?php
                             $pattern = '/:+([a-z]+):+/i';
-                            echo preg_replace('/:+([a-z]+):+/i', '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('width' => '48')).'</span>', $notification->message);
+                            echo preg_replace('/:+([a-z]+):+/i', '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('width' => '48')).'</span><span>', $notification->message);
                             //echo $notification->message;
                             ?></p>
 					</article>

@@ -14,14 +14,21 @@
                 <li><p class="bebida">bebidas</p>
                     <ul class="bebida">
                         <?php foreach($itos['bebidas'] as $id=>$cantidad): ?>
-                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$bebidas[$id]; ?></li>
+                            <li><span class="numeroVeces"><?php
+                                echo $cantidad.'</span><span class="veces"> x </span>'.$bebidas[$id];
+                                $img = CHtml::image(Yii::app()->baseUrl.'/images/tick.png','Oído Cocina',array('title' => 'Oído Cocina')    );
+                                echo CHtml::link($img,'#');
+                                ?></li>
                         <?php endforeach; ?>
                     </ul>
                 </li>
                 <li><p class="comida">comidas</p>
                     <ul class="comida">
                         <?php foreach($itos['comidas'] as $id=>$cantidad): ?>
-                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$comidas[$id]; ?></li>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$comidas[$id];
+                            $img = CHtml::image(Yii::app()->baseUrl.'/images/tick.png','Oído Cocina',array('title' => 'Oído Cocina'));
+                            echo CHtml::link($img,'#');
+                            ?></li>
                         <?php endforeach; ?>
                     </ul>
                 </li>
@@ -34,15 +41,21 @@
                 <li><p class="bebida">bebidas</p>
                     <ul class="bebida">
                         <?php foreach($noitos['bebidas'] as $id=>$cantidad): ?>
-                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$bebidas[$id]; ?></li>
-                        <?php endforeach; ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$bebidas[$id];
+                            $img = CHtml::image(Yii::app()->baseUrl.'/images/tick.png','Oído Cocina',array('title' => 'Oído Cocina'));
+                            echo CHtml::link($img,'#');
+                            ?></li>
+                            <?php endforeach; ?>
                     </ul>
                 </li>
                 <li><p class="comida">comidas</p>
                     <ul class="comida">
                         <?php foreach($noitos['comidas'] as $id=>$cantidad): ?>
-                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$comidas[$id]; ?></li>
-                        <?php endforeach; ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$comidas[$id];
+                            $img = CHtml::image(Yii::app()->baseUrl.'/images/tick.png','Oído Cocina',array('title' => 'Oído Cocina'));
+                            echo CHtml::link($img,'#');
+                            ?></li>
+                            <?php endforeach; ?>
                     </ul>
                 </li>
             </ul>
