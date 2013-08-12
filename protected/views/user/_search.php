@@ -13,12 +13,17 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'id'); ?>
-		<?php echo $form->textField($model,'id',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->textField($model,'id'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'username'); ?>
 		<?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>128)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'alias'); ?>
+		<?php echo $form->textField($model,'alias',array('size'=>60,'maxlength'=>128)); ?>
 	</div>
 
 	<div class="row">
@@ -33,17 +38,22 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'role'); ?>
-		<?php echo $form->textField($model,'role',array('size'=>9,'maxlength'=>9)); ?>
+		<?php echo $form->textField($model,'role',array('size'=>5,'maxlength'=>5)); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'group_id'); ?>
-		<?php echo $form->textField($model,'group_id',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->textField($model,'group_id'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'side'); ?>
 		<?php echo $form->textField($model,'side',array('size'=>10,'maxlength'=>10)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'status'); ?>
+		<?php echo $form->textField($model,'status'); ?>
 	</div>
 
 	<div class="row">
@@ -77,8 +87,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'azucarillos'); ?>
-		<?php echo $form->textField($model,'azucarillos'); ?>
+		<?php echo $form->label($model,'experience'); ?>
+		<?php echo $form->textField($model,'experience'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'sugarcubes'); ?>
+		<?php echo $form->textField($model,'sugarcubes'); ?>
 	</div>
 
 	<div class="row">
@@ -104,6 +119,16 @@
 	<div class="row">
 		<?php echo $form->label($model,'calls'); ?>
 		<?php echo $form->textField($model,'calls'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'last_regen_timestamp'); ?>
+		<?php echo $form->textField($model,'last_regen_timestamp'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'last_notification_read'); ?>
+		<?php echo $form->textField($model,'last_notification_read'); ?>
 	</div>
 
 	<div class="row buttons">

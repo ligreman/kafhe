@@ -179,7 +179,7 @@ class SkillValidator
 	public function checkCaller($skill, $user) {
 		if (!$skill->require_caller) return true;
 		else if (isset(Yii::app()->event->model)) {
-			if (Yii::app()->event->caller!=null && Yii::app()->event->caller==$user->id) return true;
+			if (Yii::app()->event->callerId!=null && Yii::app()->event->callerId==$user->id) return true;
 			else {
 				$this->_lastError = 'No eres el actual llamador del evento.';
 				return false;

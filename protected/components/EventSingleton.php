@@ -16,7 +16,7 @@ class EventSingleton extends CApplicationComponent
 		$this->getModel(); //Por si acaso
 			
 		//Cojo los usuarios alistados del grupo de este evento
-		$users = User::model()->findAll(array('condition'=>'group_id=:group AND status=:status', 'params'=>array(':group'=>$this->getGroup(), ':status'=>Yii::app()->params->statusAlistado)));
+		$users = User::model()->findAll(array('condition'=>'group_id=:group AND status=:status', 'params'=>array(':group'=>$this->getGroupId(), ':status'=>Yii::app()->params->statusAlistado)));
 				
 		//Probabilidades de cada bando
 		$bandos = Yii::app()->usertools->calculateSideProbabilities($this->getGungubosKafhe(), $this->getGungubosAchikhoria());
@@ -111,27 +111,227 @@ class EventSingleton extends CApplicationComponent
 		return $this->getOrder($event->id);
 	}
 	
-	//Coge el array de usuarios y los distribuye en bandos, cambiando los $usuario->side como corresponda
-	//* $usuarios[$usuario->id] = $usuario;
-	public function createSides($usuarios, $llamador)
+
+	/** Distribuye en bandos a los usuarios
+     * @param $usuarios: $usuarios[$usuario->id] = $usuario;
+     * @param $exAgenteLibre: objeto User del anterior agente libre, para saber el bando final del grupo donde esté él
+     * @return mixed
+     */
+    public function createSides($usuarios, $exAgenteLibre=null)
 	{
-		return $usuarios;
+	    $listaRangos = array();
+	    $listaUsuarios = $usuarios;
+	    if ($exAgenteLibre!=null) array_push($listaUsuarios, $exAgenteLibre);
+
+	    if(count($listaUsuarios)>0) {
+	        foreach($listaUsuarios as $usuario) {
+	            $listaRangos[] = $usuario->rank;
+	        }
+        }
+
+		////Yii::log('----------------------------','info');
+		////Yii::log(print_r($listaRangos,true), 'info', 'Lista rangos');
+		////Yii::log(print_r($listaUsuarios,true), 'info', 'Lista usuarios');
+		
+        //Calculo reparto de rangos
+        $teams = $this->bruteForceTeamDivision($listaRangos);
+		////Yii::log('----------------------------','info');
+		////Yii::log(print_r($teams,true), 'info', 'TEAMS');
+        $teams = $this->distributeUsersPerRank($teams, $listaUsuarios);
+		////Yii::log(print_r($teams,true), 'info', 'TEAMS AFTER Distribute');
+
+        if ($exAgenteLibre == null) {
+            $finalteams['kafhe'] = $teams['teamA'];
+            $finalteams['achikhoria'] = $teams['teamB'];
+        } else {
+            $bandoAnterior = Yii::app()->usertools->getPreviousSide($exAgenteLibre); //bando anterior del ex-libre
+			if ($bandoAnterior === null)
+				throw new CHttpException(400, 'Error al obtener el bando anterior del agente libre del evento '.Yii::app()->event->id.'.'); //Tiene que existir por narices si existe un agente libre
+
+            //Reparto los bandos dependiendo del agente libre
+            if(array_key_exists($exAgenteLibre->id, $teams['teamA'])) {
+                if($bandoAnterior == 'kafhe') {
+                    $finalteams['achikhoria'] = $teams['teamA'];
+                    $finalteams['kafhe'] = $teams['teamB'];
+                } else {
+                    $finalteams['achikhoria'] = $teams['teamB'];
+                    $finalteams['kafhe'] = $teams['teamA'];
+                }
+            } else {
+                if($bandoAnterior == 'kafhe') {
+                    $finalteams['achikhoria'] = $teams['teamB'];
+                    $finalteams['kafhe'] = $teams['teamA'];
+                } else {
+                    $finalteams['achikhoria'] = $teams['teamA'];
+                    $finalteams['kafhe'] = $teams['teamB'];
+                }
+            }
+        }
+
+		if (count($finalteams['kafhe'])==0  &&  count($finalteams['achikhoria'])==0) return false;
+		else return $finalteams;
 	}
+
+
+    private function bruteForceTeamDivision($teams) {
+        $kafheT = $achiT = array();
+        $kafheL = $achiL = 0;
+        $limite_diferencia_rangos = 2;
+
+        $this->prepareTeamArrays(count($teams), $kafheL, $achiL);
+
+        $counter = 0;
+
+        do {
+            shuffle($teams);
+            $kafheT = $achiT = array(); //reinicio los arrays
+
+            for ($i=0; $i<$kafheL; $i++) { $kafheT[] = $teams[$i]; } //Team kafhe
+            for ($j=$kafheL; $j<($kafheL+$achiL); $j++) { $achiT[] = $teams[$j]; } //Team achikhoria
+
+            $counter++;
+
+            if ($counter>20) {
+                $counter=0;
+                $limite_diferencia_rangos++;
+            }
+        } while( abs(array_sum($kafheT) - array_sum($achiT)) >= $limite_diferencia_rangos );
+
+        //Ahora miro si algún bando abusa, siendo el que más usuarios tiene y además el que más rango tiene
+        $maxL = max( count($kafheT), count($achiT) );
+        $maxR = max( array_sum($kafheT), array_sum($achiT) );
+		
+		////Yii::log('----------------------------','info');
+		////Yii::log(print_r($kafheT,true), 'info', 'KafheT');
+		////Yii::log(print_r($achiT,true), 'info', 'AchiT');
+
+        if ($maxL==count($kafheT) && $maxR==array_sum($kafheT)) { //Kafhe abusón
+            $this->desabusar($kafheT, $achiT, abs(array_sum($kafheT)-array_sum($achiT)));
+        }
+
+        if ($maxL==count($achiT) && $maxR==array_sum($achiT)) { //Achikhoria abusón
+            $this->desabusar($achiT, $kafheT, abs(array_sum($kafheT)-array_sum($achiT)));
+        }
+		
+		////Yii::log('----------------------------','info');
+		////Yii::log(print_r($kafheT,true), 'info', 'KafheT after desabusar');
+		////Yii::log(print_r($achiT,true), 'info', 'AchiT after desabusar');
+
+        return array('teamA'=>$kafheT, 'teamB'=>$achiT);
+    }
+
+    /** Distribuye a los usuarios según sus rangos y una lista de equipos
+     * @param $teams: array con teamA y teamB que son arrays de rangos
+     * @param $listaUsuarios: array de objetos User
+     */
+    private function distributeUsersPerRank($teams, $listaUsuarios)
+    {
+        if( (count($teams['teamA']) + count($teams['teamB'])) != count($listaUsuarios) )
+            throw new CHttpException(400, 'Error al distribuir en bandos a los usuarios por rangos.');
+
+        $finalteams = array('teamA'=>array(), 'teamB'=>array());
+		
+		//Yii::log(print_r($teams,true), 'info', 'TEAMS');
+		////Yii::log(print_r(,true), 'info', '');
+
+        foreach($teams['teamA'] as $rango) {
+            shuffle($listaUsuarios);
+			
+			//Yii::log('Rango '.$rango, 'info', 'Team A');
+
+            //Busco un usuario de ese rango
+            for($i=0; $i<count($listaUsuarios); $i++) {
+				//Yii::log('count($listaUsuarios): '.count($listaUsuarios), 'info', 'Team A');
+				//Yii::log('Counter i: '.$i, 'info', 'Team A');
+                if($listaUsuarios[$i]->rank == $rango) {
+					//Yii::log('Encuentro a '.$listaUsuarios[$i]->username, 'info', 'Team A');
+                    $finalteams['teamA'][$listaUsuarios[$i]->id] = $listaUsuarios[$i];
+                    unset($listaUsuarios[$i]);
+                    break; //salgo del for
+                }
+            }
+        }
+
+        foreach($teams['teamB'] as $rango) {
+            shuffle($listaUsuarios);
+			
+			//Yii::log('Rango '.$rango, 'info', 'Team B');
+
+            //Busco un usuario de ese rango
+            for($i=0; $i<count($listaUsuarios); $i++) {
+				//Yii::log('count($listaUsuarios): '.count($listaUsuarios), 'info', 'Team B');
+				//Yii::log('Counter i: '.$i, 'info', 'Team B');
+                if($listaUsuarios[$i]->rank == $rango) {
+					//Yii::log('Encuentro a '.$listaUsuarios[$i]->username, 'info', 'Team B');
+                    $finalteams['teamB'][$listaUsuarios[$i]->id] = $listaUsuarios[$i];
+                    unset($listaUsuarios[$i]);
+                    break; //salgo del for
+                }
+            }
+        }
+		
+		//Yii::log('---------------------', 'info');
+		//Yii::log(print_r($finalteams,true), 'info', 'FINAL TEAMS');
+
+        return $finalteams;
+    }
+
+
+    /** FUNCIONES AUXILIARES **/
+    private function desabusar(&$abusones, &$victimas, $diferencia)
+    {
+        foreach($abusones as $id_abuson=>$abuson) {
+            $resuelto = false;
+
+            foreach($victimas as $id_victima=>$victima) {
+                if( ($victima+$diferencia) == $abuson ) {
+                    $resuelto = true;
+                }
+
+                if ($resuelto) {
+                    $new_abuson = $victimas[$id_victima];
+                    $new_victima = $abusones[$id_abuson];
+
+                    $victimas[$id_victima] = $new_victima;
+                    $abusones[$id_abuson] = $new_abuson;
+                    break;
+                }
+            }
+
+            if ($resuelto) break;
+        }
+    }
+
+    private function prepareTeamArrays($length, &$kafheL, &$achiL)
+    {
+        //PAR: El numero de participantes es par, dividimos en partes iguales
+        if ($length % 2 == 0){
+            $kafheL = $achiL = $length/2;
+        }//IMPAR: El numero de participantes es impar, aleatorizamos qué equipo tendrá un jugador más.
+        else{
+            $size1 = intval($length/2);
+            $size2 = $length - $size1;
+            //decide qué equipo se queda con más parte del array (quién tendrá un jugador más). Si random es par, Kafhe, sino achicoria
+            if (mt_rand(1,2) == 1){
+                $kafheL = $size2;
+                $achiL = $size1;
+            }
+            else{
+                $kafheL = $size1;
+                $achiL = $size2;
+            }
+        }
+    }
 	
 	/** GETTERS Y SETTERS GENERALES **/
 
-	/*public function setModel($id)
-    {
-        $this->_model = Event::model()->findByPk($id);
-    }*/
-
-    //Esta función la coge automáticamente
+	//Esta función la coge automáticamente
     public function getModel()
     {
         if (!$this->_model)
         {
             $type = 'desayuno'; //Si no hay un modelo cargado, cargo el modelo de desayuno por defecto
-            //Yii::log('Modelo Event', 'info', 'aa.yy.zz');
+            //////Yii::log('Modelo Event', 'info', 'aa.yy.zz');
 
             if (!isset(Yii::app()->currentUser->groupId))
                 return null;
@@ -156,10 +356,11 @@ class EventSingleton extends CApplicationComponent
     }
 
 	public function getId() { return $this->model->id; }	
-	public function getGroup() { return $this->model->group_id; }	
+	public function getGroupId() { return $this->model->group_id; }	
     public function getStatus() { return $this->model->status; }	
-	public function getCaller() { return $this->model->caller_id; }	
-	public function getType() { return $this->model->type; }
+	public function getCallerId() { return $this->model->caller_id; }
+    public function getCallerSide() { return $this->model->caller_side; }
+    public function getType() { return $this->model->type; }
 	public function getGungubosKafhe() { return $this->model->gungubos_kafhe; }
 	public function getGungubosAchikhoria() { return $this->model->gungubos_achikhoria; }
 }

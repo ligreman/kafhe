@@ -222,5 +222,8 @@ return array(
 		'skillCazarGungubos'=>'cazarGungubos',
 		'skillEscaquearse'=>'escaquearse',
 		'skillVendetta'=>'vendetta',
+
+		//Otros
+		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Renegados'),
 	),
 );

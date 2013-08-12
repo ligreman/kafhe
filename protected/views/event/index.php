@@ -38,36 +38,38 @@
         }
     </script>
 
-    <?php $status = array('Criador', 'Cazador', 'Alistado', 'Baja', 'Desertor', 'Libre'); ?>
+    <?php //$status = array('Criador', 'Cazador', 'Alistado', 'Baja'); ?>
     <?php
         $achikhoriaMembers = '<ul id="kafheMembers">';
         $kafheMembers = '<ul id="achikhoriaMembers">';
-        $libre = '<p id="libreMember"> El agente libre es ';
+        $libre = '<ul id="libreMember">';
         foreach ($users as $user) {
             if($user->side == 'kafhe'){
-                $kafheMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.$status[$user->status].'</li>';
+                $kafheMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->usertools->getStatusName($user->status).'</li>';
             }elseif($user->side == 'achikhoria'){
-                $achikhoriaMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.$status[$user->status].'</li>';
+                $achikhoriaMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->usertools->getStatusName($user->status).'</li>';
             }else{
-                $libre .= '<strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.$status[$user->status];
+				$libre .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->usertools->getStatusName($user->status).'</li>';
             }
         }
     ?>
     <div id="bandoKafhe">
-        <h2>bando de Kafhe</h2>
+        <h2>bando de <?php echo Yii::app()->params->sideNames['kafhe']; ?></h2>
         <?php
-            echo $kafheMembers;
+            echo $kafheMembers.'</ul>';
         ?>
     </div>
     <div id="bandoAchikhoria">
-        <h2>bando de Achikhoria</h2>
+        <h2>bando de <?php echo Yii::app()->params->sideNames['achikhoria']; ?></h2>
         <?php
-        echo $achikhoriaMembers;
+        echo $achikhoriaMembers.'</ul>';
         ?>
     </div>
     <div id="bandoLibre">
-        <?php echo $libre;?>
+        <h2>bando de <?php echo Yii::app()->params->sideNames['libre']; ?></h2>
+        <?php echo $libre.'</ul>';?>
     </div>
+
     <?php
         /*echo "Elijo a...";
         $res = Yii::app()->event->selectCaller();
@@ -79,7 +81,7 @@
         /*print_r($arr);*/
     ?>
 	
-	<p class="clear">*Nota: las probabilidades de un bando de salir elegido son inversamente proporcionales al porcentaje de gungubos que tiene.</p>
+	<p class="clear noteProbs">* Nota: las probabilidades de un bando de salir elegido son inversamente proporcionales al porcentaje de gungubos que tiene.</p>
 
     <div id="generalProbs">
         <h2>Probabilidad por usuario</h2>
@@ -131,7 +133,7 @@
                     $kSide = 0;
                     $aSide = 0;
                     foreach ($users as $user) {
-                        if(isset($arr[$user->id]) && $user->side != 'kafhe'){
+                        if(isset($arr[$user->id]) && $user->side == 'achikhoria'){
                             echo '["'.$user->alias.'",'.$arr[$user->id].'],';
                         }
                     }
@@ -238,13 +240,13 @@
 
      echo "<br><br>EMAIL: ";
     */
-        $data['to'] = array('cgoo85@gmail.com');
+       /* $data['to'] = array('cgoo85@gmail.com');
         $data['subject'] = 'Email de prueba desde Kafhe 3.0';
         $data['body'] = 'Hola caracola. Esta es la plantilla por defecto de los emails.';
         $sent = Yii::app()->mail->sendEmail($data);
         if ($sent !== true)
             echo $sent;
-
+*/
 
          //envio mails
         /*$mail = new YiiMailer();

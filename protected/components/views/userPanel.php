@@ -12,7 +12,7 @@
             <span id="modificadores">
                 <?php
                 //Modificadores (provisional)
-                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",$user->side,array('class' => 'modifier','title' => 'Perteneces al bando de '.$user->side));
+                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",$user->side,array('class' => 'modifier','title' => 'Perteneces al bando de '.Yii::app()->params->sideNames[$user->side]));
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     foreach(Yii::app()->usertools->modifiers as $modifier) {
                         echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => $modifier->keyword.': '.$modifier->duration.' '.$modifier->duration_type));

@@ -843,6 +843,10 @@ label.title{
     background-color: #bf3950;
 }
 
+.flash-error{
+    background-color: #bf3950;
+}
+
 .flash-success{
     background-color: #00924a;
 }
@@ -947,7 +951,7 @@ label.title{
 }
 
 #main h1.battle {
-    text-transform: lowercase;
+    /*text-transform: lowercase;*/
     font-weight: bold;
     font-size: 1.4em;
     text-align: center;
@@ -959,7 +963,7 @@ label.title{
     float:right;
 }
 
-#bandoAchikhoria,#bandoKafhe{
+#bandoAchikhoria,#bandoKafhe,#bandoLibre{
     margin-left: 2em;
     float:left;
 }
@@ -968,7 +972,7 @@ label.title{
     clear:left;
 }
 
-#bandoAchikhoria h2,#bandoKafhe h2{
+#bandoAchikhoria h2,#bandoKafhe h2,#bandoLibre h2{
     font-weight: bold;
     padding: 2em 0 .5em 24px;
     font-size: 1.2em;
@@ -983,17 +987,28 @@ label.title{
     background: url('../images/modifiers/kafhe.png') no-repeat left 1.9em;
 }
 
-#bandoAchikhoria ul,#bandoKafhe ul{
+#bandoLibre h2{
+    background: url('../images/modifiers/libre.png') no-repeat left 1.9em;
+}
+
+#bandoAchikhoria ul,#bandoKafhe ul,#bandoLibre ul{
     padding: .5em 0 0 3em;
 }
 
-#bandoAchikhoria li,#bandoKafhe li{
+#bandoAchikhoria li,#bandoKafhe li,#bandoLibre li{
     padding: .5em 0;
 }
 
-#bandoLibre{
+/*#bandoLibre{
     clear: left;
     padding: 1em 1.5em;
+}*/
+
+.noteProbs {
+    font-size: .9em;
+    font-style: italic;
+    text-align: right;
+    margin-bottom: 2em;
 }
 
 #generalProbs{
@@ -1005,6 +1020,10 @@ label.title{
 
 #sideProbs{
     float:right;
+}
+
+#sideProbs h2,#generalProbs h2{
+    font-weight: bold;
 }
 
 #userProbabilities{
