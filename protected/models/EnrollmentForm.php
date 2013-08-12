@@ -49,9 +49,9 @@ class EnrollmentForm extends CFormModel
 		
 		public function alMenosUno($attribute, $params)
 		{		
-			if ($this->meal_id=='' && $this->drink_id=='') {
-				$this->addError('meal_id','Debes elegir una comida o una bebida al menos.');
-				$this->addError('drink_id','Debes elegir una comida o una bebida al menos.');
+			if ($this->meal_id=='' && $this->drink_id=='' && $attribute=='meal_id') {
+				$this->addError('meal_id','Debes elegir una comida o una bebida al menos.'); //Lo muestro sólo 1 vez, para meal_id
+				//$this->addError('drink_id','Debes elegir una comida o una bebida al menos.');
 			}
 
 			//A ver si existen
