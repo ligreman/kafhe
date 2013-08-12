@@ -242,7 +242,7 @@ article.first{
     margin-top:-3.4em;
 }
 
-article.system, article.omelettus{
+article.system, article.omelettus, article.libre{
     clear:both;
     margin: 1em auto;
 }
@@ -262,6 +262,10 @@ article.achikhoria h1{
     background-color:#673c7d;
 }
 
+article.libre h1{
+    background-color: #8f6255;
+}
+
 article.omelettus h1{
     background-color:#00924a;
     color:#ffffff;
@@ -270,6 +274,8 @@ article.omelettus h1{
 article.notification .notification_message{
     color: #363636;
     padding:1.2em 6em 1.2em 2%;
+    text-indent: -59px;
+    margin-left: 59px;
 }
 
 .notification_message img{
@@ -286,7 +292,7 @@ article.notification .timestamp{
 
 .categoriaNotif{
     clear: both;
-    margin: 1em auto 5em;
+    margin: 2em auto 3em;
     text-align: center;
     background: #e0e0e0;
     color: #363636;
@@ -325,6 +331,7 @@ article.notification .timestamp{
 
 #meals label, #drinks label{
     padding: .2em 0 .2em 2em;
+    cursor: pointer;
 }
 
 #meals label:hover, #drinks label:hover, #drinks label.selected, #meals label.selected{
@@ -427,6 +434,18 @@ label.title{
 .btnachikhoria:hover, .btnachikhoria:active{
     border-width: 3px 0 3px 0;
     border-color:#2a0e3d transparent transparent;
+    color: #ffffff;
+}
+
+.btnlibre{
+    background-color: #8f6255;
+    border-color: transparent transparent #50261c;
+    color:#ffffff;
+}
+
+.btnlibre:hover, .btnlibre:active{
+    border-width: 3px 0 3px 0;
+    border-color: #50261c transparent transparent;
     color: #ffffff;
 }
 
@@ -879,15 +898,27 @@ label.title{
     float: right;
 }
 
-.kafhepin .title, .achikhoriapin .title{
+#batteStatusKafhe .librepin, #batteStatusAchikhoria .librepin{
+    box-shadow: 0 3px 2px rgba(0,0,0,.15);
+    height: 10px;
+    width: 10px;
+    display: block;
+    border-radius: 30px;
+    background: #8f6255;
+    border: 3px solid white;
+    margin-top: -6px;
+    float: right;
+}
+
+.kafhepin .title, .achikhoriapin .title, .librepin .title{
     position: absolute;
     left:-9999px;
     overflow: hidden;
 }
 
-.kafhepin:hover .title, .achikhoriapin:hover .title{
+.kafhepin:hover .title, .achikhoriapin:hover .title, .librepin:hover .title{
     position: relative;
-    top: -2.5em;
+    top: -3.5em;
     left: -5.5em;
     background: white;
     color: #363636;
@@ -897,6 +928,7 @@ label.title{
     text-align: center;
     padding: 4px;
     border-radius: 3px;
+    overflow: visible;
 }
 
 .score{
@@ -959,6 +991,11 @@ label.title{
     padding: .5em 0;
 }
 
+#bandoLibre{
+    clear: left;
+    padding: 1em 1.5em;
+}
+
 #generalProbs{
     clear:both;
     margin-left: 2em;
@@ -987,6 +1024,10 @@ ul.pedido, ul.comida, ul.bebida{
 ul.comida li,  ul.bebida li {
     padding: 0.3em 0 0.3em .5em;
     font-style: italic;
+}
+
+ul.comida li a,  ul.bebida li a{
+    padding-left: 0.8em;
 }
 
 ul.comida p,  ul.bebida p {
@@ -1024,6 +1065,19 @@ p.bebida{
     width: 35%;
     padding-left: 15%;
     min-width: 10em;
+}
+
+.battleTitle .flecha-down {
+    width: 0px;
+    height: 0px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #ffffff;
+    font-size: 0px;
+    line-height: 0px;
+    position: absolute;
+    top: 25px;
+    left: 58px;
 }
 
 .w0{width:0%;}

@@ -94,7 +94,10 @@ $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii:
                                     echo $battle->gungubos_achikhoria;
                                 ?></span><?php
                                 echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/achikhoria.png",'Achikhoria',array('height' => 16, 'class' => 'scoreSide'));
-                                ?></span>
+                                ?>
+                                <span class="flecha-down"></span>
+                            </span>
+
                     </span>
                 </span>
         </div>
