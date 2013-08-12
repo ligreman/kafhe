@@ -7,6 +7,7 @@ $(document).ready(function() {
         resizeNavBar();
     });
     prepareOrder();
+    readOldNotifications();
 });
 
 function resizeNavBar(){
@@ -132,4 +133,18 @@ function prepareOrder(){
         $(this).parent().css('text-decoration','line-through');
         return false;
     });
+}
+
+function readOldNotifications(){
+    setTimeout(function (){
+        date = $('#muro article:first').attr('data-rel');
+        var l = window.location;
+        var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+        $.ajax({
+           url:base_url+'/site/read?date='+date,
+
+        }).done(function(){
+
+            });
+    },5000);
 }
