@@ -128,7 +128,6 @@ function prepareHabilities(){
 }
 
 function prepareOrder(){
-    $('.tipoPedido ul.comida li, .tipoPedido ul.bebida li').append(' <a href="#">Oído Cocina</a>');
     $('.tipoPedido ul.comida li a, .tipoPedido ul.bebida li a').click(function(){
         $(this).parent().css('text-decoration','line-through');
         return false;

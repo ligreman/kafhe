@@ -38,15 +38,18 @@
         }
     </script>
 
-    <?php $status = array('Criador', 'Cazador', 'Alistado', 'Baja'); ?>
+    <?php $status = array('Criador', 'Cazador', 'Alistado', 'Baja', 'Desertor', 'Libre'); ?>
     <?php
         $achikhoriaMembers = '<ul id="kafheMembers">';
         $kafheMembers = '<ul id="achikhoriaMembers">';
+        $libre = '<p id="libreMember"> El agente libre es ';
         foreach ($users as $user) {
             if($user->side == 'kafhe'){
                 $kafheMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.$status[$user->status].'</li>';
-            }else{
+            }elseif($user->side == 'achikhoria'){
                 $achikhoriaMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.$status[$user->status].'</li>';
+            }else{
+                $libre .= '<strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.$status[$user->status];
             }
         }
     ?>
@@ -61,6 +64,9 @@
         <?php
         echo $achikhoriaMembers;
         ?>
+    </div>
+    <div id="bandoLibre">
+        <?php echo $libre;?>
     </div>
     <?php
         /*echo "Elijo a...";
