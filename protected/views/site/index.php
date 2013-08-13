@@ -12,6 +12,16 @@ $aliases = Yii::app()->usertools->getAlias();
 ?>
 <div id="muro">
 <h1 class="oculto">Notificaciones</h1>
+    <?php
+    $flashMessages = Yii::app()->user->getFlashes();
+    if ($flashMessages) {
+        echo '<ul class="flashes">';
+        foreach($flashMessages as $key => $message) {
+            echo '<li><div class="flash-' . $key . '">' . $message . "</div></li>\n";
+        }
+        echo '</ul>';
+    }
+    ?>
     <?php $last_type = ""; ?>
     <?php
 		if ($notifications!==null):
@@ -106,7 +116,11 @@ $aliases = Yii::app()->usertools->getAlias();
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
 						<p class="notification_message"><?php
                             $pattern = '/:+([a-z]+):+/i';
-                            print_r(preg_replace('/:+([a-z]+):+/i', CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png"), $notification->message));
+                            if(preg_match('/:+([a-z]+):+/i',$notification->message)){
+                                echo preg_replace('/:+([a-z]+):+/i', '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('width' => '48')).'</span><span>', $notification->message);
+                            }else{
+                                echo '<span>'.$notification->message.'</span>';
+                            }
                             //echo $notification->message;
                             ?></p>
 					</article>
@@ -119,7 +133,7 @@ $aliases = Yii::app()->usertools->getAlias();
 			
 		endif;?>
 		
-		<p>Botón de cargar más</p>
+		<p id="moreNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
 		
     <div class="clear"></div>
 </div>
