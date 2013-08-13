@@ -8,19 +8,20 @@ $(document).ready(function() {
     });
     prepareOrder();
     readOldNotifications();
+    loadMoreNotifications();
 });
 
 function resizeNavBar(){
-    if($('#main').height() > $('#content').children().height()){
-        $('#secondary_nav').height($('#main').height());
-        $('#content').height($('#main').height());
+    if($('#main').innerHeight() > $('#content').children().innerHeight()){
+        $('#secondary_nav').height($('#main').innerHeight());
+        $('#content').height($('#main').innerHeight());
     }else{
-        $('#secondary_nav').height($('#content').children().height());
-        $('#content').height($('#content').children().height());
+        $('#secondary_nav').height($('#content').children().innerHeight());
+        $('#content').height($('#content').children().innerHeight());
     }
     oldH = $('#vResponsiveContent').height();
 
-    newH = $(window).height()-($('header').outerHeight()+$('footer').outerHeight());
+    newH = $(window).height()-($('header').innerHeight()+$('footer').innerHeight());
     if(newH > oldH) $('#guest').height(newH);
 }
 
@@ -147,4 +148,26 @@ function readOldNotifications(){
 
             });
     },5000);
+}
+
+function loadMoreNotifications(){
+    $('#muro').on('click','#moreNotifications a',function(){
+        date = $('#muro article:last').attr('data-rel');
+        var l = window.location;
+        var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+        $.ajax({
+            url:base_url+'/site/load?date='+date,
+            datatype: 'html'
+        }).done(function(data){
+                if(data==""){
+                    $('#moreNotifications').addClass('categoriaNotif');
+                    $('#moreNotifications').html('<span>No hay más notificaciones</span>');
+                }else{
+                    $('#moreNotifications').detach();
+                    $('#muro').html($('#muro').html()+data);
+                    resizeNavBar();
+                }
+            });
+        return false;
+    });
 }

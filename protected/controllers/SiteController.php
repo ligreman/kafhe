@@ -200,6 +200,15 @@ class SiteController extends Controller
         }
     }
 
+    public function actionLoad($date) {
+        $d = date_parse($date);
+        if($d != false){
+            $notifications = Notification::model()->findAll(array('condition' => 'timestamp > :d', 'params' => array(':d' => $date)));
+            $data["notifications"] = $notifications;
+            $this->renderPartial('more',$data);
+        }
+    }
+
 
 	/*public function actionAlistamiento()
 	{
