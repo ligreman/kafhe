@@ -222,6 +222,7 @@ return array(
 		'skillDisimular'=>'disimular',
 		'skillCazarGungubos'=>'cazarGungubos',
 		'skillEscaquearse'=>'escaquearse',
+		'skillGungubicidio'=>'gungubicidio',
 		'skillVendetta'=>'vendetta',
 
 		//Otros

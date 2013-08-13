@@ -227,6 +227,11 @@ article.notification{
     position: relative;
 }
 
+article.notification .icon{
+	max-width: 48px;
+	vertical-align: middle;
+}
+
 article.kafhe{
     float: left;
 }

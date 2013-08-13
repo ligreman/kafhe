@@ -57,6 +57,7 @@ class SkillSingleton extends CApplicationComponent
 				case Yii::app()->params->skillDisimular: $this->disimular($skill, $user, $finalTarget); break;
 				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill, $user); break;
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse($skill, $user); break;
+				case Yii::app()->params->skillGungubicidio: $this->gungubicidio($skill, $user); break;
 			}
 			
 		}
@@ -168,7 +169,6 @@ class SkillSingleton extends CApplicationComponent
 		if (!$event->save())
 			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
 
-
 		//Aviso al llamador
 		$caller = User::model()->findByPk($event->caller_id);
 		$sent = Yii::app()->mail->sendEmail(array(
@@ -182,6 +182,33 @@ class SkillSingleton extends CApplicationComponent
 		
 		return true;
 	}
+	
+	// Mata 100 gungubos de un bando aleatorio
+	private function gungubicidio($skill, $user) 
+	{
+		$cantidad = 100;
+		
+		//Elijo un bando aleatorio
+		$rand = mt_rand(0,1);
+		if ($rand==0) $bando = 'kafhe';
+		else $bando = 'achikhoria';
+		
+		//Mato 100 gungubos de ese bando :O
+		$event = Yii::app()->event->model;
+		
+		if ($bando == 'kafhe') {
+			$event->gungubos_kafhe = max(0, ($event->gungubos_kafhe-$cantidad)); //Evito que sea negativo el valor
+		} elseif ($bando == 'achikhoria') {
+			$event->gungubos_achikhoria = max(0, ($event->gungubos_achikhoria-$cantidad)); //Evito que sea negativo el valor
+		} 
+		
+		if(!$event->save())
+			throw new CHttpException(400, 'Error al restar gungubos al bando '.$bando.' del evento '.$event->id.'.');
+			
+		return true;
+	}
+	
+	
 	
 	
 	/************** FUNCIONES AUXILIARES *************/
