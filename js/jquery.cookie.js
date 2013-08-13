@@ -45,7 +45,8 @@
 			}
 
 			value = config.json ? JSON.stringify(value) : String(value);
-
+			//alert('Path: '+options.path);
+			//alert('Domain: '+options.domain);
 			return (document.cookie = [
 				encodeURIComponent(key), '=', config.raw ? value : encodeURIComponent(value),
 				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE

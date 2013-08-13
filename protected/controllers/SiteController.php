@@ -182,10 +182,10 @@ class SiteController extends Controller
 	}
 
 
-	public function actionPrueba()
+	/*public function actionPrueba()
     {
         $this->render('prueba');
-    }
+    }*/
     public function actionPruebaAjax()
     {
         $data = array();
@@ -193,17 +193,43 @@ class SiteController extends Controller
         $this->renderPartial('_ajaxPrueba', $data, false, true);
     }
 
-    public function actionRead($date) {
+    public function actionRead($date) 
+	{
         $d = date_parse($date);
         if($d != false){
             $notifications = User::model()->updateByPk(Yii::app()->currentUser->id,array("last_notification_read" => $date));
         }
+		Yii::app()->end(); //Para terminar ya que no devuelvo ni view ni nada.
     }
+	
+	/*public function actionMoreNotifications($date)
+	{
+		$d = date_parse($date);
+        if($d != false){
+			//header("Content-type: application/json");
+			//echo CJSON::encode($resp);
+        }
+		Yii::app()->end(); //Para terminar ya que no devuelvo ni view ni nada.
+		
+		/*echo CHtml::ajaxbutton(
+			"Cargar más"
+            ,array('site/moreNotifications','date'=>'123')
+            ,array('success'=>new CJavaScriptExpression("function(){ alert('hola'); }"),'error'=>'alert("No se han podido cargar las notificaciones.")') //eso del js: ta deprecated
+        );*/
+		
+		//Si leo X notificaciones y hay < X, borro el botón de cargar más.
+	//}*/
 
     public function actionLoad($date) {
         $d = date_parse($date);
         if($d != false){
-            $notifications = Notification::model()->findAll(array('condition' => 'timestamp > :d', 'params' => array(':d' => $date)));
+            $notifications = Notification::model()->findAll(array('condition'=>'timestamp < :d', 'params'=>array(':d' => $date), 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
+
+            if(count($notifications) < Yii::app()->config->getParam('maxNotificacionesMuro'))
+                $data['hay_mas'] = false;
+            else
+                $data['hay_mas'] = true;
+
             $data["notifications"] = $notifications;
             $this->renderPartial('more',$data);
         }
@@ -256,8 +282,9 @@ class SiteController extends Controller
 				array_push($viejas_aux, $noti);
 		}
 		
-		$user->last_notification_read = date('Y-m-d H:i:s');
-		///TODO activar esto de nuevo
+		//$user->last_notification_read = date('Y-m-d H:i:s');
+		
+		// La actualización del last_read se hace ahora por ajax
 		//if (!$user->save())
 			//throw new CHttpException(400, 'Error al guardar el usuario '.$user->id.' procesando las notificaciones.');
 
@@ -273,6 +300,11 @@ class SiteController extends Controller
 			}
 		}
 
-		return array('new'=>$nuevas, 'old'=>$viejas);
+        if(count($data_notif) < Yii::app()->config->getParam('maxNotificacionesMuro'))
+            $hay_mas = false;
+        else
+            $hay_mas = true;
+
+		return array('new'=>$nuevas, 'old'=>$viejas, 'hay_mas'=>$hay_mas);
 	}
 }
