@@ -12,6 +12,8 @@ $aliases = Yii::app()->usertools->getAlias();
 ?>
 <div id="muro">
 <h1 class="oculto">Notificaciones</h1>
+<span id="baseUrl" class="oculto"><?php echo Yii::app()->getBaseUrl(true);?></span>
+
     <?php
     $flashMessages = Yii::app()->user->getFlashes();
     if ($flashMessages) {
@@ -28,13 +30,15 @@ $aliases = Yii::app()->usertools->getAlias();
 		
 			$nuevas = $notifications['new'];
 			$viejas = $notifications['old'];
+			$hay_mas = $notification['hay_mas'];
+            $pattern = '/:+([a-z]+):+/i';
 			
 			//echo "<br>Nuevas: ".count($nuevas);
 			//echo "<br>Viejas: ".count($viejas);
 			
 			
 			if (count($nuevas)>0): ?>
-				<p class="categoriaNotif"><span>notificaciones sin leer</span></p>
+				<p class="categoriaNotif"><span>Notificaciones sin leer</span></p>
 				
 				<?php foreach($nuevas as $notification):?>
 					<article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
@@ -68,13 +72,13 @@ $aliases = Yii::app()->usertools->getAlias();
 						?>
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
                         <p class="notification_message"><?php
-                            $pattern = '/:+([a-z]+):+/i';
-                            echo preg_replace('/:+([a-z]+):+/i', '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('width' => '48')).'</span><span>', $notification->message);
-                            //echo $notification->message;
+                            if(preg_match($pattern,$notification->message)){
+                                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message);
+                            }else{
+                                echo '<span>'.$notification->message.'</span>';
+                            }
                             ?></p>
 					</article>
-
-				<?php //echo $notification->read."<br>";?>
 
 				<?php 
 				endforeach;
@@ -82,7 +86,7 @@ $aliases = Yii::app()->usertools->getAlias();
 			
 			
 			if (count($viejas)>0): ?>
-				<p class="categoriaNotif"><span>notificaciones leídas</span></p>
+				<p class="categoriaNotif"><span>Notificaciones leídas</span></p>
 				<?php foreach($viejas as $notification): ?>
 					<article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
@@ -115,25 +119,26 @@ $aliases = Yii::app()->usertools->getAlias();
 						?>
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
 						<p class="notification_message"><?php
-                            $pattern = '/:+([a-z]+):+/i';
-                            if(preg_match('/:+([a-z]+):+/i',$notification->message)){
-                                echo preg_replace('/:+([a-z]+):+/i', '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('width' => '48')).'</span><span>', $notification->message);
+                            if(preg_match($pattern,$notification->message)){
+                                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message);
                             }else{
                                 echo '<span>'.$notification->message.'</span>';
                             }
-                            //echo $notification->message;
                             ?></p>
 					</article>
 
-				<?php //echo $notification->read."<br>";?>
 
 				<?php 
 				endforeach;			
 			endif; //viejas
 			
 		endif;?>
-		
-		<p id="moreNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
+
+    <?php if($hay_mas): ?>
+        <p id="moreNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
+    <?php else: ?>
+        <p class="categoriaNotif"><span>No hay más notificaciones</span></p>
+    <?php endif; ?>
 		
     <div class="clear"></div>
 </div>

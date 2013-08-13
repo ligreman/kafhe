@@ -44,8 +44,12 @@ if($notifications != null):
             <p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
             <p class="notification_message"><?php
                 $pattern = '/:+([a-z]+):+/i';
-                echo preg_replace('/:+([a-z]+):+/i', '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('width' => '48')).'</span><span>', $notification->message);
-                //echo $notification->message;
+
+                if(preg_match($pattern, $notification->message)){
+                    echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message);
+                }else{
+                    echo '<span>'.$notification->message.'</span>';
+                }
                 ?></p>
         </article>
 
@@ -53,5 +57,14 @@ if($notifications != null):
         endforeach;
 
     ?>
-    <p id="moreNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
+
+
+
+    <?php if($hay_mas): ?>
+        <p id="moreNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
+    <?php else: ?>
+        <p class="categoriaNotif"><span>No hay más notificaciones</span></p>
+    <?php endif; ?>
+
+
 <?php endif; ?>

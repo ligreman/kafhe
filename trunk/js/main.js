@@ -71,11 +71,11 @@ function prepareUserPanel(){
         if(src.indexOf('show') != -1){
             $(this).children('img').attr('src',src.replace('show','hide'));
             $(this).children('img').attr('title', 'No quiero ver mi panel de usuario');
-            $.cookie('userPanelHidden','0');
+            $.cookie('userPanelHidden','0', {'path':'/'});
         }else{
             $(this).children('img').attr('src',src.replace('hide','show'));
             $(this).children('img').attr('title','Quiero ver mi panel de usuario');
-            $.cookie('userPanelHidden','1');
+            $.cookie('userPanelHidden','1', {'path':'/'});
         }
         return false;
     });
@@ -87,10 +87,10 @@ function prepareHabilities(){
         $('#skillsUserBlock').slideToggle();
         if($('#skillsUserBlock').is('.visible')){
             $('#skillsUserBlock').removeClass('visible')
-            $.cookie('skillsHidden','1');
+            $.cookie('skillsHidden','1', {'path':'/'});
         }else{
             $('#skillsUserBlock').addClass('visible')
-            $.cookie('skillsHidden','0');
+            $.cookie('skillsHidden','0', {'path':'/'});
         }
     });
 
@@ -139,22 +139,21 @@ function prepareOrder(){
 function readOldNotifications(){
     setTimeout(function (){
         date = $('#muro article:first').attr('data-rel');
-        var l = window.location;
-        var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+        //var l = window.location;
+        //var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+        var base_url = $('#baseUrl').text();
         $.ajax({
-           url:base_url+'/site/read?date='+date,
-
-        }).done(function(){
-
-            });
+           url:base_url+'/site/read?date='+date
+        }).done(function(){ });
     },5000);
 }
 
 function loadMoreNotifications(){
     $('#muro').on('click','#moreNotifications a',function(){
         date = $('#muro article:last').attr('data-rel');
-        var l = window.location;
-        var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+        //var l = window.location;
+        //var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+        var base_url = $('#baseUrl').text();
         $.ajax({
             url:base_url+'/site/load?date='+date,
             datatype: 'html'
