@@ -16,31 +16,31 @@ class SkillValidator
 	    $this->_lastError = '';
 
 		//¿Tengo tueste suficiente?
-		if ($skill->cost_tueste!=null && !$this->checkTueste($skill, $user))			
+		if ($skill->cost_tueste!==null && !$this->checkTueste($skill, $user))
 			return false;		
 		
 		//¿Tengo retueste suficiente?
-		if ($skill->cost_retueste!=null && !$this->checkRetueste($skill, $user))			
+		if ($skill->cost_retueste!==null && !$this->checkRetueste($skill, $user))
 			return false;		
 		
 		//¿Tengo puntos de relanzamiento suficientes?
-		if ($skill->cost_relanzamiento!=null && !$this->checkPuntosRelanzamiento($skill, $user))			
+		if ($skill->cost_relanzamiento!==null && !$this->checkPuntosRelanzamiento($skill, $user))
 			return false;		
 		
 		//¿Tengo tostolares suficientes?
-		if ($skill->cost_tostolares!=null && !$this->checkTostolares($skill, $user))
+		if ($skill->cost_tostolares!==null && !$this->checkTostolares($skill, $user))
 			return false;		
 			
 		//¿Requiere un estado concreto del usuario?
-		if ($skill->require_user_status!=null && !$this->checkUserStatus($skill, $user))
+		if ($skill->require_user_status!==null && !$this->checkUserStatus($skill, $user))
 			return false;	
 		
 		//¿Requiere un bando concreto del usuario?
-		if ($skill->require_user_side!=null && !$this->checkUserSide($skill, $user))
+		if ($skill->require_user_side!==null && !$this->checkUserSide($skill, $user))
 			return false;	
 		
 		//¿Requiere un rango mínimo para el usuario?
-		if ($skill->require_user_min_rank!=null && !$this->checkUserRank($skill, $user))
+		if ($skill->require_user_min_rank!==null && !$this->checkUserRank($skill, $user))
 			return false;
 		
 		//¿Requiere que yo sea el llamador actualmente?
@@ -52,9 +52,13 @@ class SkillValidator
 			return false;
 			
 		//¿Hay una batalla iniciada (event.status=2)?
-		if ($skill->require_event_status && !$this->checkEventStatus($skill))
+		if ($skill->require_event_status!==null && !$this->checkEventStatus($skill))
 		    return false;
-		
+
+		//¿Requiere un talento concreto?
+		if ($skill->require_talent_id!==null && !$this->checkTalent($skill, $user))
+		    return false;
+
 		
 		//Comprobaciones sólo si estoy intentando ejecutar una habilidad
 		if ($is_executing) {
@@ -159,6 +163,7 @@ class SkillValidator
 			$this->_lastError = 'No tienes el Talento requerido para ejecutar esta habilidad.';
 			return false;
 		}*/
+		return true;
 	}
 
     public function checkEventStatus($skill) {
