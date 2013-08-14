@@ -146,6 +146,10 @@ return array(
             //'class'=>'CDbAuthManager',
             //'connectionID'=>'db',
 			'class'=>'RDbAuthManager', //rights
+			'assignmentTable'=>'authassignment',
+            'itemTable'=>'authitem',
+            'rightsTable'=>'rights',
+            'itemChildTable'=>'authitemchild',
         ),
 		
 		

@@ -11,7 +11,7 @@ class SkillValidator
 	/**
 	* $is_executing: indica si la función se está llamando desde una ejecución de una habilidad o sólo es para comprobar si se podría ejecutar la misma (para la lista de habilidades)
 	*/
-	public function canExecute($skill, $user, $target=null, $is_executing=false)	
+	public function canExecute($skill, $user, $target=null, $side_target=null, $is_executing=false)	
 	{
 	    $this->_lastError = '';
 
@@ -58,8 +58,12 @@ class SkillValidator
 		
 		//Comprobaciones sólo si estoy intentando ejecutar una habilidad
 		if ($is_executing) {
-			//¿Requiere elegir objetivo?
-			if ($skill->require_target && !$this->checkTarget($skill, $user, $target))
+			//¿Requiere elegir usuario objetivo?
+			if ($skill->require_target && !$this->checkTargetUser($skill, $user, $target))
+				return false;
+				
+			//¿Requiere elegir bando objetivo? Si el require_target es null pero no el require_target_side
+			if (!$skill->require_target && $skill->require_target_side!==null && !$this->checkSideTarget($skill, $user, $side_target))
 				return false;
 		}
 		
@@ -190,21 +194,25 @@ class SkillValidator
 		}
 	}
 	
-	//Comprueba el objetivo y su bando si fuera necesario
-	public function checkTarget($skill, $user, $target) {
+	//Comprueba el objetivo y su bando si fuera necesario. Sólo para objetivos usuario (no si se hizo objetivo un bando)
+	public function checkTargetUser($skill, $user, $target) {
 		if (!$skill->require_target) {
-			if ($skill->require_target_side===null)
-				return true;
-			elseif ($target=='kafhe' || $target=='achikhoria') //si el target es un bando completo.
+			/*if ($skill->require_target_side===null)
 				return true;
 			else {
-				$this->_lastError = 'No se ha seleccionado un bando objetivo para la habilidad.';
-				return false;
-			}
+				$sides = explode(',', $skill->require_target_side); //Bando/s que requiere la skill
+				
+				if (!in_array($target, $sides)) {
+					$this->_lastError = 'No se ha seleccionado un bando objetivo para la habilidad.';
+					return false;
+				} else
+					return true;
+			}	*/	
+			return true;
 		} else {			
 			//Si no hay objetivo
-			if ($target == null) {
-				$this->_lastError = 'No se ha seleccionado un objetivo para la habilidad.';
+			if ($target==null) { // || !is_object($target)) {
+				$this->_lastError = 'No se ha seleccionado un objetivo válido para la habilidad.';
 				return false;
 			}
 			
@@ -216,9 +224,9 @@ class SkillValidator
 			
 			//Compruebo que si requería que el objetivo sea de un bando, lo sea
 			if ($skill->require_target_side!==null) {
-				$sides = explode(',', $skill->require_target_side);
+				$sides = explode(',', $skill->require_target_side); //Bandos que requiere la skill
 
-				if (!in_array($skill->require_target_side, $sides)) {
+				if (!in_array($target->side, $sides)) {
 					$this->_lastError = 'El objetivo seleccionado no pertenece al bando requerido por la habilidad.';
 					return false;
 				}
@@ -228,4 +236,17 @@ class SkillValidator
 		}
 	}
 	
+	//Compruebo si el bando seleccionado es correcto, si se requería un bando concreto
+	public function checkSideTarget($skill, $user, $side_target) {
+		if (!$skill->require_target && $skill->require_target_side!==null) {
+			$sides = explode(',', $skill->require_target_side); //Bando/s que requiere la skill
+			
+			if (!in_array($side_target, $sides)) {
+				$this->_lastError = 'No se ha seleccionado un bando objetivo válido para la habilidad.';
+				return false;
+			} else
+				return true;		
+		} else
+			return true;
+	}	
 }
