@@ -147,8 +147,8 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `type` enum('ofensiva','mejora','utilidad') NOT NULL,
   `keyword` varchar(50) NOT NULL,
   `modifier_keyword` varchar(50) NOT NULL,
-  `duration` smallint(5) NOT NULL DEFAULT '0',
-  `duration_type` enum('horas','evento','usos') NOT NULL DEFAULT 'horas',
+  `duration` smallint(5) NULL DEFAULT NULL,
+  `duration_type` enum('horas','evento','usos') NULL DEFAULT NULL,
   `critic` smallint(5) NOT NULL DEFAULT '0',
   `fail` smallint(5) NOT NULL DEFAULT '0',
   `cost_tueste` smallint(5) NULL DEFAULT NULL,
@@ -163,10 +163,10 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `require_target_side` varchar(255) NULL DEFAULT NULL,  
   `require_caller` tinyint(1) NOT NULL DEFAULT '0',    
   `require_user_side` varchar(255) NULL DEFAULT NULL,
-  `require_user_min_rank` smallint(5) NOT NULL DEFAULT '0',
+  `require_user_min_rank` smallint(5) NULL DEFAULT NULL,
   `require_user_status` varchar(255) NULL DEFAULT NULL,
   `require_event_status` tinyint(1) NULL DEFAULT NULL,
-  `talent_id_required` int(10) NULL DEFAULT NULL,
+  `require_talent_id` int(10) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
