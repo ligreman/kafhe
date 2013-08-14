@@ -15,7 +15,7 @@ class SkillSingleton extends CApplicationComponent
 	private $_resultMessage = '';
 	private $_error = '';
 
-    public function executeSkill($skill, $user, $target)
+    public function executeSkill($skill, $user, $target, $side)
     {
         $this->_error = '';
 		$this->_keyword = $skill->keyword;
@@ -29,7 +29,7 @@ class SkillSingleton extends CApplicationComponent
 		Yii::app()->usertools->checkModifiersExpiration();
 
         //Calculo cuál es el objetivo final, por si hay escudos y demás cosas por ahí
-        $finalTarget = $this->calculateFinalTarget($skill, $user, $target);
+        $finalTarget = $this->calculateFinalTarget($skill, $user, $target, $side);
 
         //Compruebo si es crítico o pifia
 		//son porcentajes. PIFIA: de 1 a (1+(fail-1)) || CRÍTICO: de (100-(critic-1)) a 100
@@ -277,14 +277,15 @@ class SkillSingleton extends CApplicationComponent
 		return $fail;
 	}
 	
-	private function calculateFinalTarget($skill, $user, $target) {
+	///TODO tratar los bandos
+	private function calculateFinalTarget($skill, $user, $target, $side) {
 		if ($target === null) {
 			$this->_finalTarget = $this->_caster;
 			return $user; //Si no hay objetivo, es que el objetivo es uno mismo
+		} else {		
+			$finalTarget = $target;
+			$this->_finalTarget = $finalTarget->id;
 		}
-		
-		$finalTarget = $target;
-		$this->_finalTarget = $finalTarget->id;
 
 		return $finalTarget;
 	}

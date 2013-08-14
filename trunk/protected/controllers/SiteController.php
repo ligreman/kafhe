@@ -98,7 +98,7 @@ class SiteController extends Controller
             //Estoy identificado, muestro el Muro
             $data_notif = $this->loadNotifications();
 			if($data_notif!==null) $data_notif = $this->processNotifications($data_notif);
-			
+
             $this->render('index', array('notifications'=>$data_notif));
         } else{
             $this->layout = 'guest';
@@ -304,6 +304,7 @@ class SiteController extends Controller
             $hay_mas = false;
         else
             $hay_mas = true;
+
 
 		return array('new'=>$nuevas, 'old'=>$viejas, 'hay_mas'=>$hay_mas);
 	}
