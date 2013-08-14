@@ -26,20 +26,25 @@ class SkillController extends Controller
 		);
 	}
   
-	public function actionExecute($skill_id, $target_id=null) //Automáticamente asocia $skill_id = $_GET['skill_id'] y si no existe lanza excepción 404 controlada
+	public function actionExecute($skill_id, $target_id=null, $side=null) //Automáticamente asocia $skill_id = $_GET['skill_id'] y si no existe lanza excepción 404 controlada
 	{	
 		//Obtengo la skill y mi usuario
 		$skill = Skill::model()->findByPk($skill_id);
 		$user = Yii::app()->currentUser->model; ///TODO este se puede prescindir de él pero hay que modificar el resto de funciones
-		if ($target_id!==null) $target = User::model()->findByPk($target_id);
-		else $target = null;
+		if ($target_id!==null) {
+			/*if (is_numeric($target_id)) //$target_id!='kafhe' && $target_id!='achikhoria' && $target_id!='libre')
+				$target = User::model()->findByPk($target_id);
+			else
+				$target = $target_id;*/
+			$target = User::model()->findByPk($target_id);
+		} else $target = null;
 		
 		//Creo una instancia del validador de habilidades
 		$validator = new SkillValidator;
 		
-		if ($validator->canExecute($skill, $user, $target, true)) {
+		if ($validator->canExecute($skill, $user, $target, $side, true)) {
 			//Ejecuto la habilidad
-			Yii::app()->skill->executeSkill($skill, $user, $target);
+			Yii::app()->skill->executeSkill($skill, $user, $target, $side);
 
 			//Feedback para el usuario
 			switch(Yii::app()->skill->result) {

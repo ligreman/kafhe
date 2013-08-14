@@ -30,9 +30,9 @@ $aliases = Yii::app()->usertools->getAlias();
 		
 			$nuevas = $notifications['new'];
 			$viejas = $notifications['old'];
-			$hay_mas = $notification['hay_mas'];
+			$hay_mas = $notifications['hay_mas'];
             $pattern = '/:+([a-z]+):+/i';
-			
+
 			//echo "<br>Nuevas: ".count($nuevas);
 			//echo "<br>Viejas: ".count($viejas);
 			
