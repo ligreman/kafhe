@@ -106,7 +106,7 @@ function prepareHabilities(){
     $('.sdcontent ul li').click(function(){
         $(this).siblings().removeClass('selected');
         if($(this).hasClass('selected')){
-            $(this).removeClass('selected');
+            //$(this).removeClass('selected');
         }else{
             $(this).addClass('selected');
             destino = $(this).parent().parent().parent().siblings('.skillButtons').children('.acceptButton').attr('href');

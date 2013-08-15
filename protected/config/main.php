@@ -220,9 +220,11 @@ return array(
 		//Modificadores. Están aquí y en BBDD
 		'modifierHidratado'=>'hidratado',
 		'modifierDisimulando'=>'disimulando',
+		'modifierDesecado'=>'desecado',
 		
 		//Habilidades. Están aquí y en BBDD
 		'skillHidratar'=>'hidratar',
+        'skillDesecar'=>'desecar',
 		'skillDisimular'=>'disimular',
 		'skillCazarGungubos'=>'cazarGungubos',
 		'skillEscaquearse'=>'escaquearse',

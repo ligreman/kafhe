@@ -791,6 +791,10 @@ label.title{
     margin:0 0 1em 6em;
 }
 
+#skillsUserBlock .targetList li:hover{
+    cursor: pointer;
+}
+
 #loginSection{
     padding: 1em;
 }
