@@ -54,6 +54,7 @@ class SkillSingleton extends CApplicationComponent
 			//Ejecuto la skill
 			switch ($skill->keyword) {
 				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $user, $finalTarget); break;
+                case Yii::app()->params->skillDesecar: $this->desecar($skill, $user, $finalTarget); break;
 				case Yii::app()->params->skillDisimular: $this->disimular($skill, $user, $finalTarget); break;
 				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill, $user); break;
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse($skill, $user); break;
@@ -100,6 +101,29 @@ class SkillSingleton extends CApplicationComponent
 
 		return true;
 	}
+
+    // Crea un modificador de "desecado"
+    private function desecar($skill, $user, $target)
+    {
+        //si ya tengo desecar, lo que hago es actualizar sus datos, ya que solo puede haber uno (busco por keyword porque puede estar creado por diferentes fuentes)
+        $modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
+
+        if ($modificador == null)
+            $modificador = new Modifier;
+
+        $modificador->caster_id = $user->id;
+        $modificador->target_final_id = $target->id;
+        $modificador->skill_id = $skill->id;
+        $modificador->keyword = $skill->modifier_keyword;
+        $modificador->duration = $skill->duration;
+        $modificador->duration_type = $skill->duration_type;
+        $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
+
+        if (!$modificador->save())
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
+
+        return true;
+    }
 	
 	//Crea un modificador de "disimulando"
 	private function disimular($skill, $user, $target)

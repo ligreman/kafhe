@@ -97,7 +97,7 @@ class m130617_204503_inicial extends TXDbMigration
 		$this->insert('authitem', array(
             'name'=>'lanzar_evento',
             'type'=>0,
-            'description'=>'Lanzar un evento para elegir al llamador',
+            'description'=>'Iniciar la batalla de un evento',
             'bizrule'=>NULL,
             'data'=>'N;'
         ));
