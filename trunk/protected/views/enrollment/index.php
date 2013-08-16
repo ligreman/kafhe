@@ -1,6 +1,6 @@
 <div id="menuContent">
 
-<h1 class="oculto">Alistamiento</h1>
+    <h1 class="oculto">Alistamiento</h1>
 
     <?php
         if($model->hasErrors()){
@@ -10,82 +10,155 @@
         }
     ?>
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'enrollment-form',
-	'enableClientValidation'=>true,
+    <?php $form=$this->beginWidget('CActiveForm', array(
+        'id'=>'enrollment-form',
+        'enableClientValidation'=>true,
 
-	'clientOptions'=>array(
-        'inputContainer'=>'ul',
-		'validateOnSubmit'=>true,
-        
-        //'validateOnChange'=>true,
+        'clientOptions'=>array(
+            'inputContainer'=>'ul',
+            'validateOnSubmit'=>true,
 
-        /*'afterValidate'=>"js:function(form, data, hasError) {
-            if (hasError) {
-                alert('There were errors. Please correct them before submitting again.');
-                return false; //<- normally not needed
-            }
-        }",*/
-	),
-));
+            //'validateOnChange'=>true,
 
-?>
-    <!--<p class="floatedLink"><a href="#" class="closeSubmenuLink">Cerrar</a></p>-->
-	<p>Alístate eligiendo tu próximo desayuno:</p>
+            /*'afterValidate'=>"js:function(form, data, hasError) {
+                if (hasError) {
+                    alert('There were errors. Please correct them before submitting again.');
+                    return false; //<- normally not needed
+                }
+            }",*/
+        ),
+    ));
 
-  <div class="itoSelect">
-		<?php echo $form->checkBox($model,'ito',array('class' => 'oculto')); ?>
-		<?php echo $form->labelEx($model,'ito'); ?>
-		<?php //echo $form->error($model,'ito'); ?>
-	</div>
-	
-	
-    <div class="centerContainer">
-        <div class="blockCentered">
-            <div id="drinks">
-                <?php echo $form->label($model,'drink_id',array('class' => 'title')); ?>                
-                <?php echo $form->radioButtonList($model,'drink_id', CHtml::listData($drinks, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>                
-                <?php //echo $form->error($model,'drink_id'); ?>
-            </div>
+    ?>
+        <!--<p class="floatedLink"><a href="#" class="closeSubmenuLink">Cerrar</a></p>-->
+      <p>Alístate eligiendo tu próximo desayuno:</p>
 
-            <div id="meals">
-                <?php echo $form->label($model,'meal_id',array('class' => 'title')); ?>                
-                <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
-                <?php //echo $form->error($model,'meal_id'); ?>
+      <div class="itoSelect">
+            <?php echo $form->checkBox($model,'ito',array('class' => 'oculto')); ?>
+            <?php echo $form->labelEx($model,'ito'); ?>
+            <?php //echo $form->error($model,'ito'); ?>
+        </div>
+
+
+        <div class="centerContainer">
+            <div class="blockCentered">
+                <div id="drinks">
+                    <?php echo $form->label($model,'drink_id',array('class' => 'title')); ?>
+                    <?php echo $form->radioButtonList($model,'drink_id', CHtml::listData($drinks, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                    <?php //echo $form->error($model,'drink_id'); ?>
+                </div>
+
+                <div id="meals">
+                    <?php echo $form->label($model,'meal_id',array('class' => 'title')); ?>
+                    <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
+                    <?php //echo $form->error($model,'meal_id'); ?>
+                </div>
             </div>
         </div>
+
+        <div class="buttons">
+                <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn btn'.Yii::app()->currentUser->side)); ?>
+                <?php
+                  if ($already_enroll) {
+                    echo CHtml::submitButton('Darse de baja', array('name'=>'btn_cancel', 'class' => 'btn'));
+                    }
+                ?>
+            <?php //echo CHtml::submitButton($model->isNewRecord ? 'Guardar' : 'Modificar'); ?>
+        </div>
+
+    <?php $this->endWidget(); ?>
+
+
+
+    <?php
+    // PEDIDO DEL EVENTO ANTERIOR
+    if ($orders !== null):
+        $itos = $orders['itos'];
+        $noitos = $orders['noitos'];
+        $bebidas = $orders['bebidas'];
+        $comidas = $orders['comidas'];
+    ?>
+    <p>Pedido del evento anterior</p>
+    <div id="pedidoCentrado">
+        <div class="tipoPedido">
+            <h2 class="pedido">pedidos ITO</h2>
+            <ul class="pedido">
+                <li><p class="bebida">bebidas</p>
+                    <ul class="bebida">
+                        <?php foreach($itos['bebidas'] as $id=>$cantidad): ?>
+                            <li><span class="numeroVeces"><?php
+                                echo $cantidad.'</span><span class="veces"> x </span>'.$bebidas[$id];
+                                $img = CHtml::image(Yii::app()->baseUrl.'/images/tick.png','Oído Cocina',array('title' => 'Oído Cocina')    );
+                                echo CHtml::link($img,'#');
+                                ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+                <li><p class="comida">comidas</p>
+                    <ul class="comida">
+                        <?php foreach($itos['comidas'] as $id=>$cantidad): ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$comidas[$id];
+                                $img = CHtml::image(Yii::app()->baseUrl.'/images/tick.png','Oído Cocina',array('title' => 'Oído Cocina'));
+                                echo CHtml::link($img,'#');
+                                ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tipoPedido">
+            <h2 class="pedido">pedidos normales</h2>
+            <ul  class="pedido">
+                <li><p class="bebida">bebidas</p>
+                    <ul class="bebida">
+                        <?php foreach($noitos['bebidas'] as $id=>$cantidad): ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$bebidas[$id];
+                                $img = CHtml::image(Yii::app()->baseUrl.'/images/tick.png','Oído Cocina',array('title' => 'Oído Cocina'));
+                                echo CHtml::link($img,'#');
+                                ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+                <li><p class="comida">comidas</p>
+                    <ul class="comida">
+                        <?php foreach($noitos['comidas'] as $id=>$cantidad): ?>
+                            <li><span class="numeroVeces"><?php echo $cantidad.'</span><span class="veces"> x </span>'.$comidas[$id];
+                                $img = CHtml::image(Yii::app()->baseUrl.'/images/tick.png','Oído Cocina',array('title' => 'Oído Cocina'));
+                                echo CHtml::link($img,'#');
+                                ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
+    <?php endif; ?>
 
-	<div class="buttons">
-            <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn btn'.Yii::app()->currentUser->side)); ?>
-            <?php 
-              if ($already_enroll) {
-                echo CHtml::submitButton('Darse de baja', array('name'=>'btn_cancel', 'class' => 'btn'));
-                }
-            ?>
-		<?php //echo CHtml::submitButton($model->isNewRecord ? 'Guardar' : 'Modificar'); ?>
-	</div>
 
-<?php $this->endWidget(); ?>
-    <script type="text/javascript">
-		<!--
-			//Pongo los itos para filtrarlos
-			<?php foreach($drinks as $drink) {			
-				if (!$drink->ito): ?>
-					$('#drinks input[value='+<?php echo intval($drink->id); ?>+']').attr('rel-ito', 'no');
-				<?php endif;
-			}?>
-			
-			<?php foreach($meals as $meal) {			
-				if (!$meal->ito): ?>
-					$('#meals input[value='+<?php echo intval($meal->id); ?>+']').attr('rel-ito', 'no');
-				<?php endif;
-			}?>
-			
-			prepareEnrollmentForm();
-		//-->
-	</script>
 </div>
+
+
+<script type="text/javascript">
+    <!--
+    //Pongo los itos para filtrarlos
+    <?php foreach($drinks as $drink) {
+        if (!$drink->ito): ?>
+    $('#drinks input[value='+<?php echo intval($drink->id); ?>+']').attr('rel-ito', 'no');
+    <?php endif;
+}?>
+
+    <?php foreach($meals as $meal) {
+        if (!$meal->ito): ?>
+    $('#meals input[value='+<?php echo intval($meal->id); ?>+']').attr('rel-ito', 'no');
+    <?php endif;
+}?>
+
+    prepareEnrollmentForm();
+    //-->
+</script>
+
+
 <?php
 
 
@@ -117,7 +190,6 @@
 
         echo "<br>";
     }*/
-    
     
 /*
  * In addition to setting both enableAjaxValidation and validateOnSubmit to true, you can use CActiveForm's afterValidate property if you really want to do something in JavaScript (e.g. alert). All is described in CActiveForm doc.
