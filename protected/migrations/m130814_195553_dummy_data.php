@@ -270,6 +270,28 @@ class m130814_195553_dummy_data extends CDbMigration
             'ito'=>0
         ));
 
+        $this->insert('enrollment', array(
+            'user_id'=>7,
+            'event_id'=>1,
+            'meal_id'=>2,
+            'drink_id'=>2,
+            'ito'=>0
+        ));
+        $this->insert('enrollment', array(
+            'user_id'=>4,
+            'event_id'=>1,
+            'meal_id'=>2,
+            'drink_id'=>2,
+            'ito'=>1
+        ));
+        $this->insert('enrollment', array(
+            'user_id'=>3,
+            'event_id'=>1,
+            'meal_id'=>2,
+            'drink_id'=>2,
+            'ito'=>0
+        ));
+
         $this->insert('notification', array(
             'sender'=>2,
             'recipient_original'=>3,
