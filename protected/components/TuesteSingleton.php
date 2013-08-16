@@ -24,26 +24,28 @@ class TuesteSingleton extends CApplicationComponent
 				
 		///IDEA Los talentos crean modificadores con duración null
 		
-		//Tueste extra por modificadores y talentos. Miro los mods que me afectan a la regenración
+		//Tueste extra por modificadores y talentos. Miro los mods que me afectan a la regeneración
 		$porcentajePorModificadores = 0;
-		$hasHidratado = false;
+		$signoRegeneracion = 1; //positivo o negativo
+		$estaHidratado = $estaDesecado = false;
 
         //Si es el usuario activo me ahorro una consulta a BBDD
 		if (isset(Yii::app()->currentUser) && isset(Yii::app()->currentUser->id) && $user->id == Yii::app()->currentUser->id) {
-			if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado))
-				$hasHidratado = true;
+			if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado)) $estaHidratado = true;
+            if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierDesecado)) $estaDesecado = true;
 		} else {
 			$mods = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>$user->id)));
-			if($mods!==null  &&  Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado, $mods))
-				$hasHidratado = true;
+			if($mods!==null  &&  Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado, $mods)) $estaHidratado = true;
+            if($mods!==null  &&  Yii::app()->usertools->inModifiers(Yii::app()->params->modifierDesecado, $mods)) $estaDesecado = true;
 		}
 		
-		if($hasHidratado) $porcentajePorModificadores = 25; //25% más rápido por estar hidratado			
+		if($estaHidratado) $porcentajePorModificadores = 25; //25% más rápido por estar hidratado
+        if($estaDesecado) $signoRegeneracion = -1; //Regeneración negativa
+
 		$tuesteExtraPorModificadores = round(intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) * $porcentajePorModificadores / 100);
 
-
 		//Devuelvo el tueste regenerado
-        $tuesteRegenerado = intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + $tuesteExtraPorRango + $tuesteExtraPorModificadores;
+        $tuesteRegenerado = $signoRegeneracion * ( intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + $tuesteExtraPorRango + $tuesteExtraPorModificadores );
 		return $tuesteRegenerado;
     }
 
