@@ -160,6 +160,13 @@ class EnrollmentController extends Controller
 
         $data['model'] = $model;
 
+        //Saco el pedido del evento anterior
+        $past_event = Event::model()->find(array('condition'=>'id!=:id', 'params'=>array(':id'=>Yii::app()->event->id), 'order'=>'date DESC'));
+        if ($past_event!==null)
+            $data['orders'] = Yii::app()->event->getOrder($past_event->id);
+        else
+            $data['orders'] = null;
+
         // displays the login form
         $this->render('index', $data);
 	}
