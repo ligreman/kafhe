@@ -83,8 +83,8 @@ $aliases = Yii::app()->usertools->getAlias();
 				<?php 
 				endforeach;
 			endif; //nuevas
-			
-			
+
+            $last_type = "";
 			if (count($viejas)>0): ?>
 				<p class="categoriaNotif"><span>Notificaciones leídas</span></p>
 				<?php foreach($viejas as $notification): ?>
