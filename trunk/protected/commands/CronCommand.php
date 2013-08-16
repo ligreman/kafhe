@@ -53,7 +53,9 @@ class CronCommand extends CConsoleCommand {
 		echo "ok";
 		return 0;
     }*/
-	
+
+
+	//NOTA no necesitaré comprobar modificadores ya que lo compruebo en cada carga de página y al regenerar tueste en el Cron
 	
 	
 	/*
