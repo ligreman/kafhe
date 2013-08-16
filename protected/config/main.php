@@ -55,39 +55,6 @@ return array(
 			'debug'=>false,
 		),
 		
-		//Hybrid Auth
-		'hybridauth' => array(
-            'baseUrl' => 'http://localhost/kafhe_3.0/trunk/index.php/hybridauth', 
-            'withYiiUser' => false, // Set to true if using yii-user
-            "providers" => array ( 
-                "openid" => array (
-                    "enabled" => true
-                ),
- 
-                "yahoo" => array ( 
-                    "enabled" => true 
-                ),
- 
-                "google" => array ( 
-                    "enabled" => true,
-                    "keys"    => array ( "id" => "", "secret" => "" ),
-                    "scope"   => ""
-                ),
- 
-                "facebook" => array ( 
-                    "enabled" => true,
-                    "keys"    => array ( "id" => "", "secret" => "" ),
-                    "scope"   => "email,publish_stream", 
-                    "display" => "" 
-                ),
- 
-                "twitter" => array ( 
-                    "enabled" => true,
-                    "keys"    => array ( "key" => "", "secret" => "" ) 
-                )
-            )
-        ),
-		
 	),
 
 	// application components
