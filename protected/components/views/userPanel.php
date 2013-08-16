@@ -15,7 +15,16 @@
                 echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",$user->side,array('class' => 'modifier','title' => 'Perteneces al bando de '.Yii::app()->params->sideNames[$user->side]));
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     foreach(Yii::app()->usertools->modifiers as $modifier) {
-                        echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => $modifier->keyword.': '.$modifier->duration.' '.$modifier->duration_type));
+                        if($modifier->duration_type=='horas') {
+                            $duration = $modifier->duration * 60 * 60; //en segundos
+                            $duration = (strtotime($modifier->timestamp) + $duration) - time();
+                            $duration = gmdate("H:i:s", $duration);
+                            $duration_type = $modifier->duration_type;
+                        } else {
+                            $duration = $modifier->duration;
+                            $duration_type = $modifier->duration_type;
+                        }
+                        echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => ucfirst($modifier->keyword).': '.$duration.' '.$duration_type));
                     }
                 }
                 ?>
@@ -49,6 +58,7 @@
             <span class="concepto">tostólares</span>
         </p>
 
+        <?php /*
         <p class="dato">
             <span class="numero">3</span>
             <span class="concepto">cofres</span>
@@ -58,6 +68,7 @@
             <span class="numero"><?php echo $user->sugarcubes; ?></span>
             <span class="concepto">azucarillos</span>
         </p>
+        */ ?>
 
         <p class="dato">
             <span class="numero"><?php echo $user->ptos_relanzamiento; ?></span>

@@ -29,5 +29,10 @@ class Controller extends CController
 		}
 
         return parent::beforeAction($action);
-  }
+    }
+
+    //Se ejecuta en cada carga de página
+    public function init() {
+        Yii::app()->usertools->checkModifiersExpiration(); //Compruebo expiración de modificadores
+    }
 }

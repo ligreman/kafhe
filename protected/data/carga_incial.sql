@@ -187,11 +187,12 @@ CREATE TABLE IF NOT EXISTS `modifier` (
 INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`, `role`, `group_id`, `side`, `status`, `rank`, `experience`, `ptos_tueste`, `ptos_retueste`, `ptos_relanzamiento`, `ptos_talentos`, `tostolares`, `sugarcubes`, `dominio_tueste`, `dominio_habilidades`, `dominio_bandos`, `times`, `calls`) VALUES
 (1, 'admin', '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe', 'Administrador', 'admin@mail.com', NULL, 'admin', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(1, 'tiempoRegeneracionTueste', '600', 'Juego', 'Intervalo de tiempo, en segundos, entre una regeneración automática de tueste y la siguiente.');
-INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(2, 'tuesteRegeneradoIntervalo', '100', 'Juego', 'Puntos de tueste regenerado en cada intervalo de regeneración.');
-INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(3, 'maxTuesteUsuario', '1000', 'Juego', 'Máximo puntos de tueste que puede tener un usuario.');
-INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(4, 'tiempoCriaGungubos', '3600', 'Juego', 'Intervalo de tiempo, en segundos, entre una cría de gungubos y la siguiente.');
-INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(5, 'gungubosCriadosIntervalo', '100', 'Juego', 'Cantidad de gungubos criados a la hora por un bando.');
-INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(6, 'maxNewNotificacionesMuro', '30', 'Visual', 'Cantidad máxima de notificaciones nuevas a mostrar en el muro (suele ser mayor que el límite de notificaciones normal).');
-INSERT INTO `configuration` (`id`, `param`, `value`, `category`, `description`) VALUES(7, 'maxNotificacionesMuro', '10', 'Visual', 'Cantidad máxima de notificaciones a mostrar en el muro.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('tiempoRegeneracionTueste', '600', 'Juego', 'Intervalo de tiempo, en segundos, entre una regeneración automática de tueste y la siguiente.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('tuesteRegeneradoIntervalo', '100', 'Juego', 'Puntos de tueste regenerado en cada intervalo de regeneración.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxTuesteUsuario', '1000', 'Juego', 'Máximo puntos de tueste que puede tener un usuario.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxExperienciaUsuario', '10000', 'Juego', 'Máximo puntos de experiencia que un usuario puede tener.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('tiempoCriaGungubos', '3600', 'Juego', 'Intervalo de tiempo, en segundos, entre una cría de gungubos y la siguiente.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('gungubosCriadosIntervalo', '100', 'Juego', 'Cantidad de gungubos criados a la hora por un bando.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxNewNotificacionesMuro', '30', 'Visual', 'Cantidad máxima de notificaciones nuevas a mostrar en el muro (suele ser mayor que el límite de notificaciones normal).');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxNotificacionesMuro', '10', 'Visual', 'Cantidad máxima de notificaciones a mostrar en el muro.');
 
