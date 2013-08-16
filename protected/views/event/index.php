@@ -81,7 +81,7 @@
         /*print_r($arr);*/
     ?>
 	
-	<p class="clear noteProbs">* Nota: las probabilidades de un bando de salir elegido son inversamente proporcionales al porcentaje de gungubos que tiene.</p>
+	<p class="clear noteProbs">* Nota: las probabilidades de un bando de salir elegido son inversamente proporcionales a la cantidad de gungubos que tiene.</p>
 
     <div id="generalProbs">
         <h2>Probabilidad por usuario</h2>

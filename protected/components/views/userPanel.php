@@ -155,7 +155,8 @@
     </div>
 </div>
 <div id="experiencia">
-    <span id="xp" class="w50">
+    <?php $pExp = floor(100*(Yii::app()->currentUser->experience/Yii::app()->config->getParam('maxExperienciaUsuario'))); ?>
+    <span id="xp<?php if($pExp == 0) echo 0;?>" class="w<?php echo $pExp;?>">
         <span class="pin">
                 <span class="title">Faltan 300 puntos de experiencia</span>
         </span>
