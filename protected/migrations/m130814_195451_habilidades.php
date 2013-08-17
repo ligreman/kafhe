@@ -9,7 +9,7 @@ class m130814_195451_habilidades extends CDbMigration
 	    // HIDRATAR
         $this->insert('skill', array(
             'name'  =>  'Hidratar',
-            'description'  =>  'Aumenta tu ritmo de regeneración de tueste durante 4 horas',
+            'description'  =>  'Aumenta tu ritmo de regeneración de tueste durante 4 horas. Si estás desecado sólo eliminará dicho penalizador',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'mejora',         // ofensiva, mejora, utilidad
             'keyword'  =>  'hidratar',
@@ -159,7 +159,7 @@ class m130814_195451_habilidades extends CDbMigration
         //DESECAR
         $this->insert('skill', array(
             'name'  =>  'Desecar',
-            'description'  =>  'El ritmo de regeneración de tueste del jugador objetivo se invierte durante 4 horas',
+            'description'  =>  'El ritmo de regeneración de tueste del jugador objetivo se invierte durante 4 horas. Si está hidratado sólo eliminará dicho bonificador',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
             'keyword'  =>  'desecar',

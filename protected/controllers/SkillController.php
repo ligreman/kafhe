@@ -46,14 +46,6 @@ class SkillController extends Controller
 			//Ejecuto la habilidad
 			Yii::app()->skill->executeSkill($skill, $user, $target, $side);
 
-			//Feedback para el usuario
-			switch(Yii::app()->skill->result) {
-                case 'fail': $feedback = 'Has pifiado al ejecutar '.$skill->name.'.'; break;
-                case 'normal': $feedback = 'Has ejecutado '.$skill->name.' correctamente.'; break;
-                case 'critic': $feedback = '¡Has hecho un crítico al ejecutar '.$skill->name.'!'; break;
-			}
-			Yii::app()->user->setFlash(Yii::app()->skill->result, $feedback);
-
 			//Creo la notificación si no es la skill Disimular o tengo ésta activa
             if (!$this->skillNotification(Yii::app()->skill, $user))
                 throw new CHttpException(400, 'Error al guardar una notificación por habilidad ('.$skill_id.').');

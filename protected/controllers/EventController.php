@@ -74,7 +74,7 @@ class EventController extends Controller
 
 		//Creo la notificación		
 		$nota = new Notification;        
-        $nota->message = ':kafhe: ¡Que de comienzo la batalla! :achikhoria:';
+        $nota->message = ':battle: ¡Que de comienzo la batalla!';
         $nota->type = 'omelettus';
 		if (!$nota->save())
 			throw new CHttpException(400, 'Error al guardar la notificación de aviso de inicio de batalla del evento '.$event->id);

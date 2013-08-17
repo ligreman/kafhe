@@ -13,12 +13,14 @@ class SkillSingleton extends CApplicationComponent
 	private $_keyword = '';
 	private $_result = '';
 	private $_resultMessage = '';
+	private $_extraMessage = '';
 	private $_error = '';
 
     public function executeSkill($skill, $user, $target, $side)
     {
         $this->_error = '';
 		$this->_keyword = $skill->keyword;
+		$this->_extraMessage = '';
 
         //Saco los nombres de los que intervienen
 		$this->_caster = $user->id;
@@ -63,17 +65,21 @@ class SkillSingleton extends CApplicationComponent
 			
 		}
 		
-		//Mensaje
+		//Mensaje para el Muro de notificaciones y el Flash de feedbak del usuario
 		if ($target===null) $finalName = '';  //si venía nulo, es porque no tiene objetivo y no pongo nada
         elseif ($this->_finalTarget == $this->_caster) $finalName = ' sobre sí mismo';
         else $finalName = ' sobre '.Yii::app()->usertools->getAlias($this->_finalTarget);
 
-        if ($this->_result == 'fail')
+        if ($this->_result == 'fail') {
             $this->_resultMessage = ':'.$skill->keyword.': Ha pifiado al intentar ejecutar la habilidad '.$skill->name.$finalName.'.';
-        else if ($this->_result == 'normal')
+            Yii::app()->user->setFlash(Yii::app()->skill->result, 'Has pifiado al ejecutar '.$skill->name.$finalName.'. '.$this->_extraMessage);
+        } else if ($this->_result == 'normal') {
             $this->_resultMessage = ':'.$skill->keyword.': Ha ejecutado la habilidad '.$skill->name.$finalName.'.';
-        else if ($this->_result == 'critic')
+            Yii::app()->user->setFlash(Yii::app()->skill->result, 'Has ejecutado '.$skill->name.$finalName.' correctamente. '.$this->_extraMessage);
+        } else if ($this->_result == 'critic') {
             $this->_resultMessage = ':'.$skill->keyword.': Ha hecho un crítico ejecutando la habilidad '.$skill->name.$finalName.'.';
+            Yii::app()->user->setFlash(Yii::app()->skill->result, '¡Has hecho un crítico al ejecutar '.$skill->name.$finalName.'!. '.$this->_extraMessage);
+        }
 
 		return true;
     }
@@ -82,10 +88,20 @@ class SkillSingleton extends CApplicationComponent
 	// Crea un modificador de "hidratado"
 	private function hidratar($skill, $user, $target) 
 	{
+	    //Si tengo Desecar, lo que hago es quitármelo de encima en vez de ejecutar hidratar
+        $modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>Yii::app()->params->modifierDesecado)));
+        if ($modificador !== null) {
+            if (!$modificador->delete())
+                throw new CHttpException(400, 'Error al eliminar el modificador ('.Yii::app()->params->modifierDesecado.').');
+
+            $this->_extraMessage = 'Al estar el objetivo previamente '.Yii::app()->params->modifierDesecado.', '.$skill->name.' únicamente ha eliminado esa penalización.';
+            return true;
+        }
+
 	    //si ya tengo hidratar, lo que hago es actualizar sus datos, ya que solo puede haber uno (busco por keyword porque puede estar creado por diferentes fuentes)
         $modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
 
-        if ($modificador == null)
+        if ($modificador === null)
             $modificador = new Modifier;
 
 	    $modificador->caster_id = $user->id;
@@ -105,10 +121,20 @@ class SkillSingleton extends CApplicationComponent
     // Crea un modificador de "desecado"
     private function desecar($skill, $user, $target)
     {
+        //Si tiene Hidratar, lo que hago es quitarlo en vez de ejecutar desecar
+        $modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>Yii::app()->params->modifierHidratado)));
+        if ($modificador !== null) {
+            if (!$modificador->delete())
+                throw new CHttpException(400, 'Error al eliminar el modificador ('.Yii::app()->params->modifierHidratado.').');
+
+            $this->_extraMessage = 'Al estar el objetivo previamente '.Yii::app()->params->modifierHidratado.', '.$skill->name.' únicamente ha eliminado esa bonificación.';
+            return true;
+        }
+
         //si ya tengo desecar, lo que hago es actualizar sus datos, ya que solo puede haber uno (busco por keyword porque puede estar creado por diferentes fuentes)
         $modificador = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
 
-        if ($modificador == null)
+        if ($modificador === null)
             $modificador = new Modifier;
 
         $modificador->caster_id = $user->id;
