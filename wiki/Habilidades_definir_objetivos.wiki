@@ -32,7 +32,7 @@ A la hora de establecer los requisitos de la habilidad en la tabla *skill*, se p
 ||id_usuario||bandoA||Usuario cualquiera perteneciente al bandoA||
 ||id_usuario||bandoA,bandoB||Usuario cualquiera perteneciente al bandoA o bandoB||
 ||NULL||bandoA||Todo el bandoA||
-||NULL||bandoA,bandoB||Ambos bandos A y B||
+||NULL||bandoA,bandoB||Un bando a elegir entre A ó B||
 ||NULL||NULL||No requiere ningún objetivo||
 
 
