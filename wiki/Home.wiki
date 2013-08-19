@@ -5,8 +5,8 @@
 
 == Fase de Desarrollo ==
 
-  * [Entorno_de_Desarrollo]
-  * [Habilidades_definir_objetivos]
+  * [Entorno_de_Desarrollo]: explica cómo montar el entorno de desarrollo.
+  * [Habilidades_definir_objetivos]: explica cómo funciona el sistema de objetivos de habilidades.
 
 	
 
