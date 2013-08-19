@@ -21,3 +21,9 @@ En la tabla *skill* hay varios campos relacionados con los objetivos. Esta tabla
 
 En la tabla *modifier* tenemos otros campos relacionados con el objetivo, que hacen referencia al objetivo seleccionado al que afecta una habilidad ejecutada:
   * target_final: hace referencia al objetivo seleccionado. Puede ser el ID de un jugador, o los textos: kafhe, achikhoria, global (ambos bandos).
+
+
+== Detalles a tener en cuenta ==
+
+A la hora de establecer los requisitos de la habilidad en la tabla *skill*, se pueden hacer combinaciones de ambos campos:
+||table||cell||
