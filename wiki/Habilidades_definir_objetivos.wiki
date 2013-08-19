@@ -7,4 +7,12 @@
 A la hora de diseñar una habilidad una de las cosas a tener en cuenta es a qué objetivo va a afectar. Puede ser un jugador concreto, o puede ser a todo un bando. En este apartado se explica cómo funciona el mecanismo de objetivos de una habilidad, qué campos se ven afectados y qué valores admiten.
 
 
-== Explicación ==
+== Base de datos ==
+
+En base de datos hay dos tablas relacionadas con las habilidades:
+  * skill: que almacena las propias habilidades.
+  * modifier: que almacena los modificadores creados por las habilidades.
+
+Un modificador es el resultado de la ejecución de una habilidad, si es que ésta crea un efecto que perdura en el tiempo y no es instantáneo. Por ejemplo, una habilidad que al ejecutarla te otorga 100 puntos de tueste es instantánea y no crea ningún modificador. Pero una habilidad que haga "durante la próxima hora regeneras más tueste" crea un efecto que perdura un tiempo, y para ello se crea un modificador indicando este efecto.
+
+En la tabla *skill* hay
