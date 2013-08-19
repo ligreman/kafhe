@@ -7,12 +7,6 @@ class UserToolsSingleton extends CApplicationComponent
 {
 	private $_users = null;
 	private $_modifiers = null;
-	private $_statuses = null;
-
-	/*public function setModel($id)
-    {
-        $this->_model = Event::model()->findByPk($id);
-    }*/
 
     //Cojo el alias de sesión si ya está cargado, porque no es algo que cambie
     public function getAlias($userId=null)
@@ -34,40 +28,21 @@ class UserToolsSingleton extends CApplicationComponent
 		
 		return $aliases;
     }
-	
-	public function getStatusName($status_id)
-	{
-		if (!$this->_statuses) {
-			$estados = array(
-				Yii::app()->params->statusCriador => 'Criador',
-				Yii::app()->params->statusCazador => 'Cazador',
-				Yii::app()->params->statusAlistado => 'Alistado',
-				Yii::app()->params->statusBaja => 'Baja',
-				Yii::app()->params->statusDesertor => 'Desertor',
-				Yii::app()->params->statusLibre => 'Agente libre',
-			);
-			$this->_statuses = $estados;
-		}
-		
-		return $this->_statuses[$status_id];
-	}
-	
+
 	//Esta función la coge automáticamente. Coge usuarios del grupo actual
     public function getUsers()
     {
         if (!$this->_users)
         {
-            /*if (!isset(Yii::app()->currentUser->groupId))
-                return null;*/
-
             $criteria = New CDbCriteria;
 
             //Si es admin tendrá grupo null y cogeré todos los usuarios
             if (Yii::app()->currentUser->groupId !== null) {
                 $criteria->condition = 'group_id=:groupId';
                 $criteria->params = array(':groupId'=>Yii::app()->currentUser->groupId);
-                $criteria->order = 'rank DESC';
             }
+
+            $criteria->order = 'rank DESC';
 
             $this->_users = User::model()->findAll($criteria);
         }
@@ -87,13 +62,12 @@ class UserToolsSingleton extends CApplicationComponent
 
         if ($groupId == null) $groupId = Yii::app()->currentUser->groupId;
 
+        $criteria->condition = 'group_id=:groupId';
+
         if ($exclude !== null)
-            $criteria->condition = 'id NOT IN ('.implode(',', $exclude).') ';
+            $criteria->condition .= ' AND id NOT IN ('.implode(',', $exclude).') ';
 
-            //$excluidos = ' WHERE id NOT IN ('.implode(',', $exclude).') ';
-
-        //$sql = 'SELECT id FROM user '.$excluidos.' ORDER BY RAND() LIMIT 1';
-
+        $criteria->params = array(':groupId'=>$groupId);
         $criteria->order = 'BY RAND()';
         $criteria->limit = '1';
 
@@ -101,8 +75,8 @@ class UserToolsSingleton extends CApplicationComponent
         return $user;
     }
 	
-	//Compruebo si han expirado modificadores de todo el mundo
-	public function checkModifiersExpiration($finEvento=false)
+	//Compruebo si han expirado modificadores de todo el mundo, de cualquier tipo.
+	public function checkModifiersExpiration()
 	{
 		$modifiers = Modifier::model()->findAll(array('condition'=>'duration IS NOT NULL AND duration_type IS NOT NULL'));
 		if($modifiers !== null) 
@@ -122,7 +96,7 @@ class UserToolsSingleton extends CApplicationComponent
 				}
 				
 				//Compruebo si caduca por fin de evento
-				if ($finEvento && $modifier->duration_type=='evento' && $modifier->duration<=0) {
+				if ($modifier->duration_type=='evento' && $modifier->duration<=0) {
 					$modifier->delete();
 				}
 			}
@@ -130,61 +104,69 @@ class UserToolsSingleton extends CApplicationComponent
 	}
 
     /** Reduce los usos de un modificador del jugador
-     * @param $mod_keyword
-     * @param null $userId
+     * @param $modifier: el objeto del modificador a reducir su uso. Si es null ha de estar definido el parámetro $mod_keyword
+     * @param $mod_keyword: keyword del modificador a reducir su uso. Si es null ha de estar el parámetro $modifier definido
+     * @param null $userId: Si es null se toma el usuario activo. Va siempre en conjunto con mod_keyword
      * @return bool
      */
-    public function reduceModifierUses($mod_keyword, $userId=null)
+    public function reduceModifierUses($modifier=null, $mod_keyword=null, $userId=null)
 	{
+	    if ($mod_keyword===null && $modifier===null) return false;
+
 		if ($userId === null) {
 			if (isset(Yii::app()->currentUser->id))
 				$userId = Yii::app()->currentUser->id;
 			else
 				return false;
 		}
+
+		//Saco el modificador según lo que me hayan pasado
+		if ($mod_keyword!==null)
+		    $modifier = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$userId, ':keyword'=>$mod_keyword)));
+
+        //Posibles puntos de fallo inesperado
+		if ($modifier===null  ||  $modifier->duration_type!='usos'  ||  $modifier->duration <= 0) return false;
+
+        $modifier->duration--;
 		
-		$mod = Modifier::model()->find(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$userId, ':keyword'=>$mod_keyword)));
-		
-		if ($mod===null  ||  $mod->duration_type!='usos') return false;
-		
-		if ($mod->duration <= 0)
-			return false;
-		
-		$mod->duration--;
-		
-		if ($mod->duration <= 0)
-			return $mod->delete();
-		else
-			return $mod->save();
+		if ($modifier->duration <= 0) {
+			if(!$modifier->delete())
+                Yii::log('Error al eliminar el modificador '.$modifier->keyword.' ('.$modifier->id.').', 'error', 'reduceModifierUses');
+        } else {
+            if(!$modifier->save())
+                Yii::log('Error al reducir los usos del modificador '.$modifier->keyword.' ('.$modifier->id.').', 'error', 'reduceModifierUses');
+        }
+
+        return true;
 	}
-	
-	public function reduceEventModifiers($groupId=null)
+
+///TODO sacar todo lo de modificadores a un ModifierSingleton
+
+    /** Reduce los modificadores de tipo evento de un grupo
+     * @param $eventId: ID del evento que quiero reducir
+     * @return bool
+     */
+    public function reduceEventModifiers($eventId)
 	{
-		if ($groupId === null) {
-			if (isset(Yii::app()->currentUser->groupId))
-				$groupId = Yii::app()->currentUser->groupId;
-			else
-				return false;
-		}	
-					
-		$sql = 'SELECT m.* FROM modifier m, user u WHERE u.group_id='.$groupId.' AND m.target_final_id=u.id AND m.duration_type="desayuno";';
+		//$sql = 'SELECT m.* FROM modifier m, user u WHERE u.group_id='.$groupId.' AND m.target_final=u.id AND m.duration_type="evento";';
 		//$mods = Modifier::model()->findAll(array('condition'=>'duration_type=:type AND group_id=:group', 'params'=>array(':type'=>'evento', ':group'=>$groupId)));
-		$mods = Yii::app()->db->createCommand($sql)->queryAll();
+		//$mods = Yii::app()->db->createCommand($sql)->queryAll();
+		$mods = Modifier::model()->findAll(array('condition'=>'event_id=:evento AND duration_type=:tipo', 'params'=>array(':evento'=>$eventId, 'tipo'=>'evento')));
 		
 		if ($mods === null)
 			return false;
 		else {
 			foreach($mods as $mod) {
-				if ($mod->duration_type != 'desayuno') continue;
+				if ($mod->duration_type != 'evento') continue;
 			
 				$mod->duration--;
 		
 				if ($mod->duration <= 0) {
 					if(!$mod->delete())
-						Yii::log('Error al eliminar el modificador de evento '.$mod->id.'.', 'error', 'reduceEventModifiers');
+						Yii::log('Error al eliminar el modificador de evento '.$mod->keyword.' ('.$mod->id.').', 'error', 'reduceEventModifiers');
 				} else {
 					if(!$mod->save())
-						Yii::log('Error al reducir el modificador de evento '.$mod->id.'.', 'error', 'reduceEventModifiers');
+						Yii::log('Error al reducir el modificador de evento '.$mod->keyword.' ('.$mod->id.').', 'error', 'reduceEventModifiers');
 				}
 			}
 		}
@@ -203,18 +185,19 @@ class UserToolsSingleton extends CApplicationComponent
 		
         foreach ($haystack as $modifier) {
             if ($needle == $modifier->keyword)
-                return true; //Devuelvo que sí al primer modificador que coincida, pero puede haber otros
+                return $modifier; //Devuelvo el primer modificador que coincida, pero puede haber otros
         }
 
         //Si llego aquí es que no lo tiene
         return false;
     }
 
+    /*
 	//Compruebo un modificador en tiempo real. No sé si tendrá uso ya que el getModifiers se actualiza en cada carga de página
-	public function hasModifier($modifier, $userId)
+	public function hasModifier($modifier, $user)
 	{
-		return Modifier::model()->exists(array('condition'=>'target_final_id=:target AND keyword=:keyword', 'params'=>array(':target'=>$userId, ':keyword'=>$modifier)));		
-	}
+		return Modifier::model()->exists(array('condition'=>'(target_final=:target OR target_final=:bando OR target_final=:todos) AND keyword=:keyword', 'params'=>array(':target'=>$user->id, ':bando'=>$user->side, ':todos'=>'global', ':keyword'=>$modifier)));
+	}*/
 
 	
 	//Carga los modificadores en variable sólo una vez por carga de página
@@ -224,19 +207,21 @@ class UserToolsSingleton extends CApplicationComponent
 			if (!isset(Yii::app()->currentUser->id))
 				return null;
 
-			$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->currentUser->id)));
+            $criteria = New CDbCriteria;
+            $criteria->condition = 'target_final=:target OR target_final=:bando';
+
+            if (Yii::app()->user->side != 'libre')
+                $criteria->condition .= ' OR target_final="global"'; //Si no soy del bando libre me afecta el "global" también
+
+            $criteria->params = array(':target'=>Yii::app()->currentUser->id, ':bando'=>Yii::app()->currentUser->side);
+
+            //Busco los mods que me afecta a mi ID, a mi bando o a global
+			$this->_modifiers = Modifier::model()->findAll($criteria);
 		}
 		
 		return $this->_modifiers;
 	}
-	
-	/*public function updateModifiers()
-	{
-		if (!isset(Yii::app()->currentUser->id))
-				return null;
-				
-		$this->_modifiers = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>Yii::app()->currentUser->id)));
-	}*/
+
 	
 	//Calculo las probabilidades para cada usuario del grupo
 	public function calculateProbabilities($groupId, $soloAlistados=true, $side=null)

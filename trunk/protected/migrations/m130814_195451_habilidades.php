@@ -9,12 +9,12 @@ class m130814_195451_habilidades extends CDbMigration
 	    // HIDRATAR
         $this->insert('skill', array(
             'name'  =>  'Hidratar',
-            'description'  =>  'Aumenta tu ritmo de regeneración de tueste durante 4 horas. Si estás desecado sólo eliminará dicho penalizador',
+            'description'  =>  'Aumenta tu ritmo de regeneración de tueste durante 4 horas. No se acumula. Si estás desecado sólo eliminará dicho penalizador',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'mejora',         // ofensiva, mejora, utilidad
             'keyword'  =>  'hidratar',
             'modifier_keyword'  =>  'hidratado',
-            'duration'  =>  '4',
+            'duration'  =>  4,
             'duration_type'  =>  'horas',  // horas, evento, usos
             'critic'  =>  10,
             'fail'  =>  10,
@@ -26,7 +26,7 @@ class m130814_195451_habilidades extends CDbMigration
             'cost_tueste_cooperate'  =>  NULL,
             'cost_tostolares_cooperate'  =>  NULL,
             'cooperate_benefit'  =>  NULL,      // valor numérico de beneficio, normalmente %
-            'require_target'  =>  0,         // 0,1
+            'require_target_user'  =>  0,         // 0,1
             'require_target_side'  =>  NULL,  // valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  NULL,    // valores (kafhe, achikhoria, libre) separados por comas
@@ -39,7 +39,7 @@ class m130814_195451_habilidades extends CDbMigration
         // DISIMULAR
         $this->insert('skill', array(
             'name'  =>  'Disimular',
-            'description'  =>  'La próxima habilidad que lances no aparecerá en el muro de notificaciones. Esta habilidad tampoco aparecerá en el muro',
+            'description'  =>  'La próxima habilidad que lances no aparecerá en el muro de notificaciones. No se acumula. Esta habilidad tampoco aparecerá en el muro',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',         // ofensiva, mejora, utilidad
             'keyword'  =>  'disimular',
@@ -56,7 +56,7 @@ class m130814_195451_habilidades extends CDbMigration
             'cost_tueste_cooperate'  =>  NULL,
             'cost_tostolares_cooperate'  =>  NULL,
             'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
-            'require_target'  =>  0,         // 0,1
+            'require_target_user'  =>  0,         // 0,1
             'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  NULL,      // String valores (kafhe, achikhoria, libre) separados por comas
@@ -86,7 +86,7 @@ class m130814_195451_habilidades extends CDbMigration
             'cost_tueste_cooperate'  =>  NULL,
             'cost_tostolares_cooperate'  =>  NULL,
             'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
-            'require_target'  =>  0,         // 0,1
+            'require_target_user'  =>  0,         // 0,1
             'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  'kafhe,achikhoria',      // String valores (kafhe, achikhoria, libre) separados por comas
@@ -116,7 +116,7 @@ class m130814_195451_habilidades extends CDbMigration
             'cost_tueste_cooperate'  =>  NULL,
             'cost_tostolares_cooperate'  =>  NULL,
             'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
-            'require_target'  =>  0,         // 0,1
+            'require_target_user'  =>  0,         // 0,1
             'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  'libre',      // String valores (kafhe, achikhoria, libre) separados por comas
@@ -124,6 +124,37 @@ class m130814_195451_habilidades extends CDbMigration
             'require_user_status'  =>  NULL,    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  '1',   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL      // ID del talento requerido
+        ));
+
+        // TRAMPA
+        $this->insert('skill', array(
+            'name'  =>  'Trampa',
+            'description'  =>  'Provoca que el próximo miembro de un bando que intente ejecutar una habilidad pifie. Se acumulan los usos. Esta habilidad no aparecerá en el muro de notificaciones',
+            'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
+            'keyword'  =>  'trampa',
+            'modifier_keyword'  =>  'trampa',
+            'modifier_hidden' => 1,
+            'duration'  =>  1,
+            'duration_type'  =>  'usos',  // horas, evento, usos
+            'critic'  =>  10,
+            'fail'  =>  10,
+            'cost_tueste'  =>  20,
+            'cost_retueste'  =>  NULL,
+            'cost_relanzamiento'  =>  NULL,
+            'cost_tostolares'  =>  NULL,
+            'is_cooperative'  =>  0,         // 0,1
+            'cost_tueste_cooperate'  =>  NULL,
+            'cost_tostolares_cooperate'  =>  NULL,
+            'cooperate_benefit'  =>  NULL,      // valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,         // 0,1
+            'require_target_side'  =>  NULL,  // valores (kafhe o achikhoria o libre) separados por comas. Uno u otro, no 'y'.
+            'require_caller'  =>  0,         // 0,1
+            'require_user_side'  =>  'libre',    // valores (kafhe, achikhoria, libre) separados por comas
+            'require_user_min_rank'  =>  NULL,  // Rango mínimo para ejecutarla
+            'require_user_status'  =>  NULL,  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
+            'require_talent_id'  =>  NULL
         ));
 
         // ESCAQUEARSE
@@ -146,7 +177,7 @@ class m130814_195451_habilidades extends CDbMigration
             'cost_tueste_cooperate'  =>  NULL,
             'cost_tostolares_cooperate'  =>  NULL,
             'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
-            'require_target'  =>  0,         // 0,1
+            'require_target_user'  =>  0,         // 0,1
             'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  1,         // 0,1
             'require_user_side'  =>  NULL,      // String valores (kafhe, achikhoria, libre) separados por comas
@@ -159,7 +190,7 @@ class m130814_195451_habilidades extends CDbMigration
         //DESECAR
         $this->insert('skill', array(
             'name'  =>  'Desecar',
-            'description'  =>  'El ritmo de regeneración de tueste del jugador objetivo se invierte durante 4 horas. Si está hidratado sólo eliminará dicho bonificador',
+            'description'  =>  'El ritmo de regeneración de tueste del jugador objetivo se invierte durante 4 horas. No se acumula. Si está hidratado sólo eliminará dicho bonificador',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
             'keyword'  =>  'desecar',
@@ -176,7 +207,7 @@ class m130814_195451_habilidades extends CDbMigration
             'cost_tueste_cooperate'  =>  NULL,
             'cost_tostolares_cooperate'  =>  NULL,
             'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
-            'require_target'  =>  1,         // 0,1
+            'require_target_user'  =>  1,         // 0,1
             'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  NULL,      // String valores (kafhe, achikhoria, libre) separados por comas
@@ -202,6 +233,7 @@ class m130814_195451_habilidades extends CDbMigration
             'type'  =>  '',         // ofensiva, mejora, utilidad
             'keyword'  =>  '',
             'modifier_keyword'  =>  '',
+	        'modifier_hidden' => 0,       // Que no se muestre en la lista de modificadores de los jugadores
             'duration'  =>  NULL,       // Int cantidad para la duración
             'duration_type'  =>  NULL,  // horas, evento, usos
             'critic'  =>  ,
@@ -214,7 +246,7 @@ class m130814_195451_habilidades extends CDbMigration
             'cost_tueste_cooperate'  =>  NULL,
             'cost_tostolares_cooperate'  =>  NULL,
             'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
-            'require_target'  =>  0,         // 0,1
+            'require_target_user'  =>  0,         // 0,1
             'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  NULL,      // String valores (kafhe, achikhoria, libre) separados por comas

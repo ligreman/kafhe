@@ -6,8 +6,8 @@
  * The followings are the available columns in table 'notification':
  * @property integer $id
  * @property integer $sender
- * @property integer $recipient_original
- * @property integer $recipient_final
+ * @property string $recipient_original
+ * @property string $recipient_final
  * @property string $message
  * @property string $timestamp
  * @property string $type
@@ -41,7 +41,8 @@ class Notification extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('message, type', 'required'),
-			array('sender, recipient_original, recipient_final', 'numerical', 'integerOnly'=>true),
+			array('sender', 'numerical', 'integerOnly'=>true),
+			array('recipient_original, recipient_final', 'length', 'max'=>50),
 			array('type', 'length', 'max'=>10),
 			array('timestamp', 'safe'),
 			// The following rule is used by search().
@@ -90,8 +91,8 @@ class Notification extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('sender',$this->sender);
-		$criteria->compare('recipient_original',$this->recipient_original);
-		$criteria->compare('recipient_final',$this->recipient_final);
+		$criteria->compare('recipient_original',$this->recipient_original,true);
+		$criteria->compare('recipient_final',$this->recipient_final,true);
 		$criteria->compare('message',$this->message,true);
 		$criteria->compare('timestamp',$this->timestamp,true);
 		$criteria->compare('type',$this->type,true);
