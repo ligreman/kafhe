@@ -36,3 +36,7 @@ A la hora de establecer los requisitos de la habilidad en la tabla *skill*, se p
 
 
 == Tabla de modificadores (modifier) ==
+
+Al ejecutar una habilidad se procesa el objetivo seleccionado por el usuario, y si ésta genera un modificador se almacena dicho objetivo final en la tabla modifier. Hay que tener en cuenta que el objetivo final puede variar por diversas causas, y no ser el mismo que seleccionó el usuario que lanza la habilidad.
+|| *target_final* || *Significado* ||
+||s || s||
