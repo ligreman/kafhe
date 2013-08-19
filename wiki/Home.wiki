@@ -6,12 +6,9 @@
 == Fase de Desarrollo ==
 
   * [Entorno_de_Desarrollo]
+  * [Habilidades_definir_objetivos]
 
 	
-
-== Fase de Diseño ==
-
-  *
 
 == Documentación ==
 
