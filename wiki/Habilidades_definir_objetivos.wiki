@@ -15,4 +15,9 @@ En base de datos hay dos tablas relacionadas con las habilidades:
 
 Un modificador es el resultado de la ejecución de una habilidad, si es que ésta crea un efecto que perdura en el tiempo y no es instantáneo. Por ejemplo, una habilidad que al ejecutarla te otorga 100 puntos de tueste es instantánea y no crea ningún modificador. Pero una habilidad que haga "durante la próxima hora regeneras más tueste" crea un efecto que perdura un tiempo, y para ello se crea un modificador indicando este efecto.
 
-En la tabla *skill* hay
+En la tabla *skill* hay varios campos relacionados con los objetivos. Esta tabla es la definición de una habilidad, y por lo tanto tiene varios campos que indican cuáles son los requisitos para poder ejecutarla. Varios de estos requisitos afectan al tema de objetivos:
+  * require_target_user
+  * require_target_side
+  * 
+  * 
+  * 
