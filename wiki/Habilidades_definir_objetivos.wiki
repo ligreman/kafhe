@@ -1,4 +1,5 @@
 #summary Explicación de cómo definir un objetivo (target) de una habilidad.
+#labels Phase-Implementation
 
 = Habilidades: Definición de objetivos =
 
