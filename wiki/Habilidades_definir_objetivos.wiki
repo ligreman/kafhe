@@ -39,4 +39,8 @@ A la hora de establecer los requisitos de la habilidad en la tabla *skill*, se p
 
 Al ejecutar una habilidad se procesa el objetivo seleccionado por el usuario, y si ésta genera un modificador se almacena dicho objetivo final en la tabla modifier. Hay que tener en cuenta que el objetivo final puede variar por diversas causas, y no ser el mismo que seleccionó el usuario que lanza la habilidad.
 || *target_final* || *Significado* ||
-||s || s||
+||12||Usuario con id 12||
+||kafhe||Todos los usuarios del bando Kafhe||
+||global||Todos los usuarios de los bandos de Kafhe y Achikhoria||
+
+Nota: el objetivo final no tiene sentido que sea bando "libre" ya que se supone que sólo hay 1 jugador en ese bando siempre, por lo que se apuntaría al ID del jugador en lugar de a "todos los jugadores del bando Libre".
