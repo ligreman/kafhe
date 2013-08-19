@@ -17,3 +17,7 @@
 == Recursos ==
   * [http://www.yiiframework.com/doc/guide/1.1/en/index Manual oficial Yii]
   * [http://www.yiiframework.com/doc/api/ API]
+
+
+== Otros ==
+  * [Cambios_Framework_Yii Cambios realizados en el framework Yii]
