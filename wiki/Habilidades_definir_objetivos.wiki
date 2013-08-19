@@ -23,7 +23,7 @@ En la tabla *modifier* tenemos otros campos relacionados con el objetivo, que ha
   * target_final: hace referencia al objetivo seleccionado. Puede ser el ID de un jugador, o los textos: kafhe, achikhoria, global (ambos bandos).
 
 
-== Detalles a tener en cuenta ==
+== Tabla de habilidades (skill) ==
 
 A la hora de establecer los requisitos de la habilidad en la tabla *skill*, se pueden hacer combinaciones de ambos campos:
 || *require_target_user* || *require_target_side* || *Objetivo final* ||
@@ -33,3 +33,6 @@ A la hora de establecer los requisitos de la habilidad en la tabla *skill*, se p
 ||NULL||bandoA||Todo el bandoA||
 ||NULL||bandoA,bandoB||Ambos bandos A y B||
 ||NULL||NULL||No requiere ningún objetivo||
+
+
+== Tabla de modificadores (modifier) ==
