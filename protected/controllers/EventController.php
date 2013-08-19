@@ -187,7 +187,7 @@ class EventController extends Controller
             throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
 
         //Caducidad de modificadores de evento		
-		Yii::app()->usertools->reduceEventModifiers($event->group_id);
+		Yii::app()->usertools->reduceEventModifiers($event->id);
 
         //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
 		$usuarios = Yii::app()->usertools->users;

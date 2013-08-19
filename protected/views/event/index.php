@@ -45,11 +45,11 @@
         $libre = '<ul id="libreMember">';
         foreach ($users as $user) {
             if($user->side == 'kafhe'){
-                $kafheMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->usertools->getStatusName($user->status).'</li>';
+                $kafheMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->params->userStatusNames[$user->status].'</li>';
             }elseif($user->side == 'achikhoria'){
-                $achikhoriaMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->usertools->getStatusName($user->status).'</li>';
+                $achikhoriaMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->params->userStatusNames[$user->status].'</li>';
             }else{
-				$libre .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->usertools->getStatusName($user->status).'</li>';
+				$libre .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->params->userStatusNames[$user->status].'</li>';
             }
         }
     ?>

@@ -34,7 +34,7 @@ class TuesteSingleton extends CApplicationComponent
 			if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado)) $estaHidratado = true;
             if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierDesecado)) $estaDesecado = true;
 		} else {
-			$mods = Modifier::model()->findAll(array('condition'=>'target_final_id=:target', 'params'=>array(':target'=>$user->id)));
+			$mods = Modifier::model()->findAll(array('condition'=>'target_final=:target', 'params'=>array(':target'=>$user->id)));
 			if($mods!==null  &&  Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado, $mods)) $estaHidratado = true;
             if($mods!==null  &&  Yii::app()->usertools->inModifiers(Yii::app()->params->modifierDesecado, $mods)) $estaDesecado = true;
 		}
