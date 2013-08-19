@@ -187,16 +187,20 @@ return array(
 		//Modificadores. Están aquí y en BBDD
 		'modifierHidratado'=>'hidratado',
 		'modifierDisimulando'=>'disimulando',
+        'modifierImpersonando'=>'impersonando',
 		'modifierDesecado'=>'desecado',
+        'modifierTrampa'=>'trampa',
 		
 		//Habilidades. Están aquí y en BBDD
 		'skillHidratar'=>'hidratar',
         'skillDesecar'=>'desecar',
-		'skillDisimular'=>'disimular',
+        'skillDisimular'=>'disimular',
+        'skillImpersonar'=>'impersonar',
 		'skillCazarGungubos'=>'cazarGungubos',
 		'skillEscaquearse'=>'escaquearse',
 		'skillGungubicidio'=>'gungubicidio',
 		'skillVendetta'=>'vendetta',
+		'skillTrampa'=>'trampa',
 
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Renegados'),

@@ -11,12 +11,17 @@
             <span id="userName"><?php echo $user->alias; ?></span>
             <span id="modificadores">
                 <?php
-                //Modificadores (provisional)
-                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",Yii::app()->params->sideNames[$user->side],array('class' => 'modifier','title' => 'Perteneces al bando de '.Yii::app()->params->sideNames[$user->side]));
-
-                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
+                //Modificadores
                 if (Yii::app()->user->checkAccess('Usuario')) {
+                    //Bando y estado
+                    echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",Yii::app()->params->sideNames[$user->side],array('class' => 'modifier','title' => 'Perteneces al bando de '.Yii::app()->params->sideNames[$user->side]));
+                    echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
+
+                    //Modificadores de habilidades
                     foreach(Yii::app()->usertools->modifiers as $modifier) {
+                        //Si es oculto no lo muestro
+                        if ($modifier->hidden) continue;
+
                         if($modifier->duration_type=='horas') {
                             $duration = $modifier->duration * 60 * 60; //en segundos
                             $duration = (strtotime($modifier->timestamp) + $duration) - time();
@@ -113,7 +118,7 @@
                                     <dt>Probabilidad de Pifia:</dt>
                                     <dd><?php echo $skill->fail; ?></dd>
                                     
-									<?php if($skill->require_target): ?>
+									<?php if($skill->require_target_user): ?>
                                     
 										<dt>Objetivo</dt>
                                         <dd class="targetList">
