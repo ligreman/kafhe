@@ -1,0 +1,8 @@
+#summary Explicación de cómo definir un objetivo (target) de una habilidad.
+
+= Introducción =
+
+A la hora de diseñar una habilidad una de las cosas a tener en cuenta es a qué objetivo va a afectar. Puede ser un jugador concreto, o puede ser a todo un bando. En este apartado se explica cómo funciona el mecanismo de objetivos de una habilidad, qué campos se ven afectados y qué valores admiten.
+
+
+= Explicación =
