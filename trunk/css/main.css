@@ -1006,7 +1006,7 @@ label.title{
     font-weight: bold;
     font-size: 1.4em;
     text-align: center;
-    margin: 1em 0 0;
+    padding: 1em 0 0;
     color: #363636;
 }
 
@@ -1048,6 +1048,22 @@ label.title{
 
 #bandoAchikhoria li,#bandoKafhe li,#bandoLibre li{
     padding: .5em 0;
+}
+
+#battleResults h2{
+    font-weight: bold;
+    padding: 1em;
+    font-size: 1.2em;
+    color:#363636;
+    clear: both;
+}
+
+#lastBattleStatusChart{
+    float:right;
+}
+
+#lastBattleResult{
+    float:left;
 }
 
 /*#bandoLibre{
@@ -1127,7 +1143,7 @@ p.bebida{
 
 #pedidoCentrado{
     width:60%;
-    margin: 3em auto 0 ;
+    margin: 1em auto 0 ;
 }
 
 .tipoPedido{

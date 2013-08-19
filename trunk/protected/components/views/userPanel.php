@@ -12,7 +12,9 @@
             <span id="modificadores">
                 <?php
                 //Modificadores (provisional)
-                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",$user->side,array('class' => 'modifier','title' => 'Perteneces al bando de '.Yii::app()->params->sideNames[$user->side]));
+                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",Yii::app()->params->sideNames[$user->side],array('class' => 'modifier','title' => 'Perteneces al bando de '.Yii::app()->params->sideNames[$user->side]));
+
+                echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     foreach(Yii::app()->usertools->modifiers as $modifier) {
                         if($modifier->duration_type=='horas') {
@@ -77,7 +79,7 @@
 
         <p id="skillsIcon">
             <a>
-                <img src="<?php echo Yii::app()->baseUrl?>/images/skillsIcon.png">
+                <img src="<?php echo Yii::app()->baseUrl?>/images/skillsIcon.png" />
             </a>
         </p>
     </div>
