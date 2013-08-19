@@ -27,7 +27,7 @@ En la tabla *modifier* tenemos otros campos relacionados con el objetivo, que ha
 == Tabla de habilidades (skill) ==
 
 A la hora de establecer los requisitos de la habilidad en la tabla *skill*, se pueden hacer combinaciones de ambos campos:
-|| *require_target_user* || *require_target_side* || *Objetivo válido* ||
+|| *require_target_user* || *require_target_side* || *Objetivo válido requerido* ||
 ||id_usuario||NULL||Usuario cualquiera||
 ||id_usuario||bandoA||Usuario cualquiera perteneciente al bandoA||
 ||id_usuario||bandoA,bandoB||Usuario cualquiera perteneciente al bandoA o bandoB||
