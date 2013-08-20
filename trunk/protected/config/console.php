@@ -43,6 +43,7 @@ return array(
 		//Singletons
 		//'event'=>array('class'=>'EventSingleton'),
 		'usertools'=>array('class'=>'UserToolsSingleton'),
+		'modifier'=>array('class'=>'ModifierSingleton'),
 		'gungubos'=>array('class'=>'GungubosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),		
 		'config'=>array('class'=>'ConfigurationSingleton'),
@@ -68,16 +69,24 @@ return array(
 		//Modificadores. Están aquí y en BBDD
 		'modifierHidratado'=>'hidratado',
 		'modifierDisimulando'=>'disimulando',
+        'modifierImpersonando'=>'impersonando',
+		'modifierDesecado'=>'desecado',
+        'modifierTrampa'=>'trampa',
 		
 		//Habilidades. Están aquí y en BBDD
 		'skillHidratar'=>'hidratar',
-		'skillDisimular'=>'disimular',
+        'skillDesecar'=>'desecar',
+        'skillDisimular'=>'disimular',
+        'skillImpersonar'=>'impersonar',
 		'skillCazarGungubos'=>'cazarGungubos',
 		'skillEscaquearse'=>'escaquearse',
 		'skillGungubicidio'=>'gungubicidio',
 		'skillVendetta'=>'vendetta',
+		'skillTrampa'=>'trampa',
 
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Renegados'),
+        'userStatusNames'=>array(0=>'Criador', 1=>'Cazador', 2=>'Alistado', 3=>'Baja', 4=>'Desertor', 5=>'Agente libre'),
+        'eventStatusNames'=>array(0=>'Cerrado', 1=>'Iniciado', 2=>'Batalla', 3=>'Finalizado'),
 	),
 );

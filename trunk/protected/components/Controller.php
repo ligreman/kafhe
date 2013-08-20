@@ -33,6 +33,6 @@ class Controller extends CController
 
     //Se ejecuta en cada carga de página
     public function init() {
-        Yii::app()->usertools->checkModifiersExpiration(); //Compruebo expiración de modificadores
+        Yii::app()->modifier->checkModifiersExpiration(); //Compruebo expiración de modificadores
     }
 }

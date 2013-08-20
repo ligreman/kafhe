@@ -18,7 +18,7 @@
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
 
                     //Modificadores de habilidades
-                    foreach(Yii::app()->usertools->modifiers as $modifier) {
+                    foreach(Yii::app()->modifier->modifiers as $modifier) {
                         //Si es oculto no lo muestro
                         if ($modifier->hidden) continue;
 
@@ -90,13 +90,12 @@
     </div>
     <div id="skillsUserBlock" <?php if($skillsHidden=="1"){echo 'style="display:none;"';}else{echo 'class="visible"';} ?>>
         <?php
-        //Validador de habilidades
-        $validator = new SkillValidator;
-        //$user = User::model()->findByPk(Yii::app()->currentUser->id); //viene del controlador
+			//Validador de habilidades
+			$validator = new SkillValidator;        
         ?>
         <ul>
             <?php foreach($skills as $skill):?>
-                <?php if ($validator->canExecute($skill, $user)): ?>
+                <?php if ($validator->canExecute($skill)): ?>
                     <li><?php
                         $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png");
                         echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.$skill->description));
