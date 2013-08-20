@@ -30,7 +30,7 @@ class SkillController extends Controller
 	{	
 		//Obtengo la skill y mi usuario
 		$skill = Skill::model()->findByPk($skill_id);
-		$user = Yii::app()->currentUser->model; ///TODO este se puede prescindir de él pero hay que modificar el resto de funciones
+		//$user = Yii::app()->currentUser->model;
 		if ($target_id!==null) {
 			/*if (is_numeric($target_id)) //$target_id!='kafhe' && $target_id!='achikhoria' && $target_id!='libre')
 				$target = User::model()->findByPk($target_id);
@@ -42,13 +42,13 @@ class SkillController extends Controller
 		//Creo una instancia del validador de habilidades
 		$validator = new SkillValidator;
 		
-		if ($validator->canExecute($skill, $user, $target, $side, true)) {
+		if ($validator->canExecute($skill, $target, $side, true)) {
 			//Ejecuto la habilidad
-			if (!Yii::app()->skill->executeSkill($skill, $user, $target, $side)) {
+			if (!Yii::app()->skill->executeSkill($skill, $target, $side)) {
                 Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".Yii::app()->skill->error);
 			} else {
 			    //Creo la notificación si no es la skill Disimular o tengo ésta activa
-                if (!$this->skillNotification(Yii::app()->skill, $user))
+                if (!$this->skillNotification(Yii::app()->skill))
                     throw new CHttpException(400, 'Error al guardar una notificación por habilidad ('.$skill_id.').');
             }
 		}
@@ -65,16 +65,16 @@ class SkillController extends Controller
 	}
 	
 	
-	private function skillNotification($skill, $user) 
+	private function skillNotification($skill) 
 	{
 		//Si la habilidad ejecutándose no pifió y es Disimular o Impersonar o Trampa, no la muestro
 		if ($skill->result!='fail' && ($skill->keyword==Yii::app()->params->skillDisimular || $skill->keyword==Yii::app()->params->skillImpersonar || $skill->keyword==Yii::app()->params->skillTrampa))
 		    return true;
 		
 		//Si el usuario tiene el modificador "disimulando" activo, resto usos y no muestro la notificación
-		$modifier = Yii::app()->usertools->inModifiers(Yii::app()->params->modifierDisimulando);
+		$modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDisimulando);
 		if ($modifier !== false) {
-			if (!Yii::app()->usertools->reduceModifierUses($modifier))
+			if (!Yii::app()->modifier->reduceModifierUses($modifier))
 				throw new CHttpException(400, 'Error al reducir los usos de un modificador ('.$modifier->keyword.').');
 			return true;
 		}
@@ -84,12 +84,12 @@ class SkillController extends Controller
         $nota->recipient_original = $skill->originalTarget;
         $nota->recipient_final = $skill->finalTarget;
         $nota->message = $skill->resultMessage; //Mensaje para el muro
-        $nota->type = $user->side;
+        $nota->type = Yii::app()->currentUser->side;
 
         //Si el usuario está impersonando, cambio el objetivo original
-        $modifier = Yii::app()->usertools->inModifiers(Yii::app()->params->modifierImpersonando);
+        $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierImpersonando);
         if ($modifier !== false) {
-            if (!Yii::app()->usertools->reduceModifierUses($modifier))
+            if (!Yii::app()->modifier->reduceModifierUses($modifier))
                 throw new CHttpException(400, 'Error al reducir los usos de un modificador ('.$modifier->keyword.').');
 
             $alt_sender = Yii::app()->usertools->randomUser(null, array($skill->caster, $skill->finalTarget));

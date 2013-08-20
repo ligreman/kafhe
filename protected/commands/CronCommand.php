@@ -64,7 +64,7 @@ class CronCommand extends CConsoleCommand {
 	public function actionRegenerarTueste($userId=null)	
 	{
 		echo "Compruebo caducidad de modificadores.\n";
-		Yii::app()->usertools->checkModifiersExpiration();
+		Yii::app()->modifier->checkModifiersExpiration();
 		
 		echo "Iniciando regeneracion.\n";
 		if ($userId === null) {
@@ -121,7 +121,7 @@ class CronCommand extends CConsoleCommand {
 	public function actionCriarGungubos($eventId=null)	
 	{
 		echo "Compruebo caducidad de modificadores.\n";
-		Yii::app()->usertools->checkModifiersExpiration();
+		Yii::app()->modifier->checkModifiersExpiration();
 		
 		if ($eventId === null) {
 			//Para todos los eventos de estado "iniciado" (1)
