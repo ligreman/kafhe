@@ -1,9 +1,4 @@
-<?php
 
-//$maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
-//$skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()->request->cookies['skillsHidden']->value : '1';
-
-?>
 <div id="upContent">
     <div id="mainUserBlock">
         <p id="user">
@@ -18,10 +13,7 @@
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
 
                     //Modificadores de habilidades
-                    foreach(Yii::app()->modifier->modifiers as $modifier) {
-                        //Si es oculto no lo muestro
-                        if ($modifier->hidden) continue;
-
+                    foreach($modifiers as $modifier) {
                         if($modifier->duration_type=='horas') {
                             $duration = $modifier->duration * 60 * 60; //en segundos
                             $duration = (strtotime($modifier->timestamp) + $duration) - time();
