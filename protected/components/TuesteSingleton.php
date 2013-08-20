@@ -31,12 +31,12 @@ class TuesteSingleton extends CApplicationComponent
 
         //Si es el usuario activo me ahorro una consulta a BBDD
 		if (isset(Yii::app()->currentUser) && isset(Yii::app()->currentUser->id) && $user->id == Yii::app()->currentUser->id) {
-			if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado)) $estaHidratado = true;
-            if(Yii::app()->usertools->inModifiers(Yii::app()->params->modifierDesecado)) $estaDesecado = true;
+			if(Yii::app()->modifier->inModifiers(Yii::app()->params->modifierHidratado)) $estaHidratado = true;
+            if(Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDesecado)) $estaDesecado = true;
 		} else {
 			$mods = Modifier::model()->findAll(array('condition'=>'target_final=:target', 'params'=>array(':target'=>$user->id)));
-			if($mods!==null  &&  Yii::app()->usertools->inModifiers(Yii::app()->params->modifierHidratado, $mods)) $estaHidratado = true;
-            if($mods!==null  &&  Yii::app()->usertools->inModifiers(Yii::app()->params->modifierDesecado, $mods)) $estaDesecado = true;
+			if($mods!==null  &&  Yii::app()->modifier->inModifiers(Yii::app()->params->modifierHidratado, $mods)) $estaHidratado = true;
+            if($mods!==null  &&  Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDesecado, $mods)) $estaDesecado = true;
 		}
 		
 		if($estaHidratado) $porcentajePorModificadores = 25; //25% más rápido por estar hidratado

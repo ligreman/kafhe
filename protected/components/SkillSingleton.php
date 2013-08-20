@@ -17,7 +17,7 @@ class SkillSingleton extends CApplicationComponent
 	private $_privateMessage = ''; //Texto extra para el mensaje Flash
 	private $_error = '';
 
-    public function executeSkill($skill, $user, $target, $side)
+    public function executeSkill($skill, $target, $side)
     {
         $this->_error = '';
 		$this->_keyword = $skill->keyword;
@@ -25,15 +25,15 @@ class SkillSingleton extends CApplicationComponent
 		$this->_privateMessage = '';
 
         //Saco los nombres de los que intervienen
-		$this->_caster = $user->id;
-		if ($target === null) $this->_originalTarget = $user->id;
+		$this->_caster = Yii::app()->currentUser->id;
+		if ($target === null) $this->_originalTarget = Yii::app()->currentUser->id;
 		else $this->_originalTarget = $target->id;
 
 		//compruebo caducidad de modificadores		
-		Yii::app()->usertools->checkModifiersExpiration();
+		Yii::app()->modifier->checkModifiersExpiration();
 
         //Calculo cuál es el objetivo final, por si hay escudos y demás cosas por ahí
-        $finalTarget = $this->calculateFinalTarget($skill, $user, $target, $side);
+        $finalTarget = $this->calculateFinalTarget($skill, $target, $side);
 
         //Compruebo si caigo en una Trampa
         if($this->caigoTrampa()) {
@@ -45,8 +45,8 @@ class SkillSingleton extends CApplicationComponent
             $this->_privateMessage = 'Has caído en una trampa y eso ha provocado que pifies.';
         } else {
             //Compruebo si es crítico o pifia. Son porcentajes. PIFIA: de 1 a (1+(fail-1)) || CRÍTICO: de (100-(critic-1)) a 100
-            $critic = 100 - ($this->criticValue($skill, $user)-1);
-            $fail = 1 + ($this->failValue($skill, $user)-1);
+            $critic = 100 - ($this->criticValue($skill)-1);
+            $fail = 1 + ($this->failValue($skill)-1);
             $tirada = mt_rand(1,100);
         }
 		
@@ -55,7 +55,7 @@ class SkillSingleton extends CApplicationComponent
 			$this->_result = 'fail'; //Pifia
 
             //Pago el coste igualmente
-            if ($this->paySkillCosts($skill, $user, $this->_result) === false)
+            if ($this->paySkillCosts($skill, $this->_result) === false)
                 return false;
         } else {
 			//Normal o Crítico
@@ -65,18 +65,18 @@ class SkillSingleton extends CApplicationComponent
 				$this->_result = 'critic'; //Crítico
 			
 			//Pago el coste. Lo pongo aquí y duplicado para pagar antes de ejecutar la habilidad.
-			if ($this->paySkillCosts($skill, $user, $this->_result) === false)
+			if ($this->paySkillCosts($skill, $this->_result) === false)
 			    return false;
 			
 			//Ejecuto la skill
 			switch ($skill->keyword) {
-				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $user, $finalTarget); break;
-                case Yii::app()->params->skillDesecar: $this->desecar($skill, $user, $finalTarget); break;
-				case Yii::app()->params->skillDisimular: $this->disimular($skill, $user, $finalTarget); break;
-				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill, $user); break;
-				case Yii::app()->params->skillEscaquearse: $this->escaquearse($skill, $user); break;
-				case Yii::app()->params->skillGungubicidio: $this->gungubicidio($skill, $user); break;
-                case Yii::app()->params->skillTrampa: $this->trampa($skill, $user); break;
+				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $finalTarget); break;
+                case Yii::app()->params->skillDesecar: $this->desecar($skill, $finalTarget); break;
+				case Yii::app()->params->skillDisimular: $this->disimular($skill, $finalTarget); break;
+				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
+				case Yii::app()->params->skillEscaquearse: $this->escaquearse($skill); break;
+				case Yii::app()->params->skillGungubicidio: $this->gungubicidio($skill); break;
+                case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
 			}
 			
 		}
@@ -106,12 +106,11 @@ class SkillSingleton extends CApplicationComponent
 	
 	/************* SKILLS ************/
     /** Crea un modificador de "hidratado"
-     * @param $skill: Obj de la skill
-     * @param $user: Obj del caster
+     * @param $skill: Obj de la skill     
      * @param $target: Obj del target
      * @return bool
      */
-    private function hidratar($skill, $user, $target)
+    private function hidratar($skill, $target)
 	{
 	    //Si tengo Desecar, lo que hago es quitármelo de encima en vez de ejecutar hidratar
         $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>Yii::app()->params->modifierDesecado)));
@@ -130,7 +129,7 @@ class SkillSingleton extends CApplicationComponent
             $modificador = new Modifier;
 
 	    $modificador->event_id = Yii::app()->event->id;
-	    $modificador->caster_id = $user->id;
+	    $modificador->caster_id = Yii::app()->currentUser->id;
 	    $modificador->target_final = $target->id;
 	    $modificador->skill_id = $skill->id;
 	    $modificador->keyword = $skill->modifier_keyword;
@@ -146,11 +145,10 @@ class SkillSingleton extends CApplicationComponent
 
     /** Crea un modificador de "desecado"
      * @param $skill: Obj de la skill
-     * @param $user: Obj del caster
      * @param $target: Obj del target
      * @return bool
      */
-    private function desecar($skill, $user, $target)
+    private function desecar($skill, $target)
     {
         //Si tiene Hidratar, lo que hago es quitarlo en vez de ejecutar desecar
         $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>Yii::app()->params->modifierHidratado)));
@@ -169,7 +167,7 @@ class SkillSingleton extends CApplicationComponent
             $modificador = new Modifier;
 
         $modificador->event_id = Yii::app()->event->id;
-        $modificador->caster_id = $user->id;
+        $modificador->caster_id = Yii::app()->currentUser->id;
         $modificador->target_final = $target->id;
         $modificador->skill_id = $skill->id;
         $modificador->keyword = $skill->modifier_keyword;
@@ -185,11 +183,10 @@ class SkillSingleton extends CApplicationComponent
 
     /** Crea un modificador de "disimulando"
      * @param $skill: Obj de la skill
-     * @param $user: Obj del caster
      * @param $target: Obj del target
      * @return bool
      */
-	private function disimular($skill, $user, $target)
+	private function disimular($skill, $target)
 	{
 		//Si ya tengo disimular lo que haré será sumar 1 uso
 		$modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
@@ -201,7 +198,7 @@ class SkillSingleton extends CApplicationComponent
 			$modificador->duration += $skill->duration;
 
         $modificador->event_id = Yii::app()->event->id;
-		$modificador->caster_id = $user->id;
+		$modificador->caster_id = Yii::app()->currentUser->id;
 	    $modificador->target_final = $target->id;
 	    $modificador->skill_id = $skill->id;
 	    $modificador->keyword = $skill->modifier_keyword;	    
@@ -215,8 +212,9 @@ class SkillSingleton extends CApplicationComponent
 	}
 	
 	//Caza gungubos y me pone como Cazador si estaba como Criador
-	private function cazarGungubos($skill, $user)
+	private function cazarGungubos($skill)
 	{
+		$user = Yii::app()->currentUser->model;
 		$cantidad = 100;
 	
 		//Cambio al usuario a Cazador si era criador
@@ -241,7 +239,7 @@ class SkillSingleton extends CApplicationComponent
 	}
 	
 	//Relanza el evento
-	public function escaquearse($skill, $user)
+	public function escaquearse($skill)
 	{
 		//Lanzo de nuevo el evento
 		$event = Yii::app()->event->model;
@@ -272,7 +270,7 @@ class SkillSingleton extends CApplicationComponent
 	}
 	
 	// Mata 100 gungubos de un bando aleatorio
-	private function gungubicidio($skill, $user) 
+	private function gungubicidio($skill) 
 	{
 		$cantidad = 100;
 		
@@ -297,7 +295,7 @@ class SkillSingleton extends CApplicationComponent
 	}
 
 
-    private function trampa($skill, $user)
+    private function trampa($skill)
     {
         //si ya tengo trampas puestas, lo que hago es sumar 1 a sus usos
         $modificador = Modifier::model()->find(array('condition'=>'keyword=:keyword', 'params'=>array(':keyword'=>$skill->modifier_keyword)));
@@ -310,7 +308,7 @@ class SkillSingleton extends CApplicationComponent
 
         $modificador->duration_type = $skill->duration_type;
         $modificador->event_id = Yii::app()->event->id;
-        $modificador->caster_id = $user->id;
+        $modificador->caster_id = Yii::app()->currentUser->id;
         $modificador->target_final = 'global'; //afecta a ambos bandos
         $modificador->skill_id = $skill->id;
         $modificador->keyword = $skill->modifier_keyword;
@@ -326,8 +324,9 @@ class SkillSingleton extends CApplicationComponent
 	
 	
 	/************** FUNCIONES AUXILIARES *************/
-	public function paySkillCosts($skill, $user, $executionResult) 
+	public function paySkillCosts($skill, $executionResult) 
 	{
+		$user = Yii::app()->currentUser->model;
 	    //No compruebo nada porque se ha comprobado ya antes de llegar a executeSkill
 
 	   /* //Compruebo si tengo tueste
@@ -383,27 +382,26 @@ class SkillSingleton extends CApplicationComponent
 	    return true;
 	}
 
-	public function criticValue($skill, $user) {
+	public function criticValue($skill) {
 		$critic = $skill->critic;
 		return $critic;
 	}
 	
-	public function failValue($skill, $user) {
+	public function failValue($skill) {
 		$fail = $skill->fail;
 		return $fail;
 	}
 
     /**
-     * @param $skill: objeto de la skill ejecutada
-     * @param $user: objeto del caster
+     * @param $skill: objeto de la skill ejecutada     
      * @param $target: objeto del objetivo o NULL si no hay
      * @param $side: texto del bando objetivo o NULL si no hay
      * @return o el objeto objetivo o el texto del bando
      */
-    private function calculateFinalTarget($skill, $user, $target, $side) {
+    private function calculateFinalTarget($skill, $target, $side) {
 		if ($target===null && $side===null) {
-            $finalTarget = $user; //Si no hay objetivo, es que el objetivo es uno mismo
-			$this->_finalTarget = $user->id;
+            $finalTarget = Yii::app()->currentUser->model; //Si no hay objetivo, es que el objetivo es uno mismo. 
+			$this->_finalTarget = Yii::app()->currentUser->id;
 		} elseif ($target===null && $side!==null) {
 		    $finalTarget = $side;
             $this->_finalTarget = $side; //texto, kafhe, achikhoria, global
@@ -420,10 +418,10 @@ class SkillSingleton extends CApplicationComponent
      */
     private function caigoTrampa() {
 	    //Si existe el modificador "trampa" entre los que me afectan
-	    $modificadorTrampa = Yii::app()->usertools->inModifiers(Yii::app()->params->modifierTrampa);
+	    $modificadorTrampa = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierTrampa);
 	    if ($modificadorTrampa !== false) {
 	        //Reduzco los usos del modificador trampa
-            if (!Yii::app()->usertools->reduceModifierUses($modificadorTrampa))
+            if (!Yii::app()->modifier->reduceModifierUses($modificadorTrampa))
                 throw new CHttpException(400, 'Error al eliminar el modificador Trampa.');
 
 	        return true;

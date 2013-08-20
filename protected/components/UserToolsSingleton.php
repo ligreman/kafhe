@@ -75,7 +75,7 @@ class UserToolsSingleton extends CApplicationComponent
         return $user;
     }
 	
-	//Compruebo si han expirado modificadores de todo el mundo, de cualquier tipo.
+	/*//Compruebo si han expirado modificadores de todo el mundo, de cualquier tipo.
 	public function checkModifiersExpiration()
 	{
 		$modifiers = Modifier::model()->findAll(array('condition'=>'duration IS NOT NULL AND duration_type IS NOT NULL'));
@@ -101,7 +101,7 @@ class UserToolsSingleton extends CApplicationComponent
 				}
 			}
 		}		
-	}
+	}*/
 
     /** Reduce los usos de un modificador del jugador
      * @param $modifier: el objeto del modificador a reducir su uso. Si es null ha de estar definido el parámetro $mod_keyword
@@ -109,7 +109,7 @@ class UserToolsSingleton extends CApplicationComponent
      * @param null $userId: Si es null se toma el usuario activo. Va siempre en conjunto con mod_keyword
      * @return bool
      */
-    public function reduceModifierUses($modifier=null, $mod_keyword=null, $userId=null)
+    /*public function reduceModifierUses($modifier=null, $mod_keyword=null, $userId=null)
 	{
 	    if ($mod_keyword===null && $modifier===null) return false;
 
@@ -138,15 +138,15 @@ class UserToolsSingleton extends CApplicationComponent
         }
 
         return true;
-	}
+	}*/
 
-///TODO sacar todo lo de modificadores a un ModifierSingleton
+
 
     /** Reduce los modificadores de tipo evento de un grupo
      * @param $eventId: ID del evento que quiero reducir
      * @return bool
      */
-    public function reduceEventModifiers($eventId)
+    /*public function reduceEventModifiers($eventId)
 	{
 		//$sql = 'SELECT m.* FROM modifier m, user u WHERE u.group_id='.$groupId.' AND m.target_final=u.id AND m.duration_type="evento";';
 		//$mods = Modifier::model()->findAll(array('condition'=>'duration_type=:type AND group_id=:group', 'params'=>array(':type'=>'evento', ':group'=>$groupId)));
@@ -171,13 +171,13 @@ class UserToolsSingleton extends CApplicationComponent
 			}
 		}
 		return true;
-	}
+	}*/
 	
 
     /* Compruebo si tiene un modificador. Esto lo que hace sólo es buscar dentro del grupo de modificadores uno concreto, como un "in_array"
 	 * Si el haystack es nulo considero que quiero comprobar los modificadores del usuario activo
 	 */
-    public function inModifiers($needle, $haystack=null)
+    /*public function inModifiers($needle, $haystack=null)
     {
 		if($haystack == null) {			
 			$haystack = $this->getModifiers();
@@ -190,7 +190,7 @@ class UserToolsSingleton extends CApplicationComponent
 
         //Si llego aquí es que no lo tiene
         return false;
-    }
+    }*/
 
     /*
 	//Compruebo un modificador en tiempo real. No sé si tendrá uso ya que el getModifiers se actualiza en cada carga de página
@@ -201,7 +201,7 @@ class UserToolsSingleton extends CApplicationComponent
 
 	
 	//Carga los modificadores en variable sólo una vez por carga de página
-	public function getModifiers() 
+	/*public function getModifiers() 
 	{	
 		if (!$this->_modifiers) {
 			if (!isset(Yii::app()->currentUser->id))
@@ -220,7 +220,7 @@ class UserToolsSingleton extends CApplicationComponent
 		}
 		
 		return $this->_modifiers;
-	}
+	}*/
 
 	
 	//Calculo las probabilidades para cada usuario del grupo

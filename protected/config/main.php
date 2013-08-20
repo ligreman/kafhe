@@ -84,6 +84,7 @@ return array(
 		//Singletons
 		'event'=>array('class'=>'EventSingleton'),
 		'usertools'=>array('class'=>'UserToolsSingleton'),
+		'modifier'=>array('class'=>'ModifierSingleton'),
         'currentUser'=>array('class'=>'UserSingleton'),
 		'gungubos'=>array('class'=>'GungubosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),
