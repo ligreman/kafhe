@@ -2,6 +2,7 @@
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -33,7 +34,7 @@ return array(
 			'password'=>'kafhe',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
-			//'generatorPaths' => array('bootstrap.gii'),
+			'generatorPaths' => array('bootstrap.gii'),
 		),
 		
 		//Rights
@@ -49,7 +50,7 @@ return array(
 			'flashErrorKey'=>'RightsError', // Key to use for setting error flash messages.		
 			'baseUrl'=>'/rights', // Base URL for Rights. Change if module is nested. 
 			'layout'=>'rights.views.layouts.main', // Layout to use for displaying Rights. 
-			'appLayout'=>'application.views.layouts.main', // Application layout. 
+			'appLayout'=>'webroot.themes.bootstrap.views.layouts.main', // Application layout.
 			//'cssFile'=>'', // Style sheet file to use for Rights.
 			'install'=>false, // Whether to enable installer. 
 			'debug'=>false,
@@ -92,11 +93,16 @@ return array(
 		'config'=>array('class'=>'ConfigurationSingleton'),
         'mail'=>array('class'=>'MailSingleton'),
 
-		
+
+        'bootstrap'=>array(
+            'class'=>'bootstrap.components.Bootstrap',
+        ),
+
 		/*'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),*/
 		// uncomment the following to use a MySQL database
+
 		
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=kafhe_refactor',

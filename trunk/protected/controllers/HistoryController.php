@@ -38,6 +38,13 @@ class HistoryController extends Controller
             $data['orders'] = null;
 
         $data['event'] = $past_event;
+		
+		//Saco el ranking de los mejores		
+		$connection=Yii::app()->db;
+		$sql = "SELECT r.* FROM ranking r, user u WHERE r.user_id=u.id AND u.group_id=:grupo ORDER BY r.rank DESC, r.date DESC";
+		$command = $connection->createCommand($sql);
+		$command->bindParam(":grupo", Yii::app()->currentUser->groupId, PDO::PARAM_INT);
+		$data['ranking'] = $command->queryAll();  
 
         $this->render('index', $data);
     }

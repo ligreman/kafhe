@@ -16,7 +16,7 @@ class EventSingleton extends CApplicationComponent
 		$this->getModel(); //Por si acaso
 			
 		//Cojo los usuarios alistados del grupo de este evento
-		$users = User::model()->findAll(array('condition'=>'group_id=:group AND status=:status', 'params'=>array(':group'=>$this->getGroupId(), ':status'=>Yii::app()->params->statusAlistado)));
+		//$users = User::model()->findAll(array('condition'=>'group_id=:group AND status=:status', 'params'=>array(':group'=>$this->getGroupId(), ':status'=>Yii::app()->params->statusAlistado)));
 				
 		//Probabilidades de cada bando
 		$bandos = Yii::app()->usertools->calculateSideProbabilities($this->getGungubosKafhe(), $this->getGungubosAchikhoria());
@@ -108,7 +108,12 @@ class EventSingleton extends CApplicationComponent
 		$group_id = Yii::app()->currentUser->groupId;
 		$event = Event::model()->findAll(array( 'condition'=>'status=:status AND group_id=:group', 'params'=>array(':status'=>Yii::app()->params->statusCerrado, ':group'=>$group_id), 'order'=>'date DESC', 'limit'=>1) );
 		
-		return $this->getOrder($event->id);
+		if ($event == null)
+			$eventId = null;
+		else
+			$eventId = $event->id;
+		
+		return $this->getOrder($eventId);
 	}
 	
 
@@ -121,7 +126,7 @@ class EventSingleton extends CApplicationComponent
 	{
 	    $listaRangos = array();
 	    $listaUsuarios = $usuarios;
-	    if ($exAgenteLibre!=null) array_push($listaUsuarios, $exAgenteLibre);
+	    if ($exAgenteLibre!==null) array_push($listaUsuarios, $exAgenteLibre);
 
 	    if(count($listaUsuarios)>0) {
 	        foreach($listaUsuarios as $usuario) {
@@ -140,11 +145,11 @@ class EventSingleton extends CApplicationComponent
         $teams = $this->distributeUsersPerRank($teams, $listaUsuarios);
 		////Yii::log(print_r($teams,true), 'info', 'TEAMS AFTER Distribute');
 
-        if ($exAgenteLibre == null) {
+        if ($exAgenteLibre === null) {
             $finalteams['kafhe'] = $teams['teamA'];
             $finalteams['achikhoria'] = $teams['teamB'];
         } else {
-            $bandoAnterior = Yii::app()->usertools->getPreviousSide($exAgenteLibre); //bando anterior del ex-libre
+            $bandoAnterior = Yii::app()->usertools->getPreviousSide(); //bando anterior del ex-libre
 			if ($bandoAnterior === null)
 				throw new CHttpException(400, 'Error al obtener el bando anterior del agente libre del evento '.Yii::app()->event->id.'.'); //Tiene que existir por narices si existe un agente libre
 

@@ -10,7 +10,7 @@
 	yiic test index --param1=News --param3=valorArray1
 	
 	//parametros globales
-	tiic test index --global_param=8
+	yiic test index --global_param=8
 	
 	--------------------------------------------------------------------------------------------------------------------------
 	
@@ -126,7 +126,7 @@ class CronCommand extends CConsoleCommand {
 		if ($eventId === null) {
 			//Para todos los eventos de estado "iniciado" (1)
 			$events = Event::model()->findAll(array('condition'=>'status=:status', 'params'=>array(':status'=>Yii::app()->params->statusIniciado)));
-			if ($events !== null) {
+			if ($events != null) {
 				foreach($events as $event) {
 					$criados = Yii::app()->gungubos->getGungubosCriados($event);			
 					if ($criados !== false) {
@@ -162,9 +162,65 @@ class CronCommand extends CConsoleCommand {
 				echo "Criados ".$criados['kafhe']." gungubos para Kafhe.\n";
 				echo "Criados ".$criados['achikhoria']." gungubos para Achikhoria.\n";
 			} else
-				echo "Todavia no puede criar gungubos.\n";
+				echo "Todavía no puede criar gungubos.\n";
 		}
 				
 		return 0;
+	}
+
+
+	public function actionGenerateRanking() {
+        //Cojo los grupos
+        $groups = Group::model()->findAll();
+
+        foreach ($groups as $group) {
+            //Primero saco el ranking actual de ese grupo
+            $ranking = Ranking::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$group->id), 'order'=>'rank DESC'));
+
+            //Saco los usuarios del grupo ordenados por rango
+            $users = User::model()->findAll(array('order'=>'rank DESC'));
+
+            if ($ranking == null)
+                $ranking = array_slice($users, 0, 10); //Si no existía ranking cojo los 10 primeros usuarios y ese es el ranking
+            else {
+
+                foreach ($users as $user) {
+                    $newR = new Ranking;
+                    $newR->user->id = $user->id;
+                    $newR->rank = $user->rank;
+                    $newR->date = date('Y-m-d');
+
+                    //Miro cada posición del ranking a ver dónde encaja
+                    for ($i=0; $i<count($ranking); $i++) {
+                        if ($user->rank >= $ranking[$i]->rank) {
+                            //Coloco al usuario encima de esta posición del ranking
+                            $ranking = array_splice($ranking, $i, 0, $newR);
+
+                            break; //Termino de mirar posiciones del ranking para este usuario
+                        }
+                    }
+
+                    //Si llego aquí es que no se ha metido el usuario aún, por lo que le pongo el último
+                    array_push($ranking, $newR);
+                }
+
+            }
+
+            //Por último, guardo el ranking de este grupo (los 10 primeros sólo)
+            $connection = Yii::app()->db;
+
+            $values = array;
+            for ($i=0; $i<10; $i++) {
+				if (!isset($ranking[$i])) break; //Paro si no hay más
+				
+                $values[] = "(".$ranking[$i]->id.", ".$ranking[$i]->rank.", '".$ranking[$i]->date."')";
+            }
+
+            $sql="INSERT INTO ranking (user_id, rank, date) VALUES ".implode(',',$values);
+            $command=$connection->createCommand($sql);
+            $command->execute();
+        }
+
+	    return 0;
 	}
 }

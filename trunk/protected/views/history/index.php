@@ -1,5 +1,15 @@
 <div id="menuContent">
     <div id="battleResults">
+		<h1 class="battle">Los mejores de todos los tiempos</h1>
+		<ol>
+		<?php
+			foreach ($ranking as $user) {
+				echo '<li><strong>'.Yii::app()->usertools->getAlias($user['user_id']).'</strong>, rango '.$user['rank'].' el '.$user['date'].'</li>';
+			}
+		?>
+		</ol>
+	
+	
         <h1 class="battle">Histórico de batallas</h1>
 
         <div id="lastBattleResult">

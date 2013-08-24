@@ -5,6 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="icon" type="image/png" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon.ico">
 
         <!-- blueprint CSS framework -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
@@ -15,8 +16,6 @@
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-
-        <link rel="icon" type="image/png" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon.ico">
 
         <?php
             Yii::app()->clientScript->registerCoreScript('jquery'); //JQuery viene con Yii, simplemente lo cojo del Core para no duplicarlo
@@ -45,23 +44,25 @@
             <nav>
                 <?php if (!Yii::app()->user->isGuest): ?>
                     <ul id="mainActionsList">
-                        <li>
-                        <?php
-                            $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
-                            echo CHtml::link($img,array('#'),array('title' => 'Enséñame las notificaciones, Oh! Gran Omelettus!','id' => 'notificationsMainLink'));
-                        ?>
-                        </li>
-                        <li>
-                        <?php
-                            if($userPanelHidden=="1"){
-                                $img = CHtml::image(Yii::app()->request->baseUrl.'/images/showUserBlock.png','Quiero ver el panel de usuario');
-                            }else{
-                                $img = CHtml::image(Yii::app()->request->baseUrl.'/images/hideUserBlock.png','No quiero ver el panel de usuario');
-                            }
+                        <?php if (!Yii::app()->user->checkAccess('Administrador')): ?>
+                            <li>
+                            <?php
+                                $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
+                                echo CHtml::link($img,array('#'),array('title' => 'Enséñame las notificaciones, Oh! Gran Omelettus!','id' => 'notificationsMainLink'));
+                            ?>
+                            </li>
+                            <li>
+                            <?php
+                                if($userPanelHidden=="1"){
+                                    $img = CHtml::image(Yii::app()->request->baseUrl.'/images/showUserBlock.png','Quiero ver el panel de usuario');
+                                }else{
+                                    $img = CHtml::image(Yii::app()->request->baseUrl.'/images/hideUserBlock.png','No quiero ver el panel de usuario');
+                                }
 
-                            echo CHtml::link($img,array('#'), array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
-                        ?>
-                        </li>
+                                echo CHtml::link($img,array('#'), array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
+                            ?>
+                            </li>
+                        <?php endif; ?>
                         <li>
                         <?php
                             $img = CHtml::image(Yii::app()->request->baseUrl.'/images/logoutIcon.png','Salir');
@@ -131,9 +132,9 @@
                     array('label'=>'Ya he llamado', 'url'=>array('/event/close'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && !Yii::app()->user->checkAccess('Administrador') && isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusFinalizado && isset(Yii::app()->event->callerId) && Yii::app()->event->callerId==Yii::app()->user->id)),
 
                     //Admin pages
-                    array('label'=>'Administración', 'url'=>array('/admin/index'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>($this->id=='admin' && $this->action->id=='index')?true:false),
-                    array('label'=>'Roles y permisos', 'url'=>array('/rights'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='rights'?true:false),
-                    array('label'=>'Usuarios', 'url'=>array('/user'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='user'?true:false),
+                    //array('label'=>'Administración', 'url'=>array('/admin/index'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>($this->id=='admin' && $this->action->id=='index')?true:false),
+                    //array('label'=>'Roles y permisos', 'url'=>array('/rights'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='rights'?true:false),
+                    //array('label'=>'Usuarios', 'url'=>array('/user'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='user'?true:false),
 
                 ),
             ));

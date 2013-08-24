@@ -34,7 +34,7 @@ class ModifierSingleton extends CApplicationComponent
 	public function checkModifiersExpiration()
 	{
 		$modifiers = Modifier::model()->findAll(array('condition'=>'duration IS NOT NULL AND duration_type IS NOT NULL'));
-		if($modifiers !== null) 
+		if($modifiers != null) 
 		{		
 			$currentTime = time();
 			foreach($modifiers as $modifier) {			
@@ -103,7 +103,7 @@ class ModifierSingleton extends CApplicationComponent
 	{		
 		$mods = Modifier::model()->findAll(array('condition'=>'event_id=:evento AND duration_type=:tipo', 'params'=>array(':evento'=>$eventId, 'tipo'=>'evento')));
 		
-		if ($mods === null)
+		if ($mods == null)
 			return false;
 		else {
 			foreach($mods as $mod) {
@@ -129,7 +129,7 @@ class ModifierSingleton extends CApplicationComponent
 	 */
     public function inModifiers($needle, $haystack=null)
     {
-		if($haystack == null) {			
+		if($haystack === null) {			
 			$haystack = $this->getModifiers();
 		}
 		
