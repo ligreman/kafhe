@@ -1,5 +1,5 @@
 <?php
-// ¿Needed?
+///TODO BORRAR, NO SE NECESITA
 
 defined('YII_DEBUG') or define('YII_DEBUG',true);
 

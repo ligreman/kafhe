@@ -8243,3 +8243,19 @@ Stack trace:
 2013/08/15 15:54:26 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`kafhe_refactor`.`authassignment`, CONSTRAINT `authassignment_ibfk_1` FOREIGN KEY (`itemname`) REFERENCES `authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE). The SQL statement executed was: INSERT INTO `authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES (:itemname, :userid, :bizrule, :data).
 2013/08/15 15:55:04 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`kafhe_refactor`.`authassignment`, CONSTRAINT `authassignment_ibfk_1` FOREIGN KEY (`itemname`) REFERENCES `authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE). The SQL statement executed was: INSERT INTO `authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES (:itemname, :userid, :bizrule, :data).
 2013/08/19 22:37:54 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'hidden' in 'field list'. The SQL statement executed was: INSERT INTO `skill` (`name`, `description`, `category`, `type`, `keyword`, `modifier_keyword`, `duration`, `duration_type`, `critic`, `fail`, `cost_tueste`, `cost_retueste`, `cost_relanzamiento`, `cost_tostolares`, `is_cooperative`, `cost_tueste_cooperate`, `cost_tostolares_cooperate`, `cooperate_benefit`, `require_target_user`, `require_target_side`, `require_caller`, `require_user_side`, `require_user_min_rank`, `require_user_status`, `require_event_status`, `require_talent_id`, `hidden`) VALUES (:name, :description, :category, :type, :keyword, :modifier_keyword, :duration, :duration_type, :critic, :fail, :cost_tueste, :cost_retueste, :cost_relanzamiento, :cost_tostolares, :is_cooperative, :cost_tueste_cooperate, :cost_tostolares_cooperate, :cooperate_benefit, :require_target_user, :require_target_side, :require_caller, :require_user_side, :require_user_min_rank, :require_user_status, :require_event_status, :require_talent_id, :hidden).
+2013/08/20 23:03:33 [error] [php] PDO::__construct(): [2002] No se puede establecer una conexión ya que el equipo de destino  (trying to connect via tcp://localhost:3306) (D:\Webs\kafhe_3.0\trunk\framework\db\CDbConnection.php:423)
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\Webs\kafhe_3.0\trunk\framework\db\CDbConnection.php(308): CDbConnection->setActive()
+#2 D:\Webs\kafhe_3.0\trunk\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\Webs\kafhe_3.0\trunk\framework\cli\commands\MigrateCommand.php(442): CConsoleApplication->getComponent()
+#4 D:\Webs\kafhe_3.0\trunk\framework\cli\commands\MigrateCommand.php(451): MigrateCommand->getDbConnection()
+#5 D:\Webs\kafhe_3.0\trunk\framework\cli\commands\MigrateCommand.php(128): MigrateCommand->getMigrationHistory()
+#6 unknown(0): MigrateCommand->actionDown()
+#7 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs()
+#8 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): MigrateCommand->run()
+#9 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run()
+#10 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#11 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CConsoleApplication->run()
+#12 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once()
+

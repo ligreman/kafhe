@@ -53,7 +53,7 @@ class EnrollmentController extends Controller
         //Primero comprobaré si ya he metido mi desayuno o no (si hay enrollment de mi usuario para este enveto)
         $enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id=:event_id', 'params'=>array(':user_id'=>Yii::app()->currentUser->id, 'event_id'=>Yii::app()->event->id)));
 
-        if ($enroll==null) {
+        if ($enroll===null) {
             $enroll = new Enrollment;
             $data['already_enroll'] = false;
             $model = new EnrollmentForm('create');
