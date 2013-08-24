@@ -52,10 +52,10 @@ class SiteController extends Controller
 	{
 		return array(
 			// captcha action renders the CAPTCHA image displayed on the contact page
-			'captcha'=>array(
+			/*'captcha'=>array(
 				'class'=>'CCaptchaAction',
 				'backColor'=>0xFFFFFF,
-			),
+			),*/
 			// page action renders "static" pages stored under 'protected/views/site/pages'
 			// They can be accessed via: index.php?r=site/page&view=FileName
 			'page'=>array(
@@ -93,11 +93,11 @@ class SiteController extends Controller
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
         if(Yii::app()->user->checkAccess('Administrador')) {
-            $this->redirect(array('admin/index'));
+            $this->redirect(array('/administration/home'));
         } else if(Yii::app()->user->checkAccess('Usuario')) {
             //Estoy identificado, muestro el Muro
             $data_notif = $this->loadNotifications();
-			if($data_notif!==null) $data_notif = $this->processNotifications($data_notif);
+			if($data_notif!=null) $data_notif = $this->processNotifications($data_notif);
 
             $this->render('index', array('notifications'=>$data_notif));
         } else{
@@ -269,7 +269,7 @@ class SiteController extends Controller
 		$user = Yii::app()->currentUser->model;
 		
 		$last_read = $user->last_notification_read;
-		if($last_read===null || $last_read=='')
+		if($last_read==null)
 			$last_read = date('Y-m-d H:i:s');
 						
 		//Proceso las notificaciones

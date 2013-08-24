@@ -316,6 +316,58 @@ class m130814_195553_dummy_data extends CDbMigration
             'type'=>'achikhoria',
             'timestamp' => '2013-08-08 13:20:38'
         ));
+		
+		
+		$this->insert('ranking', array(
+            'user_id'=>5,
+            'rank'=>7,            
+            'date' => '2013-05-09'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>4,
+            'rank'=>7,            
+            'date' => '2013-08-08'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>5,
+            'rank'=>6,            
+            'date' => '2013-08-07'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>2,
+            'rank'=>6,            
+            'date' => '2013-08-06'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>4,
+            'rank'=>6,            
+            'date' => '2013-08-18'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>2,
+            'rank'=>5,            
+            'date' => '2013-06-08'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>4,
+            'rank'=>4,            
+            'date' => '2013-04-08'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>2,
+            'rank'=>3,            
+            'date' => '2013-09-08'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>1,
+            'rank'=>3,            
+            'date' => '2013-10-08'
+        ));
+		$this->insert('ranking', array(
+            'user_id'=>2,
+            'rank'=>2,            
+            'date' => '2013-05-18'
+        ));
 
     }
 
@@ -333,6 +385,7 @@ class m130814_195553_dummy_data extends CDbMigration
         $this->delete('notification', "1=1");
         //$this->delete('skill', "1=1");
         $this->delete('modifier', "1=1");
+		$this->delete('ranking', "1=1");
     }
 
     /*
