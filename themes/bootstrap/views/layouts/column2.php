@@ -13,6 +13,7 @@
                 'title'=>'Operations',
             ));
             $this->widget('bootstrap.widgets.TbMenu', array(
+                'type'=>'list',
                 'items'=>$this->menu,
                 'htmlOptions'=>array('class'=>'operations'),
             ));
