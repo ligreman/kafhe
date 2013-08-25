@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List User','url'=>array('index')),
+	//array('label'=>'List User','url'=>array('index')),
 	array('label'=>'Create User','url'=>array('create')),
 );
 
@@ -48,7 +48,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'alias',
 		'email',
 		'birthdate',
-		/*
 		'role',
 		'group_id',
 		'side',
@@ -68,7 +67,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'calls',
 		'last_regen_timestamp',
 		'last_notification_read',
-		*/
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),

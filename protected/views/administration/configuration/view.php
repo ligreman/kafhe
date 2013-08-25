@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Configuration','url'=>array('index')),
+	//array('label'=>'List Configuration','url'=>array('index')),
 	array('label'=>'Create Configuration','url'=>array('create')),
 	array('label'=>'Update Configuration','url'=>array('update','id'=>$model->id)),
 	array('label'=>'Delete Configuration','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),

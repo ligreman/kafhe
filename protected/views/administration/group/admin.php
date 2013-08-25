@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Group','url'=>array('index')),
+	//array('label'=>'List Group','url'=>array('index')),
 	array('label'=>'Create Group','url'=>array('create')),
 );
 
