@@ -70,7 +70,7 @@ class RankingController extends Controller
 		$model=new Ranking;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Ranking']))
 		{
@@ -94,7 +94,7 @@ class RankingController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Ranking']))
 		{

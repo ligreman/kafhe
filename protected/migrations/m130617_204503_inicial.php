@@ -135,17 +135,18 @@ class m130617_204503_inicial extends TXDbMigration
  
 	public function safeDown()
 	{
-        $this->dropTable('group');
         $this->dropTable('configuration');
-        $this->dropTable('rank');
-        $this->dropTable('notification');
-        $this->dropTable('event');
-        $this->dropTable('enrollment');
-        $this->dropTable('meal');
         $this->dropTable('drink');
-        $this->dropTable('user');
-        $this->dropTable('skill');
+        $this->dropTable('enrollment');
+        $this->dropTable('event');
+        $this->dropTable('group');
+        $this->dropTable('meal');
         $this->dropTable('modifier');
+        $this->dropTable('notification');
+        $this->dropTable('rank');
+        $this->dropTable('ranking');
+        $this->dropTable('skill');
+        $this->dropTable('user');
 
         $this->dropTable('authassignment');
         $this->dropTable('authitemchild');

@@ -70,7 +70,7 @@ class ConfigurationController extends Controller
 		$model=new Configuration;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Configuration']))
 		{
@@ -94,7 +94,7 @@ class ConfigurationController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Configuration']))
 		{
