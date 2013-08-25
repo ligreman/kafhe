@@ -1,16 +1,18 @@
 <div id="menuContent">
+    <div id="rankRanking">
+        <h1 class="battle">Los mejores de todos los tiempos</h1>
+        <ol>
+            <?php
+            $pos = 1;
+            foreach ($ranking as $user) {
+                echo '<li id="rankingPos'.$pos.'" title="'.date("d/m/Y", strtotime($user['date'])).'"><strong>Rango '.$user['rank'].'</strong><em>'.Yii::app()->usertools->getAlias($user['user_id']).'</em></li>';
+                $pos++;
+            }
+            ?>
+        </ol>
+    </div>
     <div id="battleResults">
-		<h1 class="battle">Los mejores de todos los tiempos</h1>
-		<ol>
-		<?php
-			foreach ($ranking as $user) {
-				echo '<li><strong>'.Yii::app()->usertools->getAlias($user['user_id']).'</strong>, rango '.$user['rank'].' el '.$user['date'].'</li>';
-			}
-		?>
-		</ol>
-	
-	
-        <h1 class="battle">Histórico de batallas</h1>
+		<h1 class="battle">Histórico de batallas</h1>
 
         <div id="lastBattleResult">
             <h2>Última batalla</h2>

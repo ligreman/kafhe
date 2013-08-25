@@ -542,7 +542,7 @@ label.title{
     display: block;
 }
 
-#modificadores{
+#modificadores, #sideStatus{
     color: #363636;
     font-size: .8em;
     float:left;
@@ -556,7 +556,7 @@ label.title{
 #energia{
     float: left;
     width: 45%;
-    padding: 2.2em 0 0 0;
+    padding: 2em 0 0 0;
     margin-right: 2%;
 }
 
@@ -1050,6 +1050,10 @@ label.title{
     padding: .5em 0;
 }
 
+#battleResults{
+    clear:both;
+}
+
 #battleResults h2{
     font-weight: bold;
     padding: 1em;
@@ -1064,6 +1068,40 @@ label.title{
 
 #lastBattleResult{
     float:left;
+}
+
+#rankRanking ol{
+    margin: 1em 2.4em;
+}
+
+#rankRanking ol li{
+    margin: 1.52em .5em 0em 1em;
+    float:left;
+    padding:1em;
+    background-color: #9acfad;
+    width: 5em;
+    text-align: center;
+}
+
+#rankRanking li strong{
+    display:block;
+    padding-bottom: .5em;
+}
+
+#rankRanking #rankingPos1{
+    background-color: #00924a;
+    font-size: 1.2em;
+    margin-top: 0.5em;
+}
+
+#rankRanking #rankingPos1 *{
+    color: #ffffff;
+}
+
+#rankRanking #rankingPos2{
+    background-color: #60b97f;
+    font-size: 1.1em;
+    margin-top: 0.9em;
 }
 
 /*#bandoLibre{
