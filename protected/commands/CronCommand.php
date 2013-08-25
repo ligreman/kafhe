@@ -209,7 +209,7 @@ class CronCommand extends CConsoleCommand {
             //Por último, guardo el ranking de este grupo (los 10 primeros sólo)
             $connection = Yii::app()->db;
 
-            $values = array;
+            $values = array();
             for ($i=0; $i<10; $i++) {
 				if (!isset($ranking[$i])) break; //Paro si no hay más
 				

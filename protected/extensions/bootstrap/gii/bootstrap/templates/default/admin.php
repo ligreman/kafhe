@@ -14,7 +14,7 @@ echo "\$this->breadcrumbs=array(
 ?>
 
 $this->menu=array(
-	array('label'=>'List <?php echo $this->modelClass; ?>','url'=>array('index')),
+	//array('label'=>'List <?php echo $this->modelClass; ?>','url'=>array('index')),
 	array('label'=>'Create <?php echo $this->modelClass; ?>','url'=>array('create')),
 );
 
@@ -56,6 +56,9 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 $count=0;
 foreach($this->tableSchema->columns as $column)
 {
+
+    $count = 0;
+
 	if(++$count==7)
 		echo "\t\t/*\n";
 	echo "\t\t'".$column->name."',\n";

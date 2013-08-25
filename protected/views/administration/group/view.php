@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Group','url'=>array('index')),
+	//array('label'=>'List Group','url'=>array('index')),
 	array('label'=>'Create Group','url'=>array('create')),
 	array('label'=>'Update Group','url'=>array('update','id'=>$model->id)),
 	array('label'=>'Delete Group','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
