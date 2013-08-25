@@ -70,7 +70,7 @@ class NotificationController extends Controller
 		$model=new Notification;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Notification']))
 		{
@@ -94,7 +94,7 @@ class NotificationController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Notification']))
 		{

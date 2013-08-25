@@ -70,7 +70,7 @@ class DrinkController extends Controller
 		$model=new Drink;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Drink']))
 		{
@@ -94,7 +94,7 @@ class DrinkController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Drink']))
 		{
