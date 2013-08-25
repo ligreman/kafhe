@@ -11,12 +11,7 @@ $this->menu=array(
 
 <h1>Users</h1>
 
-<?php
-
-$this->widget('bootstrap.widgets.TbListView',array(
+<?php $this->widget('bootstrap.widgets.TbListView',array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
-));
-
-
-?>
+)); ?>

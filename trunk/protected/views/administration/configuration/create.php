@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Configuration','url'=>array('index')),
+	//array('label'=>'List Configuration','url'=>array('index')),
 	array('label'=>'Manage Configuration','url'=>array('admin')),
 );
 ?>
