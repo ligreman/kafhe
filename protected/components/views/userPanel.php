@@ -1,30 +1,21 @@
+<?php
 
+//$maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
+//$skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()->request->cookies['skillsHidden']->value : '1';
+
+?>
 <div id="upContent">
     <div id="mainUserBlock">
         <p id="user">
 
             <span id="userName"><?php echo $user->alias; ?></span>
-            <span id="modificadores">
+            <span id="sideStatus">
                 <?php
                 //Modificadores
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     //Bando y estado
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",Yii::app()->params->sideNames[$user->side],array('class' => 'modifier','title' => 'Perteneces al bando de '.Yii::app()->params->sideNames[$user->side]));
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
-
-                    //Modificadores de habilidades
-                    foreach($modifiers as $modifier) {
-                        if($modifier->duration_type=='horas') {
-                            $duration = $modifier->duration * 60 * 60; //en segundos
-                            $duration = (strtotime($modifier->timestamp) + $duration) - time();
-                            $duration = gmdate("H:i:s", $duration);
-                            $duration_type = $modifier->duration_type;
-                        } else {
-                            $duration = $modifier->duration;
-                            $duration_type = $modifier->duration_type;
-                        }
-                        echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => ucfirst($modifier->keyword).': '.$duration.' '.$duration_type));
-                    }
                 }
                 ?>
             </span>
@@ -46,6 +37,29 @@
                     <?php endif; ?>
                 </span>
             </div>
+            <span id="modificadores">
+                <?php
+                //Modificadores
+                if (Yii::app()->user->checkAccess('Usuario')) {
+                    //Modificadores de habilidades
+                    foreach(Yii::app()->modifier->modifiers as $modifier) {
+                        //Si es oculto no lo muestro
+                        if ($modifier->hidden) continue;
+
+                        if($modifier->duration_type=='horas') {
+                            $duration = $modifier->duration * 60 * 60; //en segundos
+                            $duration = (strtotime($modifier->timestamp) + $duration) - time();
+                            $duration = gmdate("H:i:s", $duration);
+                            $duration_type = $modifier->duration_type;
+                        } else {
+                            $duration = $modifier->duration;
+                            $duration_type = $modifier->duration_type;
+                        }
+                        echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => ucfirst($modifier->keyword).': '.$duration.' '.$duration_type));
+                    }
+                }
+                ?>
+            </span>
         </div>
         <p class="dato">
             <span class="numero"><?php echo $user->rank; ?></span>
