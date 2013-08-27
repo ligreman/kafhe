@@ -9,16 +9,16 @@ class m130814_195451_habilidades extends CDbMigration
 	    // HIDRATAR
         $this->insert('skill', array(
             'name'  =>  'Hidratar',
-            'description'  =>  'Aumenta tu ritmo de regeneración de tueste durante 4 horas. No se acumula. Si estás desecado sólo eliminará dicho penalizador',
+            'description'  =>  'Aumenta tu ritmo de regeneración de tueste durante 24 horas. No se acumula. Si estás desecado sólo eliminará dicho penalizador',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'mejora',         // ofensiva, mejora, utilidad
             'keyword'  =>  'hidratar',
             'modifier_keyword'  =>  'hidratado',
-            'duration'  =>  4,
+            'duration'  =>  24,
             'duration_type'  =>  'horas',  // horas, evento, usos
             'critic'  =>  10,
             'fail'  =>  10,
-            'cost_tueste'  =>  20,
+            'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -46,9 +46,9 @@ class m130814_195451_habilidades extends CDbMigration
             'modifier_keyword'  =>  'disimulando',
             'duration'  =>  1,       // Int cantidad para la duración
             'duration_type'  =>  'usos',  // horas, evento, usos
-            'critic'  =>  10,
+            'critic'  =>  15,
             'fail'  =>  10,
-            'cost_tueste'  =>  10,
+            'cost_tueste'  =>  250,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -60,7 +60,7 @@ class m130814_195451_habilidades extends CDbMigration
             'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  NULL,      // String valores (kafhe, achikhoria, libre) separados por comas
-            'require_user_min_rank'  =>  2,  // Int Rango mínimo para ejecutarla
+            'require_user_min_rank'  =>  NULL,  // Int Rango mínimo para ejecutarla
             'require_user_status'  =>  '2',    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL      // ID del talento requerido
@@ -69,16 +69,16 @@ class m130814_195451_habilidades extends CDbMigration
         //CAZAR GUNGUBOS
         $this->insert('skill', array(
             'name'  =>  'Cazar gungubos',
-            'description'  =>  'Cazas gungubos para tu bando',
+            'description'  =>  'Cazas 100 gungubos para tu bando',
             'category'  =>  'gungubos',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'mejora',         // ofensiva, mejora, utilidad
             'keyword'  =>  'cazarGungubos',
             'modifier_keyword'  =>  '',
             'duration'  =>  NULL,       // Int cantidad para la duración
             'duration_type'  =>  NULL,  // horas, evento, usos
-            'critic'  =>  10,
-            'fail'  =>  10,
-            'cost_tueste'  =>  15,
+            'critic'  =>  15,
+            'fail'  =>  15,
+            'cost_tueste'  =>  100,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -108,7 +108,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration_type'  =>  NULL,  // horas, evento, usos
             'critic'  =>  10,
             'fail'  =>  10,
-            'cost_tueste'  =>  15,
+            'cost_tueste'  =>  100,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -137,9 +137,9 @@ class m130814_195451_habilidades extends CDbMigration
             'modifier_hidden' => 1,
             'duration'  =>  1,
             'duration_type'  =>  'usos',  // horas, evento, usos
-            'critic'  =>  10,
+            'critic'  =>  5,
             'fail'  =>  10,
-            'cost_tueste'  =>  20,
+            'cost_tueste'  =>  300,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -171,7 +171,7 @@ class m130814_195451_habilidades extends CDbMigration
             'fail'  =>  10,
             'cost_tueste'  =>  NULL,
             'cost_retueste'  =>  NULL,
-            'cost_relanzamiento'  =>  1,
+            'cost_relanzamiento'  =>  2,
             'cost_tostolares'  =>  NULL,
             'is_cooperative'  =>  0,         // 0,1
             'cost_tueste_cooperate'  =>  NULL,
@@ -198,8 +198,8 @@ class m130814_195451_habilidades extends CDbMigration
             'duration'  =>  4,       // Int cantidad para la duración
             'duration_type'  =>  'horas',  // horas, evento, usos
             'critic'  =>  10,
-            'fail'  =>  10,
-            'cost_tueste'  =>  20,
+            'fail'  =>  15,
+            'cost_tueste'  =>  300,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -211,7 +211,7 @@ class m130814_195451_habilidades extends CDbMigration
             'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  NULL,      // String valores (kafhe, achikhoria, libre) separados por comas
-            'require_user_min_rank'  =>  2,  // Int Rango mínimo para ejecutarla
+            'require_user_min_rank'  =>  3,  // Int Rango mínimo para ejecutarla
             'require_user_status'  =>  '1,2,3',    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL      // ID del talento requerido
