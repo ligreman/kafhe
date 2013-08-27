@@ -25,6 +25,7 @@ class MailSingleton extends CApplicationComponent
         $mail->IsHTML(true);                                  // Set email format to HTML
 
         //$mail->clearLayout();//if layout is already set in config
+        $mail->UseSendmailOptions = false;
         $mail->setFrom(Yii::app()->params->adminEmail, 'Omelettus');
 
         $mail->setBcc($data['to']);
