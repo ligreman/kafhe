@@ -98,7 +98,6 @@ header > div::before {
 }
 
 header > div h1 {
-    font-size: 3em;
     font-style: italic;
 }
 
@@ -532,7 +531,7 @@ label.title{
     width: 10%;
     float:left;
     padding: .8em 0 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 #userName{
@@ -821,14 +820,14 @@ label.title{
 
 #login-form label{
     display: inline-block;
-    width: 25%;
+    width: 40%;
     text-align: right;
     padding: 0 5% 0 0;
 }
 
 #login-form input[type="text"], #login-form input[type="password"]{
     display: inline-block;
-    width: 67%;
+    width: 48%;
     padding: .7em;
     margin: .5em 0;
     border: none;
@@ -836,7 +835,7 @@ label.title{
 }
 
 #login-form .rememberMe{
-    margin: 1em 0 0 30%;
+    margin: 1em 0 0 45%;
 }
 
 #login-form .rememberMe label{
