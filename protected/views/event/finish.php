@@ -7,6 +7,7 @@
         $bebidas = $orders['bebidas'];
         $comidas = $orders['comidas'];
     ?>
+    <p>Omelettus ha decidiso que seas tú el que haga el pedido de hoy. Prepárate para llamar al 987 213 178</p>
     <div id="pedidoCentrado">
         <div class="tipoPedido">
             <h2 class="pedido">pedidos ITO</h2>
