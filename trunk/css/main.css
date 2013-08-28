@@ -246,7 +246,8 @@ article.first{
 
 article.system, article.omelettus, article.libre{
     clear:both;
-    margin: 1em auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 article.notification h1{
@@ -298,7 +299,7 @@ article.notification .timestamp{
     color:#363636;
     font-size: .6em;
     position:absolute;
-    top: 3.3em;
+    top: 2.8em;
     right: 2%;
 }
 
@@ -471,6 +472,24 @@ label.title{
     border-width: 3px 0 3px 0;
     border-color: #005415 transparent transparent;
     color: #ffffff;
+}
+
+#btnBattle a{
+    border-style: solid;
+    border-radius: 3px;
+    border-width: 3px 0 3px 0;
+    padding: .7em 1em;
+    background-color: #e0e0e0;
+    border-color: transparent transparent #c5c5c5;
+    cursor: pointer;
+    color:#363636;
+    text-decoration: none;
+}
+
+#btnBattle a:hover, #btnBattle a:active{
+    border-width: 3px 0 3px 0;
+    border-color:#c5c5c5 transparent transparent;
+    color: #363636;
 }
 
 .centerContainer{
@@ -993,7 +1012,7 @@ label.title{
 }
 
 .scoreSide{
-    padding: 0 10px;
+    padding: 0 5px;
 }
 
 .paddedContent{
@@ -1185,8 +1204,8 @@ p.bebida{
 
 .tipoPedido{
     float: left;
-    width: 35%;
-    padding-left: 15%;
+    width: 40%;
+    padding-left: 10%;
     min-width: 10em;
 }
 
