@@ -193,11 +193,13 @@ class EventController extends Controller
 		$usuarios = Yii::app()->usertools->users;
 		$new_usuarios = array();
 		$anterior_llamador = null;
+		$llamador_id = null;
 		foreach($usuarios as $usuario) {			
 			$usuario->ptos_relanzamiento = 0;			
 			
 			//Al llamador le pongo rango 1 y estado desertor, y side libre
 			if ($usuario->id == $event->caller_id) {
+			    $llamador_id = $usuario->id;
 				$usuario->calls++;
 				$usuario->times++;
 				$usuario->rank = 1;
@@ -275,7 +277,7 @@ class EventController extends Controller
 			throw new CHttpException(400, 'Error al guardar la notificación de creación del nuevo evento: '.$nuevoEvento->id);
 
         //Envío correos avisando de que ya se ha llamado
-        $alias = Yii::app()->usertools->getAlias($user->id);
+        $alias = Yii::app()->usertools->getAlias($llamador_id);
         $sent = Yii::app()->mail->sendEmail(array(
             'to'=>$emails,
             'subject'=>$alias.' ya ha llamado',
