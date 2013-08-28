@@ -223,7 +223,7 @@ class SiteController extends Controller
     public function actionLoad($date) {
         $d = date_parse($date);
         if($d != false){
-            $notifications = Notification::model()->findAll(array('condition'=>'timestamp < :d', 'params'=>array(':d' => $date), 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
+            $notifications = Notification::model()->findAll(array('condition'=>'timestamp < :d', 'params'=>array(':d' => $date), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
 
             if(count($notifications) < Yii::app()->config->getParam('maxNotificacionesMuro'))
                 $data['hay_mas'] = false;
