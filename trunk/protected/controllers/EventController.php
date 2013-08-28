@@ -84,7 +84,7 @@ class EventController extends Controller
 		$sent = Yii::app()->mail->sendEmail(array(
 		    'to'=>$caller->email,
 		    'subject'=>'¡A llamar!',
-		    'body'=>'Ha dado inicio la batalla y el Gran Omelettus ha decidido que te toca llamar.'
+		    'body'=>'Ha dado inicio la batalla y el Gran Omelettus ha decidido que te toca llamar. Ve a la sección &lt;Pedido&gt; de Kafhe para consultar el pedido.'
 		    ));
 		if ($sent !== true)
             throw new CHttpException(400, $sent);

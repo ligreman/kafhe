@@ -206,4 +206,5 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('gungubosCriadosIntervalo', '100', 'Juego', 'Cantidad de gungubos criados a la hora por un bando.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxNewNotificacionesMuro', '30', 'Visual', 'Cantidad máxima de notificaciones nuevas a mostrar en el muro (suele ser mayor que el límite de notificaciones normal).');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxNotificacionesMuro', '10', 'Visual', 'Cantidad máxima de notificaciones a mostrar en el muro.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('informacionCafeteria', 'El Espiral (987 213 178)', 'Información', 'Datos de la cafetería a la que se llama.');
 
