@@ -1232,6 +1232,17 @@ p.bebida{
     text-align: center;
 }
 
+h2.error404{
+    font-size: 2em;
+    font-weight: bold;
+    padding: 0 .5em .5em;
+}
+
+.error404 img{
+    width: 50%;
+    margin-left: 40%;
+}
+
 .w0{width:0%;}
 .w1{width:1%;}
 .w2{width:2%;}
