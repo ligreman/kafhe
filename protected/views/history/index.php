@@ -31,7 +31,7 @@
                 }
             ?>
             <p><?php
-                    if($kafheVictory && $event->caller_side == "kafhe"){
+                    if(($kafheVictory && $event->caller_side == "kafhe") || (!$kafheVictory && $event->caller_side != "kafhe")){
                         echo 'Así fue como ';
                     }else{
                         echo 'Sin embargo ';
