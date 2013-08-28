@@ -21,7 +21,7 @@
 		</tr>
         <tr>
             <td>
-                <p>No lo pienses mas y entra directamente a <?php Chtml::link('kafhe',Yii::app()->getBaseUrl(true));?></p>
+                <p>No lo pienses mas y entra directamente a <?php echo Chtml::link('kafhe',Yii::app()->getBaseUrl(true));?></p>
             </td>
         </tr>
 	</tbody>
