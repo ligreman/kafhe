@@ -148,6 +148,9 @@ class EnrollmentController extends Controller
                 } else
                     throw new CHttpException(400,'Error al darse de baja: No se han encontrado tus datos de alistamiento.');
             }
+
+            //En cualquiera de ambos casos hago un redirect para actualizar el userPanel
+            $this->redirect(array('/enrollment'));
         }
         //Si el usuario simplemente accede a la página...
         else if (!$enroll->isNewRecord)
