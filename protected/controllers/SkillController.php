@@ -42,7 +42,7 @@ class SkillController extends Controller
 		//Creo una instancia del validador de habilidades
 		$validator = new SkillValidator;
 		
-		if ($validator->canExecute($skill, $target, $side, true)) {
+		if ($validator->canExecute($skill, $target, $side, true) == 1) {
 			//Ejecuto la habilidad
 			if (!Yii::app()->skill->executeSkill($skill, $target, $side)) {
                 Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".Yii::app()->skill->error);
