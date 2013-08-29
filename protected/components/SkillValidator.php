@@ -7,73 +7,89 @@
 class SkillValidator
 {	
 	private $_lastError = '';
-	
-	/**
-	* $is_executing: indica si la función se está llamando desde una ejecución de una habilidad o sólo es para comprobar si se podría ejecutar la misma (para la lista de habilidades)
-	*/
-	public function canExecute($skill, $target=null, $side_target=null, $is_executing=false)	
+
+    /**
+     * @param $skill: Objeto de la habilidad ejecutándose.
+     * @param null $target: ID objetivo seleccionado.
+     * @param null $side_target: Bando objetivo seleccionado.
+     * @param bool $is_executing: Indica si estoy intentando ejecutar o no la habilidad. Si es true se comprueba el objetivo.
+     * @return int:
+     *      0 - Fallo. No hay un objetivo válido seleccionado.
+     *      1 - Correcto. Puedes ejecutar la habilidad.
+     *      2 - Fallo. No tienes suficiente tueste, retueste, tostólares o ptos de relanzamiento para pagar el coste de la habilidad.
+     *      3 - Fallo. No tienes el estado adecuado para ejecutar la habilidad.
+     *      4 - Fallo. No estás en el bando correcto para ejecutar la habilidad.
+     *      5 - Fallo. No tienes el rango mínimo exigido para ejecutar la habilidad.
+     *      6 - Fallo. El evento no se encuentra en el estado requerido o no eres el llamador.
+     *      7 - Fallo. No tienes el talento requerido para ejecutar esta habilidad.
+     *      8 - Fallo. Hay modificadores que te impiden ejecutar la habilidad.
+     */
+    public function canExecute($skill, $target=null, $side_target=null, $is_executing=false)
 	{
 	    $this->_lastError = '';
 		$user = Yii::app()->currentUser->model;
 
-		//¿Tengo tueste suficiente?
-		if ($skill->cost_tueste!==null && !$this->checkTueste($skill, $user))
-			return false;		
-		
-		//¿Tengo retueste suficiente?
-		if ($skill->cost_retueste!==null && !$this->checkRetueste($skill, $user))
-			return false;		
-		
-		//¿Tengo puntos de relanzamiento suficientes?
-		if ($skill->cost_relanzamiento!==null && !$this->checkPuntosRelanzamiento($skill, $user))
-			return false;		
-		
-		//¿Tengo tostolares suficientes?
-		if ($skill->cost_tostolares!==null && !$this->checkTostolares($skill, $user))
-			return false;		
-			
 		//¿Requiere un estado concreto del usuario?
 		if ($skill->require_user_status!==null && !$this->checkUserStatus($skill, $user))
-			return false;	
+			return 3;
 		
 		//¿Requiere un bando concreto del usuario?
 		if ($skill->require_user_side!==null && !$this->checkUserSide($skill, $user))
-			return false;	
+			return 4;
 		
 		//¿Requiere un rango mínimo para el usuario?
 		if ($skill->require_user_min_rank!==null && !$this->checkUserRank($skill, $user))
-			return false;
+			return 5;
 		
 		//¿Requiere que yo sea el llamador actualmente?
 		if ($skill->require_caller && !$this->checkCaller($skill, $user))
-			return false;
-		
-		//¿Tengo algún modificador que me impida ejecutar esta habilidad?
-		if (!$this->checkModifiers($user))
-			return false;
+			return 6;
 			
 		//¿Hay una batalla iniciada (event.status=2)?
 		if ($skill->require_event_status!==null && !$this->checkEventStatus($skill))
-		    return false;
+		    return 6;
 
 		//¿Requiere un talento concreto?
 		if ($skill->require_talent_id!==null && !$this->checkTalent($skill, $user))
-		    return false;
+		    return 7;
 
-		
-		//Comprobaciones sólo si estoy intentando ejecutar una habilidad
+
+
+        //¿Tengo tueste suficiente?
+        if ($skill->cost_tueste!==null && !$this->checkTueste($skill, $user))
+            return 2;
+
+        //¿Tengo retueste suficiente?
+        if ($skill->cost_retueste!==null && !$this->checkRetueste($skill, $user))
+            return 2;
+
+        //¿Tengo puntos de relanzamiento suficientes?
+        if ($skill->cost_relanzamiento!==null && !$this->checkPuntosRelanzamiento($skill, $user))
+            return 2;
+
+        //¿Tengo tostolares suficientes?
+        if ($skill->cost_tostolares!==null && !$this->checkTostolares($skill, $user))
+            return 2;
+
+        //¿Tengo algún modificador que me impida ejecutar esta habilidad?
+        if (!$this->checkModifiers($user))
+            return 8;
+
+
+
+        //Comprobaciones sólo si estoy intentando ejecutar una habilidad
 		if ($is_executing) {
 			//¿Requiere elegir usuario objetivo?
 			if ($skill->require_target_user && !$this->checkTargetUser($skill, $user, $target))
-				return false;
+				return 0;
 				
 			//¿Requiere elegir bando objetivo? Si el require_target_user es null pero no el require_target_side
 			if (!$skill->require_target_user && $skill->require_target_side!==null && !$this->checkSideTarget($skill, $user, $side_target))
-				return false;
+				return 0;
 		}
 		
 		//Si todo ha ido bien
-		return true;
+		return 1;
 	}
 	
 	public function canCooperate() {

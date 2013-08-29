@@ -93,7 +93,7 @@
         ?>
         <ul>
             <?php foreach($skills as $skill):?>
-                <?php if ($validator->canExecute($skill) === true): ?>
+                <?php if ($validator->canExecute($skill) == 1): ?>
                     <li><?php
                         $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png");
                         echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.$skill->description));
