@@ -17,7 +17,7 @@ class ModifierSingleton extends CApplicationComponent
             $criteria = New CDbCriteria;
             $criteria->condition = 'target_final=:target OR target_final=:bando';
 
-            if (Yii::app()->user->side != 'libre')
+            if (Yii::app()->currentUser->side != 'libre')
                 $criteria->condition .= ' OR target_final="global"'; //Si no soy del bando libre me afecta el "global" también
 
             $criteria->params = array(':target'=>Yii::app()->currentUser->id, ':bando'=>Yii::app()->currentUser->side);

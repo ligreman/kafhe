@@ -1,9 +1,4 @@
-<?php
 
-//$maxTueste = Yii::app()->config->getParam('maxTuesteUsuario');
-//$skillsHidden = isset(Yii::app()->request->cookies['skillsHidden']) ? Yii::app()->request->cookies['skillsHidden']->value : '1';
-
-?>
 <div id="upContent">
     <div id="mainUserBlock">
         <p id="user">
@@ -42,10 +37,7 @@
                 //Modificadores
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     //Modificadores de habilidades
-                    foreach(Yii::app()->modifier->modifiers as $modifier) {
-                        //Si es oculto no lo muestro
-                        if ($modifier->hidden) continue;
-
+                    foreach($modifiers as $modifier) {
                         if($modifier->duration_type=='horas') {
                             $duration = $modifier->duration * 60 * 60; //en segundos
                             $duration = (strtotime($modifier->timestamp) + $duration) - time();
@@ -101,7 +93,7 @@
         ?>
         <ul>
             <?php foreach($skills as $skill):?>
-                <?php if ($validator->canExecute($skill)): ?>
+                <?php if ($validator->canExecute($skill) === true): ?>
                     <li><?php
                         $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png");
                         echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.$skill->description));
