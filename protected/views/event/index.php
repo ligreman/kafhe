@@ -95,9 +95,18 @@
             var data = google.visualization.arrayToDataTable([
             ['Usuario', 'Probabilidad'],
             <?php
+                $aArr = Yii::app()->usertools->calculateProbabilities(Yii::app()->currentUser->groupId, true, 'achikhoria');
+                $kArr = Yii::app()->usertools->calculateProbabilities(Yii::app()->currentUser->groupId, true, 'kafhe');
+
+                $totalGungubos = $battle->gungubos_achikhoria + $battle->gungubos_kafhe;
+                $pAchikhoria = round(($battle->gungubos_kafhe / $totalGungubos), 3);
+                $pKafhe = 1 - $pAchikhoria;
                 foreach ($users as $user) {
                     if(isset($arr[$user->id])){
-                        echo '["'.$user->alias.'",'.$arr[$user->id].'],';
+                        if($user->side == "kafhe")
+                            echo '["'.$user->alias.'",'.round($kArr[$user->id]*$pKafhe, 1).'],';
+                        else
+                            echo '["'.$user->alias.'",'.round($aArr[$user->id]*$pAchikhoria, 1).'],';
                     }
                 }
             ?>
