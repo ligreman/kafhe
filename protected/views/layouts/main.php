@@ -171,6 +171,9 @@
 
         <footer>
             <ul>
+                <?php if (!Yii::app()->user->isGuest): ?>
+                <li><a href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a></li>
+                <?php endif;?>
                 <li><a href="<?php echo Yii::app()->request->baseUrl.'/wiki'?>">kafhe wiki</a></li>
             </ul>
         </footer>

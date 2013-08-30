@@ -93,15 +93,26 @@
         ?>
         <ul>
             <?php foreach($skills as $skill):?>
-                <?php if ($validator->canExecute($skill) == 1): ?>
+                <?php
+                    $execCode = $validator->canExecute($skill);
+                    //Se muestra siempre que el bando, estado del jugador, estado del desayuno o talentos adquiridos no sean un requisito.
+                    if ($execCode < 3 || $execCode > 7): ?>
                     <li><?php
-                        $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png");
+                        $class = 'skillImage';
+                        if($execCode != 1) $class .= " grayScale";
+                        $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('title' => $skill->description, 'class' => $class));
                         echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.$skill->description));
                         ?>
                         <section class="skillDescription">
                             <div class="sdcontent">
-                                <h1><span><?php echo $skill->name; ?></span><?php echo CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png"); ?></h1>
+                                <h1><span><?php echo $skill->name; ?></span><?php echo CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('class' => $class)); ?></h1>
                                 <p class="skillDesc"><?php echo $skill->description; ?></p>
+                                <?php if($execCode == 2):?>
+                                    <p class="mensajeDesactivado">No tienes suficiente tueste, retueste, tostólares o ptos de relanzamiento para pagar el coste de la habilidad.</p>
+                                <?php endif; ?>
+                                <?php if($execCode == 8): ?>
+                                    <p class="mensajeDesactivado">Hay modificadores que te impiden ejecutar la habilidad.</p>
+                                <?php endif; ?>
                                 <dl>
                                     <dt>Coste: </dt>
                                     <dd><?php
@@ -114,7 +125,9 @@
                                     <dd><?php echo $skill->critic; ?></dd>
                                     <dt>Probabilidad de Pifia:</dt>
                                     <dd><?php echo $skill->fail; ?></dd>
-                                    
+
+                                    <?php if($execCode == 1): ?>
+
 									<?php if($skill->require_target_user): ?>
                                     
 										<dt>Objetivo</dt>
@@ -150,6 +163,12 @@
                                     <?php echo CHtml::link('Aceptar', Yii::app()->createUrl('skill/execute', array('skill_id'=>$skill->id)), array('class'=>'btn btncommon acceptButton'));?>
                                     <?php echo CHtml::link('Cancelar', null, array('class' => 'btn cancelButton'));?>
                                 </p>
+                                <?php else: ?>
+                                </dl>
+                                <p class="skillButtons centerContainer">
+                                    <?php echo CHtml::link('Cerrar', null, array('class' => 'btn cancelButton'));?>
+                                </p>
+                                <?php endif; //Fin de if de execCode 1 para mostrar objetivo y botones?>
                             </div>
                         </section>
                     </li>
