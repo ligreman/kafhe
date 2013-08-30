@@ -722,6 +722,12 @@ label.title{
     cursor: pointer;
 }
 
+img.grayScale{
+    filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome & Safari 6+ */
+}
+
 #skillsUserBlock{
     height: 5em;
     padding: 0 3em;
@@ -779,6 +785,7 @@ label.title{
     color: #ffffff;
     font-style: italic;
     text-align: left;
+    line-height: 1.5em;
 }
 
 .sdcontent dl{
@@ -1198,7 +1205,7 @@ p.bebida{
 }
 
 #pedidoCentrado{
-    width:60%;
+    width:80%;
     margin: 1em auto 0 ;
 }
 
@@ -1241,6 +1248,15 @@ h2.error404{
 .error404 img{
     width: 50%;
     margin-left: 40%;
+}
+
+.mensajeDesactivado{
+    text-align: left;
+    padding: 1em 2em;
+    background: #bf3950;
+    margin: -.5em -2em 0;
+    color: #ffffff;
+    font-style: italic;
 }
 
 .w0{width:0%;}

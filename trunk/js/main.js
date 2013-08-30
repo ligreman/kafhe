@@ -101,9 +101,11 @@ function prepareHabilities(){
 
     $('.cancelButton').click(function(){
         $("#skillsUserBlock .targetList li").removeClass('selected');
-        var button = $(this).siblings(".acceptButton"),
-        text = button.attr('href').split('&target_id');
-        button.attr('href', text[0]);
+        if($(this).siblings(".acceptButton").length > 0){
+            var button = $(this).siblings(".acceptButton");
+            text = button.attr('href').split('&target_id');
+            button.attr('href', text[0]);
+        }
         $(this).parents('.skillDescription').hide();
     });
 
