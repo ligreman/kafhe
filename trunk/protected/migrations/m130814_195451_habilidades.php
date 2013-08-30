@@ -129,7 +129,7 @@ class m130814_195451_habilidades extends CDbMigration
         // TRAMPA
         $this->insert('skill', array(
             'name'  =>  'Trampa',
-            'description'  =>  'Provoca que el próximo miembro de un bando que intente ejecutar una habilidad pifie. Se acumulan los usos. Esta habilidad no aparecerá en el muro de notificaciones',
+            'description'  =>  'Provoca que el próximo miembro de un bando que intente ejecutar una habilidad que no sea de relanzamiento pifie. Se acumulan los usos. Esta habilidad no aparecerá en el muro de notificaciones',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
             'keyword'  =>  'trampa',

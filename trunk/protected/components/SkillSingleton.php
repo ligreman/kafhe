@@ -35,8 +35,8 @@ class SkillSingleton extends CApplicationComponent
         //Calculo cuál es el objetivo final, por si hay escudos y demás cosas por ahí
         $finalTarget = $this->calculateFinalTarget($skill, $target, $side);
 
-        //Compruebo si caigo en una Trampa
-        if($this->caigoTrampa()) {
+        //Compruebo si caigo en una Trampa y no estoy ejecutando una habilidad de relanzamiento
+        if($this->caigoTrampa() && $skill->category!='relanzamiento') {
             //Hago que pifie
             $tirada = $fail = 0;
 
