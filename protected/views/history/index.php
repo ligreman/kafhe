@@ -23,18 +23,18 @@
                 if($event->gungubos_kafhe < $event->gungubos_achikhoria) $kafheVictory = false;
                 $battleResult = "(".$event->gungubos_kafhe." - ".$event->gungubos_achikhoria.")";
                 if($battleEqual){
-                    echo '<p id="battleResult">La batalla finalizo en igualdad de condiciones. '.$battleResult.'</p>';
+                    echo '<p id="battleResult">La batalla finalizó en igualdad de condiciones. '.$battleResult.'</p>';
                 }elseif($kafheVictory){
-                    echo '<p id="battleResult">La batalla finalizo con una victoria del <strong>bando de '.Yii::app()->params->sideNames["kafhe"].' '.$battleResult.'</strong>.</p>';
+                    echo '<p id="battleResult">La batalla finalizó con una victoria del <strong>bando de '.Yii::app()->params->sideNames["kafhe"].' '.$battleResult.'</strong>.</p>';
                 }else{
                     echo '<p id="battleResult">La batalla finalizó con una victoria del <strong>bando de '.Yii::app()->params->sideNames["achikhoria"].' '.$battleResult.'</strong>.</p>';
                 }
             ?>
             <p><?php
                     if(($kafheVictory && $event->caller_side == "kafhe") || (!$kafheVictory && $event->caller_side != "kafhe")){
-                        echo 'Así fue como ';
-                    }else{
                         echo 'Sin embargo ';
+                    }else{
+                        echo 'Así fue como ';
                     }
                 ?>el destino quiso que fuese <strong><?php echo Yii::app()->usertools->getAlias($event->caller_id); ?></strong> (bando de <?php echo Yii::app()->params->sideNames[$event->caller_side]?>) el elegido para llamar.</p>
         </div>
