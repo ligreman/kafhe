@@ -10,7 +10,7 @@ $nombres_tiempo=array('día','hora','minuto','segundo');
 $aliases = Yii::app()->usertools->getAlias();
 if($notifications != null):
 ?>
-<?php $last_type = ""; ?>
+<?php $last_type = $type; ?>
     <?php foreach($notifications as $notification):?>
         <article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
             if(strcmp($notification->type,$last_type)!=0 && strcmp("",$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
@@ -46,7 +46,7 @@ if($notifications != null):
                 $pattern = '/:+([a-z]+):+/i';
 
                 if(preg_match($pattern, $notification->message)){
-                    echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message);
+                    echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message).'</span>';
                 }else{
                     echo '<span>'.$notification->message.'</span>';
                 }

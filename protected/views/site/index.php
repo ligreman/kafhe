@@ -73,7 +73,7 @@ $aliases = Yii::app()->usertools->getAlias();
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
                         <p class="notification_message"><?php
                             if(preg_match($pattern,$notification->message)){
-                                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message);
+                                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message).'</span>';
                             }else{
                                 echo '<span>'.$notification->message.'</span>';
                             }
@@ -120,7 +120,7 @@ $aliases = Yii::app()->usertools->getAlias();
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
 						<p class="notification_message"><?php
                             if(preg_match($pattern,$notification->message)){
-                                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message);
+                                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message).'</span>';
                             }else{
                                 echo '<span>'.$notification->message.'</span>';
                             }
