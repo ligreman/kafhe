@@ -1,14 +1,16 @@
 <?php
 
-/**
- * Utilizado para obtener los usuarios de un grupo (no bando, ojo) y otra información de los mismos
+/** Utilizado para obtener los usuarios de un grupo (no bando, ojo) y otra información de los mismos
  */
 class UserToolsSingleton extends CApplicationComponent
 {
 	private $_users = null;
 	private $_modifiers = null;
 
-    //Cojo el alias de sesión si ya está cargado, porque no es algo que cambie
+    /** Devuelve el alias de un usuario o de todos
+     * @param null $userId ID del usuario del que obtener el alias. Si es null devuelve un array con todos los alias.
+     * @return array|text Devuelve el alias del usuario o un array de todos los alias (id=>alias) si userId es nulo.
+     */
     public function getAlias($userId=null)
     {
 		if (!$this->_users) {
@@ -51,10 +53,10 @@ class UserToolsSingleton extends CApplicationComponent
     }
    
 
-    /**
-     * @param null $groupId: grupo dentro del que buscar, si es null se coge el activo
-     * @param null $exclude: array de id de usuario a excluir
-     * @return CActiveRecord. Usuario encontrado o null si no hay resultados.
+    /** Calcula y coge un usuario aleatorio dentro de un grupo
+     * @param null $groupId grupo dentro del que buscar, si es null se coge el activo
+     * @param null $exclude array de id de usuario a excluir
+     * @return CActiveRecord Usuario encontrado o null si no hay resultados.
      */
     public function randomUser($groupId=null, $exclude=null)
     {
@@ -75,9 +77,13 @@ class UserToolsSingleton extends CApplicationComponent
         return $user;
     }
 
-	
-	//Calculo las probabilidades para cada usuario del grupo
-	public function calculateProbabilities($groupId, $soloAlistados=true, $side=null)
+
+    /** Calculo las probabilidades para cada usuario del grupo
+     * @param bool $soloAlistados True si sólo quiero tener en cuenta los alistados.
+     * @param null $side Texto con el bando si quiero limitar a usuarios de tal bando. Null si es para todos.
+     * @return array|null Devuelve un array user_id=>probabilidad (en %). NULL si no hay usuarios, por alguna razón extraña.
+     */
+    public function calculateProbabilities($soloAlistados=true, $side=null)
 	{
 		$users = $this->getUsers();
 		
@@ -108,8 +114,13 @@ class UserToolsSingleton extends CApplicationComponent
 		if (empty($finales)) return null;
 		return $finales;
 	}
-	
-	public function calculateSideProbabilities($kafhe, $achikhoria)
+
+    /** Calcula las probabilidades de cada bando
+     * @param $kafhe Gungubos del bando Kafhe
+     * @param $achikhoria Gungubos del bando Achikhoria
+     * @return array Array con claves 'kafhe' y 'achikhoria' que contienen la probabilidad en % de cada uno
+     */
+    public function calculateSideProbabilities($kafhe, $achikhoria)
 	{
 		//La probabilidad es inversa al número de gungubos que tengas, así que doy la vuelta a los valores
 		$totalGungubos = $kafhe + $achikhoria;
@@ -122,7 +133,7 @@ class UserToolsSingleton extends CApplicationComponent
 	}
 
 
-    /** He de encontrar el bando de este usuario en el evento anterior al actual     
+    /** Bando del usuario actual en el evento anterior. Se usa cuando el usuario actual es el agente libre
      */
     public function getPreviousSide()
     {

@@ -8,12 +8,12 @@ class SkillValidator
 {	
 	private $_lastError = '';
 
-    /**
-     * @param $skill: Objeto de la habilidad ejecutándose.
-     * @param null $target: ID objetivo seleccionado.
-     * @param null $side_target: Bando objetivo seleccionado.
-     * @param bool $is_executing: Indica si estoy intentando ejecutar o no la habilidad. Si es true se comprueba el objetivo.
-     * @return int:
+    /** Comprueba si puedo o no ejecutar una habilidad
+     * @param $skill Objeto de la habilidad ejecutándose.
+     * @param null $target ID objetivo seleccionado.
+     * @param null $side_target Bando objetivo seleccionado.
+     * @param bool $is_executing Indica si estoy intentando ejecutar o no la habilidad. Si es true se comprueba el objetivo.
+     * @return int
      *      0 - Fallo. No hay un objetivo válido seleccionado.
      *      1 - Correcto. Puedes ejecutar la habilidad.
      *      2 - Fallo. No tienes suficiente tueste, retueste, tostólares o ptos de relanzamiento para pagar el coste de la habilidad.
@@ -103,7 +103,7 @@ class SkillValidator
 	/************************************** CHECKS ******************************************/
 	/****************************************************************************************/
 	
-	public function checkTueste($skill, $user) {
+	private function checkTueste($skill, $user) {
 		if ($skill->cost_tueste == null) return true;
 		else if ($skill->cost_tueste <= $user->ptos_tueste) return true;
 		else {
@@ -111,8 +111,8 @@ class SkillValidator
 			return false;
 		}
 	}
-	
-	public function checkRetueste($skill, $user) {
+
+    private function checkRetueste($skill, $user) {
 		if ($skill->cost_retueste == null) return true;
 		else if ($skill->cost_retueste <= $user->ptos_retueste) return true;
 		else {
@@ -120,8 +120,8 @@ class SkillValidator
 			return false;
 		}
 	}
-	
-	public function checkPuntosRelanzamiento($skill, $user) {
+
+    private function checkPuntosRelanzamiento($skill, $user) {
 		if ($skill->cost_relanzamiento == null) return true;
 		else if ($skill->cost_relanzamiento <= $user->ptos_relanzamiento) return true;
 		else {
@@ -129,8 +129,8 @@ class SkillValidator
 			return false;
 		}
 	}
-	
-	public function checkTostolares($skill, $user) {
+
+    private function checkTostolares($skill, $user) {
 		if ($skill->cost_tostolares == null) return true;
 		else if ($skill->cost_tostolares <= $user->tostolares) return true;
 		else {
@@ -138,8 +138,8 @@ class SkillValidator
 			return false;
 		}
 	}
-	
-	public function checkUserStatus($skill, $user) {
+
+    private function checkUserStatus($skill, $user) {
 		if ($skill->require_user_status == null) return true;
 		
 		$estados = explode(',', $skill->require_user_status);
@@ -150,8 +150,8 @@ class SkillValidator
 			return false;
 		}
 	}
-	
-	public function checkUserSide($skill, $user) {
+
+    private function checkUserSide($skill, $user) {
 		if ($skill->require_user_side == null) return true;
 		
 		$sides = explode(',', $skill->require_user_side);
@@ -162,8 +162,8 @@ class SkillValidator
 			return false;
 		}
 	}
-	
-	public function checkUserRank($skill, $user) {
+
+    private function checkUserRank($skill, $user) {
 		if ($skill->require_user_min_rank == null) return true;
 		else if ($skill->require_user_min_rank <= $user->rank) return true;
 		else {
@@ -171,8 +171,8 @@ class SkillValidator
 			return false;
 		}
 	}
-	
-	public function checkTalent($skill, $user) {
+
+    private function checkTalent($skill, $user) {
 		/*if ($skill->talent_id_required == null) return true;
 		else if ( TalentUser::model()->exists('user_id=:userId AND talent_id=:talentId', array(':userId'=>$user->id, ':talentId'=>$skill->talent_id_required)) )
 			return true;
@@ -183,7 +183,7 @@ class SkillValidator
 		return true;
 	}
 
-    public function checkEventStatus($skill) {
+    private function checkEventStatus($skill) {
         if ($skill->require_event_status == null) return true;
         else if (isset(Yii::app()->event->model)) {
             if ($skill->require_event_status == Yii::app()->event->status) return true;
@@ -198,11 +198,11 @@ class SkillValidator
     }
 	
 	//Compruebo si algún mod no me deja ejecutar esta habilidad
-	public function checkModifiers($user) {
+    private function checkModifiers($user) {
 		return true;
 	}
-	
-	public function checkCaller($skill, $user) {
+
+    private function checkCaller($skill, $user) {
 		if (!$skill->require_caller) return true;
 		else if (isset(Yii::app()->event->model)) {
 			if (Yii::app()->event->callerId!=null && Yii::app()->event->callerId==$user->id) return true;
@@ -217,7 +217,7 @@ class SkillValidator
 	}
 	
 	//Comprueba el objetivo y su bando si fuera necesario. Sólo para objetivos usuario (no si se hizo objetivo un bando)
-	public function checkTargetUser($skill, $user, $target) {
+    private function checkTargetUser($skill, $user, $target) {
 		if (!$skill->require_target_user)
 			return true;
 		else {
@@ -248,7 +248,7 @@ class SkillValidator
 	}
 	
 	//Compruebo si el bando seleccionado es correcto, si se requería un bando concreto
-	public function checkSideTarget($skill, $user, $side_target) {
+    private function checkSideTarget($skill, $user, $side_target) {
 		if (!$skill->require_target_user && $skill->require_target_side!==null) {
 			$sides = explode(',', $skill->require_target_side); //Bando/s que requiere la skill
 			

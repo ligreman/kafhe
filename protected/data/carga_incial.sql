@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS `rank` (
 CREATE TABLE IF NOT EXISTS `ranking` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
   `rank` int(11) NOT NULL,
   `date` date NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -194,6 +195,13 @@ CREATE TABLE IF NOT EXISTS `modifier` (
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `cronpile` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `operation` varchar(50) NOT NULL,
+  `params` varchar(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`, `role`, `group_id`, `side`, `status`, `rank`, `experience`, `ptos_tueste`, `ptos_retueste`, `ptos_relanzamiento`, `ptos_talentos`, `tostolares`, `sugarcubes`, `dominio_tueste`, `dominio_habilidades`, `dominio_bandos`, `times`, `calls`) VALUES
 (1, 'admin', '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe', 'Administrador', 'admin@mail.com', NULL, 'admin', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);

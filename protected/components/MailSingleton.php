@@ -1,7 +1,6 @@
 <?php
 
-/**
- * MailSingleton para gestionar el envío de correos
+/** MailSingleton para gestionar el envío de correos
  */
 class MailSingleton extends CApplicationComponent
 {

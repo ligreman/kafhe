@@ -1,23 +1,21 @@
 <?php
 
-/**
- * EventSingleton para el estado de los eventos actuales 
+/** EventSingleton para el estado de los eventos actuales
  */
 class EventSingleton extends CApplicationComponent
 {
 	private $_model = null;
-	
-	
-	public function selectCaller()
+
+    /** Elige al llamador de un evento
+     * @return array|null Array compuesto por 'side' con el nombre del bando perdedor, y 'userId' con el id del llamador. NULL si hay algún error.
+     */
+    public function selectCaller()
 	{
 		if (!isset(Yii::app()->currentUser->groupId))
             return null;
 				
 		$this->getModel(); //Por si acaso
 			
-		//Cojo los usuarios alistados del grupo de este evento
-		//$users = User::model()->findAll(array('condition'=>'group_id=:group AND status=:status', 'params'=>array(':group'=>$this->getGroupId(), ':status'=>Yii::app()->params->statusAlistado)));
-				
 		//Probabilidades de cada bando
 		$bandos = Yii::app()->usertools->calculateSideProbabilities($this->getGungubosKafhe(), $this->getGungubosAchikhoria());
 		
@@ -28,8 +26,8 @@ class EventSingleton extends CApplicationComponent
 		else  $bandoPerdedor = 'achikhoria';
 		
 		//Preparo un array con las probabilidades de cada uno de los usuarios del bando perdedor
-		$probabilidades = Yii::app()->usertools->calculateProbabilities(Yii::app()->currentUser->groupId, true, $bandoPerdedor);
-		if ($probabilidades === null) return false;
+		$probabilidades = Yii::app()->usertools->calculateProbabilities(true, $bandoPerdedor);
+		if ($probabilidades === null) return null;
 		
 		//Elijo llamador "ganador" dentro de ese bando
 		$randomCaller = mt_rand(1, 10000);
@@ -47,13 +45,16 @@ class EventSingleton extends CApplicationComponent
 			$anterior += $valor;
 		}
 		
-		if ($caller === null) return false;		
+		if ($caller === null) return null;
 		
 		return array('side'=>$bandoPerdedor, 'userId'=>$caller);
 	}
-	
-	//Obtiene el pedido del evento actual o del que le pases
-	public function getOrder($eventId=null)
+
+    /** Obtiene el pedido del evento actual o del que le pases
+     * @param null $eventId Evento del que obtener el pedido. Si es null toma el evento actual.
+     * @return array Array con el pedido separado en 4 arrays. Los arrays 'itos' y 'noitos' contienen a su vez dos arrays: itos( 'comidas'=>array(id=>nombre_comida), 'bebidas'=>array(id=>nombre_bebida) ). Los arrays 'comidas' y 'bebidas' de los 4 primeros que comentábamos, asocian id_comida/bebida=>nombre.
+     */
+    public function getOrder($eventId=null)
 	{
 		if ($eventId === null)
 			$eventId = Yii::app()->event->id;
@@ -101,9 +102,11 @@ class EventSingleton extends CApplicationComponent
 		
 		return array('itos'=>$itos, 'noitos'=>$noitos, 'comidas'=>$comidas, 'bebidas'=>$bebidas);
 	}
-	
-	//Obtiene el pedido del evento de la semana pasada... el último evento cerrado
-	public function getPastOrder() 
+
+    /** Obtiene el pedido del evento de la semana pasada... el último evento cerrado
+     * @return array Array con el pedido, tal y como lo devuelve la función getOrder.
+     */
+    public function getPastOrder()
 	{
 		$group_id = Yii::app()->currentUser->groupId;
 		$event = Event::model()->findAll(array( 'condition'=>'status=:status AND group_id=:group', 'params'=>array(':status'=>Yii::app()->params->statusCerrado, ':group'=>$group_id), 'order'=>'date DESC', 'limit'=>1) );
@@ -115,12 +118,133 @@ class EventSingleton extends CApplicationComponent
 		
 		return $this->getOrder($eventId);
 	}
-	
 
-	/** Distribuye en bandos a los usuarios
-     * @param $usuarios: $usuarios[$usuario->id] = $usuario;
-     * @param $exAgenteLibre: objeto User del anterior agente libre, para saber el bando final del grupo donde esté él
-     * @return mixed
+
+    /** Regenera el ranking de jugadores de todos los grupos.
+     * @return bool
+     */
+    public function generateRanking() {
+        //Cojo los grupos
+        $mostrar = 5; //Cantidad usuarios a mostrar en el ranking
+        $groups = Group::model()->findAll();
+
+        foreach ($groups as $group) {
+            //Primero saco el ranking actual de ese grupo
+            $ranking = Ranking::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$group->id), 'order'=>'rank DESC'));
+
+            //Saco los usuarios del grupo ordenados por rango
+            $users = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$group->id), 'order'=>'rank DESC'));
+
+            if ($ranking == null) {
+                //echo "Genero un ranking nuevo.\n";
+                foreach ($users as $user) {
+                    if(count($ranking)>=$mostrar) break; //termino si ya tengo la cantidad a mostrar
+
+                    $newR = new Ranking;
+                    $newR->user_id = $user->id;
+                    $newR->group_id = $user->group_id;
+                    $newR->rank = $user->rank;
+                    $newR->date = date('Y-m-d');
+
+                    $ranking[] = $newR;
+                }
+            } else {
+                //echo "Reorganizo el ranking (".count($ranking)."). Hay ".count($users)." usuarios.\n";
+                foreach ($users as $user) {
+                    $reorganizarme = false;
+                    $estoy_en_ranking = false;
+                    $colocado = false;
+
+                    $newR = new Ranking;
+                    $newR->user_id = $user->id;
+                    $newR->group_id = $user->group_id;
+                    $newR->rank = $user->rank;
+                    $newR->date = date('Y-m-d');
+
+                    //Miro a ver si estoy en el ranking y con qué rango
+                    for ($i=0; $i<count($ranking); $i++) {
+                        //¿Soy yo?
+                        if($ranking[$i]->user_id == $user->id) {
+                            $estoy_en_ranking = true; //Estoy en el ranking
+                            $colocado = true;
+
+                            if($ranking[$i]->rank > $user->rank) {
+                                //No hago nada
+                            } elseif($ranking[$i]->rank > $user->rank) {
+                                $ranking[$i]->date = date('Y-m-d'); //Actualizo la fecha simplemente
+                            } else {
+                                //Tengo que reoganizarme y colocarme en el ranking de nuevo
+                                $reorganizarme = true;
+                            }
+                        }
+                    }
+
+                    //¿Me tengo que reorganizar o no estaba en el ranking?
+                    if ($reorganizarme || !$estoy_en_ranking) {
+                        //Busco mi sitio en el ranking y me meto
+                        for ($i=0; $i<count($ranking); $i++) {
+                            if ($user->rank >= $ranking[$i]->rank) {
+                                //echo "   Meto por encima al usuario.\n";
+                                //Coloco al usuario encima de esta posición del ranking
+                                array_splice($ranking, $i, 0, array($newR));
+                                $colocado = true;
+
+                                break; //Termino de mirar posiciones del ranking para este usuario
+                            }
+                        }
+
+
+                    }
+
+                    //Si no estoy colocado en ninguna parte es que me voy pal final del ranking
+                    if (!$colocado)
+                        array_push($ranking, $newR);
+
+                    //echo "Reorganizado el usuario ".$user->id.". El ranking tiene ".count($ranking).".\n";
+                }
+
+            }
+
+            //Por último, guardo el ranking de este grupo (los 10 primeros sólo)
+            $connection = Yii::app()->db;
+            //echo "Eliminamos duplicados y preparamos SQL. En el ranking hay ".count($ranking)." entradas.\n";
+
+            $values = $ya_ha_salido = array();
+            $cuenta = 0;
+            for ($i=0; $i<count($ranking); $i++) {
+                if ($cuenta>=$mostrar) break; //Paro si llego al tope
+
+                //echo "Buscando posicion ".$i." del ranking. La cuenta va por ".$cuenta." y he de llegar a ".$mostrar.".\n";
+
+                if (in_array($ranking[$i]->user_id, $ya_ha_salido)) continue;
+                else $ya_ha_salido[] = $ranking[$i]->user_id; //Evito repetidos, solo 1 vez en toda la lista cada user
+
+                $values[] = "(".$ranking[$i]->user_id.", ".$ranking[$i]->group_id.", ".$ranking[$i]->rank.", '".$ranking[$i]->date."')";
+
+                $cuenta++;
+                //echo "Ya hay ".count($values)." usuarios en el ranking.\n";
+            }
+
+            //echo "Borro el ranking anterior.\n";
+            $sql = "DELETE FROM ranking WHERE group_id=".$group->id;
+            $command=$connection->createCommand($sql);
+            $command->execute();
+
+            $sql="INSERT INTO ranking (user_id, group_id, rank, date) VALUES ".implode(',',$values);
+            //echo "Consulta SQL: ".$sql.";\n";
+            $command=$connection->createCommand($sql);
+            $command->execute();
+        }
+
+        return true;
+    }
+
+
+
+    /** Distribuye en bandos a los usuarios
+     * @param $usuarios $usuarios[$usuario->id] = $usuario;
+     * @param $exAgenteLibre objeto User del anterior agente libre, para saber el bando final del grupo donde esté él
+     * @return array|false Devuelve un array con las claves 'kafhe' y 'achikhoria'. Cada una contiene un array que asocia id_usuario=>objeto_usuario con los miembros de cada equipo.
      */
     public function createSides($usuarios, $exAgenteLibre=null)
 	{
@@ -225,10 +349,7 @@ class EventSingleton extends CApplicationComponent
         return array('teamA'=>$kafheT, 'teamB'=>$achiT);
     }
 
-    /** Distribuye a los usuarios según sus rangos y una lista de equipos
-     * @param $teams: array con teamA y teamB que son arrays de rangos
-     * @param $listaUsuarios: array de objetos User
-     */
+    // Distribuye a los usuarios según sus rangos y una lista de equipos
     private function distributeUsersPerRank($teams, $listaUsuarios)
     {
         if( (count($teams['teamA']) + count($teams['teamB'])) != count($listaUsuarios) )
@@ -327,7 +448,7 @@ class EventSingleton extends CApplicationComponent
             }
         }
     }
-	
+
 	/** GETTERS Y SETTERS GENERALES **/
 
 	//Esta función la coge automáticamente
@@ -359,6 +480,7 @@ class EventSingleton extends CApplicationComponent
 
         return $this->_model;
     }
+
 
 	public function getId() { return $this->model->id; }	
 	public function getGroupId() { return $this->model->group_id; }	

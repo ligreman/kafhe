@@ -1,21 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "ranking".
+ * This is the model class for table "cronpile".
  *
- * The followings are the available columns in table 'ranking':
+ * The followings are the available columns in table 'cronpile':
  * @property integer $id
- * @property integer $user_id
- * @property integer $group_id
- * @property integer $rank
- * @property string $date
+ * @property string $operation
+ * @property string $params
  */
-class Ranking extends CActiveRecord
+class Cronpile extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Ranking the static model class
+	 * @return Cronpile the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -27,7 +25,7 @@ class Ranking extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ranking';
+		return 'cronpile';
 	}
 
 	/**
@@ -38,12 +36,12 @@ class Ranking extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, group_id, rank', 'required'),
-			array('user_id, group_id, rank', 'numerical', 'integerOnly'=>true),
-			array('date', 'safe'),
+			array('operation, params', 'required'),
+			array('operation', 'length', 'max'=>50),
+			array('params', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, group_id, rank, date', 'safe', 'on'=>'search'),
+			array('id, operation, params', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,10 +63,8 @@ class Ranking extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'user_id' => 'User',
-			'group_id' => 'Group',
-			'rank' => 'Rank',
-			'date' => 'Date',
+			'operation' => 'Operation',
+			'params' => 'Params',
 		);
 	}
 
@@ -84,10 +80,8 @@ class Ranking extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('group_id',$this->group_id);
-		$criteria->compare('rank',$this->rank);
-		$criteria->compare('date',$this->date,true);
+		$criteria->compare('operation',$this->operation,true);
+		$criteria->compare('params',$this->params,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

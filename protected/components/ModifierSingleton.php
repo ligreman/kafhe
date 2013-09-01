@@ -1,7 +1,6 @@
 <?php
 
-/**
- * ModifierSingleton para operaciones relacionadas con los modificadores
+/** ModifierSingleton para operaciones relacionadas con los modificadores
  */
 class ModifierSingleton extends CApplicationComponent
 {
@@ -28,10 +27,11 @@ class ModifierSingleton extends CApplicationComponent
 		
 		return $this->_modifiers;
 	}
-	
-	
-	//Compruebo si han expirado modificadores de todo el mundo, de cualquier tipo.
-	public function checkModifiersExpiration()
+
+
+    /** Compruebo si han expirado modificadores de todo el mundo, de cualquier tipo.
+     */
+    public function checkModifiersExpiration()
 	{
 		$modifiers = Modifier::model()->findAll(array('condition'=>'duration IS NOT NULL AND duration_type IS NOT NULL'));
 		if($modifiers != null) 
@@ -59,9 +59,9 @@ class ModifierSingleton extends CApplicationComponent
 	}
 
     /** Reduce los usos de un modificador del jugador
-     * @param $modifier: el objeto del modificador a reducir su uso. Si es null ha de estar definido el parámetro $mod_keyword
-     * @param $mod_keyword: keyword del modificador a reducir su uso. Si es null ha de estar el parámetro $modifier definido
-     * @param null $userId: Si es null se toma el usuario activo. Va siempre en conjunto con mod_keyword
+     * @param $modifier el objeto del modificador a reducir su uso. Si es null ha de estar definido el parámetro $mod_keyword
+     * @param $mod_keyword keyword del modificador a reducir su uso. Si es null ha de estar el parámetro $modifier definido
+     * @param null $userId Si es null se toma el usuario activo. Va siempre en conjunto con mod_keyword
      * @return bool
      */
     public function reduceModifierUses($modifier=null, $mod_keyword=null, $userId=null)
@@ -96,7 +96,7 @@ class ModifierSingleton extends CApplicationComponent
 	}
 
     /** Reduce los modificadores de tipo evento
-     * @param $eventId: ID del evento que quiero reducir
+     * @param $eventId ID del evento que quiero reducir
      * @return bool
      */
     public function reduceEventModifiers($eventId)
@@ -124,9 +124,11 @@ class ModifierSingleton extends CApplicationComponent
 	}
 	
 
-    /* Compruebo si tiene un modificador. Esto lo que hace sólo es buscar dentro del grupo de modificadores uno concreto, como un "in_array"
-	 * Si el haystack es nulo considero que quiero comprobar los modificadores del usuario activo
-	 */
+    /** Compruebo si tiene un modificador. Esto lo que hace sólo es buscar dentro del grupo de modificadores uno concreto, como un "in_array"
+     * @param $needle Keyword del modificador a buscar
+     * @param null $haystack Si el haystack es nulo considero que quiero comprobar los modificadores del usuario activo
+     * @return object|bool El objeto Modifier del modificador si lo encuentra, o false si no lo encuentra.
+     */
     public function inModifiers($needle, $haystack=null)
     {
 		if($haystack === null) {			

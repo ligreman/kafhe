@@ -8263,3 +8263,132 @@ Stack trace:
 2013/08/25 11:21:25 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id) ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1' at line 1. The SQL statement executed was: CREATE TABLE IF NOT EXISTS `user` ( `id` int(10) NOT NULL AUTO_INCREMENT, `username` varchar(128) NOT NULL, `password` varchar(128) NOT NULL, `alias` varchar(128) NOT NULL, `email` varchar(128) NOT NULL, `birthdate` date NULL DEFAULT NULL, `role` enum('admin','user') NOT NULL DEFAULT 'user', `group_id` int(10) NULL DEFAULT NULL, `side` enum('kafhe','achikhoria','libre') NULL DEFAULT NULL, `status` tinyint(1) NOT NULL DEFAULT '1', `rank` smallint(5) NOT NULL DEFAULT '0', `ptos_tueste` smallint(5) NOT NULL DEFAULT '0', `ptos_retueste` smallint(5) NOT NULL DEFAULT '0', `ptos_relanzamiento` smallint(5) NOT NULL DEFAULT '0', `ptos_talentos` smallint(5) NOT NULL DEFAULT '0', `tostolares` smallint(5) NOT NULL DEFAULT '0', `experience` int(10) NOT NULL DEFAULT '0', `sugarcubes` smallint(5) NOT NULL DEFAULT '0', `dominio_tueste` smallint(5) NOT NULL DEFAULT '0', `dominio_habilidades` smallint(5) NOT NULL DEFAULT '0', `dominio_bandos` smallint(5) NOT NULL DEFAULT '0', `times` smallint(5) NOT NULL DEFAULT '0', `calls` smallint(5) NOT NULL DEFAULT '0', `last_regen_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP, `last_notification_read` timestamp NULL, PRIMARY KEY (`id`), FOREIGN KEY (group_id) REFERENCES group (id) ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ; .
 2013/08/25 11:21:51 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE=InnoDB  DEFAULT CHARSET=' at line 1. The SQL statement executed was: CREATE TABLE IF NOT EXISTS `user` ( `id` int(10) NOT NULL AUTO_INCREMENT, `username` varchar(128) NOT NULL, `password` varchar(128) NOT NULL, `alias` varchar(128) NOT NULL, `email` varchar(128) NOT NULL, `birthdate` date NULL DEFAULT NULL, `role` enum('admin','user') NOT NULL DEFAULT 'user', `group_id` int(10) NULL DEFAULT NULL, `side` enum('kafhe','achikhoria','libre') NULL DEFAULT NULL, `status` tinyint(1) NOT NULL DEFAULT '1', `rank` smallint(5) NOT NULL DEFAULT '0', `ptos_tueste` smallint(5) NOT NULL DEFAULT '0', `ptos_retueste` smallint(5) NOT NULL DEFAULT '0', `ptos_relanzamiento` smallint(5) NOT NULL DEFAULT '0', `ptos_talentos` smallint(5) NOT NULL DEFAULT '0', `tostolares` smallint(5) NOT NULL DEFAULT '0', `experience` int(10) NOT NULL DEFAULT '0', `sugarcubes` smallint(5) NOT NULL DEFAULT '0', `dominio_tueste` smallint(5) NOT NULL DEFAULT '0', `dominio_habilidades` smallint(5) NOT NULL DEFAULT '0', `dominio_bandos` smallint(5) NOT NULL DEFAULT '0', `times` smallint(5) NOT NULL DEFAULT '0', `calls` smallint(5) NOT NULL DEFAULT '0', `last_regen_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP, `last_notification_read` timestamp NULL, PRIMARY KEY (`id`), FOREIGN KEY (group_id) REFERENCES group (id) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ; .
 2013/08/25 11:24:45 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE=InnoDB  DEFAULT CHARSET=' at line 1. The SQL statement executed was: CREATE TABLE IF NOT EXISTS `user` ( `id` int(10) NOT NULL AUTO_INCREMENT, `username` varchar(128) NOT NULL, `password` varchar(128) NOT NULL, `alias` varchar(128) NOT NULL, `email` varchar(128) NOT NULL, `birthdate` date NULL DEFAULT NULL, `role` enum('admin','user') NOT NULL DEFAULT 'user', `group_id` int(10) NOT NULL, `side` enum('kafhe','achikhoria','libre') NULL DEFAULT NULL, `status` tinyint(1) NOT NULL DEFAULT '1', `rank` smallint(5) NOT NULL DEFAULT '0', `ptos_tueste` smallint(5) NOT NULL DEFAULT '0', `ptos_retueste` smallint(5) NOT NULL DEFAULT '0', `ptos_relanzamiento` smallint(5) NOT NULL DEFAULT '0', `ptos_talentos` smallint(5) NOT NULL DEFAULT '0', `tostolares` smallint(5) NOT NULL DEFAULT '0', `experience` int(10) NOT NULL DEFAULT '0', `sugarcubes` smallint(5) NOT NULL DEFAULT '0', `dominio_tueste` smallint(5) NOT NULL DEFAULT '0', `dominio_habilidades` smallint(5) NOT NULL DEFAULT '0', `dominio_bandos` smallint(5) NOT NULL DEFAULT '0', `times` smallint(5) NOT NULL DEFAULT '0', `calls` smallint(5) NOT NULL DEFAULT '0', `last_regen_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP, `last_notification_read` timestamp NULL, PRIMARY KEY (`id`), FOREIGN KEY (group_id) REFERENCES group (id) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ; .
+2013/08/31 10:42:41 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'group_id' in 'where clause'. The SQL statement executed was: SELECT * FROM `ranking` `t` WHERE group_id=:grupo ORDER BY rank DESC.
+2013/08/31 10:42:41 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'group_id' in 'where clause'. The SQL statement executed was: SELECT * FROM `ranking` `t` WHERE group_id=:grupo ORDER BY rank DESC' in D:\Webs\kafhe_3.0\trunk\framework\db\CDbCommand.php:541
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\framework\db\CDbCommand.php(395): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 D:\Webs\kafhe_3.0\trunk\framework\db\ar\CActiveRecord.php(1297): CDbCommand->queryAll()
+#2 D:\Webs\kafhe_3.0\trunk\framework\db\ar\CActiveRecord.php(1416): CActiveRecord->query(Object(CDbCriteria), true)
+#3 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(183): CActiveRecord->findAll(Array)
+#4 [internal function]: CronCommand->actionGenerateRanking()
+#5 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#6 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#7 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#8 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#9 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#10 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#11 {main}
+---
+2013/08/31 10:46:30 [error] [php] in_array() expects parameter 2 to be array, null given (D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php:226)
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs()
+#1 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CronCommand->run()
+#2 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run()
+#3 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#4 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CConsoleApplication->run()
+#5 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once()
+
+2013/08/31 10:47:23 [error] [exception.CException] exception 'CException' with message 'Property "User.date" is not defined.' in D:\Webs\kafhe_3.0\trunk\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\framework\db\ar\CActiveRecord.php(143): CComponent->__get('date')
+#1 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(229): CActiveRecord->__get('date')
+#2 [internal function]: CronCommand->actionGenerateRanking()
+#3 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#4 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#5 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#6 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#7 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#8 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#9 {main}
+---
+2013/08/31 10:49:29 [error] [exception.CException] exception 'CException' with message 'Property "User.date" is not defined.' in D:\Webs\kafhe_3.0\trunk\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\framework\db\ar\CActiveRecord.php(143): CComponent->__get('date')
+#1 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(229): CActiveRecord->__get('date')
+#2 [internal function]: CronCommand->actionGenerateRanking()
+#3 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#4 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#5 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#6 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#7 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#8 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#9 {main}
+---
+2013/08/31 10:51:38 [error] [exception.CException] exception 'CException' with message 'Property "User.date" is not defined.' in D:\Webs\kafhe_3.0\trunk\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\framework\db\ar\CActiveRecord.php(143): CComponent->__get('date')
+#1 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(230): CActiveRecord->__get('date')
+#2 [internal function]: CronCommand->actionGenerateRanking()
+#3 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#4 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#5 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#6 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#7 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#8 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#9 {main}
+---
+2013/08/31 10:54:45 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' 3, '2013-08-31')' at line 1. The SQL statement executed was: INSERT INTO ranking (user_id, rank, date) VALUES (, 3, '2013-08-31').
+2013/08/31 10:54:45 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' 3, '2013-08-31')' at line 1. The SQL statement executed was: INSERT INTO ranking (user_id, rank, date) VALUES (, 3, '2013-08-31')' in D:\Webs\kafhe_3.0\trunk\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(251): CDbCommand->execute()
+#1 [internal function]: CronCommand->actionGenerateRanking()
+#2 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#3 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#4 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#5 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#6 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#7 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#8 {main}
+---
+2013/08/31 11:01:51 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' 0, '2013-08-31')' at line 1. The SQL statement executed was: INSERT INTO ranking (user_id, group_id, rank, date) VALUES (7, 1, 2, '2013-08-31'),(2, 1, 1, '2013-08-31'),(1, , 0, '2013-08-31').
+2013/08/31 11:01:51 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' 0, '2013-08-31')' at line 1. The SQL statement executed was: INSERT INTO ranking (user_id, group_id, rank, date) VALUES (7, 1, 2, '2013-08-31'),(2, 1, 1, '2013-08-31'),(1, , 0, '2013-08-31')' in D:\Webs\kafhe_3.0\trunk\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(252): CDbCommand->execute()
+#1 [internal function]: CronCommand->actionGenerateRanking()
+#2 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#3 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#4 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#5 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#6 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#7 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#8 {main}
+---
+2013/08/31 11:07:58 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE group_id=1' at line 1. The SQL statement executed was: DELETE ranking WHERE group_id=1.
+2013/08/31 11:07:58 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE group_id=1' at line 1. The SQL statement executed was: DELETE ranking WHERE group_id=1' in D:\Webs\kafhe_3.0\trunk\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(252): CDbCommand->execute()
+#1 [internal function]: CronCommand->actionGenerateRanking()
+#2 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#3 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#4 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#5 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#6 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#7 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#8 {main}
+---
+2013/08/31 12:04:23 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1. The SQL statement executed was: INSERT INTO ranking (user_id, group_id, rank, date) VALUES .
+2013/08/31 12:04:23 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1. The SQL statement executed was: INSERT INTO ranking (user_id, group_id, rank, date) VALUES ' in D:\Webs\kafhe_3.0\trunk\framework\db\CDbCommand.php:357
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(264): CDbCommand->execute()
+#1 [internal function]: CronCommand->actionGenerateRanking()
+#2 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#3 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#4 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#5 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#6 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#7 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#8 {main}
+---
+2013/09/01 14:13:32 [error] [exception.CException] exception 'CException' with message 'Property "CConsoleApplication.event" is not defined.' in D:\Webs\kafhe_3.0\trunk\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\Webs\kafhe_3.0\trunk\framework\base\CModule.php(105): CComponent->__get('event')
+#1 D:\Webs\kafhe_3.0\trunk\protected\commands\CronCommand.php(185): CModule->__get('event')
+#2 [internal function]: CronCommand->actionProcessCronPile()
+#3 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(CronCommand), Array)
+#4 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleCommandRunner.php(67): CConsoleCommand->run(Array)
+#5 D:\Webs\kafhe_3.0\trunk\framework\console\CConsoleApplication.php(91): CConsoleCommandRunner->run(Array)
+#6 D:\Webs\kafhe_3.0\trunk\framework\base\CApplication.php(169): CConsoleApplication->processRequest()
+#7 D:\Webs\kafhe_3.0\trunk\framework\yiic.php(33): CApplication->run()
+#8 D:\Webs\kafhe_3.0\trunk\protected\yiic.php(7): require_once('D:\Webs\kafhe_3...')
+#9 {main}
+---
