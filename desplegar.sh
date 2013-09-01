@@ -16,11 +16,14 @@ if [ -f "$1" ]
     
     tar -zcf backups/backup-${FECHA}.tar.gz kafhe/*
 
+    echo "Creando backup de base de datos..."
+    sh mysql_backup.sh
+
     echo "Borrando contenidos actuales..."
     rm -rf kafhe/*
 
     echo "Desplegando $1..."
-    unzip -o "$1" -d kafhe/
+    unzip -opp "$1" -d kafhe/
 
     echo "Modificando archivos de configuración..."
       #Gii
