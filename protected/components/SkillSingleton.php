@@ -17,6 +17,12 @@ class SkillSingleton extends CApplicationComponent
 	private $_privateMessage = ''; //Texto extra para el mensaje Flash
 	private $_error = '';
 
+    /** Ejecuta una habilidad.
+     * @param $skill Objeto Skill de la habilidad.
+     * @param $target Objeto User del objetivo seleccionado, o null si no se seleccionó ninguno
+     * @param $side Nombre del bando seleccionado, o null si no se seleccionó ninguno
+     * @return bool True si se ejecuta correctamente, false si hay fallos.
+     */
     public function executeSkill($skill, $target, $side)
     {
         $this->_error = '';
@@ -73,9 +79,9 @@ class SkillSingleton extends CApplicationComponent
 				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $finalTarget); break;
                 case Yii::app()->params->skillDesecar: $this->desecar($skill, $finalTarget); break;
 				case Yii::app()->params->skillDisimular: $this->disimular($skill, $finalTarget); break;
-				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
-				case Yii::app()->params->skillEscaquearse: $this->escaquearse($skill); break;
-				case Yii::app()->params->skillGungubicidio: $this->gungubicidio($skill); break;
+				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos(); break;
+				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
+				case Yii::app()->params->skillGungubicidio: $this->gungubicidio(); break;
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
 			}
 			
@@ -106,8 +112,8 @@ class SkillSingleton extends CApplicationComponent
 	
 	/************* SKILLS ************/
     /** Crea un modificador de "hidratado"
-     * @param $skill: Obj de la skill     
-     * @param $target: Obj del target
+     * @param $skill Obj de la skill
+     * @param $target Obj del target
      * @return bool
      */
     private function hidratar($skill, $target)
@@ -144,8 +150,8 @@ class SkillSingleton extends CApplicationComponent
 	}
 
     /** Crea un modificador de "desecado"
-     * @param $skill: Obj de la skill
-     * @param $target: Obj del target
+     * @param $skill Obj de la skill
+     * @param $target Obj del target
      * @return bool
      */
     private function desecar($skill, $target)
@@ -182,8 +188,8 @@ class SkillSingleton extends CApplicationComponent
     }
 
     /** Crea un modificador de "disimulando"
-     * @param $skill: Obj de la skill
-     * @param $target: Obj del target
+     * @param $skill Obj de la skill
+     * @param $target Obj del target
      * @return bool
      */
 	private function disimular($skill, $target)
@@ -210,9 +216,11 @@ class SkillSingleton extends CApplicationComponent
 
 		return true;
 	}
-	
-	//Caza gungubos y me pone como Cazador si estaba como Criador
-	private function cazarGungubos($skill)
+
+    /** Caza gungubos y me pone como Cazador si estaba como Criador
+     * @return bool
+     */
+	private function cazarGungubos()
 	{
 		$user = Yii::app()->currentUser->model;
 		$cantidad = 100;
@@ -238,8 +246,10 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 	
-	//Relanza el evento
-	public function escaquearse($skill)
+    /** Relanza el evento
+     * @return bool
+     */
+	public function escaquearse()
 	{
 		//Lanzo de nuevo el evento
 		$event = Yii::app()->event->model;
@@ -269,8 +279,10 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 	
-	// Mata 100 gungubos de un bando aleatorio
-	private function gungubicidio($skill) 
+    /** Mata 100 gungubos de un bando aleatorio
+     * @return bool
+     */
+	private function gungubicidio()
 	{
 		$cantidad = 100;
 		
@@ -295,6 +307,10 @@ class SkillSingleton extends CApplicationComponent
 	}
 
 
+    /** Crea un modificador de "trampa"
+     * @param $skill Obj de la skill
+     * @return bool
+     */
     private function trampa($skill)
     {
         //si ya tengo trampas puestas, lo que hago es sumar 1 a sus usos
@@ -324,34 +340,14 @@ class SkillSingleton extends CApplicationComponent
 	
 	
 	/************** FUNCIONES AUXILIARES *************/
-	public function paySkillCosts($skill, $executionResult) 
+    /** Pago el coste de ejecutar la habilidad
+     * @param $skill Obj de la skill
+     * @param $executionResult Texto con el resultado de la ejecución, si fue critic, normal...
+     */
+    private function paySkillCosts($skill, $executionResult)
 	{
 		$user = Yii::app()->currentUser->model;
 	    //No compruebo nada porque se ha comprobado ya antes de llegar a executeSkill
-
-	   /* //Compruebo si tengo tueste
-	    if ($skill->cost_tueste !== null  &&  $skill->cost_tueste > $user->ptos_tueste) {
-            $this->_error = 'No tienes suficiente Tueste.';
-            return false;
-	    }
-
-	    //Compruebo si tengo retueste
-        if ($skill->cost_retueste !== null  &&  $skill->cost_retueste > $user->ptos_retueste) {
-            $this->_error = 'No tienes suficiente Retueste.';
-            return false;
-        }
-
-	    //Compruebo si tengo tostólares
-        if ($skill->cost_tostolares !== null  &&  $skill->cost_tostolares > $user->tostolares) {
-            $this->_error = 'No tienes suficientes tostólares.';
-            return false;
-        }
-
-	    //Compruebo si tengo ptos relanzamiento
-        if ($skill->cost_relanzamiento !== null  &&  $skill->cost_relanzamiento > $user->ptos_relanzamiento) {
-            $this->_error = 'No tienes suficiente puntos de relanzamiento.';
-            return false;
-        }*/
 
         //Si ha sido crítico, cuesta menos
         $criticModificator = array('tueste'=>1, 'retueste'=>1, 'tostolares'=>1, 'relanzamiento'=>1);
@@ -382,21 +378,29 @@ class SkillSingleton extends CApplicationComponent
 	    return true;
 	}
 
-	public function criticValue($skill) {
+    /** Calcula el valor de crítico de la habilidad
+     * @param $skill Obj de la skill
+     * @return int Valor del crítico
+     */
+    private function criticValue($skill) {
 		$critic = $skill->critic;
 		return $critic;
 	}
-	
-	public function failValue($skill) {
+
+    /** Calcula el valor de pifia de la habilidad
+     * @param $skill Obj de la skill
+     * @return int Valor de la pifia
+     */
+	private function failValue($skill) {
 		$fail = $skill->fail;
 		return $fail;
 	}
 
-    /**
-     * @param $skill: objeto de la skill ejecutada     
-     * @param $target: objeto del objetivo o NULL si no hay
-     * @param $side: texto del bando objetivo o NULL si no hay
-     * @return o el objeto objetivo o el texto del bando
+    /** Calcula el objetivo final de la habilidad
+     * @param $skill objeto de la skill ejecutada
+     * @param $target objeto del objetivo o NULL si no hay
+     * @param $side texto del bando objetivo o NULL si no hay
+     * @return object|text Objeto objetivo o el texto del bando
      */
     private function calculateFinalTarget($skill, $target, $side) {
 		if ($target===null && $side===null) {
@@ -414,7 +418,7 @@ class SkillSingleton extends CApplicationComponent
 	}
 
     /** Comprueba si el usuario activo tiene un modificador Trampa afectándole, y reduce el modificador en caso afirmativo
-     * @return bool: si está o no afectado por una trampa
+     * @return bool si está o no afectado por una trampa
      */
     private function caigoTrampa() {
 	    //Si existe el modificador "trampa" entre los que me afectan

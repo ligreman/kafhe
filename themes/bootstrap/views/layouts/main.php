@@ -78,5 +78,9 @@
 
 </div><!-- page -->
 
+<footer>
+    <p>Versión <?php echo Yii::app()->params->appVersion; ?></p>
+</footer>
+
 </body>
 </html>
