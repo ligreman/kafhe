@@ -321,7 +321,7 @@ article.notification .timestamp{
 #muro{
     background: #e0e0e0 url(../images/timeline.png) repeat-y center top;
     padding:1em 0 5em;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 #meals, #drinks{
@@ -1257,6 +1257,14 @@ h2.error404{
     margin: -.5em -2em 0;
     color: #ffffff;
     font-style: italic;
+}
+
+#newNotifications{
+    margin: 1em 0 -1em;
+}
+
+#newNotifications a.btn{
+    padding: .7em 4em !important;
 }
 
 .w0{width:0%;}

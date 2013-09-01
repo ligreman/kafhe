@@ -220,7 +220,7 @@ class SiteController extends Controller
 		//Si leo X notificaciones y hay < X, borro el botón de cargar más.
 	//}*/
 
-    public function actionLoad($date) {
+    public function actionLoad($date,$type) {
         $d = date_parse($date);
         if($d != false){
             $notifications = Notification::model()->findAll(array('condition'=>'timestamp < :d', 'params'=>array(':d' => $date), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
@@ -229,9 +229,19 @@ class SiteController extends Controller
                 $data['hay_mas'] = false;
             else
                 $data['hay_mas'] = true;
-
+            $data['type'] = $type;
             $data["notifications"] = $notifications;
             $this->renderPartial('more',$data);
+        }
+    }
+
+    public function actionAskForNew($date) {
+        $d = date_parse($date);
+        if($d != false){
+            $notifications = Notification::model()->count('timestamp > :d', array(':d' => $date));
+
+            $data["notifications"] = $notifications;
+            echo $notifications;
         }
     }
 
