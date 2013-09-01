@@ -268,6 +268,11 @@ class EventController extends Controller
                 if (!$user->save()) throw new CHttpException(400, 'Error al actualizar al usuario '.$id.' al cerrar el evento '.$event->id.'.');
             }
         }
+
+        //Creo una tarea Cron para regenerar el ranking
+        $cron = new Cronpile;
+        $cron->operation = 'generateRanking';
+        $cron->save();
 		
 		//Creo la notificación		
 		$nota = new Notification;        

@@ -77,7 +77,7 @@
 
          echo "<br><br>";*/
 
-         $arr = Yii::app()->usertools->calculateProbabilities(Yii::app()->currentUser->groupId, true);
+         $arr = Yii::app()->usertools->calculateProbabilities(true);
         /*print_r($arr);*/
     ?>
 	
@@ -95,8 +95,8 @@
             var data = google.visualization.arrayToDataTable([
             ['Usuario', 'Probabilidad'],
             <?php
-                $aArr = Yii::app()->usertools->calculateProbabilities(Yii::app()->currentUser->groupId, true, 'achikhoria');
-                $kArr = Yii::app()->usertools->calculateProbabilities(Yii::app()->currentUser->groupId, true, 'kafhe');
+                $aArr = Yii::app()->usertools->calculateProbabilities(true, 'achikhoria');
+                $kArr = Yii::app()->usertools->calculateProbabilities(true, 'kafhe');
 
                 $totalGungubos = $battle->gungubos_achikhoria + $battle->gungubos_kafhe;
                 $pAchikhoria = round(($battle->gungubos_kafhe / $totalGungubos), 3);

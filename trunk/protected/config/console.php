@@ -21,8 +21,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=kafhe_refactor',
 			'emulatePrepare' => true,
-			'username' => 'kafhe',
-			'password' => '',
+			'username' => 'kafhe',//#mysqlUsername
+			'password' => '',//#mysqlPassword
 			'charset' => 'utf8',
 		),
 		
@@ -41,16 +41,20 @@ return array(
 		//'SkillValidator'=>array('class'=>'SkillValidator'),
 		
 		//Singletons
-		//'event'=>array('class'=>'EventSingleton'),
+		'event'=>array('class'=>'EventSingleton'),
 		'usertools'=>array('class'=>'UserToolsSingleton'),
 		'modifier'=>array('class'=>'ModifierSingleton'),
 		'gungubos'=>array('class'=>'GungubosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),		
 		'config'=>array('class'=>'ConfigurationSingleton'),
+        //'skill'=>array('class'=>'SkillSingleton'),
+        //'mail'=>array('class'=>'MailSingleton'),
 	),
 	
 	'params'=>array(
-        'adminEmail'=>'omelettus@gmail.com',		
+        'adminEmail'=>'omelettus@gmail.com',//#mailEmail
+        'mailServerUsername'=>'',//#mailUsername
+        'mailServerPassword'=>'',//#mailPassword
 		
 		//Estados de Usuario
 		'statusCriador'=>0,

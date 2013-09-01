@@ -28,7 +28,8 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		
+
+        //#iniGii
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'kafhe',
@@ -36,6 +37,7 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 			'generatorPaths' => array('bootstrap.gii'),
 		),
+		//#finGii
 		
 		//Rights
 		'rights'=>array( 
@@ -107,8 +109,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=kafhe_refactor',
 			'emulatePrepare' => true,
-			'username' => 'kafhe',
-			'password' => '',
+			'username' => 'kafhe',//#mysqlUsername
+			'password' => '',//#mysqlPassword
 			'charset' => 'utf8',
 		),
 		
@@ -153,7 +155,7 @@ return array(
 					'levels'=>'info',
 				),
 				// uncomment the following to show log messages on web pages
-				
+				//#iniLog
 				array(
 					'class'=>'CWebLogRoute',
 					'levels' =>'error, warning, profile, info' //trace
@@ -165,6 +167,7 @@ return array(
 		          'levels'=>'error, warning, profile, info, trace', //trace
 		          'allowedIPs'=>array('127.0.0.1','::1','192.168.1.54','192\.168\.1[0-5]\.[0-9]{3}'),
 		        ),
+		        //#finLog
 				
 			),
 		),
@@ -172,10 +175,13 @@ return array(
     
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName'] ó Yii::app()->params->paramName
-	'params'=>array(		
-		'adminEmail'=>'omelettus@gmail.com',
-		'mailServerUsername'=>'omelettus@gmail.com',
-		'mailServerPassword'=>'',
+	'params'=>array(
+	    'appVersion'=>'b.1',
+
+	    //Servidor de correo
+		'adminEmail'=>'omelettus@gmail.com',//#mailEmail
+		'mailServerUsername'=>'',//#mailUsername
+		'mailServerPassword'=>'',//#mailPassword
 		
 		//Estados de Usuario
 		'statusCriador'=>0,

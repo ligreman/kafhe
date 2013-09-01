@@ -1,7 +1,6 @@
 <?php
 
-/**
- * Utilizado para la información del usuario actual
+/** Utilizado para la información del usuario actual
  */
 class UserSingleton extends CApplicationComponent
 {

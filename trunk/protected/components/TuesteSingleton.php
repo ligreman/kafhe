@@ -1,11 +1,14 @@
 <?php
 
-/**
- * TuesteSingleton para operaciones relacionadas con el tueste
+/** TuesteSingleton para operaciones relacionadas con el tueste
  */
 class TuesteSingleton extends CApplicationComponent
 {
-    // $checkTime si es true hace comprobación de la última vez que se regeneró tueste, si es false devuelve el tueste que se regenera por tick
+    /** Devuelve la cantidad de tueste que regenera un usuario en un tick
+     * @param $user Objeto del usuario al que regenerar tueste
+     * @param bool $checkTime si es true hace comprobación de la última vez que se regeneró tueste, si es false devuelve el tueste que se regenera por tick
+     * @return bool|int Cantidad de tueste regenerado o false si no se puede regenerar aún.
+     */
     public function getTuesteRegenerado($user, $checkTime=true)
     {
         if ($checkTime) {

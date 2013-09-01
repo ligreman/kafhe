@@ -34,33 +34,41 @@
 		$this->runMigrationTool();
 	}
 
-*/
+    --------------------------------------------------------------------------------------------------------------------------
 
-class CronCommand extends CConsoleCommand {
-    public $global_param = true;
+    $time = time();
+    echo date('d-m-Y H:m:s')."\n";
+    echo $time."\n";
+    echo date('d-m-Y H:m:s', $time)."\n";
+    echo print_r(getdate($time),true)."\n";
+    echo print_r(getdate(strtotime(date('d-m-Y H:i:s'))),true);
 
-    //Ejecuta esto si no se pasa ninguna acción
-    /*public function actionIndex ()
+    --------------------------------------------------------------------------------------------------------------------------
+
+    //Si al yiic cron no se le pasa ninguna acción ejecuta la Index
+    public function actionIndex ()
     {
         echo "Index";
         return 0;
     }
 
-    //Acción por defecto: index
+    //Ejemplo de acción
     public function actionParams ($param1, $param2='default', array $param3)
     {
         // here we are doing what we need to do
         echo "ok";
         return 0;
-    }*/
-
+    }
 
     //NOTA no necesitaré comprobar modificadores ya que lo compruebo en cada carga de página y al regenerar tueste en el Cron
+*/
 
+class CronCommand extends CConsoleCommand {
+    public $global_param = true;
 
-    /*
-    *	Regenera el tueste del usuario $userId (ID User). Si $userId es nulo regenera el tueste de todos los usuarios de grupos activos.
-    */
+    /** Regenera el tueste del usuario $userId (ID User).
+     * @param null $userId Usuario a regenerar tueste. Si $userId es nulo regenera el tueste de todos los usuarios de grupos activos.
+     */
     public function actionRegenerarTueste($userId=null)
     {
         echo "Compruebo caducidad de modificadores.\n";
@@ -110,18 +118,13 @@ class CronCommand extends CConsoleCommand {
                 echo "    Usuario ".$usuario->username." - Todavia no puede regenerar tueste.\n";
         }
 
-        /*$time = time();
-        echo date('d-m-Y H:m:s')."\n";
-        echo $time."\n";
-        echo date('d-m-Y H:m:s', $time)."\n";
-        echo print_r(getdate($time),true)."\n";
-        echo print_r(getdate(strtotime(date('d-m-Y H:i:s'))),true);*/
         return 0;
     }
 
-    /*
-    *	Cría gungubos cada hora para el bando
-    */
+
+    /** Cría gungubos cada hora para cada bando
+     * @param null $eventId Evento para el que criar gungubos. Si es null miro todos los eventos en estado iniciado (1).
+     */
     public function actionCriarGungubos($eventId=null)
     {
         echo "Compruebo caducidad de modificadores.\n";
@@ -172,65 +175,27 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }
 
+    /** Procesa la pila de tareas Cron
+     */
+    public function actionProcessCronPile() {
+        $pila = Cronpile::model()->findAll();
 
-    public function actionGenerateRanking() {
-        //Cojo los grupos
-        $groups = Group::model()->findAll();
+        echo "Hay ".count($pila)." tareas en la pila de Cron.\n";
 
-        foreach ($groups as $group) {
-            //Primero saco el ranking actual de ese grupo
-            $ranking = Ranking::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$group->id), 'order'=>'rank DESC'));
+        foreach($pila as $cronjob) {
+            echo "Procesando ".$cronjob->operation." [".$cronjob->params."].\n";
 
-            //Saco los usuarios del grupo ordenados por rango
-            $users = User::model()->findAll(array('order'=>'rank DESC'));
-
-            if ($ranking == null)
-                $ranking = array_slice($users, 0, 10); //Si no existía ranking cojo los 10 primeros usuarios y ese es el ranking
-            else {
-
-                foreach ($users as $user) {
-                    $newR = new Ranking;
-                    $newR->user->id = $user->id;
-                    $newR->rank = $user->rank;
-                    $newR->date = date('Y-m-d');
-
-                    //Miro cada posición del ranking a ver dónde encaja
-                    for ($i=0; $i<count($ranking); $i++) {
-                        if ($user->rank >= $ranking[$i]->rank) {
-                            //Coloco al usuario encima de esta posición del ranking
-                            $ranking = array_splice($ranking, $i, 0, $newR);
-
-                            break; //Termino de mirar posiciones del ranking para este usuario
-                        }
-                    }
-
-                    //Si llego aquí es que no se ha metido el usuario aún, por lo que le pongo el último
-                    array_push($ranking, $newR);
-                }
-
+            switch($cronjob->operation) {
+                case 'generateRanking':
+                        Yii::app()->event->generateRanking();
+                    break;
             }
 
-            //Por último, guardo el ranking de este grupo (los 10 primeros sólo)
-            $connection = Yii::app()->db;
-
-            $values = $ya_ha_salido = array();
-            $cuenta = 0;
-            for ($i=0; $i<count($ranking); $i++) {
-                if ($cuenta>=10) break; //Paro si no hay más
-
-                if (in_array($ranking[$i]->id.'#'.$ranking[$i]->rank, $ya_han_salido)) continue;
-                else $ya_ha_salido[] = $ranking[$i]->id.'#'.$ranking[$i]->rank; //Evito repetidos
-
-                $values[] = "(".$ranking[$i]->id.", ".$ranking[$i]->rank.", '".$ranking[$i]->date."')";
-
-                $cuenta++;
-            }
-
-            $sql="INSERT INTO ranking (user_id, rank, date) VALUES ".implode(',',$values);
-            $command=$connection->createCommand($sql);
-            $command->execute();
+            echo "Elimino la tarea ".$cronjob->operation." [".$cronjob->params."] de la pila.\n";
+            $cronjob->delete();
         }
 
         return 0;
     }
+
 }

@@ -1,7 +1,6 @@
 <?php
 
-/**
- * ConfigurationSingleton para la configuración de Kafhe
+/** ConfigurationSingleton para la configuración de Kafhe
  */
 class ConfigurationSingleton extends CApplicationComponent
 {
@@ -23,7 +22,11 @@ class ConfigurationSingleton extends CApplicationComponent
         return $this->_model;
     }
 
-	public function getParam($param)
+    /** Obtiene un parámetro de configuración almacenado en BBDD
+     * @param $param parámetro a obtener
+     * @return El valor del parámetro o false
+     */
+    public function getParam($param)
     {
 		foreach ($this->model as $conf) {
 			if ($conf->param == $param)
