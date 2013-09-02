@@ -222,7 +222,7 @@ class SkillSingleton extends CApplicationComponent
      */
 	private function cazarGungubos()
 	{
-		$user = Yii::app()->currentUser->model;
+		$user = Yii::app()->currentUser->model; //cojo el usuario actual
 		$cantidad = 100;
 	
 		//Cambio al usuario a Cazador si era criador
@@ -232,8 +232,8 @@ class SkillSingleton extends CApplicationComponent
 			if (!$user->save())
 				throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador.');
 		}
-			
-		$event = Yii::app()->event->model;
+
+		$event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
 		if($user->side == 'kafhe') {
 			$event->gungubos_kafhe += $cantidad;
 		} elseif ($user->side == 'achikhoria') {
