@@ -1,4 +1,5 @@
 <div id="menuContent">
+    <?php if(!empty($ranking)): ?>
     <div id="rankRanking">
         <h1 class="battle">Los mejores de todos los tiempos</h1>
         <ol>
@@ -11,6 +12,7 @@
             ?>
         </ol>
     </div>
+    <?php endif;?>
     <div id="battleResults">
 		<h1 class="battle">Histórico de batallas</h1>
 
