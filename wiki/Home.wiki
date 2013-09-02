@@ -7,9 +7,10 @@
 
   * [Entorno_de_Desarrollo]: explica cómo montar el entorno de desarrollo.
   * [Habilidades_definir_objetivos]: explica cómo funciona el sistema de objetivos de habilidades.
-
+  * [Crear_una_habilidad]: explica los pasos a seguir para crear una nueva habilidad.
 	
 
 == Documentación ==
 
   * [Manual_de_Referencia_Yii]
+  * [Despliegue_en_producción]: manual de despliegue en producción
