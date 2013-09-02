@@ -1,0 +1,14 @@
+#summary Cómo crear una nueva habilidad.
+#labels Phase-Implementation
+
+= Crear una habilidad nueva =
+
+Los pasos a seguir para ello son:
+
+  # Definir la habilidad en BBDD: migrations/m130814_195451_habilidades.php
+
+
+== Definir la habilidad en el archivo de migraciones ==
+Al final del archivo hay una plantilla comentada. Copiarla y usarla para definir la nueva habilidad.
+
+La plantilla tiene valores por defecto (NULLs y demás). Si un campo no se necesita pues se deja el valor por defecto. Por ejemplo, si la habilidad no crea un modificador, el campo _modifier_keyword_ quedará vacío.
