@@ -78,7 +78,7 @@ return array(
         'modifierTrampa'=>'trampa',
 		
 		//Habilidades. Están aquí y en BBDD
-		'skillHidratar'=>'hidratar',
+		'skillHidratar'=>'hidratar', //Asocia el parámetro skillHidratar con el keyword de la habilidad
         'skillDesecar'=>'desecar',
         'skillDisimular'=>'disimular',
         'skillImpersonar'=>'impersonar',
