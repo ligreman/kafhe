@@ -6,9 +6,19 @@
 Los pasos a seguir para ello son:
 
   # Definir la habilidad en BBDD: migrations/m130814_195451_habilidades.php
+  # En conf/main.php y conf/console.php añadir al final una entrada de parámetro nuevo para la habilidad y modificador (si se requiere). Formato: skill+(nombre de habilidad) => keyword.
+  # Programar la habilidad en components/SkillSingleton.php
 
 
 == Definir la habilidad en el archivo de migraciones ==
 Al final del archivo hay una plantilla comentada. Copiarla y usarla para definir la nueva habilidad.
 
 La plantilla tiene valores por defecto (NULLs y demás). Si un campo no se necesita pues se deja el valor por defecto. Por ejemplo, si la habilidad no crea un modificador, el campo _modifier_keyword_ quedará vacío.
+
+
+== Programar la habilidad en components/SkillSingleton.php ==
+Al principio en la función _executeSkill_ hay que añadir al switch una llamada a la función que se ejecutará al lanzar la habilidad. El switch asocia el keyword de la habilidad a la función que lanzará.
+
+Dependiendo de la habilidad, se necesitarán unos parámetros de entrada u otros:
+  * $skill: es un objeto de tipo Skill con los datos de la habilidad ejecutada. Normalmente se requiere si la habilidad crea un modificador, para sacar los datos de duración y demás.
+  * $finalTarget: puede ser dos cosas. El objeto tipo User del jugador objetivo sobre el que se lanza la habilidad, o un texto con el nombre del bando si el objetivo es un bando (kafhe, achikhoria, libre). En caso de ser un User, si la habilidad requería usuario normalmente será un jugador diferente al que ejecuta la habilidad. Si no requería objetivo, en $finalTarget estará el objeto User del jugador que ejecuta la habilidad.
