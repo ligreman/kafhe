@@ -8,6 +8,7 @@ Los pasos a seguir para ello son:
   # Definir la habilidad en BBDD: migrations/m130814_195451_habilidades.php
   # En conf/main.php y conf/console.php añadir al final una entrada de parámetro nuevo para la habilidad y modificador (si se requiere). Formato: skill+(nombre de habilidad) => keyword.
   # Programar la habilidad en components/SkillSingleton.php
+  # Crear los iconos correspondientes para la habilidad y modificador.
 
 
 == Definir la habilidad en el archivo de migraciones ==
