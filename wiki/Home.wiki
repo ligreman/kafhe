@@ -13,4 +13,4 @@
 == Documentación ==
 
   * [Manual_de_Referencia_Yii]
-  * [Despliegue_en_producción]: manual de despliegue en producción
+  * [Despliegue_en_produccion]: manual de despliegue en producción
