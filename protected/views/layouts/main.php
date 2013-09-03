@@ -49,8 +49,11 @@
                             <li>
                             <?php
                                 $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
-                                echo CHtml::link($img,array('/'),array('title' => 'Enséñame las notificaciones, Oh! Gran Omelettus!','id' => 'notificationsMainLink'));
+                                echo CHtml::link($img,array('/'),array('id' => 'notificationsMainLink'));
                             ?>
+                                <span id="numberUnreadNotifications" class="<?php echo Yii::app()->currentUser->side;?>"></span>
+                                <ul id="unreadSelfNotificationsList">
+                                </ul>
                             </li>
                             <li>
                             <?php
@@ -60,7 +63,7 @@
                                     $img = CHtml::image(Yii::app()->request->baseUrl.'/images/hideUserBlock.png','No quiero ver el panel de usuario');
                                 }
 
-                                echo CHtml::link($img,array('/'), array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
+                                echo CHtml::link($img,Yii::app()->request->baseUrl, array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
                             ?>
                             </li>
                         <?php endif; ?>
@@ -121,7 +124,7 @@
             $this->widget('zii.widgets.CMenu',array(
                 'items'=>array(
                     //Menú principal
-                    array('label'=>'Notificaciones', 'url'=>array('/'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='site'?true:false),
+                    array('label'=>'Notificaciones', 'url'=>Yii::app()->request->baseUrl, 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='site'?true:false),
                     array('label'=>'Alistamiento', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusBatalla)), 'active'=>$this->id=='enrollment'?true:false),
                     array('label'=>'Batalla', 'url'=>array('/event'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->status!=Yii::app()->params->statusCerrado), 'active'=>($this->id=='event' && $this->action->id=='index')?true:false),
                     array('label'=>'Histórico de batallas', 'url'=>array('/history'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='history'?true:false),

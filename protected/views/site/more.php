@@ -17,7 +17,9 @@ if($notifications != null):
                 echo 'first';
                 $last_type = $notification->type;
             }
-            ?>">
+        ?>" target-rel="<?php if($notification->recipient_original == Yii::app()->user->id || $notification->recipient_final == Yii::app()->user->id) echo "self";
+                else echo "other";?>" sender-rel="<?php if($notification->sender == Yii::app()->user->id ) echo "self";
+                else echo "other";?>">
             <?php //Calculo el nombre a mostrar
                 if($notification->type == OMELETTUS) $nombre = 'Omelettus';
                 elseif($notification->type == SYSTEM) $nombre = 'System';
