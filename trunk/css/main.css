@@ -45,6 +45,10 @@ table {
     border-spacing: 0;
 }
 
+a:focus{
+    color:inherit;
+}
+
 /*BASIC STYLE FONT*/
 
 * {font-family: 'Lato', sans-serif !important; color:#363636;}
@@ -406,7 +410,7 @@ label.title{
     padding: 1em 0;
 }
 
-.btn{
+.btn, .btn:focus{
     border-style: solid;
     border-radius: 3px;
     border-width: 3px 0 3px 0;
@@ -426,7 +430,7 @@ label.title{
 ;
 }
 
-.btnkafhe{
+.btnkafhe, .btnkafhe:focus{
     background-color: #f0cc33;
     border-color: transparent transparent #e2a30a;
     color:#363636;
@@ -438,7 +442,7 @@ label.title{
     color: #363636;
 }
 
-.btnachikhoria{
+.btnachikhoria, .btnachikhoria:focus{
     background-color: #673c7d;
     border-color: transparent transparent #2a0e3d;
     color:#e0e0e0;
@@ -450,7 +454,7 @@ label.title{
     color: #ffffff;
 }
 
-.btnlibre{
+.btnlibre, .btnlibre:focus{
     background-color: #8f6255;
     border-color: transparent transparent #50261c;
     color:#ffffff;
@@ -462,7 +466,7 @@ label.title{
     color: #ffffff;
 }
 
-.btncommon{
+.btncommon, .btncommon:focus{
     background-color: #00924a;
     border-color: transparent transparent #005415;
     color:#ffffff;
@@ -474,7 +478,7 @@ label.title{
     color: #ffffff;
 }
 
-#btnBattle a{
+#btnBattle a, #btnBattle a:focus{
     border-style: solid;
     border-radius: 3px;
     border-width: 3px 0 3px 0;
@@ -1011,6 +1015,102 @@ img.grayScale{
     overflow: visible;
 }
 
+.achikhoriapin:hover #battleStatus .w0 .achikhoriapin:hover .title, #battleStatus .w1 .kafhepin:hover .title, #battleStatus .w2 .kafhepin:hover .title{
+    left:-0.4em;
+}
+
+#battleStatus .w0 .title .flecha-down, #battleStatus .w1 .title .flecha-down, #battleStatus .w2 .title .flecha-down{
+    left:2px
+}
+
+#battleStatus .w3 .kafhepin:hover .title{
+    left:-1.3em;
+}
+
+#battleStatus .w3 .title .flecha-down{
+    left:12px
+}
+
+#battleStatus .w4 .kafhepin:hover .title{
+    left:-2.2em;
+}
+
+#battleStatus .w4 .title .flecha-down{
+    left:22px
+}
+
+#battleStatus .w5 .kafhepin:hover .title{
+    left:-3.1em;
+}
+
+#battleStatus .w5 .title .flecha-down{
+    left:32px
+}
+
+#battleStatus .w6 .kafhepin:hover .title{
+    left:-4em;
+}
+
+#battleStatus .w6 .title .flecha-down{
+    left:42px
+}
+
+#battleStatus .w7 .kafhepin:hover .title{
+    left:-4.9em;
+}
+
+#battleStatus .w7 .title .flecha-down{
+    left:52px
+}
+
+#battleStatus .w95 .kafhepin:hover .title{
+    left:-6.3em;
+}
+
+#battleStatus .w95 .title .flecha-down{
+    left:68px
+}
+
+#battleStatus .w96 .kafhepin:hover .title{
+    left:-7.1em;
+}
+
+#battleStatus .w96 .title .flecha-down{
+    left:77px
+}
+
+#battleStatus .w97 .kafhepin:hover .title{
+    left:-8em;
+}
+
+#battleStatus .w97 .title .flecha-down{
+    left:87px
+}
+
+#battleStatus .w98 .kafhepin:hover .title{
+    left:-8.9em;
+}
+
+#battleStatus .w98 .title .flecha-down{
+    left:97px
+}
+
+#battleStatus .w99 .kafhepin:hover .title{
+    left:-9.8em;
+}
+
+#battleStatus .w99 .title .flecha-down{
+    left:107px
+}
+
+#battleStatus .w100 .kafhepin:hover .title{
+    left:-10.6em;
+}
+
+#battleStatus .w100 .title .flecha-down{
+    left:113px
+}
+
 .score{
     font-weight: bold;
     display: inline-block;
@@ -1237,6 +1337,59 @@ p.bebida{
 #moreNotifications{
     clear:both;
     text-align: center;
+}
+
+#unreadSelfNotificationsList{
+    display:none;
+    position: absolute;
+    right: 8em;
+    width: 13em;
+    z-index: 101010101010;
+    background: #ffffff;
+    top: 4em;
+}
+
+#unreadSelfNotificationsList li{
+    margin: 0 0 1px 0;
+    display: inline-block;
+    padding: .5em 1em ;
+    border-bottom: 1px solid #ffffff;
+    color:#333333;
+    font-size: .8em;
+    line-height: 1.2em;
+}
+
+#unreadSelfNotificationsList.read li{
+    background-color: #e0e0e0;
+}
+
+#numberUnreadNotifications{
+    display:none;
+    position: absolute;
+    right: 17.5em;
+    top: 3.5em;
+    border-radius: 30px;
+    font-size: .8em;
+    font-weight: bold;
+    width: .7em;
+    height: .7em;
+    padding: .2em .4em 0.6em;
+    text-align: center;
+}
+
+#numberUnreadNotifications.kafhe{
+    background: #f0cc33;
+    color: #333333;
+}
+
+#numberUnreadNotifications.achikhoria{
+    background: #673c7d;
+    color: #ffffff;
+}
+
+#numberUnreadNotifications.libre{
+    background: #8f6255;
+    color: #ffffff;
 }
 
 h2.error404{

@@ -41,12 +41,14 @@ $aliases = Yii::app()->usertools->getAlias();
 				<p class="categoriaNotif"><span>Notificaciones sin leer</span></p>
 				
 				<?php foreach($nuevas as $notification):?>
-					<article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
+					<article data-rel="<?php echo $notification->timestamp; ?>" class="unread notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
 							echo 'first';
 							$last_type = $notification->type;
 						}
-						?>">
+						?>" target-rel="<?php if($notification->recipient_original == Yii::app()->user->id || $notification->recipient_final == Yii::app()->user->id) echo "self";
+                                                else echo "other";?>" sender-rel="<?php if($notification->sender == Yii::app()->user->id ) echo "self";
+                                                else echo "other";?>">
 						<?php //Calculo el nombre a mostrar 
 							if($notification->type == OMELETTUS) $nombre = 'Omelettus';
 							elseif($notification->type == SYSTEM) $nombre = 'System';
@@ -93,7 +95,9 @@ $aliases = Yii::app()->usertools->getAlias();
 							echo 'first';
 							$last_type = $notification->type;
 						}
-						?>">
+                    ?>" target-rel="<?php if($notification->recipient_original == Yii::app()->user->id || $notification->recipient_final == Yii::app()->user->id) echo "self";
+                    else echo "other";?>" sender-rel="<?php if($notification->sender == Yii::app()->user->id ) echo "self";
+                    else echo "other";?>">
 						<?php //Calculo el nombre a mostrar 
 							if($notification->type == OMELETTUS) $nombre = 'Omelettus';
 							elseif($notification->type == SYSTEM) $nombre = 'System';

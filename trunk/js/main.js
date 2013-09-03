@@ -7,6 +7,7 @@ $(document).ready(function() {
         resizeNavBar();
     });
     prepareOrder();
+    prepareUnreadNotifications();
     readOldNotifications();
     loadMoreNotifications();
     askForNews();
@@ -204,4 +205,30 @@ function askForNewNotifications(){
 
 function askForNews(){
     setTimeout(askForNewNotifications,20000);
+}
+
+function prepareUnreadNotifications(){
+    $("#notificationsMainLink").click(function(){
+        $visible = false;
+        if($("#unreadSelfNotificationsList").is(":visible")) $visible = true;
+
+        $("#unreadSelfNotificationsList").toggle();
+
+        if($visible){
+            $("#unreadSelfNotificationsList").addClass("read");
+            $("#numberUnreadNotifications").hide();
+        }
+
+        return false;
+    });
+
+    $("article.unread[target-rel=self]").not(".unread[sender-rel=self]").each(function(index){
+        $("#unreadSelfNotificationsList").append('<li><strong>'+$(this).children('h1').text()+'</strong>: '+$(this).children('.notification_message').text()+'</li>');
+    });
+
+    $num = $("article.unread[target-rel=self]").not(".unread[sender-rel=self]").size();
+    if($num > 0){
+        $("#numberUnreadNotifications").text($num);
+        $("#numberUnreadNotifications").show();
+    }
 }
