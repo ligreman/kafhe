@@ -99,7 +99,8 @@
                 $kArr = Yii::app()->usertools->calculateProbabilities(true, 'kafhe');
 
                 $totalGungubos = $battle->gungubos_achikhoria + $battle->gungubos_kafhe;
-                $pAchikhoria = round(($battle->gungubos_kafhe / $totalGungubos), 3);
+                if($totalGungubos > 0) $pAchikhoria = round(($battle->gungubos_kafhe / $totalGungubos), 3);
+                else $pAchikhoria = 0.5;
                 $pKafhe = 1 - $pAchikhoria;
                 foreach ($users as $user) {
                     if(isset($arr[$user->id])){
