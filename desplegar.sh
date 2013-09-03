@@ -40,6 +40,7 @@ if [ -f "$1" ]
         sed -i 's/\/\/#finLog/\/\/#finLog*\//g' kafhe/protected/config/*.php
 
       #Email
+        sed -i 's/true,\/\/#testMode/false,\/\/#testMode/g' kafhe/protected/config/*.php
         sed -i 's/@gmail.com/@kafhe.chequerestaurante.com/g' kafhe/protected/config/*.php
         #sed -i "s/'',\/\/#mysqlUsername/'kafhe',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
         #sed -i "s/'',\/\/#mysqlPassword/'F1tsjA5V',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
