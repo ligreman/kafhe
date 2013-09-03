@@ -318,7 +318,7 @@ class m130814_195553_dummy_data extends CDbMigration
         ));
 		
 		
-		$this->insert('ranking', array(
+		/*$this->insert('ranking', array(
             'user_id'=>5,
             'rank'=>7,            
             'date' => '2013-05-09'
@@ -367,7 +367,7 @@ class m130814_195553_dummy_data extends CDbMigration
             'user_id'=>2,
             'rank'=>2,            
             'date' => '2013-05-18'
-        ));
+        ));*/
 
     }
 
