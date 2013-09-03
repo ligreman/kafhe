@@ -124,7 +124,7 @@
             $this->widget('zii.widgets.CMenu',array(
                 'items'=>array(
                     //Menú principal
-                    array('label'=>'Notificaciones', 'url'=>Yii::app()->request->baseUrl, 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='site'?true:false),
+                    array('label'=>'Notificaciones', 'url'=>Yii::app()->homeUrl, 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='site'?true:false),
                     array('label'=>'Alistamiento', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusBatalla)), 'active'=>$this->id=='enrollment'?true:false),
                     array('label'=>'Batalla', 'url'=>array('/event'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->status!=Yii::app()->params->statusCerrado), 'active'=>($this->id=='event' && $this->action->id=='index')?true:false),
                     array('label'=>'Histórico de batallas', 'url'=>array('/history'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='history'?true:false),

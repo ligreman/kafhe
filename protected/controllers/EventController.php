@@ -272,7 +272,8 @@ class EventController extends Controller
         //Creo una tarea Cron para regenerar el ranking
         $cron = new Cronpile;
         $cron->operation = 'generateRanking';
-        $cron->save();
+        if (!$cron->save())
+            throw new CHttpException(400, 'Error al guardar en la pila de cron la generación del Ranking');
 		
 		//Creo la notificación		
 		$nota = new Notification;        
