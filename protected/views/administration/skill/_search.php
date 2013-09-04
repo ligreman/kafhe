@@ -27,6 +27,8 @@
 
 	<?php echo $form->textFieldRow($model,'fail',array('class'=>'span5')); ?>
 
+	<?php echo $form->textFieldRow($model,'extra_param',array('class'=>'span5','maxlength'=>50)); ?>
+
 	<?php echo $form->textFieldRow($model,'cost_tueste',array('class'=>'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'cost_retueste',array('class'=>'span5')); ?>

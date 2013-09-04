@@ -16,6 +16,7 @@
  * @property string $duration_type
  * @property integer $critic
  * @property integer $fail
+ * @property string $extra_param
  * @property integer $cost_tueste
  * @property integer $cost_retueste
  * @property integer $cost_relanzamiento
@@ -67,12 +68,12 @@ class Skill extends CActiveRecord
 			array('description, require_user_status', 'length', 'max'=>255),
 			array('category', 'length', 'max'=>13),
 			array('type', 'length', 'max'=>8),
-			array('keyword, modifier_keyword', 'length', 'max'=>50),
+			array('keyword, modifier_keyword, extra_param', 'length', 'max'=>50),
 			array('duration_type', 'length', 'max'=>6),
 			array('require_target_side, require_user_side', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description, category, type, keyword, modifier_keyword, modifier_hidden, duration, duration_type, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_status, require_event_status, require_talent_id', 'safe', 'on'=>'search'),
+			array('id, name, description, category, type, keyword, modifier_keyword, modifier_hidden, duration, duration_type, critic, fail, extra_param, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_status, require_event_status, require_talent_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -105,6 +106,7 @@ class Skill extends CActiveRecord
 			'duration_type' => 'Duration Type',
 			'critic' => 'Critic',
 			'fail' => 'Fail',
+			'extra_param' => 'Extra Param',
 			'cost_tueste' => 'Cost Tueste',
 			'cost_retueste' => 'Cost Retueste',
 			'cost_relanzamiento' => 'Cost Relanzamiento',
@@ -147,6 +149,7 @@ class Skill extends CActiveRecord
 		$criteria->compare('duration_type',$this->duration_type,true);
 		$criteria->compare('critic',$this->critic);
 		$criteria->compare('fail',$this->fail);
+		$criteria->compare('extra_param',$this->extra_param,true);
 		$criteria->compare('cost_tueste',$this->cost_tueste);
 		$criteria->compare('cost_retueste',$this->cost_retueste);
 		$criteria->compare('cost_relanzamiento',$this->cost_relanzamiento);

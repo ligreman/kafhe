@@ -21,6 +21,16 @@ class GungubosSingleton extends CApplicationComponent
 
 		//Cantidad base de gungubos criados		
 		$gungubos['kafhe'] = $gungubos['achikhoria'] = intval(Yii::app()->config->getParam('gungubosCriadosIntervalo'));
+
+		//Gungubos por criadores de cada bando. Cojo la skill cazar gungubos como referencia
+		$skill = Skill::model()->find(array('condition'=>'keyword=:key', 'params'=>array(':key'=>Yii::app()->params->skillCazarGungubos)));
+		$costeTueste = $skill->cost_tueste;
+		$gungubosSkill = intval($skill->extra_param);
+
+		$extraKafhe = round( ($event->stored_tueste_kafhe * $gungubosSkill) / $costeTueste, 0);
+        $extraAchikhoria = round( ($event->stored_tueste_achikhoria * $gungubosSkill) / $costeTueste, 0);
+        $gungubos['kafhe'] += $extraKafhe;
+        $gungubos['achikhoria'] += $extraAchikhoria;
 				
         //Aquí irán otros modificadores, etc...
 		
