@@ -1528,3 +1528,8 @@ h2.error404{
 .w98{width:98%;}
 .w99{width:99%;}
 .w100{width:100%;}
+
+.yiiLog {
+    position: relative;
+    z-index: 999999;
+}
