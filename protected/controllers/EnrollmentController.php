@@ -50,13 +50,13 @@ class EnrollmentController extends Controller
 	{
         $data = array();
 
-        //Primero comprobaré si ya he metido mi desayuno o no (si hay enrollment de mi usuario para este enveto)
+        //Primero comprobaré si ya he metido mi desayuno o no (si hay enrollment de mi usuario para este evento)
         $enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id=:event_id', 'params'=>array(':user_id'=>Yii::app()->currentUser->id, 'event_id'=>Yii::app()->event->id)));
 
-        if ($enroll===null) {
+        if ($enroll===null) { //Si no hay creo uno nuevo
             $enroll = new Enrollment;
             $data['already_enroll'] = false;
-            $model = new EnrollmentForm('create');
+            $model = new EnrollmentForm('create'); //Modelo de formulario en modo crear
         } else {
             $data['already_enroll'] = true;
             $model = new EnrollmentForm('update');
@@ -81,6 +81,7 @@ class EnrollmentController extends Controller
         //Si viene del formulario....
         if(isset($_POST['EnrollmentForm']))
         {
+
             if (isset($_POST['btn_submit'])) {
                 // collects user input data
                 $model->attributes=$_POST['EnrollmentForm'];
@@ -88,7 +89,6 @@ class EnrollmentController extends Controller
                 // validates user input and redirect to previous page if validated
                 if($model->validate())
                 {
-                    //$this->redirect(Yii::app()->user->returnUrl);
                     if (!$enroll->isNewRecord) {
                         //Actualizo (cojo el enroll de antes)
                         $enroll->meal_id = $model->meal_id;
@@ -126,6 +126,9 @@ class EnrollmentController extends Controller
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusAlistado)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
 					}
+
+                    //hago un redirect para actualizar el userPanel
+                    $this->redirect(array('/enrollment'));
                 }
             }
             else if (isset($_POST['btn_cancel'])) {                
@@ -146,12 +149,12 @@ class EnrollmentController extends Controller
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
 
 					}
+
+                    //hago un redirect para actualizar el userPanel
+                    $this->redirect(array('/enrollment'));
                 } else
                     throw new CHttpException(400,'Error al darse de baja: No se han encontrado tus datos de alistamiento.');
             }
-
-            //En cualquiera de ambos casos hago un redirect para actualizar el userPanel
-            $this->redirect(array('/enrollment'));
         }
         //Si el usuario simplemente accede a la página...
         else if (!$enroll->isNewRecord)
@@ -160,8 +163,6 @@ class EnrollmentController extends Controller
             $model->meal_id = $enroll->meal_id;
             $model->drink_id = $enroll->drink_id;
             $model->ito = $enroll->ito;
-        }else{
-            $model->addError('error','No has seleccionado comida y/o bebida o tu selección efectuada no es adecuada.');
         }
 
         $data['model'] = $model;
