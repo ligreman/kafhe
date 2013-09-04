@@ -49,6 +49,10 @@
 	<?php echo CHtml::encode($data->fail); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('extra_param')); ?>:</b>
+	<?php echo CHtml::encode($data->extra_param); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('cost_tueste')); ?>:</b>
 	<?php echo CHtml::encode($data->cost_tueste); ?>
 	<br />

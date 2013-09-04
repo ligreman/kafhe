@@ -62,6 +62,8 @@ CREATE TABLE IF NOT EXISTS `event` (
   `gungubos_kafhe` int(11) NULL DEFAULT '0',
   `gungubos_achikhoria` int(11) NULL DEFAULT '0',
   `last_gungubos_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `stored_tueste_kafhe` int(11) NULL DEFAULT '0',
+  `stored_tueste_achikhoria` int(11) NULL DEFAULT '0',
   `type` enum('desayuno') NOT NULL DEFAULT 'desayuno',
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
@@ -161,6 +163,7 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `duration_type` enum('horas','evento','usos') NULL DEFAULT NULL,
   `critic` smallint(5) NOT NULL DEFAULT '0',
   `fail` smallint(5) NOT NULL DEFAULT '0',
+  `extra_param` varchar(50) NULL DEFAULT NULL,
   `cost_tueste` smallint(5) NULL DEFAULT NULL,
   `cost_retueste` smallint(5) NULL DEFAULT NULL,
   `cost_relanzamiento` smallint(5) NULL DEFAULT NULL,
@@ -211,7 +214,7 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxTuesteUsuario', '1000', 'Juego', 'Máximo puntos de tueste que puede tener un usuario.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxExperienciaUsuario', '10000', 'Juego', 'Máximo puntos de experiencia que un usuario puede tener.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('tiempoCriaGungubos', '3600', 'Juego', 'Intervalo de tiempo, en segundos, entre una cría de gungubos y la siguiente.');
-INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('gungubosCriadosIntervalo', '100', 'Juego', 'Cantidad de gungubos criados a la hora por un bando.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('gungubosCriadosIntervalo', '0', 'Juego', 'Cantidad de gungubos criados a la hora por un bando.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxNewNotificacionesMuro', '30', 'Visual', 'Cantidad máxima de notificaciones nuevas a mostrar en el muro (suele ser mayor que el límite de notificaciones normal).');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxNotificacionesMuro', '10', 'Visual', 'Cantidad máxima de notificaciones a mostrar en el muro.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('informacionCafeteria', 'El Espiral (987 213 178)', 'Información', 'Datos de la cafetería a la que se llama.');
