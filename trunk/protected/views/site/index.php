@@ -135,7 +135,9 @@ $aliases = Yii::app()->usertools->getAlias();
 				<?php 
 				endforeach;			
 			endif; //viejas
-			
+            if (count($viejas)>0):?>
+                <p class="categoriaNotif hidden"><span>Notificaciones leídas</span></p>
+            <?php endif;
 		endif;?>
 
     <?php if($hay_mas): ?>

@@ -107,8 +107,9 @@ class EnrollmentController extends Controller
     
                     //Yii::log(print_r($enroll, true), 'error', 'ENROLL');
 					//Le alisto
-                    if (!$enroll->save())
+                    if (!$enroll->save()){
                         throw new CHttpException(400, 'Error al guardar o actualizar el pedido.');
+                    }
 
                     $data['already_enroll'] = true;
                     //var_dump($enroll->errors);
@@ -159,6 +160,8 @@ class EnrollmentController extends Controller
             $model->meal_id = $enroll->meal_id;
             $model->drink_id = $enroll->drink_id;
             $model->ito = $enroll->ito;
+        }else{
+            $model->addError('error','No has seleccionado comida y/o bebida o tu selección efectuada no es adecuada.');
         }
 
         $data['model'] = $model;
