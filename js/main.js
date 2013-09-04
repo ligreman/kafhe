@@ -173,6 +173,8 @@ function loadMoreNotifications(){
                     $('#moreNotifications').addClass('categoriaNotif');
                     $('#moreNotifications').html('<span>No hay más notificaciones</span>');
                 }else{
+                    $(".categoriaNotif.hidden").addClass("visible");
+                    $(".categoriaNotif.hidden").removeClass("hidden");
                     $('#moreNotifications').detach();
                     $('#muro').html($('#muro').html()+data);
                     resizeNavBar();
@@ -185,22 +187,24 @@ function loadMoreNotifications(){
 function askForNewNotifications(){
     date = $('#muro article:first').attr('data-rel');
 
-    var base_url = $('#baseUrl').text();
-    $.ajax({
-        url:base_url+'/site/askForNew?date='+date,
-        datatype: 'json'
-    }).done(function(data){
-                if(data > 1){
-                    $('#newNotifications').detach();
-                    $('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data+' nuevas notificaciones.</a></p>');
-                    resizeNavBar();
-                }else if(data > 0){
-                    $('#newNotifications').detach();
-                    $('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data+' nueva notificación.</a></p>');
-                    resizeNavBar();
-                }
-        });
-    askForNews();
+    if(date != null){
+        var base_url = $('#baseUrl').text();
+        $.ajax({
+            url:base_url+'/site/askForNew?date='+date,
+            datatype: 'json'
+        }).done(function(data){
+                    if(data > 1){
+                        $('#newNotifications').detach();
+                        $('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data+' nuevas notificaciones.</a></p>');
+                        resizeNavBar();
+                    }else if(data > 0){
+                        $('#newNotifications').detach();
+                        $('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data+' nueva notificación.</a></p>');
+                        resizeNavBar();
+                    }
+            });
+        askForNews();
+    }
 }
 
 function askForNews(){
