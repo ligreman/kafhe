@@ -83,6 +83,7 @@ class SkillSingleton extends CApplicationComponent
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
 				case Yii::app()->params->skillGungubicidio: $this->gungubicidio(); break;
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
+                case Yii::app()->params->skillMatanzaGungubos: $this->matanzaGungubos($skill); break;
 			}
 			
 		}
@@ -245,6 +246,29 @@ class SkillSingleton extends CApplicationComponent
 		
 		return true;
 	}
+
+    /** Mata gungubos
+     * @return bool
+     */
+    private function matanzaGungubos()
+    {
+        $user = Yii::app()->currentUser->model; //cojo el usuario actual
+        $cantidad = 100;
+
+        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
+        if($user->side == 'kafhe') {
+            $event->gungubos_achikhoria -= $cantidad;
+            if($event->gungubos_achikhoria <0) $event->gungubos_achikhoria = 0;
+        } elseif ($user->side == 'achikhoria') {
+            $event->gungubos_kafhe -= $cantidad;
+            if($event->gungubos_kafhe <0) $event->gungubos_kafhe = 0;
+        }
+
+        if (!$event->save())
+            throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.').');
+
+        return true;
+    }
 	
     /** Relanza el evento
      * @return bool
