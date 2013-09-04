@@ -79,9 +79,9 @@ class SkillSingleton extends CApplicationComponent
 				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $finalTarget); break;
                 case Yii::app()->params->skillDesecar: $this->desecar($skill, $finalTarget); break;
 				case Yii::app()->params->skillDisimular: $this->disimular($skill, $finalTarget); break;
-				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos(); break;
+				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
-				case Yii::app()->params->skillGungubicidio: $this->gungubicidio(); break;
+				case Yii::app()->params->skillGungubicidio: $this->gungubicidio($skill); break;
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
                 case Yii::app()->params->skillMatarGungubos: $this->matarGungubos($skill); break;
 			}
@@ -221,10 +221,10 @@ class SkillSingleton extends CApplicationComponent
     /** Caza gungubos y me pone como Cazador si estaba como Criador
      * @return bool
      */
-	private function cazarGungubos()
+	private function cazarGungubos($skill)
 	{
 		$user = Yii::app()->currentUser->model; //cojo el usuario actual
-		$cantidad = 100;
+		$cantidad = intval($skill->extra_param);
 	
 		//Cambio al usuario a Cazador si era criador
 		if ($user->status == Yii::app()->params->statusCriador) {
@@ -247,13 +247,13 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 
-    /** Mata gungubos
+    /** Mata gungubos del bando oponente
      * @return bool
      */
-    private function matarGungubos()
+    private function matarGungubos($skill)
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
-        $cantidad = 100;
+        $cantidad = intval($skill->extra_param);
 
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
         if($user->side == 'kafhe') {
@@ -304,12 +304,12 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 	
-    /** Mata 100 gungubos de un bando aleatorio
+    /** Mata gungubos de un bando aleatorio
      * @return bool
      */
 	private function gungubicidio()
 	{
-		$cantidad = 100;
+        $cantidad = intval($skill->extra_param);
 		
 		//Elijo un bando aleatorio
 		$rand = mt_rand(0,1);

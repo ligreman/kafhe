@@ -195,7 +195,8 @@ class EventController extends Controller
 		$anterior_llamador = null;
 		$llamador_id = null;
 		foreach($usuarios as $usuario) {			
-			$usuario->ptos_relanzamiento = 0;			
+			$usuario->ptos_relanzamiento = 0;
+			$usuario->ptos_tueste = Yii::app()->config->getParam('maxTuesteUsuario'); //Tueste al máximo
 			
 			//Al llamador le pongo rango 1 y estado desertor, y side libre
 			if ($usuario->id == $event->caller_id) {
@@ -209,25 +210,24 @@ class EventController extends Controller
 				if (!$usuario->save())
 					throw new CHttpException(400, 'Error al actualizar al usuario '.$usuario->id.' llamador, al cerrar el evento '.$event->id.'.');
 			} elseif ($usuario->status==Yii::app()->params->statusAlistado) {
-				//A los alistados les pongo como cazadores
+				//A los alistados les pongo como criadores
 				$usuario->rank++;
 				$usuario->times++;
-				$usuario->status = Yii::app()->params->statusCazador;
+				$usuario->status = Yii::app()->params->statusCriador;
 				$new_usuarios[$usuario->id] = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusDesertor) {
 				//Si era "libre" pero no fue al desayuno
-				$usuario->rank++;				
-				$usuario->status = Yii::app()->params->statusCazador;
+				$usuario->status = Yii::app()->params->statusCriador;
 				$anterior_llamador = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusLibre) {
-				//Al anterior libre le pongo como cazador también
+				//Al anterior libre, que si fue al desayuno, le pongo como criadores también
 				$usuario->rank++;
 				$usuario->times++;
-				$usuario->status = Yii::app()->params->statusCazador;
+				$usuario->status = Yii::app()->params->statusCriador;
 				$anterior_llamador = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusCriador  ||  $usuario->status==Yii::app()->params->statusCazador) {
-				//Al resto sólo les pongo de cazadores
-				$usuario->status = Yii::app()->params->statusCazador;
+				//Al resto sólo les pongo de criadores
+				$usuario->status = Yii::app()->params->statusCriador;
                 $new_usuarios[$usuario->id] = $usuario;
 			}
 		}

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "event".
+ * This is the model class for table "Event".
  *
- * The followings are the available columns in table 'event':
+ * The followings are the available columns in table 'Event':
  * @property integer $id
  * @property integer $group_id
  * @property integer $caller_id
@@ -13,6 +13,8 @@
  * @property integer $gungubos_kafhe
  * @property integer $gungubos_achikhoria
  * @property string $last_gungubos_timestamp
+ * @property integer $stored_tueste_kafhe
+ * @property integer $stored_tueste_achikhoria
  * @property string $type
  * @property string $date
  */
@@ -33,7 +35,7 @@ class Event extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'event';
+		return 'Event';
 	}
 
 	/**
@@ -45,13 +47,13 @@ class Event extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('group_id, date', 'required'),
-			array('group_id, caller_id, relauncher_id, status, gungubos_kafhe, gungubos_achikhoria', 'numerical', 'integerOnly'=>true),
+			array('group_id, caller_id, relauncher_id, status, gungubos_kafhe, gungubos_achikhoria, stored_tueste_kafhe, stored_tueste_achikhoria', 'numerical', 'integerOnly'=>true),
 			array('caller_side', 'length', 'max'=>10),
 			array('type', 'length', 'max'=>8),
 			array('last_gungubos_timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, group_id, caller_id, caller_side, relauncher_id, status, gungubos_kafhe, gungubos_achikhoria, last_gungubos_timestamp, type, date', 'safe', 'on'=>'search'),
+			array('id, group_id, caller_id, caller_side, relauncher_id, status, gungubos_kafhe, gungubos_achikhoria, last_gungubos_timestamp, stored_tueste_kafhe, stored_tueste_achikhoria, type, date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,6 +83,8 @@ class Event extends CActiveRecord
 			'gungubos_kafhe' => 'Gungubos Kafhe',
 			'gungubos_achikhoria' => 'Gungubos Achikhoria',
 			'last_gungubos_timestamp' => 'Last Gungubos Timestamp',
+			'stored_tueste_kafhe' => 'Stored Tueste Kafhe',
+			'stored_tueste_achikhoria' => 'Stored Tueste Achikhoria',
 			'type' => 'Type',
 			'date' => 'Date',
 		);
@@ -106,6 +110,8 @@ class Event extends CActiveRecord
 		$criteria->compare('gungubos_kafhe',$this->gungubos_kafhe);
 		$criteria->compare('gungubos_achikhoria',$this->gungubos_achikhoria);
 		$criteria->compare('last_gungubos_timestamp',$this->last_gungubos_timestamp,true);
+		$criteria->compare('stored_tueste_kafhe',$this->stored_tueste_kafhe);
+		$criteria->compare('stored_tueste_achikhoria',$this->stored_tueste_achikhoria);
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('date',$this->date,true);
 

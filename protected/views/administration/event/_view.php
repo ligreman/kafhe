@@ -37,6 +37,14 @@
 	<?php echo CHtml::encode($data->last_gungubos_timestamp); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('stored_tueste_kafhe')); ?>:</b>
+	<?php echo CHtml::encode($data->stored_tueste_kafhe); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('stored_tueste_achikhoria')); ?>:</b>
+	<?php echo CHtml::encode($data->stored_tueste_achikhoria); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('type')); ?>:</b>
 	<?php echo CHtml::encode($data->type); ?>
 	<br />

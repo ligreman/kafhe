@@ -27,6 +27,8 @@ $this->menu=array(
 		'gungubos_kafhe',
 		'gungubos_achikhoria',
 		'last_gungubos_timestamp',
+		'stored_tueste_kafhe',
+		'stored_tueste_achikhoria',
 		'type',
 		'date',
 	),

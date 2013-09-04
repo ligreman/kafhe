@@ -80,6 +80,9 @@ class CronCommand extends CConsoleCommand {
             $grupos = Group::model()->findAll(array('condition'=>'active=1'));
 
             foreach($grupos as $grupo) {
+                //Evento del grupo en estado Iniciado
+                $event = Event::model()->find(array('condition'=>'group_id=:groupId AND type=:tipo AND status=:estado', 'params'=>array(':groupId'=>$grupo->id, ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+
                 echo "  Usuarios del grupo ".$grupo->name." (".$grupo->id.").\n";
                 $usuarios = User::model()->findAll(array('condition'=>'group_id=:groupId', 'params'=>array(':groupId'=>$grupo->id)));
 
@@ -87,16 +90,34 @@ class CronCommand extends CConsoleCommand {
                     $regenerado = Yii::app()->tueste->getTuesteRegenerado($usuario);
 
                     if ($regenerado !== false) {
-                        //Si ya estoy al máximo de tueste cambio mi estado a Criador, si soy Cazador
-                        if ($usuario->ptos_tueste>=Yii::app()->config->getParam('maxTuesteUsuario')  &&  $usuario->status==Yii::app()->params->statusCazador)
-                            $usuario->status = Yii::app()->params->statusCriador;
+                        $desbordeTueste = 0;
 
-                        $usuario->ptos_tueste = min( intval(Yii::app()->config->getParam('maxTuesteUsuario')), ($usuario->ptos_tueste+$regenerado) );
+                        //Si ya estoy al máximo de tueste cambio mi estado a Criador, si soy Cazador, y miro el desborde
+                        $usuario->ptos_tueste += $regenerado;
+                        if ($usuario->ptos_tueste > intval(Yii::app()->config->getParam('maxTuesteUsuario')) ) {
+                            $desbordeTueste = $usuario->ptos_tueste - intval(Yii::app()->config->getParam('maxTuesteUsuario'));
+                            $usuario->ptos_tueste = intval(Yii::app()->config->getParam('maxTuesteUsuario'));
+
+                            if ($usuario->status==Yii::app()->params->statusCazador)
+                                $usuario->status = Yii::app()->params->statusCriador;
+                        }
+
                         $usuario->last_regen_timestamp = date('Y-m-d H:i:s');
                         if (!$usuario->save())
                             echo "** ERROR al guardar el usuario (".$usuario->id.") regenerando su tueste.\n";
 
                         echo "    Usuario ".$usuario->username." - Tueste regenerado: " . $regenerado."\n";
+
+                        //Guardo el tueste desbordado si hay, en el evento si está en estado Iniciado
+                        if ($event!=null && $desbordeTueste>0) {
+                            if ($usuario->side == 'kafhe')
+                                $event->stored_tueste_kafhe += $desbordeTueste;
+                            elseif ($usuario->side == 'achikhoria')
+                                $event->stored_tueste_achikhoria += $desbordeTueste;
+
+                            if (!$event->save())
+                                echo "** ERROR al guardar el evento (".$event->id.") guardando el tueste desbordado.\n";
+                        }
                     } else
                         echo "    Usuario ".$usuario->username." - Todavia no puede regenerar tueste.\n";
                 }
@@ -140,6 +161,8 @@ class CronCommand extends CConsoleCommand {
                         //Guardo el evento
                         $event->gungubos_kafhe += $criados['kafhe'];
                         $event->gungubos_achikhoria += $criados['achikhoria'];
+                        $event->stored_tueste_kafhe = 0; //lo pongo a 0 porque se ha utilizado para generar gungubos
+                        $event->stored_tueste_achikhoria = 0;
                         $event->last_gungubos_timestamp = date('Y-m-d H:i:s');
 
                         if (!$event->save())

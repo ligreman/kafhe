@@ -30,6 +30,7 @@ $this->menu=array(
 		'duration_type',
 		'critic',
 		'fail',
+		'extra_param',
 		'cost_tueste',
 		'cost_retueste',
 		'cost_relanzamiento',

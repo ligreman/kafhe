@@ -23,6 +23,10 @@
 
 	<?php echo $form->textFieldRow($model,'last_gungubos_timestamp',array('class'=>'span5')); ?>
 
+	<?php echo $form->textFieldRow($model,'stored_tueste_kafhe',array('class'=>'span5')); ?>
+
+	<?php echo $form->textFieldRow($model,'stored_tueste_achikhoria',array('class'=>'span5')); ?>
+
 	<?php echo $form->textFieldRow($model,'type',array('class'=>'span5','maxlength'=>8)); ?>
 
 	<?php echo $form->textFieldRow($model,'date',array('class'=>'span5')); ?>

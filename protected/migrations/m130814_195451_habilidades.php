@@ -78,6 +78,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration_type'  =>  NULL,  // horas, evento, usos
             'critic'  =>  15,
             'fail'  =>  15,
+            'extra_param' => '100',
             'cost_tueste'  =>  100,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
@@ -108,6 +109,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration_type'  =>  NULL,  // horas, evento, usos
             'critic'  =>  15,
             'fail'  =>  15,
+            'extra_param' => '100',
             'cost_tueste'  =>  150,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
@@ -138,6 +140,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration_type'  =>  NULL,  // horas, evento, usos
             'critic'  =>  10,
             'fail'  =>  10,
+            'extra_param' => '100',
             'cost_tueste'  =>  100,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
@@ -268,6 +271,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
             'critic'  =>  ,                         // Int con el % crítico
             'fail'  =>  ,                           // Int con el % de pifia
+            'extra_param' => NULL,                  // String con parámetro extra que se necesite para algo. Por ejemplo, CazarGungubos, para la cantidad de gugubos a cazar.
             'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
