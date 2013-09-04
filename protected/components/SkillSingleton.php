@@ -83,7 +83,7 @@ class SkillSingleton extends CApplicationComponent
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
 				case Yii::app()->params->skillGungubicidio: $this->gungubicidio(); break;
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
-                case Yii::app()->params->skillMatanzaGungubos: $this->matanzaGungubos($skill); break;
+                case Yii::app()->params->skillMatarGungubos: $this->matarGungubos($skill); break;
 			}
 			
 		}
@@ -250,7 +250,7 @@ class SkillSingleton extends CApplicationComponent
     /** Mata gungubos
      * @return bool
      */
-    private function matanzaGungubos()
+    private function matarGungubos()
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
         $cantidad = 100;

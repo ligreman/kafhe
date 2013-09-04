@@ -214,7 +214,7 @@ return array(
 		'skillGungubicidio'=>'gungubicidio',
 		'skillVendetta'=>'vendetta',
 		'skillTrampa'=>'trampa',
-        'skillMatanzaGungubos'=>'matanzaGungubos',
+        'skillMatarGungubos'=>'matarGungubos',
 
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Renegados'),

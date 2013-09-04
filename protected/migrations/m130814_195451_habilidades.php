@@ -96,13 +96,13 @@ class m130814_195451_habilidades extends CDbMigration
             'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
 
-        //MATANZA DE GUNGUBOS
+        //MATAR GUNGUBOS
         $this->insert('skill', array(
-            'name'  =>  'Matanza de gungubos',
+            'name'  =>  'Matar gungubos',
             'description'  =>  'Matas 100 gungubos del bando contrario.',
             'category'  =>  'gungubos',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'mejora',         // ofensiva, mejora, utilidad
-            'keyword'  =>  'matanzaGungubos',
+            'keyword'  =>  'matarGungubos',
             'modifier_keyword'  =>  '',
             'duration'  =>  NULL,       // Int cantidad para la duración
             'duration_type'  =>  NULL,  // horas, evento, usos
