@@ -96,6 +96,36 @@ class m130814_195451_habilidades extends CDbMigration
             'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
 
+        //MATANZA DE GUNGUBOS
+        $this->insert('skill', array(
+            'name'  =>  'Matanza de gungubos',
+            'description'  =>  'Matas 100 gungubos del bando contrario.',
+            'category'  =>  'gungubos',     // gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'mejora',         // ofensiva, mejora, utilidad
+            'keyword'  =>  'matanzaGungubos',
+            'modifier_keyword'  =>  '',
+            'duration'  =>  NULL,       // Int cantidad para la duración
+            'duration_type'  =>  NULL,  // horas, evento, usos
+            'critic'  =>  15,
+            'fail'  =>  15,
+            'cost_tueste'  =>  150,
+            'cost_retueste'  =>  NULL,
+            'cost_relanzamiento'  =>  NULL,
+            'cost_tostolares'  =>  NULL,
+            'is_cooperative'  =>  0,         // 0,1
+            'cost_tueste_cooperate'  =>  NULL,
+            'cost_tostolares_cooperate'  =>  NULL,
+            'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,         // 0,1
+            'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
+            'require_caller'  =>  0,         // 0,1
+            'require_user_side'  =>  'kafhe,achikhoria',      // String valores (kafhe, achikhoria, libre) separados por comas
+            'require_user_min_rank'  =>  NULL,  // Int Rango mínimo para ejecutarla
+            'require_user_status'  =>  NULL,    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_event_status'  =>  '1',   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
+            'require_talent_id'  =>  NULL      // ID del talento requerido
+        ));
+
         //GUNGUBICIDIO
         $this->insert('skill', array(
             'name'  =>  'Gungubicidio',
