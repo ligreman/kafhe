@@ -500,6 +500,14 @@ label.title{
     text-align: center;
 }
 
+.hidden{
+    display:none;
+}
+
+.visible{
+    display:block;
+}
+
 .blockCentered{
     display: inline-block;
     width: 28em;
@@ -650,7 +658,7 @@ label.title{
     background: #363636;
     position: absolute;
     bottom: 0;
-    z-index: 9999;
+    z-index: 9900;
 }
 
 #xp{
@@ -943,7 +951,6 @@ img.grayScale{
 }
 
 #batteStatusKafhe{
-    box-shadow: 0 3px 2px rgba(0,0,0,.15);
     height: 100%;
     background: #f0cc33;
     float: left;
@@ -951,7 +958,6 @@ img.grayScale{
 }
 
 #batteStatusAchikhoria{
-    box-shadow: 0 3px 2px rgba(0,0,0,.15);
     height: 100%;
     float: left;
     width:16px;
@@ -1357,6 +1363,7 @@ p.bebida{
     color:#333333;
     font-size: .8em;
     line-height: 1.2em;
+    width: 100%;
 }
 
 #unreadSelfNotificationsList.read li{
