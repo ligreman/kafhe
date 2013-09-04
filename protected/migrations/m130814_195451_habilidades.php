@@ -31,7 +31,7 @@ class m130814_195451_habilidades extends CDbMigration
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  NULL,    // valores (kafhe, achikhoria, libre) separados por comas
             'require_user_min_rank'  =>  NULL,  // Rango mínimo para ejecutarla
-            'require_user_status'  =>  '1,2,3,4,5',  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_user_status'  =>  '1,2,4,5',  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL
         ));
@@ -91,7 +91,7 @@ class m130814_195451_habilidades extends CDbMigration
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  'kafhe,achikhoria',      // String valores (kafhe, achikhoria, libre) separados por comas
             'require_user_min_rank'  =>  NULL,  // Int Rango mínimo para ejecutarla
-            'require_user_status'  =>  NULL,    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_user_status'  =>  '0,1,2',    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  '1',   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
@@ -121,7 +121,7 @@ class m130814_195451_habilidades extends CDbMigration
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  'kafhe,achikhoria',      // String valores (kafhe, achikhoria, libre) separados por comas
             'require_user_min_rank'  =>  NULL,  // Int Rango mínimo para ejecutarla
-            'require_user_status'  =>  NULL,    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_user_status'  =>  '0,1,2',    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  '1',   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
@@ -242,7 +242,7 @@ class m130814_195451_habilidades extends CDbMigration
             'require_caller'  =>  0,         // 0,1
             'require_user_side'  =>  NULL,      // String valores (kafhe, achikhoria, libre) separados por comas
             'require_user_min_rank'  =>  3,  // Int Rango mínimo para ejecutarla
-            'require_user_status'  =>  '1,2,3',    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_user_status'  =>  '1,2',    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
