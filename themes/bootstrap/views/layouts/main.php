@@ -49,7 +49,12 @@
                     array('label'=>'Habilidades', 'url'=>array('/administration/skill'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/skill'?true:false),
                     array('label'=>'Modificadores', 'url'=>array('/administration/modifier'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/modifier'?true:false),
                 )),
-                array('label'=>'Configuración', 'url'=>array('/administration/configuration'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/configuration'?true:false),
+                array('label'=>'Servidor', 'url'=>'#', 'items'=>array(
+                    array('label'=>'SERVIDOR'),
+                    array('label'=>'Configuración', 'url'=>array('/administration/configuration'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/configuration'?true:false),
+                    array('label'=>'Pila cron', 'url'=>array('/administration/cronpile'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/cronpile'?true:false),
+                )),
+
             ),
         ),
         array(
