@@ -284,6 +284,7 @@ class SkillSingleton extends CApplicationComponent
 		$battleResult = Yii::app()->event->selectCaller();
 		$event->caller_id = $battleResult['userId'];
 		$event->caller_side = $battleResult['side'];
+		$event->relauncher_id = Yii::app()->currentUser->id;
 		
 		//Guardo el evento
 		if (!$event->save())
