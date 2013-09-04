@@ -59,7 +59,7 @@ class SiteController extends Controller
 			// page action renders "static" pages stored under 'protected/views/site/pages'
 			// They can be accessed via: index.php?r=site/page&view=FileName
 			'page'=>array(
-				'class'=>'CViewAction',
+				'class'=>'CViewAction'
 			),
 					        
 		);
@@ -202,23 +202,6 @@ class SiteController extends Controller
 		Yii::app()->end(); //Para terminar ya que no devuelvo ni view ni nada.
     }
 	
-	/*public function actionMoreNotifications($date)
-	{
-		$d = date_parse($date);
-        if($d != false){
-			//header("Content-type: application/json");
-			//echo CJSON::encode($resp);
-        }
-		Yii::app()->end(); //Para terminar ya que no devuelvo ni view ni nada.
-		
-		/*echo CHtml::ajaxbutton(
-			"Cargar más"
-            ,array('site/moreNotifications','date'=>'123')
-            ,array('success'=>new CJavaScriptExpression("function(){ alert('hola'); }"),'error'=>'alert("No se han podido cargar las notificaciones.")') //eso del js: ta deprecated
-        );*/
-		
-		//Si leo X notificaciones y hay < X, borro el botón de cargar más.
-	//}*/
 
     public function actionLoad($date,$type) {
         $d = date_parse($date);
@@ -245,25 +228,6 @@ class SiteController extends Controller
         }
     }
 
-
-	/*public function actionAlistamiento()
-	{
-		$data = array();
-		
-		//Recojo los meals y drinks para pasarselo
-		$data['meals'] = Meal::model()->findAll(array('order'=>'type, name'));
-		$data['drinks'] = Drink::model()->findAll(array('order'=>'type, name'));
-		//findAll(array('order'=>'somefield', 'condition'=>'otherfield=:x', 'params'=>array(':x'=>$x)));
-
-		$this->render('alistamiento', $data);*/
-
-		/*$model = new LoginForm;
-    $form = new CForm('application.views.site.loginForm', $model);
-    if($form->submitted('login') && $form->validate())
-        $this->redirect(array('site/index'));
-    else
-        $this->render('login', array('form'=>$form));*/
-	//}
 
 
     /******* Funciones auxiliares **********/
