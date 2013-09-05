@@ -1427,6 +1427,17 @@ h2.error404{
     padding: .7em 4em !important;
 }
 
+#main .page h1{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-left: .8em;
+}
+
+#main .page li{
+    list-style: disc;
+    margin: .5em 0 .5em 4em;
+}
+
 .w0{width:0%;}
 .w1{width:1%;}
 .w2{width:2%;}
