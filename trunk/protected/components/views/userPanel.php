@@ -100,7 +100,7 @@
                     <li><?php
                         $class = 'skillImage';
                         if($execCode != 1) $class .= " grayScale";
-                        $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('title' => $skill->description, 'class' => $class));
+                        $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('class' => $class));
                         echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.$skill->description));
                         ?>
                         <section class="skillDescription">

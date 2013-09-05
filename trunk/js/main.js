@@ -11,6 +11,7 @@ $(document).ready(function() {
     readOldNotifications();
     loadMoreNotifications();
     askForNews();
+    $('#LoginForm_username').focus();
 });
 
 function resizeNavBar(){
@@ -20,6 +21,7 @@ function resizeNavBar(){
         $('#content').height($('#main').innerHeight());
         $('#muro').height($('#main').innerHeight());
     }else{
+        $('#secondary_nav').height($('#content').children().innerHeight());
         $('#secondary_nav').height($('#content').children().innerHeight());
         $('#content').height($('#content').children().innerHeight());
     }
@@ -152,9 +154,12 @@ function readOldNotifications(){
         //var l = window.location;
         //var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
         var base_url = $('#baseUrl').text();
-        $.ajax({
-           url:base_url+'/site/read?date='+date
-        }).done(function(){ });
+
+        if(date != null){
+            $.ajax({
+               url:base_url+'/site/read?date='+date
+            }).done(function(){ });
+        }
     },5000);
 }
 
