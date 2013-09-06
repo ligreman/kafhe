@@ -1006,7 +1006,7 @@ img.grayScale{
     overflow: hidden;
 }
 
-.kafhepin:hover .title, .achikhoriapin:hover .title, .librepin:hover .title{
+.kafhepin:hover .title, .pin:hover .title, .librepin:hover .title{
     position: relative;
     top: -3.5em;
     left: -5.5em;
@@ -1021,7 +1021,7 @@ img.grayScale{
     overflow: visible;
 }
 
-.achikhoriapin:hover #battleStatus .w0 .achikhoriapin:hover .title, #battleStatus .w1 .kafhepin:hover .title, #battleStatus .w2 .kafhepin:hover .title{
+#battleStatus .w0 .pin:hover .title, #battleStatus .w1 .pin:hover .title, #battleStatus .w2 .pin:hover .title{
     left:-0.4em;
 }
 
@@ -1029,7 +1029,7 @@ img.grayScale{
     left:2px
 }
 
-#battleStatus .w3 .kafhepin:hover .title{
+#battleStatus .w3 .pin:hover .title{
     left:-1.3em;
 }
 
@@ -1037,7 +1037,7 @@ img.grayScale{
     left:12px
 }
 
-#battleStatus .w4 .kafhepin:hover .title{
+#battleStatus .w4 .pin:hover .title{
     left:-2.2em;
 }
 
@@ -1045,7 +1045,7 @@ img.grayScale{
     left:22px
 }
 
-#battleStatus .w5 .kafhepin:hover .title{
+#battleStatus .w5 .pin:hover .title{
     left:-3.1em;
 }
 
@@ -1053,7 +1053,7 @@ img.grayScale{
     left:32px
 }
 
-#battleStatus .w6 .kafhepin:hover .title{
+#battleStatus .w6 .pin:hover .title{
     left:-4em;
 }
 
@@ -1061,7 +1061,7 @@ img.grayScale{
     left:42px
 }
 
-#battleStatus .w7 .kafhepin:hover .title{
+#battleStatus .w7 .pin:hover .title{
     left:-4.9em;
 }
 
@@ -1069,7 +1069,7 @@ img.grayScale{
     left:52px
 }
 
-#battleStatus .w95 .kafhepin:hover .title{
+#battleStatus .w95 .pin:hover .title{
     left:-6.3em;
 }
 
@@ -1077,7 +1077,7 @@ img.grayScale{
     left:68px
 }
 
-#battleStatus .w96 .kafhepin:hover .title{
+#battleStatus .w96 .pin:hover .title{
     left:-7.1em;
 }
 
@@ -1085,7 +1085,7 @@ img.grayScale{
     left:77px
 }
 
-#battleStatus .w97 .kafhepin:hover .title{
+#battleStatus .w97 .pin:hover .title{
     left:-8em;
 }
 
@@ -1093,7 +1093,7 @@ img.grayScale{
     left:87px
 }
 
-#battleStatus .w98 .kafhepin:hover .title{
+#battleStatus .w98 .pin:hover .title{
     left:-8.9em;
 }
 
@@ -1101,7 +1101,7 @@ img.grayScale{
     left:97px
 }
 
-#battleStatus .w99 .kafhepin:hover .title{
+#battleStatus .w99 .pin:hover .title{
     left:-9.8em;
 }
 
@@ -1109,7 +1109,7 @@ img.grayScale{
     left:107px
 }
 
-#battleStatus .w100 .kafhepin:hover .title{
+#battleStatus .w100 .pin:hover .title{
     left:-10.6em;
 }
 

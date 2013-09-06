@@ -91,7 +91,7 @@
             </nav>
             <div id="battleStatus">
                     <span id="batteStatus<?php echo $side; ?>" class="w<?php echo $pkafhe;?>">
-                        <span class="<?php echo Yii::app()->currentUser->side;?>pin">
+                        <span class="<?php echo Yii::app()->currentUser->side;?>pin pin">
                                 <span class="title battleTitle"><?php
                                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/kafhe.png",'Kafhe',array('height' => 16, 'class' => 'scoreSide'));
                                     ?><span class="score"><?php
