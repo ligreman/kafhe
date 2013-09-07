@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `caller_side` enum('kafhe','achikhoria') NULL DEFAULT NULL,
   `relauncher_id` int(11) NULL DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
+  `gungubos_population` int(11) NULL DEFAULT '0',
   `gungubos_kafhe` int(11) NULL DEFAULT '0',
   `gungubos_achikhoria` int(11) NULL DEFAULT '0',
   `last_gungubos_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,

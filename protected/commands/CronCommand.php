@@ -157,13 +157,27 @@ class CronCommand extends CConsoleCommand {
             if ($events != null) {
                 foreach($events as $event) {
                     $criados = Yii::app()->gungubos->getGungubosCriados($event);
+
                     if ($criados !== false) {
+
+                        //Si se van a criar más de los que hay en la población se reparten en la proporcion correspondiente
+                        if($event->gungubos_population = 0){
+                            $criados['kafhe'] = 0;
+                            $criados['achikhoria'] = 0;
+                        }else if(($criados['kafhe']+$criados['achikhoria']) > $event->gungubos_population){
+                            $proporcionKafhe = $criados['kafhe']/($criados['kafhe']+$criados['achikhoria']);
+                            $criados['kafhe'] = $event->gungubos_population*$proporcionKafhe;
+                            $criados['achikhoria'] = $event->gungubos_population - $criados['kafhe'];
+
+                        }
+
                         //Guardo el evento
                         $event->gungubos_kafhe += $criados['kafhe'];
                         $event->gungubos_achikhoria += $criados['achikhoria'];
                         $event->stored_tueste_kafhe = 0; //lo pongo a 0 porque se ha utilizado para generar gungubos
                         $event->stored_tueste_achikhoria = 0;
                         $event->last_gungubos_timestamp = date('Y-m-d H:i:s');
+                        $event->gungubos_population -= $criados['kafhe']+$criados['achikhoria'];
 
                         if (!$event->save())
                             echo "** ERROR al guardar el evento (".$event->id.") criando gungubos.\n";

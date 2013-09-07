@@ -193,6 +193,7 @@ class m130814_195553_dummy_data extends CDbMigration
             'caller_id'=>7,
             'caller_side'=>'kafhe',
             'type'=>'desayuno',
+            'gungubos_population'=>5650,
             'gungubos_kafhe'=>150,
             'gungubos_achikhoria'=>200,
             'date'=>date('2013-05-20')
@@ -201,6 +202,7 @@ class m130814_195553_dummy_data extends CDbMigration
             'group_id'=>1,
             'status'=>1,
             'type'=>'desayuno',
+            'gungubos_population'=>6650,
             'gungubos_kafhe'=>150,
             'gungubos_achikhoria'=>200,
             'date'=>date('Y-m-d')
