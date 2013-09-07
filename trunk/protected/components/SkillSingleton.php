@@ -83,7 +83,8 @@ class SkillSingleton extends CApplicationComponent
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
 				case Yii::app()->params->skillGungubicidio: $this->gungubicidio($skill); break;
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
-                case Yii::app()->params->skillMatarGungubos: $this->matarGungubos($skill); break;
+                case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
+                case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
 			}
 			
 		}
@@ -224,7 +225,7 @@ class SkillSingleton extends CApplicationComponent
 	private function cazarGungubos($skill)
 	{
 		$user = Yii::app()->currentUser->model; //cojo el usuario actual
-		$cantidad = intval($skill->extra_param);
+		$cantidad = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
 	
 		//Cambio al usuario a Cazador si era criador
 		if ($user->status == Yii::app()->params->statusCriador) {
@@ -234,38 +235,78 @@ class SkillSingleton extends CApplicationComponent
 				throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador.');
 		}
 
-		$event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
+        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
+
+        //Si hay menos gungubos libres de los que iba a cazar, cazo los que quedan
+        if($cantidad > $event->gungubos_population) $cantidad = $event->gungubos_population;
+
 		if($user->side == 'kafhe') {
 			$event->gungubos_kafhe += $cantidad;
 		} elseif ($user->side == 'achikhoria') {
 			$event->gungubos_achikhoria += $cantidad;
 		}
+
+        //La población de gungubos merma en la cantidad de gungubos cazados
+        $event->gungubos_population -= $cantidad;
 		
 		if (!$event->save())
             throw new CHttpException(400, 'Error al sumar gungubos al bando '.$user->side.' del evento ('.$event->id.').');
-		
+
+        $this->_publicMessage = 'Ha logrado hacerse con '.$cantidad.' gungubos.';
+
 		return true;
 	}
 
-    /** Mata gungubos del bando oponente
+    /** Libera gungubos del bando oponente
      * @return bool
      */
-    private function matarGungubos($skill)
+    private function liberarGungubos($skill)
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
-        $cantidad = intval($skill->extra_param);
+        $cantidad = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
 
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
         if($user->side == 'kafhe') {
+            if($event->gungubos_achikhoria < $cantidad) $cantidad = $event->gungubos_achikhoria;
             $event->gungubos_achikhoria -= $cantidad;
-            if($event->gungubos_achikhoria <0) $event->gungubos_achikhoria = 0;
         } elseif ($user->side == 'achikhoria') {
+            if($event->gungubos_kafhe < $cantidad) $cantidad = $event->gungubos_kafhe;
             $event->gungubos_kafhe -= $cantidad;
-            if($event->gungubos_kafhe <0) $event->gungubos_kafhe = 0;
+        }
+
+        $event->gungubos_population += $cantidad;
+
+        if (!$event->save())
+            throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.').');
+
+        $this->_publicMessage = 'Ha logrado liberar a '.$cantidad.' gungubos.';
+
+        return true;
+    }
+
+    /** Le quita al bando oponente una cantidad de gungubos para darsela a tu bando
+     * @return bool
+     */
+    private function atraerGungubos($skill)
+    {
+        $user = Yii::app()->currentUser->model; //cojo el usuario actual
+        $cantidad = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+
+        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
+        if($user->side == 'kafhe') {
+            if($event->gungubos_achikhoria < $cantidad) $cantidad = $event->gungubos_achikhoria;
+            $event->gungubos_achikhoria -= $cantidad;
+            $event->gungubos_kafhe += $cantidad;
+        } elseif ($user->side == 'achikhoria') {
+            if($event->gungubos_kafhe < $cantidad) $cantidad = $event->gungubos_kafhe;
+            $event->gungubos_kafhe -= $cantidad;
+            $event->gungubos_achikhoria += $cantidad;
         }
 
         if (!$event->save())
             throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.').');
+
+        $this->_publicMessage = 'Ha logrado atraer a tu bando a '.$cantidad.' gungubos.';
 
         return true;
     }
@@ -420,6 +461,15 @@ class SkillSingleton extends CApplicationComponent
 		$fail = $skill->fail;
 		return $fail;
 	}
+
+    /** Devuelve un valor aleatorizado entre el valor indicado y un porcentaje del mismo indicado como parámetro
+     * @param $value Valor máximo del rango
+     * @param $range Porcentaje del valor máximo que se admite como valor mínimo del rango (0-1)
+     * @return int Valor aleatorizado
+     */
+    private function randomWithRangeProportion($value, $proportion) {
+        return mt_rand($proportion*$value, $value);
+    }
 
     /** Calcula el objetivo final de la habilidad
      * @param $skill objeto de la skill ejecutada
