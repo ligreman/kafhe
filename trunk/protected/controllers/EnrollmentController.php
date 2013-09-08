@@ -122,7 +122,7 @@ class EnrollmentController extends Controller
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusLibre)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario desertor ('.Yii::app()->currentUser->id.') a Libre.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Se ahora es un agente libre ';
+                        $message = ':'.Yii::app()->currentUser->side.': Ahora es un agente libre ';
 					} elseif (Yii::app()->currentUser->status!=Yii::app()->params->statusLibre  &&  Yii::app()->currentUser->status!=Yii::app()->params->statusAlistado) {
 
 						
@@ -160,7 +160,7 @@ class EnrollmentController extends Controller
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusDesertor)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Desertor.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Ha causado desertado';
+                        $message = ':'.Yii::app()->currentUser->side.': Ha desertado';
 					} else {
 
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
