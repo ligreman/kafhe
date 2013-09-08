@@ -113,19 +113,34 @@ class EnrollmentController extends Controller
 
                     $data['already_enroll'] = true;
                     //var_dump($enroll->errors);
-					
+
+                    $message = "";
+
 					//Si el estado del usuario cambia (no es una actualización del pedido) le pongo alistado
 					if (Yii::app()->currentUser->status==Yii::app()->params->statusDesertor) {
 
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusLibre)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario desertor ('.Yii::app()->currentUser->id.') a Libre.');
-							
+
+                        $message = ':'.Yii::app()->currentUser->side.': Se ahora es un agente libre ';
 					} elseif (Yii::app()->currentUser->status!=Yii::app()->params->statusLibre  &&  Yii::app()->currentUser->status!=Yii::app()->params->statusAlistado) {
 
 						
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusAlistado)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
+
+                        $message = ':'.Yii::app()->currentUser->side.': Se ha alistado en el bando de '.Yii::app()->currentUser->side;
 					}
+
+                    $nota = new Notification;
+                    $nota->recipient_original = Yii::app()->currentUser->id;;
+                    $nota->recipient_final = Yii::app()->currentUser->id;;
+                    $nota->message = $message; //Mensaje para el muro
+                    $nota->type = Yii::app()->currentUser->side;
+                    $nota->sender = Yii::app()->currentUser->id;
+
+                    if (!$nota->save())
+                        throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
 
                     //hago un redirect para actualizar el userPanel
                     $this->redirect(array('/enrollment'));
@@ -136,19 +151,33 @@ class EnrollmentController extends Controller
                 if (!$enroll->isNewRecord) {
                     $enroll->delete();
                     $data['already_enroll'] = false;
-					
+
+                    $message = "";
+
 					//Actualizao mi estado a Baja/Desertor
 					if (Yii::app()->currentUser->status==Yii::app()->params->statusLibre) {
 
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusDesertor)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Desertor.');
 
+                        $message = ':'.Yii::app()->currentUser->side.': Ha causado desertado';
 					} else {
 
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
 
+                        $message = ':'.Yii::app()->currentUser->side.': Ha causado baja del bando de '.Yii::app()->currentUser->side;
 					}
+
+                    $nota = new Notification;
+                    $nota->recipient_original = Yii::app()->currentUser->id;;
+                    $nota->recipient_final = Yii::app()->currentUser->id;;
+                    $nota->message = $message; //Mensaje para el muro
+                    $nota->type = Yii::app()->currentUser->side;
+                    $nota->sender = Yii::app()->currentUser->id;
+
+                    if (!$nota->save())
+                        throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
 
                     //hago un redirect para actualizar el userPanel
                     $this->redirect(array('/enrollment'));
