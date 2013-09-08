@@ -47,7 +47,12 @@
                             $duration = $modifier->duration;
                             $duration_type = $modifier->duration_type;
                         }
-                        echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => ucfirst($modifier->keyword).': '.$duration.' '.$duration_type));
+
+                        $title = ucfirst($modifier->keyword).': '.$duration.' '.$duration_type;
+
+                        if($modifier->value != null) $title .= ' ('.$modifier->value.')';
+
+                        echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => $title));
                     }
                 }
                 ?>

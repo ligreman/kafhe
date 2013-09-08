@@ -159,6 +159,37 @@ class m130814_195451_habilidades extends CDbMigration
             'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
 
+        //PROTEGER GUNGUBOS
+        $this->insert('skill', array(
+            'name'  =>  'Proteger gungubos',
+            'description'  =>  'Proteges entre 100 y 200 gungubos de tu bando.',
+            'category'  =>  'gungubos',     // gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'mejora',         // ofensiva, mejora, utilidad
+            'keyword'  =>  'protegerGungubos',
+            'modifier_keyword'  =>  'protegiendo',
+            'duration'  =>  1,       // Int cantidad para la duración
+            'duration_type'  =>  'evento',  // horas, evento, usos
+            'critic'  =>  15,
+            'fail'  =>  10,
+            'extra_param' => '200',
+            'cost_tueste'  =>  200,
+            'cost_retueste'  =>  NULL,
+            'cost_relanzamiento'  =>  NULL,
+            'cost_tostolares'  =>  NULL,
+            'is_cooperative'  =>  0,         // 0,1
+            'cost_tueste_cooperate'  =>  NULL,
+            'cost_tostolares_cooperate'  =>  NULL,
+            'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,         // 0,1
+            'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
+            'require_caller'  =>  0,         // 0,1
+            'require_user_side'  =>  'kafhe,achikhoria',      // String valores (kafhe, achikhoria, libre) separados por comas
+            'require_user_min_rank'  =>  NULL,  // Int Rango mínimo para ejecutarla
+            'require_user_status'  =>  '0,1,2',    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_event_status'  =>  '1',   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
+            'require_talent_id'  =>  NULL      // ID del talento requerido
+        ));
+
         //GUNGUBICIDIO
         $this->insert('skill', array(
             'name'  =>  'Gungubicidio',
