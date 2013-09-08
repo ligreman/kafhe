@@ -85,6 +85,7 @@ class SkillSingleton extends CApplicationComponent
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
                 case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
                 case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
+                case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill,$finalTarget); break;
 			}
 			
 		}
@@ -225,7 +226,7 @@ class SkillSingleton extends CApplicationComponent
 	private function cazarGungubos($skill)
 	{
 		$user = Yii::app()->currentUser->model; //cojo el usuario actual
-		$cantidad = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+		$amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
 	
 		//Cambio al usuario a Cazador si era criador
 		if ($user->status == Yii::app()->params->statusCriador) {
@@ -238,21 +239,21 @@ class SkillSingleton extends CApplicationComponent
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
 
         //Si hay menos gungubos libres de los que iba a cazar, cazo los que quedan
-        if($cantidad > $event->gungubos_population) $cantidad = $event->gungubos_population;
+        if($amount > $event->gungubos_population) $amount = $event->gungubos_population;
 
 		if($user->side == 'kafhe') {
-			$event->gungubos_kafhe += $cantidad;
+			$event->gungubos_kafhe += $amount;
 		} elseif ($user->side == 'achikhoria') {
-			$event->gungubos_achikhoria += $cantidad;
+			$event->gungubos_achikhoria += $amount;
 		}
 
         //La población de gungubos merma en la cantidad de gungubos cazados
-        $event->gungubos_population -= $cantidad;
+        $event->gungubos_population -= $amount;
 		
 		if (!$event->save())
             throw new CHttpException(400, 'Error al sumar gungubos al bando '.$user->side.' del evento ('.$event->id.').');
 
-        $this->_publicMessage = 'Ha logrado hacerse con '.$cantidad.' gungubos.';
+        $this->_publicMessage = 'Ha logrado hacerse con '.$amount.' gungubos.';
 
 		return true;
 	}
@@ -263,23 +264,54 @@ class SkillSingleton extends CApplicationComponent
     private function liberarGungubos($skill)
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
-        $cantidad = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+        $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+
+        $protected = false;
 
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
         if($user->side == 'kafhe') {
-            if($event->gungubos_achikhoria < $cantidad) $cantidad = $event->gungubos_achikhoria;
-            $event->gungubos_achikhoria -= $cantidad;
+            //No se pueden liberar más de los que existen
+            if($event->gungubos_achikhoria < $amount) $amount = $event->gungubos_achikhoria;
+
+            $targetSide = 'achikhoria';
+            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($targetSide));
+            if($modifier!=null){
+                $protected = true;
+                $finalAmount = $amount - $modifier->value;
+                if($finalAmount <0) $finalAmount = 0;
+                $modifier->value -= $amount-$finalAmount;
+                if($modifier->value <= 0) $modifier->delete();
+                else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.').');
+            }else $finalAmount = $amount;
+
+            $event->gungubos_achikhoria -= $finalAmount;
         } elseif ($user->side == 'achikhoria') {
-            if($event->gungubos_kafhe < $cantidad) $cantidad = $event->gungubos_kafhe;
-            $event->gungubos_kafhe -= $cantidad;
+            if($event->gungubos_kafhe < $amount) $amount = $event->gungubos_kafhe;
+
+            $targetSide = 'kafhe';
+            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($targetSide));
+            if($modifier!=null){
+                $protected = true;
+                $finalAmount = $amount - $modifier->value;
+                if($finalAmount <0) $finalAmount = 0;
+                $modifier->value -= $amount-$finalAmount;
+                if($modifier->value <= 0) $modifier->delete();
+                else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.').');
+            }else $finalAmount = $amount;
+
+            $event->gungubos_kafhe -= $finalAmount;
         }
 
-        $event->gungubos_population += $cantidad;
+        $event->gungubos_population += $finalAmount;
 
         if (!$event->save())
             throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.').');
 
-        $this->_publicMessage = 'Ha logrado liberar a '.$cantidad.' gungubos.';
+        if(!$protected) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos.';
+        if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido liberarlos.';
+        if($protected && $finalAmount > 0) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos rompiendo la protección.';
 
         return true;
     }
@@ -290,23 +322,88 @@ class SkillSingleton extends CApplicationComponent
     private function atraerGungubos($skill)
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
-        $cantidad = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+        $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+
+        $protected = false;
 
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
         if($user->side == 'kafhe') {
-            if($event->gungubos_achikhoria < $cantidad) $cantidad = $event->gungubos_achikhoria;
-            $event->gungubos_achikhoria -= $cantidad;
-            $event->gungubos_kafhe += $cantidad;
+            //No se pueden atraer más de los que existen
+            if($event->gungubos_achikhoria < $amount) $amount = $event->gungubos_achikhoria;
+
+            $targetSide = 'achikhoria';
+            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($targetSide));
+            if($modifier!=null){
+                $protected = true;
+                $finalAmount = $amount - $modifier->value;
+                if($finalAmount <0) $finalAmount = 0;
+                $modifier->value -= $amount-$finalAmount;
+                if($modifier->value <= 0) $modifier->delete();
+                else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.').');
+            }else $finalAmount = $amount;
+
+            $event->gungubos_achikhoria -= $finalAmount;
+            $event->gungubos_kafhe += $finalAmount;
         } elseif ($user->side == 'achikhoria') {
-            if($event->gungubos_kafhe < $cantidad) $cantidad = $event->gungubos_kafhe;
-            $event->gungubos_kafhe -= $cantidad;
-            $event->gungubos_achikhoria += $cantidad;
+
+            if($event->gungubos_kafhe < $amount) $amount = $event->gungubos_kafhe;
+
+            $targetSide = 'kafhe';
+            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($targetSide));
+            if($modifier!=null){
+                $protected = true;
+                $finalAmount = $amount - $modifier->value;
+                if($finalAmount <0) $finalAmount = 0;
+                $modifier->value -= $amount-$finalAmount;
+                if($modifier->value <= 0) $modifier->delete();
+                else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.').');
+            }else $finalAmount = $amount;
+
+            $event->gungubos_kafhe -= $finalAmount;
+            $event->gungubos_achikhoria += $finalAmount;
         }
 
         if (!$event->save())
             throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.').');
 
-        $this->_publicMessage = 'Ha logrado atraer a tu bando a '.$cantidad.' gungubos.';
+        if(!$protected) $this->_publicMessage = 'Ha logrado atraer a tu bando a '.$finalAmount.' gungubos.';
+        if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido atraerlos.';
+        if($protected && $finalAmount > 0) $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos rompiendo la protección.';
+
+        return true;
+    }
+
+    /** Protegere una cantidad de gungubos de ser liberados o robados
+     * @return bool
+     */
+    private function protegerGungubos($skill, $target)
+    {
+        //Si ya tengo proteger lo que haré será sumar al valor los gungubos nuevos que puedo proteger
+        $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->side, ':keyword'=>$skill->modifier_keyword)));
+
+        if ($modificador == null) {
+            $modificador = new Modifier;
+            $modificador->duration = $skill->duration;
+            $modificador->value = 0;
+        }
+
+        $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+
+        $modificador->value += $amount;
+        $modificador->event_id = Yii::app()->event->id;
+        $modificador->caster_id = Yii::app()->currentUser->id;
+        $modificador->target_final = $target->side;
+        $modificador->skill_id = $skill->id;
+        $modificador->keyword = $skill->modifier_keyword;
+        $modificador->duration_type = $skill->duration_type;
+        $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
+
+        if (!$modificador->save())
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
+
+        $this->_privateMessage = 'Has logrado proteger a '.$amount.' gungubos.';
 
         return true;
     }
@@ -350,7 +447,7 @@ class SkillSingleton extends CApplicationComponent
      */
 	private function gungubicidio()
 	{
-        $cantidad = intval($skill->extra_param);
+        $amount = intval($skill->extra_param);
 		
 		//Elijo un bando aleatorio
 		$rand = mt_rand(0,1);
@@ -361,9 +458,9 @@ class SkillSingleton extends CApplicationComponent
 		$event = Yii::app()->event->model;
 		
 		if ($bando == 'kafhe') {
-			$event->gungubos_kafhe = max(0, ($event->gungubos_kafhe-$cantidad)); //Evito que sea negativo el valor
+			$event->gungubos_kafhe = max(0, ($event->gungubos_kafhe-$amount)); //Evito que sea negativo el valor
 		} elseif ($bando == 'achikhoria') {
-			$event->gungubos_achikhoria = max(0, ($event->gungubos_achikhoria-$cantidad)); //Evito que sea negativo el valor
+			$event->gungubos_achikhoria = max(0, ($event->gungubos_achikhoria-$amount)); //Evito que sea negativo el valor
 		} 
 		
 		if(!$event->save())

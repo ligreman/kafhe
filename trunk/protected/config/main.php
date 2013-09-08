@@ -203,6 +203,7 @@ return array(
         'modifierImpersonando'=>'impersonando',
 		'modifierDesecado'=>'desecado',
         'modifierTrampa'=>'trampa',
+        'modifierProtegiendo'=>'protegiendo',
 		
 		//Habilidades. Están aquí y en BBDD
 		'skillHidratar'=>'hidratar',
@@ -216,6 +217,7 @@ return array(
 		'skillTrampa'=>'trampa',
         'skillLiberarGungubos'=>'liberarGungubos',
         'skillAtraerGungubos'=>'atraerGungubos',
+        'skillProtegerGungubos'=>'protegerGungubos',
 
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Renegados'),
