@@ -5,6 +5,7 @@
 class ModifierSingleton extends CApplicationComponent
 {
     private $_modifiers = null;
+    private $_sideModifiers = null;
 	
 	//Carga los modificadores en variable sólo una vez por carga de página
 	public function getModifiers() 
@@ -27,6 +28,31 @@ class ModifierSingleton extends CApplicationComponent
 		
 		return $this->_modifiers;
 	}
+
+    /**
+     * Carga los modificadores activos sobre el bando indicado
+     * @param $side Nombre del bando
+     * @return array|null Null si no encuentra nada o los parámetros son incorrectos y un array con los resultados si todo es correcto
+     */
+    public function getSideModifiers($side=null)
+    {
+        if($side==null) return null;
+
+        if (!$this->_sideModifiers) {
+            if (!isset(Yii::app()->currentUser->id))
+                return null;
+
+            $criteria = New CDbCriteria;
+            $criteria->condition = 'target_final=:bando';
+
+            $criteria->params = array(':bando'=>$side);
+
+            //Busco los mods que me afecta al bando indicado
+            $this->_sideModifiers = Modifier::model()->findAll($criteria);
+        }
+
+        return $this->_sideModifiers;
+    }
 
 
     /** Compruebo si han expirado modificadores de todo el mundo, de cualquier tipo.
