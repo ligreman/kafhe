@@ -161,7 +161,7 @@ class CronCommand extends CConsoleCommand {
                     if ($criados !== false) {
 
                         //Si se van a criar más de los que hay en la población se reparten en la proporcion correspondiente
-                        if($event->gungubos_population = 0){
+                        if($event->gungubos_population == 0){
                             $criados['kafhe'] = 0;
                             $criados['achikhoria'] = 0;
                         }else if(($criados['kafhe']+$criados['achikhoria']) > $event->gungubos_population){
