@@ -11,6 +11,7 @@ $aliases = Yii::app()->usertools->getAlias();
 if($notifications != null):
 ?>
 <?php $last_type = $type; ?>
+<?php $last_type = $type; ?>
     <?php foreach($notifications as $notification):?>
         <article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
             if(strcmp($notification->type,$last_type)!=0 && strcmp("",$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){

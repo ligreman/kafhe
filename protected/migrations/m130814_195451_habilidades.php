@@ -234,7 +234,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration_type'  =>  'usos',  // horas, evento, usos
             'critic'  =>  5,
             'fail'  =>  10,
-            'cost_tueste'  =>  300,
+            'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,

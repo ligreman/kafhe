@@ -167,7 +167,11 @@ function loadMoreNotifications(){
     $('#muro').on('click','#moreNotifications a',function(){
         date = $('#muro article:last').attr('data-rel');
         type = $('#muro article:last').attr('class');
-        type = type.replace('notification','').replace('first','').replace(' ','');
+        if($('.categoriaNotif').is(':visible')){
+            type = type.replace('notification','').replace('first','').replace(' ','');
+        }else{
+            type="";
+        }
 
         var base_url = $('#baseUrl').text();
         $.ajax({
@@ -178,8 +182,10 @@ function loadMoreNotifications(){
                     $('#moreNotifications').addClass('categoriaNotif');
                     $('#moreNotifications').html('<span>No hay más notificaciones</span>');
                 }else{
-                    $(".categoriaNotif.hidden").addClass("visible");
-                    $(".categoriaNotif.hidden").removeClass("hidden");
+                    if($('.categoriaNotif:first').is('.hidden')){
+                        $(".categoriaNotif.hidden").addClass("visible");
+                        $(".categoriaNotif.hidden").removeClass("hidden");
+                    }
                     $('#moreNotifications').detach();
                     $('#muro').html($('#muro').html()+data);
                     resizeNavBar();
