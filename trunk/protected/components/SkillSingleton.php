@@ -445,7 +445,7 @@ class SkillSingleton extends CApplicationComponent
     /** Mata gungubos de un bando aleatorio
      * @return bool
      */
-	private function gungubicidio()
+	private function gungubicidio($skill)
 	{
         $amount = intval($skill->extra_param);
 		
