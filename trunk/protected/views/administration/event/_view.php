@@ -24,11 +24,15 @@
 	<?php echo CHtml::encode($data->status); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('gungubos_population')); ?>:</b>
+	<?php echo CHtml::encode($data->gungubos_population); ?>
+	<br />
+
+	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('gungubos_kafhe')); ?>:</b>
 	<?php echo CHtml::encode($data->gungubos_kafhe); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('gungubos_achikhoria')); ?>:</b>
 	<?php echo CHtml::encode($data->gungubos_achikhoria); ?>
 	<br />

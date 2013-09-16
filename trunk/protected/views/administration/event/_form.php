@@ -17,6 +17,8 @@
 
 	<?php echo $form->textFieldRow($model,'status',array('class'=>'span5')); ?>
 
+	<?php echo $form->textFieldRow($model,'gungubos_population',array('class'=>'span5')); ?>
+
 	<?php echo $form->textFieldRow($model,'gungubos_kafhe',array('class'=>'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'gungubos_achikhoria',array('class'=>'span5')); ?>

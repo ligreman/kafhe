@@ -105,6 +105,10 @@
 	<?php echo CHtml::encode($data->require_user_min_rank); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('require_user_max_rank')); ?>:</b>
+	<?php echo CHtml::encode($data->require_user_max_rank); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('require_user_status')); ?>:</b>
 	<?php echo CHtml::encode($data->require_user_status); ?>
 	<br />

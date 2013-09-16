@@ -178,6 +178,7 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `require_caller` tinyint(1) NOT NULL DEFAULT '0',    
   `require_user_side` varchar(100) NULL DEFAULT NULL,
   `require_user_min_rank` smallint(5) NULL DEFAULT NULL,
+  `require_user_max_rank` smallint(5) NULL DEFAULT NULL,
   `require_user_status` varchar(255) NULL DEFAULT NULL,
   `require_event_status` tinyint(1) NULL DEFAULT NULL,
   `require_talent_id` int(10) NULL DEFAULT NULL,

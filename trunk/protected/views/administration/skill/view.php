@@ -44,6 +44,7 @@ $this->menu=array(
 		'require_caller',
 		'require_user_side',
 		'require_user_min_rank',
+		'require_user_max_rank',
 		'require_user_status',
 		'require_event_status',
 		'require_talent_id',
