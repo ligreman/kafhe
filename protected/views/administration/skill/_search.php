@@ -55,6 +55,8 @@
 
 	<?php echo $form->textFieldRow($model,'require_user_min_rank',array('class'=>'span5')); ?>
 
+	<?php echo $form->textFieldRow($model,'require_user_max_rank',array('class'=>'span5')); ?>
+
 	<?php echo $form->textFieldRow($model,'require_user_status',array('class'=>'span5','maxlength'=>255)); ?>
 
 	<?php echo $form->textFieldRow($model,'require_event_status',array('class'=>'span5')); ?>

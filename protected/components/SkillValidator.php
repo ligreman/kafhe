@@ -19,7 +19,7 @@ class SkillValidator
      *      2 - Fallo. No tienes suficiente tueste, retueste, tostólares o ptos de relanzamiento para pagar el coste de la habilidad.
      *      3 - Fallo. No tienes el estado adecuado para ejecutar la habilidad.
      *      4 - Fallo. No estás en el bando correcto para ejecutar la habilidad.
-     *      5 - Fallo. No tienes el rango mínimo exigido para ejecutar la habilidad.
+     *      5 - Fallo. No tienes el rango exigido para ejecutar la habilidad.
      *      6 - Fallo. El evento no se encuentra en el estado requerido o no eres el llamador.
      *      7 - Fallo. No tienes el talento requerido para ejecutar esta habilidad.
      *      8 - Fallo. Hay modificadores que te impiden ejecutar la habilidad.
@@ -40,6 +40,10 @@ class SkillValidator
 		//¿Requiere un rango mínimo para el usuario?
 		if ($skill->require_user_min_rank!==null && !$this->checkUserRank($skill, $user))
 			return 5;
+
+        //¿Requiere un rango máximo para el usuario?
+        if ($skill->require_user_max_rank!==null && !$this->checkUserRank($skill, $user))
+            return 5;
 		
 		//¿Requiere que yo sea el llamador actualmente?
 		if ($skill->require_caller && !$this->checkCaller($skill, $user))
@@ -164,12 +168,15 @@ class SkillValidator
 	}
 
     private function checkUserRank($skill, $user) {
-		if ($skill->require_user_min_rank == null) return true;
-		else if ($skill->require_user_min_rank <= $user->rank) return true;
-		else {
-			$this->_lastError = 'No tienes el rango necesario para ejecutar esta habilidad.';
-			return false;
-		}
+		if ($skill->require_user_min_rank == null  &&  $skill->require_user_max_rank == null) return true;
+		else if ($skill->require_user_min_rank !== null && $skill->require_user_min_rank > $user->rank) {
+            $this->_lastError = 'Todavía no has alcanzado el rango necesario para ejecutar esta habilidad.';
+            return false;
+        } else if ($skill->require_user_max_rank !== null && $skill->require_user_max_rank < $user->rank) {
+            $this->_lastError = 'Tu rango es demasiado alto para ejecutar esta habilidad.';
+            return false;
+        } else
+            return true;
 	}
 
     private function checkTalent($skill, $user) {

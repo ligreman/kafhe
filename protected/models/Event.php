@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "Event".
+ * This is the model class for table "event".
  *
- * The followings are the available columns in table 'Event':
+ * The followings are the available columns in table 'event':
  * @property integer $id
  * @property integer $group_id
  * @property integer $caller_id
@@ -36,7 +36,7 @@ class Event extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Event';
+		return 'event';
 	}
 
 	/**

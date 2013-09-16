@@ -48,6 +48,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'caller_side',
 		'relauncher_id',
 		'status',
+		'gungubos_population',
 		'gungubos_kafhe',
 		'gungubos_achikhoria',
 		'last_gungubos_timestamp',
