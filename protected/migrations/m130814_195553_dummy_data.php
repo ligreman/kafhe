@@ -18,6 +18,7 @@ class m130814_195553_dummy_data extends CDbMigration
             'email'		=> 'mod@mail.com',
             'role'		=> 'user',
             'rank' 		=> 1,
+            'ptos_tueste' => 990,
             'experience'=>0,
             'status'	=> 2,
             'side'		=> 'kafhe',

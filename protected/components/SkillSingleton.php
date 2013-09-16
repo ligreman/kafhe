@@ -368,7 +368,7 @@ class SkillSingleton extends CApplicationComponent
         if (!$event->save())
             throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.').');
 
-        if(!$protected) $this->_publicMessage = 'Ha logrado atraer a tu bando a '.$finalAmount.' gungubos.';
+        if(!$protected) $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos.';
         if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido atraerlos.';
         if($protected && $finalAmount > 0) $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos rompiendo la protección.';
 

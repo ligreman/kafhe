@@ -113,7 +113,7 @@
                                 <h1><span><?php echo $skill->name; ?></span><?php echo CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('class' => $class)); ?></h1>
                                 <p class="skillDesc"><?php echo $skill->description; ?></p>
                                 <?php if($execCode == 2):?>
-                                    <p class="mensajeDesactivado">No tienes suficiente tueste, retueste, tostólares o ptos de relanzamiento para pagar el coste de la habilidad.</p>
+                                    <p class="mensajeDesactivado">No tienes suficiente tueste, retueste, tostólares o puntos de relanzamiento para pagar el coste de la habilidad.</p>
                                 <?php endif; ?>
                                 <?php if($execCode == 8): ?>
                                     <p class="mensajeDesactivado">Hay modificadores que te impiden ejecutar la habilidad.</p>
