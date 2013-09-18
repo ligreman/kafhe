@@ -70,14 +70,14 @@ class EventController extends Controller
 		
 		//Guardo el evento
 		if (!$event->save())
-			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
+			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
 		//Creo la notificación		
 		$nota = new Notification;        
         $nota->message = ':battle: ¡Que de comienzo la batalla!';
         $nota->type = 'omelettus';
 		if (!$nota->save())
-			throw new CHttpException(400, 'Error al guardar la notificación de aviso de inicio de batalla del evento '.$event->id);
+			throw new CHttpException(400, 'Error al guardar la notificación de aviso de inicio de batalla del evento '.$event->id.'. ['.print_r($nota->getErrors(),true).']');
 			
 		//Aviso al llamador
 		$caller = User::model()->findByPk($event->caller_id);
@@ -134,7 +134,7 @@ class EventController extends Controller
 
             //Guardo el evento
             if (!$event->save())
-                throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
+                throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
             //Aviso a todos de que asumo mi derrota
             $sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibre.');';
@@ -161,7 +161,7 @@ class EventController extends Controller
 				$nota->message = '¡Oh, amados comensales! '.$name.' ha asumido su destino y procederá a llamar en los próximos minutos.';
 				$nota->type = 'omelettus';
 				if (!$nota->save())
-					throw new CHttpException(400, 'Error al guardar la notificación de aviso de asumir llamada del evento '.$event->id);
+					throw new CHttpException(400, 'Error al guardar la notificación de aviso de asumir llamada del evento '.$event->id.'.  ['.print_r($nota->getErrors(),true).']');
             }
         }
 		
@@ -184,7 +184,7 @@ class EventController extends Controller
 
         //Guardo el evento
         if (!$event->save())
-            throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
+            throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
         //Caducidad de modificadores de evento		
 		Yii::app()->modifier->reduceEventModifiers($event->id);
@@ -208,7 +208,7 @@ class EventController extends Controller
 				$usuario->status = Yii::app()->params->statusDesertor;
 				//Salvo
 				if (!$usuario->save())
-					throw new CHttpException(400, 'Error al actualizar al usuario '.$usuario->id.' llamador, al cerrar el evento '.$event->id.'.');
+					throw new CHttpException(400, 'Error al actualizar al usuario '.$usuario->id.' llamador, al cerrar el evento '.$event->id.'. ['.print_r($usuario->getErrors(),true).']');
 			} elseif ($usuario->status==Yii::app()->params->statusAlistado) {
 				//A los alistados les pongo como criadores
 				$usuario->rank++;
@@ -247,7 +247,7 @@ class EventController extends Controller
         $nuevoEvento->date = $fecha->format('Y-m-d');
 
         if (!$nuevoEvento->save())
-            throw new CHttpException(400, 'Error al crear un nuevo evento.');
+            throw new CHttpException(400, 'Error al crear un nuevo evento. ['.print_r($nuevoEvento->getErrors(),true).']');
 
         //Salvo usuarios
         if (count($final_users['kafhe'])>0) {
@@ -256,7 +256,8 @@ class EventController extends Controller
 
 				$user->side = 'kafhe';
 				//Salvo
-				if (!$user->save()) throw new CHttpException(400, 'Error al actualizar al usuario '.$id.' al cerrar el evento '.$event->id.'.');
+				if (!$user->save())
+				    throw new CHttpException(400, 'Error al actualizar al usuario '.$id.' al cerrar el evento '.$event->id.'. ['.print_r($user->getErrors(),true).']');
             }
         }
 
@@ -274,14 +275,14 @@ class EventController extends Controller
         $cron = new Cronpile;
         $cron->operation = 'generateRanking';
         if (!$cron->save())
-            throw new CHttpException(400, 'Error al guardar en la pila de cron la generación del Ranking');
+            throw new CHttpException(400, 'Error al guardar en la pila de cron la generación del Ranking. ['.print_r($cron->getErrors(),true).']');
 		
 		//Creo la notificación		
 		$nota = new Notification;        
 		$nota->message = 'Queridos seres que habitáis mi comedor, según mi juicio y sabiduría os he asignado vuestro bando para la próxima batalla. Comenzad pues a prepararos para ella.';
 		$nota->type = 'omelettus';
 		if (!$nota->save())
-			throw new CHttpException(400, 'Error al guardar la notificación de creación del nuevo evento: '.$nuevoEvento->id);
+			throw new CHttpException(400, 'Error al guardar la notificación de creación del nuevo evento: '.$nuevoEvento->id.'. ['.print_r($nota->getErrors(),true).']');
 
         //Envío correos avisando de que ya se ha llamado
         $alias = Yii::app()->usertools->getAlias($llamador_id);

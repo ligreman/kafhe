@@ -260,7 +260,7 @@ class SiteController extends Controller
 		
 		// La actualización del last_read se hace ahora por ajax
 		//if (!$user->save())
-			//throw new CHttpException(400, 'Error al guardar el usuario '.$user->id.' procesando las notificaciones.');
+			//throw new CHttpException(400, 'Error al guardar el usuario '.$user->id.' procesando las notificaciones. ['.print_r($user->getErrors(),true).']');
 
 		//Si con las nuevas no lleno el cupo de notificaciones del muro, cojo algunas viejas
 		if (count($nuevas) < Yii::app()->config->getParam('maxNotificacionesMuro'))	{		

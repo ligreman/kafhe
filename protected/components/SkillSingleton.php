@@ -125,7 +125,7 @@ class SkillSingleton extends CApplicationComponent
         $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>Yii::app()->params->modifierDesecado)));
         if ($modificador !== null) {
             if (!$modificador->delete())
-                throw new CHttpException(400, 'Error al eliminar el modificador ('.Yii::app()->params->modifierDesecado.').');
+                throw new CHttpException(400, 'Error al eliminar el modificador ('.Yii::app()->params->modifierDesecado.'). ['.print_r($modificador->getErrors(),true).']');
 
             $this->_privateMessage = 'Al estar el objetivo previamente '.Yii::app()->params->modifierDesecado.', '.$skill->name.' únicamente ha eliminado esa penalización.';
             return true;
@@ -147,7 +147,7 @@ class SkillSingleton extends CApplicationComponent
 	    $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
 	    if (!$modificador->save())
-            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
 
 		return true;
 	}
@@ -163,7 +163,7 @@ class SkillSingleton extends CApplicationComponent
         $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>Yii::app()->params->modifierHidratado)));
         if ($modificador !== null) {
             if (!$modificador->delete())
-                throw new CHttpException(400, 'Error al eliminar el modificador ('.Yii::app()->params->modifierHidratado.').');
+                throw new CHttpException(400, 'Error al eliminar el modificador ('.Yii::app()->params->modifierHidratado.'). ['.print_r($modificador->getErrors(),true).']');
 
             $this->_privateMessage = 'Al estar el objetivo previamente '.Yii::app()->params->modifierHidratado.', '.$skill->name.' únicamente ha eliminado esa bonificación.';
             return true;
@@ -185,7 +185,7 @@ class SkillSingleton extends CApplicationComponent
         $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
         if (!$modificador->save())
-            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.') ['.print_r($modificador->getErrors(),true).'].');
 
         return true;
     }
@@ -215,7 +215,7 @@ class SkillSingleton extends CApplicationComponent
 		$modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
 	    if (!$modificador->save())
-            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
 
 		return true;
 	}
@@ -233,7 +233,7 @@ class SkillSingleton extends CApplicationComponent
 			$user->status = Yii::app()->params->statusCazador;
 		
 			if (!$user->save())
-				throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador.');
+				throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
 		}
 
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
@@ -251,7 +251,7 @@ class SkillSingleton extends CApplicationComponent
         $event->gungubos_population -= $amount;
 		
 		if (!$event->save())
-            throw new CHttpException(400, 'Error al sumar gungubos al bando '.$user->side.' del evento ('.$event->id.').');
+            throw new CHttpException(400, 'Error al sumar gungubos al bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
 
         $this->_publicMessage = 'Ha logrado hacerse con '.$amount.' gungubos.';
 
@@ -280,9 +280,11 @@ class SkillSingleton extends CApplicationComponent
                 $finalAmount = $amount - $modifier->value;
                 if($finalAmount <0) $finalAmount = 0;
                 $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) $modifier->delete();
-                else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.').');
+                if($modifier->value <= 0) {
+                    if (!$modifier->delete())
+                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$targetSide.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
+                } else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
             }else $finalAmount = $amount;
 
             $event->gungubos_achikhoria -= $finalAmount;
@@ -296,9 +298,11 @@ class SkillSingleton extends CApplicationComponent
                 $finalAmount = $amount - $modifier->value;
                 if($finalAmount <0) $finalAmount = 0;
                 $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) $modifier->delete();
-                else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.').');
+                if($modifier->value <= 0) {
+                    if (!$modifier->delete())
+                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$targetSide.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
+                } else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
             }else $finalAmount = $amount;
 
             $event->gungubos_kafhe -= $finalAmount;
@@ -307,7 +311,7 @@ class SkillSingleton extends CApplicationComponent
         $event->gungubos_population += $finalAmount;
 
         if (!$event->save())
-            throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.').');
+            throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
 
         if(!$protected) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos.';
         if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido liberarlos.';
@@ -338,9 +342,11 @@ class SkillSingleton extends CApplicationComponent
                 $finalAmount = $amount - $modifier->value;
                 if($finalAmount <0) $finalAmount = 0;
                 $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) $modifier->delete();
-                else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.').');
+                if($modifier->value <= 0) {
+                    if (!$modifier->delete())
+                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$targetSide.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
+                } else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
             }else $finalAmount = $amount;
 
             $event->gungubos_achikhoria -= $finalAmount;
@@ -356,9 +362,11 @@ class SkillSingleton extends CApplicationComponent
                 $finalAmount = $amount - $modifier->value;
                 if($finalAmount <0) $finalAmount = 0;
                 $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) $modifier->delete();
-                else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.').');
+                if($modifier->value <= 0) {
+                    if (!$modifier->delete())
+                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$targetSide.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
+                } else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
             }else $finalAmount = $amount;
 
             $event->gungubos_kafhe -= $finalAmount;
@@ -366,7 +374,7 @@ class SkillSingleton extends CApplicationComponent
         }
 
         if (!$event->save())
-            throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.').');
+            throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
 
         if(!$protected) $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos.';
         if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido atraerlos.';
@@ -401,7 +409,7 @@ class SkillSingleton extends CApplicationComponent
         $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
         if (!$modificador->save())
-            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
 
         $this->_privateMessage = 'Has logrado proteger a '.$amount.' gungubos.';
 
@@ -426,7 +434,7 @@ class SkillSingleton extends CApplicationComponent
 		
 		//Guardo el evento
 		if (!$event->save())
-			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'.');
+			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
 		//Aviso al llamador
 		$caller = User::model()->findByPk($event->caller_id);
@@ -464,7 +472,7 @@ class SkillSingleton extends CApplicationComponent
 		} 
 		
 		if(!$event->save())
-			throw new CHttpException(400, 'Error al restar gungubos al bando '.$bando.' del evento '.$event->id.'.');
+			throw new CHttpException(400, 'Error al restar gungubos al bando '.$bando.' del evento '.$event->id.'. ['.print_r($event->getErrors(),true).']');
 			
 		return true;
 	}
@@ -495,7 +503,7 @@ class SkillSingleton extends CApplicationComponent
         $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
         if (!$modificador->save())
-            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.').');
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
 
         return true;
     }
@@ -536,7 +544,7 @@ class SkillSingleton extends CApplicationComponent
 
         //Salvo todo
 	    if (!$user->save())
-            throw new CHttpException(400, 'Error al actualizar el usuario ('.$user->id.') tras ejecutar una habilidad ('.$skill->id.').');
+            throw new CHttpException(400, 'Error al actualizar el usuario ('.$user->id.') tras ejecutar una habilidad ('.$skill->id.'). ['.print_r($user->getErrors(),true).']');
 
 	    return true;
 	}
