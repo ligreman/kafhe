@@ -108,7 +108,7 @@ class EnrollmentController extends Controller
                     //Yii::log(print_r($enroll, true), 'error', 'ENROLL');
 					//Le alisto
                     if (!$enroll->save()){
-                        throw new CHttpException(400, 'Error al guardar o actualizar el pedido.');
+                        throw new CHttpException(400, 'Error al guardar o actualizar el pedido. ['.print_r($enroll->getErrors(),true).']');
                     }
 
                     $data['already_enroll'] = true;
@@ -116,7 +116,7 @@ class EnrollmentController extends Controller
 
                     $message = "";
 
-					//Si el estado del usuario cambia (no es una actualización del pedido) le pongo alistado
+					//Si el estado del usuario cambia (no es una actualización del pedido) le pongo libre ó alistado según corresponda
 					if (Yii::app()->currentUser->status==Yii::app()->params->statusDesertor) {
 
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusLibre)))
@@ -132,15 +132,18 @@ class EnrollmentController extends Controller
                         $message = ':'.Yii::app()->currentUser->side.': Se ha alistado en el bando de '.Yii::app()->currentUser->side;
 					}
 
-                    $nota = new Notification;
-                    $nota->recipient_original = Yii::app()->currentUser->id;;
-                    $nota->recipient_final = Yii::app()->currentUser->id;;
-                    $nota->message = $message; //Mensaje para el muro
-                    $nota->type = Yii::app()->currentUser->side;
-                    $nota->sender = Yii::app()->currentUser->id;
+                    //Si ha cambiado de estado creo la notificación, es decir, si hay mensaje
+                    if ($message!="") {
+                        $nota = new Notification;
+                        $nota->recipient_original = Yii::app()->currentUser->id;
+                        $nota->recipient_final = Yii::app()->currentUser->id;
+                        $nota->message = $message; //Mensaje para el muro
+                        $nota->type = Yii::app()->currentUser->side;
+                        $nota->sender = Yii::app()->currentUser->id;
 
-                    if (!$nota->save())
-                        throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
+                        if (!$nota->save())
+                            throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Alistado. ['.print_r($nota->getErrors(),true).']');
+                    }
 
                     //hago un redirect para actualizar el userPanel
                     $this->redirect(array('/enrollment'));
@@ -152,8 +155,6 @@ class EnrollmentController extends Controller
                     $enroll->delete();
                     $data['already_enroll'] = false;
 
-                    $message = "";
-
 					//Actualizao mi estado a Baja/Desertor
 					if (Yii::app()->currentUser->status==Yii::app()->params->statusLibre) {
 
@@ -162,7 +163,6 @@ class EnrollmentController extends Controller
 
                         $message = ':'.Yii::app()->currentUser->side.': Ha desertado';
 					} else {
-
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
 
@@ -170,14 +170,14 @@ class EnrollmentController extends Controller
 					}
 
                     $nota = new Notification;
-                    $nota->recipient_original = Yii::app()->currentUser->id;;
-                    $nota->recipient_final = Yii::app()->currentUser->id;;
+                    $nota->recipient_original = Yii::app()->currentUser->id;
+                    $nota->recipient_final = Yii::app()->currentUser->id;
                     $nota->message = $message; //Mensaje para el muro
                     $nota->type = Yii::app()->currentUser->side;
                     $nota->sender = Yii::app()->currentUser->id;
 
                     if (!$nota->save())
-                        throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
+                        throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Baja. ['.print_r($nota->getErrors(),true).']');
 
                     //hago un redirect para actualizar el userPanel
                     $this->redirect(array('/enrollment'));
