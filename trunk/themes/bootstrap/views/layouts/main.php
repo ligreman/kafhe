@@ -53,6 +53,7 @@
                     array('label'=>'SERVIDOR'),
                     array('label'=>'Configuración', 'url'=>array('/administration/configuration'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/configuration'?true:false),
                     array('label'=>'Pila cron', 'url'=>array('/administration/cronpile'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/cronpile'?true:false),
+                    array('label'=>'Logs', 'url'=>array('/administration/logs'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/logs'?true:false),
                 )),
 
             ),
