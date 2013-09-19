@@ -176,12 +176,14 @@ class LogsController extends Controller
 
 
         $list = array();
+        $hay_error = $hay_trace = $hay_info = false;
 
         if (count($errors)>0) {
             $list[] = array('label'=>'ERROR', 'icon'=>'fire');
             foreach ($errors as $error) {
                 $list[] = $error;
             }
+            $hay_error = true;
         }
 
         if (count($traces)>0) {
@@ -189,6 +191,7 @@ class LogsController extends Controller
             foreach ($traces as $trace) {
                 $list[] = $trace;
             }
+            $hay_trace = true;
         }
 
         if (count($infos)>0) {
@@ -196,12 +199,20 @@ class LogsController extends Controller
             foreach ($infos as $info) {
                 $list[] = $info;
             }
+            $hay_info = true;
         }
 
-        $list[] = array('label'=>'HERRAMIENTAS', 'icon'=>'wrench');
-        $list[] = array('label'=>'Borrar todos los ERROR', 'url'=>Yii::app()->baseUrl.'/administration/logs/deleteAll?type=error');
-        $list[] = array('label'=>'Borrar todos los TRACE', 'url'=>Yii::app()->baseUrl.'/administration/logs/deleteAll?type=trace');
-        $list[] = array('label'=>'Borrar todos los INFO', 'url'=>Yii::app()->baseUrl.'/administration/logs/deleteAll?type=info');
+        if ($hay_error || $hay_trace || $hay_info)
+            $list[] = array('label'=>'HERRAMIENTAS', 'icon'=>'wrench');
+
+        if ($hay_error)
+            $list[] = array('label'=>'Borrar todos los ERROR', 'url'=>Yii::app()->baseUrl.'/administration/logs/deleteAll?type=error');
+
+        if ($hay_trace)
+            $list[] = array('label'=>'Borrar todos los TRACE', 'url'=>Yii::app()->baseUrl.'/administration/logs/deleteAll?type=trace');
+
+        if ($hay_info)
+            $list[] = array('label'=>'Borrar todos los INFO', 'url'=>Yii::app()->baseUrl.'/administration/logs/deleteAll?type=info');
 
         return $list;
     }
