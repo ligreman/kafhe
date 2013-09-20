@@ -265,8 +265,15 @@ class SkillSingleton extends CApplicationComponent
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
         $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
-
         $protected = false;
+
+        //Cambio al usuario a Cazador si era criador
+        if ($user->status == Yii::app()->params->statusCriador) {
+            $user->status = Yii::app()->params->statusCazador;
+
+            if (!$user->save())
+                throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
+        }
 
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
         if($user->side == 'kafhe') {
@@ -327,8 +334,15 @@ class SkillSingleton extends CApplicationComponent
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
         $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
-
         $protected = false;
+
+        //Cambio al usuario a Cazador si era criador
+		if ($user->status == Yii::app()->params->statusCriador) {
+            $user->status = Yii::app()->params->statusCazador;
+
+            if (!$user->save())
+                throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
+        }
 
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
         if($user->side == 'kafhe') {
@@ -388,6 +402,15 @@ class SkillSingleton extends CApplicationComponent
      */
     private function protegerGungubos($skill, $target)
     {
+        $user = Yii::app()->currentUser->model; //cojo el usuario actual
+        //Cambio al usuario a Cazador si era criador
+        if ($user->status == Yii::app()->params->statusCriador) {
+            $user->status = Yii::app()->params->statusCazador;
+
+            if (!$user->save())
+                throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
+        }
+
         //Si ya tengo proteger lo que haré será sumar al valor los gungubos nuevos que puedo proteger
         $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->side, ':keyword'=>$skill->modifier_keyword)));
 
