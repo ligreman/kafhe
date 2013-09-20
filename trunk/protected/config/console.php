@@ -47,7 +47,7 @@ return array(
 		'gungubos'=>array('class'=>'GungubosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),		
 		'config'=>array('class'=>'ConfigurationSingleton'),
-        //'skill'=>array('class'=>'SkillSingleton'),
+        'skill'=>array('class'=>'SkillSingleton'),
         //'mail'=>array('class'=>'MailSingleton'),
 	),
 	

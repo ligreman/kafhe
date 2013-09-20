@@ -26,6 +26,7 @@ class GungubosSingleton extends CApplicationComponent
 		$skill = Skill::model()->find(array('condition'=>'keyword=:key', 'params'=>array(':key'=>Yii::app()->params->skillCazarGungubos)));
 		$costeTueste = $skill->cost_tueste;
 		$gungubosSkill = intval($skill->extra_param);
+		$gungubosSkill = Yii::app()->skill->randomWithRangeProportion($gungubosSkill, 0.5); //Calculo una proporción igualmente que se hace con la habilidad
 
 		$extraKafhe = round( ($event->stored_tueste_kafhe * $gungubosSkill) / $costeTueste, 0);
         $extraAchikhoria = round( ($event->stored_tueste_achikhoria * $gungubosSkill) / $costeTueste, 0);

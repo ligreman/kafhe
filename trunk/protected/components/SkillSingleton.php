@@ -633,7 +633,7 @@ class SkillSingleton extends CApplicationComponent
      * @param $range Porcentaje del valor máximo que se admite como valor mínimo del rango (0-1)
      * @return int Valor aleatorizado
      */
-    private function randomWithRangeProportion($value, $proportion) {
+    public function randomWithRangeProportion($value, $proportion) {
         return mt_rand($proportion*$value, $value);
     }
 
