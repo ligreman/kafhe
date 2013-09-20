@@ -57,13 +57,14 @@
         </div>
 
         <div class="buttons">
-                <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn btn'.Yii::app()->currentUser->side)); ?>
-                <?php
-                  if ($already_enroll) {
-                    echo CHtml::submitButton('Darse de baja', array('name'=>'btn_cancel', 'class' => 'btn'));
-                    }
-                ?>
+            <?php echo CHtml::submitButton(!$already_enroll ? 'Alistarse' : 'Actualizar pedido', array('name'=>'btn_submit', 'class' => 'btn btn'.Yii::app()->currentUser->side)); ?>
+            <?php
+              if ($already_enroll) {
+                echo CHtml::submitButton('Darse de baja', array('name'=>'btn_cancel', 'class' => 'btn'));
+                }
+            ?>
             <?php //echo CHtml::submitButton($model->isNewRecord ? 'Guardar' : 'Modificar'); ?>
+            <?php echo CHtml::linkButton('Lo del otro día', array('name'=>'btn_otroDia', 'class'=>'btn', 'rel-meal'=>$prev_meal, 'rel-drink'=>$prev_drink, 'onclick'=>'return false;')); ?>
         </div>
 
     <?php $this->endWidget(); ?>
