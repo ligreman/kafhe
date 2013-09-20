@@ -91,7 +91,7 @@ class EventController extends Controller
 
 
 		//Aviso a los demás usuarios alistados en el evento de que se inicia la batalla
-		$sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibre.' );';
+		$sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibertador.' );';
         $users = Yii::app()->db->createCommand($sql)->queryAll();
         if (count($users)>0) {
             foreach($users as $user) {
@@ -137,7 +137,7 @@ class EventController extends Controller
                 throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
             //Aviso a todos de que asumo mi derrota
-            $sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibre.');';
+            $sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibertador.');';
             $users = Yii::app()->db->createCommand($sql)->queryAll();
 			$aliases = Yii::app()->usertools->getAlias(); //Cojo todos los alias
 			
@@ -205,7 +205,7 @@ class EventController extends Controller
 				$usuario->times++;
 				$usuario->rank = 1;
 				$usuario->side = 'libre';
-				$usuario->status = Yii::app()->params->statusDesertor;
+				$usuario->status = Yii::app()->params->statusIluminado;
 				//Salvo
 				if (!$usuario->save())
 					throw new CHttpException(400, 'Error al actualizar al usuario '.$usuario->id.' llamador, al cerrar el evento '.$event->id.'. ['.print_r($usuario->getErrors(),true).']');
@@ -215,11 +215,11 @@ class EventController extends Controller
 				$usuario->times++;
 				$usuario->status = Yii::app()->params->statusCriador;
 				$new_usuarios[$usuario->id] = $usuario;
-			} elseif ($usuario->status==Yii::app()->params->statusDesertor) {
+			} elseif ($usuario->status==Yii::app()->params->statusIluminado) {
 				//Si era "libre" pero no fue al desayuno
 				$usuario->status = Yii::app()->params->statusCriador;
 				$anterior_llamador = $usuario;
-			} elseif ($usuario->status==Yii::app()->params->statusLibre) {
+			} elseif ($usuario->status==Yii::app()->params->statusLibertador) {
 				//Al anterior libre, que si fue al desayuno, le pongo como criadores también
 				$usuario->rank++;
 				$usuario->times++;
