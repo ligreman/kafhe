@@ -190,13 +190,13 @@ class m130814_195451_habilidades extends CDbMigration
             'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
 
-        //GUNGUBICIDIO
+        // RESCATAR GUNGUBOS
         $this->insert('skill', array(
-            'name'  =>  'Gungubicidio',
-            'description'  =>  'Elimina 100 gungubos de un bando aleatorio.',
+            'name'  =>  'Rescatar gungubos',
+            'description'  =>  'Liberas hasta a 100 gungubos de un bando aleatorio.',
             'category'  =>  'gungubos',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
-            'keyword'  =>  'gungubicidio',
+            'keyword'  =>  'rescatarGungubos',
             'modifier_keyword'  =>  '',
             'duration'  =>  NULL,       // Int cantidad para la duración
             'duration_type'  =>  NULL,  // horas, evento, usos

@@ -212,7 +212,7 @@ return array(
         'skillImpersonar'=>'impersonar',
 		'skillCazarGungubos'=>'cazarGungubos',
 		'skillEscaquearse'=>'escaquearse',
-		'skillGungubicidio'=>'gungubicidio',
+		'skillRescatarGungubos'=>'rescatarGungubos',
 		'skillVendetta'=>'vendetta',
 		'skillTrampa'=>'trampa',
         'skillLiberarGungubos'=>'liberarGungubos',
