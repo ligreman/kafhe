@@ -95,6 +95,7 @@ class EnrollmentController extends Controller
                         $enroll->drink_id = $model->drink_id;
                         $enroll->ito = $model->ito;
                         //Yii::log('actualizo enroll', 'warning', 'ENROLL');
+                        Yii::app()->user->setFlash('normal', 'Has actualizado tu alistamiento en la batalla actual');
                     } else {
                         //Guardo campo nuevo
                         $enroll->user_id = Yii::app()->currentUser->id;
@@ -103,6 +104,7 @@ class EnrollmentController extends Controller
                         $enroll->drink_id = $model->drink_id;
                         $enroll->ito = $model->ito;
                         //Yii::log('nuevo enroll', 'warning', 'ENROLL');
+                        Yii::app()->user->setFlash('normal', 'Te has alistado en la batalla actual');
                     }
     
                     //Yii::log(print_r($enroll, true), 'error', 'ENROLL');
@@ -178,6 +180,8 @@ class EnrollmentController extends Controller
 
                     if (!$nota->save())
                         throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Baja. ['.print_r($nota->getErrors(),true).']');
+
+                    Yii::app()->user->setFlash('normal', 'Te has dado de baja en la batalla actual');
 
                     //hago un redirect para actualizar el userPanel
                     $this->redirect(array('/enrollment'));
