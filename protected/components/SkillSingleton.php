@@ -81,7 +81,7 @@ class SkillSingleton extends CApplicationComponent
 				case Yii::app()->params->skillDisimular: $this->disimular($skill, $finalTarget); break;
 				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
-				case Yii::app()->params->skillGungubicidio: $this->gungubicidio($skill); break;
+				case Yii::app()->params->skillRescatarGungubos: $this->rescatarGungubos($skill); break; //agente libre
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
                 case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
                 case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
@@ -450,29 +450,67 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 	
-    /** Mata gungubos de un bando aleatorio
+    /** Libera gungubos de un bando aleatorio
      * @return bool
      */
-	private function gungubicidio($skill)
+	private function rescatarGungubos($skill)
 	{
-        $amount = intval($skill->extra_param);
-		
 		//Elijo un bando aleatorio
 		$rand = mt_rand(0,1);
 		if ($rand==0) $bando = 'kafhe';
 		else $bando = 'achikhoria';
-		
-		//Mato 100 gungubos de ese bando :O
-		$event = Yii::app()->event->model;
-		
-		if ($bando == 'kafhe') {
-			$event->gungubos_kafhe = max(0, ($event->gungubos_kafhe-$amount)); //Evito que sea negativo el valor
-		} elseif ($bando == 'achikhoria') {
-			$event->gungubos_achikhoria = max(0, ($event->gungubos_achikhoria-$amount)); //Evito que sea negativo el valor
-		} 
-		
-		if(!$event->save())
-			throw new CHttpException(400, 'Error al restar gungubos al bando '.$bando.' del evento '.$event->id.'. ['.print_r($event->getErrors(),true).']');
+
+        $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+        $protected = false;
+
+        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
+        if($bando == 'kafhe') {
+            //No se pueden liberar más de los que existen
+            if($event->gungubos_kafhe < $amount) $amount = $event->gungubos_kafhe;
+
+            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($bando));
+            if($modifier!=null){
+                $protected = true;
+                $finalAmount = $amount - $modifier->value;
+                if($finalAmount <0) $finalAmount = 0;
+                $modifier->value -= $amount-$finalAmount;
+                if($modifier->value <= 0) {
+                    if (!$modifier->delete())
+                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$bando.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
+                } else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$bando.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
+            }else $finalAmount = $amount;
+
+            $event->gungubos_kafhe -= $finalAmount;
+            $event->gungubos_population += $finalAmount;
+
+        } elseif ($bando == 'achikhoria') {
+
+            if($event->gungubos_achikhoria < $amount) $amount = $event->gungubos_achikhoria;
+
+            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($bando));
+            if($modifier!=null){
+                $protected = true;
+                $finalAmount = $amount - $modifier->value;
+                if($finalAmount <0) $finalAmount = 0;
+                $modifier->value -= $amount-$finalAmount;
+                if($modifier->value <= 0) {
+                    if (!$modifier->delete())
+                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$bando.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
+                } else if (!$modifier->save())
+                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$bando.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
+            }else $finalAmount = $amount;
+
+            $event->gungubos_achikhoria -= $finalAmount;
+            $event->gungubos_population += $finalAmount;
+        }
+
+        if (!$event->save())
+            throw new CHttpException(400, 'Error al liberar gungubos del bando '.$bando.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
+
+        if(!$protected) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos del bando de '.ucfirst($bando).'.';
+        if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido atraerlos.';
+        if($protected && $finalAmount > 0) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos del bando de '.ucfirst($bando).', rompiendo la protección.';
 			
 		return true;
 	}
