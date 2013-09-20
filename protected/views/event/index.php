@@ -66,7 +66,7 @@
         ?>
     </div>
     <div id="bandoLibre">
-        <h2>bando de <?php echo Yii::app()->params->sideNames['libre']; ?></h2>
+        <h2><?php echo Yii::app()->params->sideNames['libre']; ?></h2>
         <?php echo $libre.'</ul>';?>
     </div>
 

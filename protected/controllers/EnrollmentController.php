@@ -117,15 +117,15 @@ class EnrollmentController extends Controller
                     $message = "";
 
 					//Si el estado del usuario cambia (no es una actualización del pedido) le pongo libre ó alistado según corresponda
-					if (Yii::app()->currentUser->status==Yii::app()->params->statusDesertor) {
+					if (Yii::app()->currentUser->status==Yii::app()->params->statusIluminado) {
 
-						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusLibre)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario desertor ('.Yii::app()->currentUser->id.') a Libre.');
+						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusLibertador)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario Iluminado ('.Yii::app()->currentUser->id.') a Libertador.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Ahora es un agente libre ';
-					} elseif (Yii::app()->currentUser->status!=Yii::app()->params->statusLibre  &&  Yii::app()->currentUser->status!=Yii::app()->params->statusAlistado) {
+                        $message = ':'.Yii::app()->currentUser->side.': Ahora es un Libertador ';
+					} elseif (Yii::app()->currentUser->status!=Yii::app()->params->statusLibertador  &&  Yii::app()->currentUser->status!=Yii::app()->params->statusAlistado) {
 
-						
+
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusAlistado)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
 
@@ -156,12 +156,12 @@ class EnrollmentController extends Controller
                     $data['already_enroll'] = false;
 
 					//Actualizao mi estado a Baja/Desertor
-					if (Yii::app()->currentUser->status==Yii::app()->params->statusLibre) {
+					if (Yii::app()->currentUser->status==Yii::app()->params->statusLibertador) {
 
-						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusDesertor)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Desertor.');
+						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusIluminado)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Iluminado.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Ha desertado';
+                        $message = ':'.Yii::app()->currentUser->side.': Ha dejado de ser Libertador';
 					} else {
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
