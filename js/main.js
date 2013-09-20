@@ -61,6 +61,22 @@ function prepareEnrollmentForm(){
             $('input[rel-ito="no"]:checked').attr('checked' , 'false');
         }
     });
+
+    //Lo del otro día
+    $("a[name='btn_otroDia']").on('click', function(){
+        var meal = $(this).attr('rel-meal'),
+        drink = $(this).attr('rel-drink');
+
+        //Quito todas las selecciones
+        $('#meals ul label,#drinks ul label').each(function(){
+            $(this).parent().siblings().children('label').removeClass('selected');
+            $(this).removeClass('selected');
+            $(this).siblings(':radio').prop('checked', false);
+        });
+
+        $("#meals ul input[value='"+meal+"']").prop('checked', true).siblings('label').addClass('selected');
+        $("#drinks ul input[value='"+drink+"']").prop('checked', true).siblings('label').addClass('selected');
+    });
 }
 
 function bindCloseLinks(){
