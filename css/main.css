@@ -1008,7 +1008,7 @@ img.grayScale{
 
 .kafhepin:hover .title, .pin:hover .title, .librepin:hover .title{
     position: relative;
-    top: -3.5em;
+    top: -2.5em;
     left: -5.5em;
     background: white;
     color: #363636;
@@ -1156,7 +1156,7 @@ img.grayScale{
 
 #bandoAchikhoria h2,#bandoKafhe h2,#bandoLibre h2{
     font-weight: bold;
-    padding: 2em 0 .5em 24px;
+    padding: 2em 0 .5em 30px;
     font-size: 1.2em;
     color:#363636;
 }
