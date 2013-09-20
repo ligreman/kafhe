@@ -188,8 +188,8 @@ return array(
 		'statusCazador'=>1,
 		'statusAlistado'=>2,
 		'statusBaja'=>3,
-		'statusDesertor'=>4,
-		'statusLibre'=>5,
+		'statusIluminado'=>4,
+		'statusLibertador'=>5,
 		
 		//Estados de Eventos
 		'statusCerrado'=>0,
@@ -220,8 +220,8 @@ return array(
         'skillProtegerGungubos'=>'protegerGungubos',
 
 		//Otros
-		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Renegados'),
-        'userStatusNames'=>array(0=>'Criador', 1=>'Cazador', 2=>'Alistado', 3=>'Baja', 4=>'Desertor', 5=>'Agente libre'),
+		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Iluminado'),
+        'userStatusNames'=>array(0=>'Criador', 1=>'Cazador', 2=>'Alistado', 3=>'Baja', 4=>'Iluminado', 5=>'Libertador'),
         'eventStatusNames'=>array(0=>'Cerrado', 1=>'Iniciado', 2=>'Batalla', 3=>'Finalizado'),
 	),
 );
