@@ -7,6 +7,8 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
+	<?php echo $form->textFieldRow($model,'event_id',array('class'=>'span5')); ?>
+
 	<?php echo $form->textFieldRow($model,'skill_id',array('class'=>'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'caster_id',array('class'=>'span5')); ?>

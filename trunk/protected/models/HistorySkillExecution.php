@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'history_skill_execution':
  * @property integer $id
+ * @property integer $event_id
  * @property integer $skill_id
  * @property integer $caster_id
  * @property string $target_final
@@ -39,14 +40,14 @@ class HistorySkillExecution extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('skill_id, caster_id, target_final, result', 'required'),
-			array('skill_id, caster_id', 'numerical', 'integerOnly'=>true),
+			array('event_id, skill_id, caster_id, target_final, result', 'required'),
+			array('event_id, skill_id, caster_id', 'numerical', 'integerOnly'=>true),
 			array('target_final', 'length', 'max'=>50),
 			array('result', 'length', 'max'=>6),
 			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, skill_id, caster_id, target_final, result, timestamp', 'safe', 'on'=>'search'),
+			array('id, event_id, skill_id, caster_id, target_final, result, timestamp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +69,7 @@ class HistorySkillExecution extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'event_id' => 'Event',
 			'skill_id' => 'Skill',
 			'caster_id' => 'Caster',
 			'target_final' => 'Target Final',
@@ -88,6 +90,7 @@ class HistorySkillExecution extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('event_id',$this->event_id);
 		$criteria->compare('skill_id',$this->skill_id);
 		$criteria->compare('caster_id',$this->caster_id);
 		$criteria->compare('target_final',$this->target_final,true);

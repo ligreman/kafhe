@@ -57,6 +57,7 @@ class SkillController extends Controller
                 $hist->caster_id = Yii::app()->skill->caster;
                 $hist->target_final = Yii::app()->skill->finalTarget;
                 $hist->result = Yii::app()->skill->result;
+                $hist->event_id = Yii::app()->event->id;
 
                 if (!$hist->save())
                     throw new CHttpException(400, 'Error al guardar el historial de la ejecución de la habilidad ('.$skill->keyword.'). ['.print_r($hist->getErrors(),true).']');
