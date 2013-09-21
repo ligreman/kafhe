@@ -189,6 +189,14 @@ class EventController extends Controller
         //Caducidad de modificadores de evento		
 		Yii::app()->modifier->reduceEventModifiers($event->id);
 
+		//Elimino los modificadores que no son de evento
+        $sql = 'DELETE FROM modifier WHERE event_id='.$event->id.' AND duration_type!="evento";';
+        Yii::app()->db->createCommand($sql)->execute();
+
+        //Elimino el historial de ejecución de habilidades del evento
+        $sql = 'DELETE FROM history_skill_execution WHERE event_id='.$event->id.';';
+        Yii::app()->db->createCommand($sql)->execute();
+
         //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
 		$usuarios = Yii::app()->usertools->users;
 		$new_usuarios = array();

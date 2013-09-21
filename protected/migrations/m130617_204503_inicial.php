@@ -148,6 +148,7 @@ class m130617_204503_inicial extends TXDbMigration
         $this->dropTable('skill');
         $this->dropTable('user');
         $this->dropTable('cronpile');
+        $this->dropTable('history_skill_execution');
 
         $this->dropTable('authassignment');
         $this->dropTable('authitemchild');
