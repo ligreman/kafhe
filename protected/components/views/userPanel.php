@@ -121,7 +121,14 @@
                                 <dl>
                                     <dt>Coste: </dt>
                                     <dd><?php
-                                        if($skill->cost_tueste!==null && $skill->cost_tueste > 0) echo ' '.$skill->cost_tueste.' (tueste)';
+                                        if($skill->cost_tueste!==null && $skill->cost_tueste > 0) {
+                                            $costeFinal = Yii::app()->skill->calculateCostTueste($skill);
+                                            echo ' '.$skill->cost_tueste;
+                                            if ($costeFinal > $skill->cost_tueste)
+                                                echo ' <span title="Tueste extra por sobrecarga, etc." class="rojo">+ '.($costeFinal - $skill->cost_tueste).'</span> = '.$costeFinal;
+
+                                            echo ' (tueste)';
+                                        }
                                         if($skill->cost_retueste!==null && $skill->cost_retueste > 0) echo ' '.$skill->cost_retueste.' (retueste)';
                                         if($skill->cost_relanzamiento!==null && $skill->cost_relanzamiento > 0) echo ' '.$skill->cost_relanzamiento.' (relanzamiento)';
                                         if($skill->cost_tostolares!==null && $skill->cost_tostolares > 0) echo ' '.$skill->cost_tostolares.' (tostólares)';

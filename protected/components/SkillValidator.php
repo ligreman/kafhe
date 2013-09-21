@@ -108,10 +108,12 @@ class SkillValidator
 	/****************************************************************************************/
 	
 	private function checkTueste($skill, $user) {
+	    $costeTueste = Yii::app()->skill->calculateCostTueste($skill);
+
 		if ($skill->cost_tueste == null) return true;
-		else if ($skill->cost_tueste <= $user->ptos_tueste) return true;
+		else if ($costeTueste <= $user->ptos_tueste) return true;
 		else {
-			$this->_lastError = 'No tienes suficiente tueste.'.'Coste: '.$skill->cost_tueste.' // Tueste: '.$user->ptos_tueste.' -- '.$skill->name;
+			$this->_lastError = 'No tienes suficiente Tueste.';
 			return false;
 		}
 	}

@@ -845,6 +845,10 @@ img.grayScale{
     cursor: pointer;
 }
 
+#skillsUserBlock span.rojo {
+    color: #D00000;
+}
+
 #loginSection{
     padding: 1em;
 }

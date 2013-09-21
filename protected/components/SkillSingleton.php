@@ -589,7 +589,7 @@ class SkillSingleton extends CApplicationComponent
 
         //Pago el tueste
         if ($skill->cost_tueste !== null)
-            $user->ptos_tueste = $user->ptos_tueste - round($skill->cost_tueste * $criticModificator['tueste']);
+            $user->ptos_tueste = $user->ptos_tueste - round($this->calculateCostTueste($skill) * $criticModificator['tueste']);
 
 	    //Pago el restueste
         if ($skill->cost_retueste !== null)
@@ -609,6 +609,37 @@ class SkillSingleton extends CApplicationComponent
 
 	    return true;
 	}
+
+    /** Calcula el coste de tueste de una skill teniendo en cuenta todo: sobrecarga, etc.
+     * @param $skill Objeto de la skill a calcular su coste
+     */
+    public function calculateCostTueste($skill)
+    {
+        $user = Yii::app()->currentUser->model; //cojo el usuario actual
+        $costeFinal = $skill->cost_tueste;
+
+        //SOBRECARGA
+            $porcentajeExtra = Yii::app()->config->getParam('sobrecargaPorcentajeTuesteExtra');
+            $tamanoHistorico = Yii::app()->config->getParam('sobrecargaTamañoHistorico');
+
+            //Miro el histórico de ejecuciones del jugador
+            $historico = HistorySkillExecution::model()->findAll(array('condition'=>'caster_id=:caster', 'params'=>array(':caster'=>$user->id), 'order'=>'timestamp DESC', 'limit'=>$tamanoHistorico));
+            if ($historico!==null) {
+                $repeticiones = 0;
+                foreach ($historico as $historic) {
+                    //Miro si la ejecución era de esta skill y si el resultado fue normal (pifia y crítico no se tienen en cuenta)
+                    if ($historic->skill_id == $skill->id  &&  $historic->result=='normal') {
+                        $repeticiones++;
+                    }
+                }
+
+                if ($repeticiones > 0) {
+                    $costeFinal = $costeFinal + round( ($costeFinal * ($porcentajeExtra * $repeticiones)) / 100 );
+                }
+            }
+
+        return $costeFinal;
+    }
 
     /** Calcula el valor de crítico de la habilidad
      * @param $skill Obj de la skill
