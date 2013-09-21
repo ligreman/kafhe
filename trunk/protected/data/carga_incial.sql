@@ -208,6 +208,17 @@ CREATE TABLE IF NOT EXISTS `cronpile` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+
+CREATE TABLE IF NOT EXISTS `history_skill_execution` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `skill_id` int(10) NOT NULL,
+  `caster_id` int(10) NOT NULL,
+  `target_final` varchar(50) NOT NULL,
+  `result` enum('fail','normal','critic') NOT NULL,
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 INSERT INTO `user` (`id`, `username`, `password`, `alias`, `email`, `birthdate`, `role`, `group_id`, `side`, `status`, `rank`, `experience`, `ptos_tueste`, `ptos_retueste`, `ptos_relanzamiento`, `ptos_talentos`, `tostolares`, `sugarcubes`, `dominio_tueste`, `dominio_habilidades`, `dominio_bandos`, `times`, `calls`) VALUES
 (1, 'admin', '$2a$10$lEkw/VyX4WJOpJrhKAqkoeQvI/ugLjJTmqutbSNKHnL3ysamayGYe', 'Administrador', 'admin@mail.com', NULL, 'admin', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
@@ -220,4 +231,6 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxNewNotificacionesMuro', '30', 'Visual', 'Cantidad máxima de notificaciones nuevas a mostrar en el muro (suele ser mayor que el límite de notificaciones normal).');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('maxNotificacionesMuro', '10', 'Visual', 'Cantidad máxima de notificaciones a mostrar en el muro.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('informacionCafeteria', 'El Espiral (987 213 178)', 'Información', 'Datos de la cafetería a la que se llama.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('sobrecargaPorcentajeTuesteExtra', '25', 'Juego', 'Porcentaje de tueste extra que cuesta una habilidad por cada vez que aparece en el histórico de ejecuciones.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('sobrecargaTamañoHistorico', '3', 'Juego', 'Tamaño del histórico de ejecuciones de habilidades.');
 

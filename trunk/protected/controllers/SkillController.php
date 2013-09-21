@@ -50,6 +50,16 @@ class SkillController extends Controller
 			    //Creo la notificación si no es la skill Disimular o tengo ésta activa
                 if (!$this->skillNotification(Yii::app()->skill))
                     throw new CHttpException(400, 'Error al guardar una notificación por habilidad ('.$skill_id.').');
+
+                //Creo una entrada en el historial con la ejecución
+                $hist = new HistorySkillExecution();
+                $hist->skill_id = $skill->id;
+                $hist->caster_id = Yii::app()->skill->caster;
+                $hist->target_final = Yii::app()->skill->finalTarget;
+                $hist->result = Yii::app()->skill->result;
+
+                if (!$hist->save())
+                    throw new CHttpException(400, 'Error al guardar el historial de la ejecución de la habilidad ('.$skill->keyword.'). ['.print_r($hist->getErrors(),true).']');
             }
 		}
 		else {			
