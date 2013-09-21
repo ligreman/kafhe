@@ -19,6 +19,7 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
+		'event_id',
 		'skill_id',
 		'caster_id',
 		'target_final',

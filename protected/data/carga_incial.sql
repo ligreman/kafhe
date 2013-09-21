@@ -211,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `cronpile` (
 
 CREATE TABLE IF NOT EXISTS `history_skill_execution` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `event_id` int(10) NOT NULL,
   `skill_id` int(10) NOT NULL,
   `caster_id` int(10) NOT NULL,
   `target_final` varchar(50) NOT NULL,

@@ -30,6 +30,7 @@
  * @property integer $require_caller
  * @property string $require_user_side
  * @property integer $require_user_min_rank
+ * @property integer $require_user_max_rank
  * @property string $require_user_status
  * @property integer $require_event_status
  * @property integer $require_talent_id
@@ -63,7 +64,7 @@ class Skill extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, description, category, type, keyword, modifier_keyword', 'required'),
-			array('modifier_hidden, duration, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_event_status, require_talent_id', 'numerical', 'integerOnly'=>true),
+			array('modifier_hidden, duration, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_user_max_rank, require_event_status, require_talent_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>128),
 			array('description, require_user_status', 'length', 'max'=>255),
 			array('category', 'length', 'max'=>13),
@@ -73,7 +74,7 @@ class Skill extends CActiveRecord
 			array('require_target_side, require_user_side', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description, category, type, keyword, modifier_keyword, modifier_hidden, duration, duration_type, critic, fail, extra_param, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_status, require_event_status, require_talent_id', 'safe', 'on'=>'search'),
+			array('id, name, description, category, type, keyword, modifier_keyword, modifier_hidden, duration, duration_type, critic, fail, extra_param, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_max_rank, require_user_status, require_event_status, require_talent_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -120,6 +121,7 @@ class Skill extends CActiveRecord
 			'require_caller' => 'Require Caller',
 			'require_user_side' => 'Require User Side',
 			'require_user_min_rank' => 'Require User Min Rank',
+			'require_user_max_rank' => 'Require User Max Rank',
 			'require_user_status' => 'Require User Status',
 			'require_event_status' => 'Require Event Status',
 			'require_talent_id' => 'Require Talent',
@@ -163,6 +165,7 @@ class Skill extends CActiveRecord
 		$criteria->compare('require_caller',$this->require_caller);
 		$criteria->compare('require_user_side',$this->require_user_side,true);
 		$criteria->compare('require_user_min_rank',$this->require_user_min_rank);
+		$criteria->compare('require_user_max_rank',$this->require_user_max_rank);
 		$criteria->compare('require_user_status',$this->require_user_status,true);
 		$criteria->compare('require_event_status',$this->require_event_status);
 		$criteria->compare('require_talent_id',$this->require_talent_id);
