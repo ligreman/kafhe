@@ -23,7 +23,7 @@ if [ -f "$1" ]
     rm -rf kafhe/*
 
     echo "Desplegando $1..."
-    unzip -opp "$1" -d kafhe/
+    unzip -o "$1" -d kafhe/
 
     echo "Modificando archivos de configuración..."
       #Gii
@@ -40,10 +40,21 @@ if [ -f "$1" ]
         sed -i 's/\/\/#finLog/\/\/#finLog*\//g' kafhe/protected/config/*.php
 
       #Email
-        sed -i 's/true,\/\/#testMode/false,\/\/#testMode/g' kafhe/protected/config/*.php
+        sed -i 's/true,\/\/#testMode/false,\/\/#testMode/g' kafhe/protected/config/mail.php
         sed -i 's/@gmail.com/@kafhe.chequerestaurante.com/g' kafhe/protected/config/*.php
         #sed -i "s/'',\/\/#mysqlUsername/'kafhe',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
         #sed -i "s/'',\/\/#mysqlPassword/'F1tsjA5V',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
+
+      #Email usuarios test
+        sed -i 's/mod@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	sed -i 's/test1mod@mail.com/cgoo85@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+        sed -i 's/test2@mail.com/mazzzta.gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+        sed -i 's/test3@mail.com/almavic@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+        sed -i 's/test4@mail.com/migcampo@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+        sed -i 's/test5@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+
+
+
 
 
     echo "Terminado"
