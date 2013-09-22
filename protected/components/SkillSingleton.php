@@ -627,8 +627,8 @@ class SkillSingleton extends CApplicationComponent
             if ($historico!==null) {
                 $repeticiones = 0;
                 foreach ($historico as $historic) {
-                    //Miro si la ejecución era de esta skill y si el resultado fue normal (pifia y crítico no se tienen en cuenta)
-                    if ($historic->skill_id == $skill->id  &&  $historic->result=='normal') {
+                    //Miro si la ejecución era de esta skill y si el resultado fue normal o crítico (pifia no se tiene en cuenta)
+                    if ($historic->skill_id == $skill->id  &&  ($historic->result=='normal' || $historic->result=='critic')) {
                         $repeticiones++;
                     }
                 }
