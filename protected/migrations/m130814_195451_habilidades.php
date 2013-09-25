@@ -139,7 +139,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration'  =>  NULL,       // Int cantidad para la duración
             'duration_type'  =>  NULL,  // horas, evento, usos
             'critic'  =>  10,
-            'fail'  =>  20,
+            'fail'  =>  10,
             'extra_param' => '100',
             'cost_tueste'  =>  250,
             'cost_retueste'  =>  NULL,
@@ -162,7 +162,7 @@ class m130814_195451_habilidades extends CDbMigration
         //PROTEGER GUNGUBOS
         $this->insert('skill', array(
             'name'  =>  'Proteger gungubos',
-            'description'  =>  'Proteges entre 100 y 200 gungubos de tu bando.',
+            'description'  =>  'Proteges entre 50 y 100 gungubos de tu bando.',
             'category'  =>  'gungubos',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'mejora',         // ofensiva, mejora, utilidad
             'keyword'  =>  'protegerGungubos',
@@ -171,7 +171,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration_type'  =>  'evento',  // horas, evento, usos
             'critic'  =>  15,
             'fail'  =>  10,
-            'extra_param' => '200',
+            'extra_param' => '100',
             'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,

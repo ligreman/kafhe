@@ -30,7 +30,7 @@ $aliases = Yii::app()->usertools->getAlias();
 		
 			$nuevas = $notifications['new'];
 			$viejas = $notifications['old'];
-			$hay_mas = $notifications['hay_mas'];
+            $hay_mas = $notifications['hay_mas'];
             $pattern = '/:+([a-z]+):+/i';
 
 			//echo "<br>Nuevas: ".count($nuevas);
@@ -135,7 +135,7 @@ $aliases = Yii::app()->usertools->getAlias();
 				<?php 
 				endforeach;			
 			endif; //viejas
-            if (count($viejas)>0):?>
+            if (count($viejas)<=0):?>
                 <p class="categoriaNotif hidden"><span>Notificaciones leídas</span></p>
             <?php endif;
 		endif;?>
