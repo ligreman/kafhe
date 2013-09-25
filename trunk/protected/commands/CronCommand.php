@@ -63,6 +63,23 @@
     //NOTA no necesitaré comprobar modificadores ya que lo compruebo en cada carga de página y al regenerar tueste en el Cron
 */
 
+
+// #Cada 10 minutos regenero tueste
+// */10 * * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron regenerarTueste
+
+// #Cada hora genero gungubos por criadores
+// * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron criarGungubos
+
+// #Cada hora entre las 7-18 miro a ver si repueblo gungubos
+// 5 7-18 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron repopulateGungubos
+
+// #Cada hora compruebo si hay algo en cola del cronPile
+// * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron processCronPile
+
+// #Todos los días a las 4 de la mañana hago backup de base de datos
+// 0 4 * * * sh /home/kafhe/mysql_backup.sh
+
+
 class CronCommand extends CConsoleCommand {
     public $global_param = true;
 
@@ -176,7 +193,7 @@ class CronCommand extends CConsoleCommand {
                         $event->gungubos_achikhoria += $criados['achikhoria'];
                         $event->stored_tueste_kafhe = 0; //lo pongo a 0 porque se ha utilizado para generar gungubos
                         $event->stored_tueste_achikhoria = 0;
-                        $event->last_gungubos_timestamp = date('Y-m-d H:i:s');
+                        $event->last_gungubos_criadores = date('Y-m-d H:i:s');
                         $event->gungubos_population -= $criados['kafhe']+$criados['achikhoria'];
 
                         if (!$event->save())
@@ -185,7 +202,7 @@ class CronCommand extends CConsoleCommand {
                         echo "Criados ".$criados['kafhe']." gungubos para Kafhe. Evento ".$event->id.".\n";
                         echo "Criados ".$criados['achikhoria']." gungubos para Achikhoria. Evento ".$event->id.".\n";
                     } else
-                        echo "Todavia no puede criar gungubos.\n";
+                        echo "Todavia no puedo criar gungubos en el evento ".$event->id.".\n";
                 }
             }
         } else {
@@ -211,7 +228,7 @@ class CronCommand extends CConsoleCommand {
                 $event->gungubos_achikhoria += $criados['achikhoria'];
                 $event->stored_tueste_kafhe = 0; //lo pongo a 0 porque se ha utilizado para generar gungubos
                 $event->stored_tueste_achikhoria = 0;
-                $event->last_gungubos_timestamp = date('Y-m-d H:i:s');
+                $event->last_gungubos_criadores = date('Y-m-d H:i:s');
                 $event->gungubos_population -= $criados['kafhe']+$criados['achikhoria'];
 
                 if (!$event->save())
@@ -226,9 +243,54 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }
 
+    /** Repuebla los gungubos cada día
+     */
+    public function actionRepopulateGungubos()
+    {
+        //Para todos los eventos de estado "iniciado" (1)
+        $events = Event::model()->findAll(array('condition'=>'status=:status', 'params'=>array(':status'=>Yii::app()->params->statusIniciado)));
+        if ($events != null) {
+            foreach($events as $event) {
+                //Miro a ver si ya he repoblado hoy en este evento
+                if (date('Y-m-d') == $event->last_gungubos_repopulation) {
+                    echo "Todavía no se puede repoblar en el evento ".$event->id.".\n";
+                    continue;
+                }
+
+                //A ver si el random dice que toca en esta hora. Repoblaré de 7am a 18pm.
+                $hora = intval(date('H'));
+                if ($hora>=7 && $hora<=18) { //Si son las 18 he de repoblar sí o sí, por lo que no comprobaré nada
+                    $rand = mt_rand($hora,18);
+                    if ($hora != $rand) { //Si es distino nada, no toca
+                        echo "Ahora no toca repoblar en el evento ".$event->id.".\n";
+                        continue;
+                    }
+                } elseif ($hora>18 && $hora<7) { //Las 18 la dejo fuera para repoblar sí o sí
+                    echo "Los gungubos están dormidos, estas no son horas de repoblar en el evento ".$event->id.".\n";
+                    continue;
+                }
+
+                //Repueblo gungubos en el evento
+                $cuantos = mt_rand(7,13)*100;
+                $event->gungubos_population += $cuantos; //Repueblo
+
+                //Pongo la fecha de hoy
+                $event->last_gungubos_repopulation = date('Y-m-d');
+
+                if (!$event->save())
+                    echo "** ERROR al guardar el evento (".$event->id.") repoblando gungubos.\n";
+
+                echo "Repoblados ".$cuantos." gungubos en el evento ".$event->id.".\n";
+            }
+        }
+
+        return 0;
+    }
+
     /** Procesa la pila de tareas Cron
      */
-    public function actionProcessCronPile() {
+    public function actionProcessCronPile()
+    {
         $pila = Cronpile::model()->findAll();
 
         echo "Hay ".count($pila)." tareas en la pila de Cron.\n";
