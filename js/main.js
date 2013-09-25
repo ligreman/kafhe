@@ -184,7 +184,7 @@ function loadMoreNotifications(){
         date = $('#muro article:last').attr('data-rel');
         type = $('#muro article:last').attr('class');
         if($('.categoriaNotif').is(':visible')){
-            type = type.replace('notification','').replace('first','').replace(' ','');
+            type = type.replace('notification','').replace('first','').replace(' ','').replace('unread','');
         }else{
             type="";
         }
@@ -198,10 +198,8 @@ function loadMoreNotifications(){
                     $('#moreNotifications').addClass('categoriaNotif');
                     $('#moreNotifications').html('<span>No hay más notificaciones</span>');
                 }else{
-                    if($('.categoriaNotif:first').is('.hidden')){
-                        $(".categoriaNotif.hidden").addClass("visible");
-                        $(".categoriaNotif.hidden").removeClass("hidden");
-                    }
+                    $(".categoriaNotif.hidden").addClass("visible");
+                    $(".categoriaNotif.hidden").removeClass("hidden");
                     $('#moreNotifications').detach();
                     $('#muro').html($('#muro').html()+data);
                     resizeNavBar();

@@ -410,6 +410,15 @@ label.title{
     padding: 1em 0;
 }
 
+.otherDay{
+    text-align: center;
+    padding: .8em 0;
+}
+
+.otherDay a{
+    font-size: .8em;
+}
+
 .btn, .btn:focus{
     border-style: solid;
     border-radius: 3px;
@@ -846,7 +855,7 @@ img.grayScale{
 }
 
 #skillsUserBlock span.rojo {
-    color: #D00000;
+    color: #bf3950;
 }
 
 #loginSection{
