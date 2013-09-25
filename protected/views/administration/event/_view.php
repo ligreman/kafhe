@@ -37,8 +37,12 @@
 	<?php echo CHtml::encode($data->gungubos_achikhoria); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('last_gungubos_timestamp')); ?>:</b>
-	<?php echo CHtml::encode($data->last_gungubos_timestamp); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('last_gungubos_repopulation')); ?>:</b>
+	<?php echo CHtml::encode($data->last_gungubos_repopulation); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('last_gungubos_criadores')); ?>:</b>
+	<?php echo CHtml::encode($data->last_gungubos_criadores); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('stored_tueste_kafhe')); ?>:</b>

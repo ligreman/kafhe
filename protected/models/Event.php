@@ -13,7 +13,8 @@
  * @property integer $gungubos_population
  * @property integer $gungubos_kafhe
  * @property integer $gungubos_achikhoria
- * @property string $last_gungubos_timestamp
+ * @property string $last_gungubos_repopulation
+ * @property string $last_gungubos_criadores
  * @property integer $stored_tueste_kafhe
  * @property integer $stored_tueste_achikhoria
  * @property string $type
@@ -51,10 +52,10 @@ class Event extends CActiveRecord
 			array('group_id, caller_id, relauncher_id, status, gungubos_population, gungubos_kafhe, gungubos_achikhoria, stored_tueste_kafhe, stored_tueste_achikhoria', 'numerical', 'integerOnly'=>true),
 			array('caller_side', 'length', 'max'=>10),
 			array('type', 'length', 'max'=>8),
-			array('last_gungubos_timestamp', 'safe'),
+			array('last_gungubos_repopulation, last_gungubos_criadores', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, group_id, caller_id, caller_side, relauncher_id, status, gungubos_population, gungubos_kafhe, gungubos_achikhoria, last_gungubos_timestamp, stored_tueste_kafhe, stored_tueste_achikhoria, type, date', 'safe', 'on'=>'search'),
+			array('id, group_id, caller_id, caller_side, relauncher_id, status, gungubos_population, gungubos_kafhe, gungubos_achikhoria, last_gungubos_repopulation, last_gungubos_criadores, stored_tueste_kafhe, stored_tueste_achikhoria, type, date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,10 +82,11 @@ class Event extends CActiveRecord
 			'caller_side' => 'Caller Side',
 			'relauncher_id' => 'Relauncher',
 			'status' => 'Status',
-            'gungubos_population' => 'Población de Gungubos',
+			'gungubos_population' => 'Gungubos Population',
 			'gungubos_kafhe' => 'Gungubos Kafhe',
 			'gungubos_achikhoria' => 'Gungubos Achikhoria',
-			'last_gungubos_timestamp' => 'Last Gungubos Timestamp',
+			'last_gungubos_repopulation' => 'Last Gungubos Repopulation',
+			'last_gungubos_criadores' => 'Last Gungubos Criadores',
 			'stored_tueste_kafhe' => 'Stored Tueste Kafhe',
 			'stored_tueste_achikhoria' => 'Stored Tueste Achikhoria',
 			'type' => 'Type',
@@ -109,10 +111,11 @@ class Event extends CActiveRecord
 		$criteria->compare('caller_side',$this->caller_side,true);
 		$criteria->compare('relauncher_id',$this->relauncher_id);
 		$criteria->compare('status',$this->status);
-        $criteria->compare('gungubos_population',$this->gungubos_population);
+		$criteria->compare('gungubos_population',$this->gungubos_population);
 		$criteria->compare('gungubos_kafhe',$this->gungubos_kafhe);
 		$criteria->compare('gungubos_achikhoria',$this->gungubos_achikhoria);
-		$criteria->compare('last_gungubos_timestamp',$this->last_gungubos_timestamp,true);
+		$criteria->compare('last_gungubos_repopulation',$this->last_gungubos_repopulation,true);
+		$criteria->compare('last_gungubos_criadores',$this->last_gungubos_criadores,true);
 		$criteria->compare('stored_tueste_kafhe',$this->stored_tueste_kafhe);
 		$criteria->compare('stored_tueste_achikhoria',$this->stored_tueste_achikhoria);
 		$criteria->compare('type',$this->type,true);

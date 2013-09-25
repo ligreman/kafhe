@@ -29,10 +29,24 @@ return array(
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
-				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
-				),
+                array(
+                    'class'=>'CFileLogRoute',
+                    'logPath'=>'logs',
+                    'logFile'=>date('Y-m-d').'-error.log',
+                    'levels'=>'error, warning',
+                ),
+                array(
+                    'class'=>'CFileLogRoute',
+                    'logPath'=>'logs',
+                    'logFile'=>date('Y-m-d').'-trace.log',
+                    'levels'=>'profile, trace',
+                ),
+                array(
+                    'class'=>'CFileLogRoute',
+                    'logPath'=>'logs',
+                    'logFile'=>date('Y-m-d').'-info.log',
+                    'levels'=>'info',
+                ),
 			),
 		),
 		
