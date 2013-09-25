@@ -13,7 +13,7 @@ class GungubosSingleton extends CApplicationComponent
     {		
         if ($checkTime) {
             //Compruebo si ha pasado el tiempo suficiente para criar en el evento
-            $last_born = strtotime($event->last_gungubos_timestamp);
+            $last_born = strtotime($event->last_gungubos_criadores);
             
             if (time() < ($last_born + intval(Yii::app()->config->getParam('tiempoCriaGungubos')) ) )
                 return false; //no ha pasado el tiempo suficiente
