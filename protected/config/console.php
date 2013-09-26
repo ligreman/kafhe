@@ -31,20 +31,20 @@ return array(
 			'routes'=>array(
                 array(
                     'class'=>'CFileLogRoute',
-                    'logPath'=>'logs',
-                    'logFile'=>date('Y-m-d').'-error.log',
+                    //'logPath'=>'logs',
+                    'logFile'=>date('Y-m-d').'-console-error.log',
                     'levels'=>'error, warning',
                 ),
                 array(
                     'class'=>'CFileLogRoute',
-                    'logPath'=>'logs',
-                    'logFile'=>date('Y-m-d').'-trace.log',
+                    //'logPath'=>'logs',
+                    'logFile'=>date('Y-m-d').'-console-trace.log',
                     'levels'=>'profile, trace',
                 ),
                 array(
                     'class'=>'CFileLogRoute',
-                    'logPath'=>'logs',
-                    'logFile'=>date('Y-m-d').'-info.log',
+                    //'logPath'=>'logs',
+                    'logFile'=>date('Y-m-d').'-console-info.log',
                     'levels'=>'info',
                 ),
 			),
