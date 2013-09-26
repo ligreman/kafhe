@@ -247,6 +247,7 @@ class CronCommand extends CConsoleCommand {
      */
     public function actionRepopulateGungubos()
     {
+        //Yii::log('CCCXXX', 'info');
         //Para todos los eventos de estado "iniciado" (1)
         $events = Event::model()->findAll(array('condition'=>'status=:status', 'params'=>array(':status'=>Yii::app()->params->statusIniciado)));
         if ($events != null) {
