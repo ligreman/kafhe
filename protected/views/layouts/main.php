@@ -1,9 +1,11 @@
 <?php
     $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii::app()->request->cookies['userPanelHidden']->value : '1';
-    define('KAFHE','kafhe');
-    define('ACHIKHORIA','achikhoria');
-    define('OMELETTUS','omelettus');
-    define('SYSTEM','system');
+    if(!defined('KAFHE')){
+        define('KAFHE','kafhe');
+        define('ACHIKHORIA','achikhoria');
+        define('OMELETTUS','omelettus');
+        define('SYSTEM','system');
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,6 +27,7 @@
         <?php
             Yii::app()->clientScript->registerCoreScript('jquery'); //JQuery viene con Yii, simplemente lo cojo del Core para no duplicarlo
             Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.cookie.js');
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/sly.min.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/main.js');
         ?>
 
