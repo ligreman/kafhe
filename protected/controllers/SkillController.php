@@ -30,7 +30,7 @@ class SkillController extends Controller
 	{	
 		//Obtengo la skill y mi usuario
 		$skill = Skill::model()->findByPk($skill_id);
-		//$user = Yii::app()->currentUser->model;
+		$caster = Yii::app()->currentUser->model;
 		if ($target_id!==null) {
 			/*if (is_numeric($target_id)) //$target_id!='kafhe' && $target_id!='achikhoria' && $target_id!='libre')
 				$target = User::model()->findByPk($target_id);
@@ -47,6 +47,18 @@ class SkillController extends Controller
 			if (!Yii::app()->skill->executeSkill($skill, $target, $side)) {
                 Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".Yii::app()->skill->error);
 			} else {
+           //Doy experiencia por ejecutar la habilidad
+           $exp_ganada = round(Yii::app()->config->getParam('expPorcentajeHabilidadPorTueste')*$skill->cost_tueste/100) + round(Yii::app()->config->getParam('expPorcentajeHabilidadPorRetueste')*$skill->cost_retueste/100);
+           $caster->experience += $exp_ganada;
+           if ($caster->experience >= Yii::app()->config->getParam('maxExperienciaUsuario')) {
+              //Subo de nivel
+              $caster->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
+              $caster->sugarcubes += 1; //Sumo un azucarillo
+           }
+           
+           if (!$caster->save())
+                    throw new CHttpException(400, 'Error al guardar el usuario '.$caster->id.' tras darle experiencia por ejecutar una habilidad ('.$skill_id.').');           
+           
 			    //Creo la notificación si no es la skill Disimular o tengo ésta activa
                 if (!$this->skillNotification(Yii::app()->skill))
                     throw new CHttpException(400, 'Error al guardar una notificación por habilidad ('.$skill_id.').');
