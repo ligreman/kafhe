@@ -12,6 +12,28 @@ $(document).ready(function() {
     loadMoreNotifications();
     askForNews();
     $('#LoginForm_username').focus();
+    //DESCOMENTAR SI NO SE USA SLY
+    //$('#skillsUserBlock ul').width($('#skillsUserBlock ul li').outerWidth()*$('#skillsUserBlock ul li').size());
+    //DESCOMENTAR SI SE USA SLY
+    //var $frame = $('#skillsUserBlock');
+    /*var sly = new Sly($frame, {
+        horizontal: 1,
+        itemNav: 'centered',
+        activateMiddle: 1,
+        smart: 1,
+        activateOn: 'click',
+        mouseDragging: 1,
+        touchDragging: 1,
+        releaseSwing: 1,
+        startAt: 10,
+        activatePageOn: 'click',
+        speed: 400,
+        moveBy: 800,
+        elasticBounds: 1,
+        dragHandle: 1,
+        dynamicHandle: 1,
+        clickBar: 1
+    }).init();*/
 });
 
 function resizeNavBar(){

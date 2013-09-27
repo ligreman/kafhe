@@ -751,19 +751,21 @@ img.grayScale{
 
 #skillsUserBlock{
     height: 5em;
-    padding: 0 3em;
+    /*padding: 0 3em;*/
     background: #9acfad;
 }
 
 #skillsUserBlock ul{
+    /*margin: 0 auto;*/
     text-align: center;
+    padding:0 1.5em;
 }
 
 #skillsUserBlock li{
     list-style: none;
+    /*float: left;*/
     display: inline-block;
-    padding: 6px 0 0 0;
-    width: 6em;
+    padding: 6px 1.5em 0;
 }
 
 .skillDescription{
