@@ -1384,7 +1384,6 @@ p.bebida{
 }
 
 #numberUnreadNotifications{
-    display:none;
     position: absolute;
     right: 17.5em;
     top: 3.5em;
@@ -1395,6 +1394,7 @@ p.bebida{
     height: .7em;
     padding: .2em .4em 0.6em;
     text-align: center;
+    cursor: pointer;
 }
 
 #numberUnreadNotifications.kafhe{
