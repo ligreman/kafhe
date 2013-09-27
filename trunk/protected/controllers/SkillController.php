@@ -51,7 +51,11 @@ class SkillController extends Controller
                 if (Yii::app()->skill->result != 'fail') {
                     $exp_ganada = round(Yii::app()->config->getParam('expPorcentajeHabilidadPorTueste')*$skill->cost_tueste/100) + round(Yii::app()->config->getParam('expPorcentajeHabilidadPorRetueste')*$skill->cost_retueste/100);
                     $caster->experience += $exp_ganada;
-                    Yii::app()->usertools->checkLvlUpUser($caster);
+                    Yii::app()->usertools->checkLvlUpUser($caster, false);
+
+                    //Salvo
+                    if (!$caster->save())
+                        throw new CHttpException(400, 'Error al guardar el usuario '.$user->id.' tras obtener experiencia por habilidad ('.$skill->id.').');
                 }
 
 			    //Creo la notificación si no es la skill Disimular o tengo ésta activa
