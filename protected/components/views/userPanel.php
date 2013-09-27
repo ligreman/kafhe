@@ -72,13 +72,14 @@
         <p class="dato">
             <span class="numero">3</span>
             <span class="concepto">cofres</span>
-        </p>
+        </p>*/
+        ?>
 
         <p class="dato">
             <span class="numero"><?php echo $user->sugarcubes; ?></span>
             <span class="concepto">azucarillos</span>
         </p>
-        */ ?>
+
 
         <p class="dato">
             <span class="numero"><?php echo $user->ptos_relanzamiento; ?></span>
