@@ -237,22 +237,12 @@ function askForNews(){
 }
 
 function prepareUnreadNotifications(){
-    $("#notificationsMainLink").click(function(){
+    $("#notificationsMainLink, #numberUnreadNotifications").click(function(){
         $visible = false;
         if($("#unreadSelfNotificationsList").is(":visible")) $visible = true;
 
         $("#unreadSelfNotificationsList").toggle();
 
-        if($visible){
-            $("#numberUnreadNotifications").hide();
-        }
-
         return false;
     });
-
-    $num = $("#unreadSelfNotificationsList li").size();
-    if($num > 0){
-        $("#numberUnreadNotifications").text($num);
-        $("#numberUnreadNotifications").show();
-    }
 }
