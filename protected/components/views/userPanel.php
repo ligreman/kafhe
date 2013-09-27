@@ -64,11 +64,17 @@
         </p>
 
         <p class="dato">
+            <span class="numero"><?php echo $user->ptos_relanzamiento; ?></span>
+            <span class="concepto">p. relance</span>
+        </p>
+
+        <?php /*
+        <p class="dato">
             <span class="numero"><?php echo $user->tostolares; ?></span>
             <span class="concepto">tostólares</span>
         </p>
 
-        <?php /*
+
         <p class="dato">
             <span class="numero">3</span>
             <span class="concepto">cofres</span>
@@ -80,11 +86,6 @@
             <span class="concepto">azucarillos</span>
         </p>
 
-
-        <p class="dato">
-            <span class="numero"><?php echo $user->ptos_relanzamiento; ?></span>
-            <span class="concepto">p. relance</span>
-        </p>
 
         <p id="skillsIcon">
             <a>
