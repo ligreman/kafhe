@@ -55,12 +55,11 @@
                                 $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
                                 echo CHtml::link($img,array('/'),array('id' => 'notificationsMainLink'));
                             ?>
-                                <span id="numberUnreadNotifications" class="<?php echo Yii::app()->currentUser->side;?>"></span>
-
                                 <?php
                                     $notifications = Yii::app()->usertools->getNotificationsForUser();
                                     if(count($notifications)>0):?>
                                         <?php $aliases = Yii::app()->usertools->getAlias();?>
+                                        <span id="numberUnreadNotifications" class="<?php echo Yii::app()->currentUser->side;?>"><?php echo count($notifications);?></span>
                                         <ul id="unreadSelfNotificationsList">
                                             <?php foreach($notifications as $n):?>
                                                 <?php
