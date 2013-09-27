@@ -1048,7 +1048,7 @@ img.grayScale{
 
 .kafhepin:hover .title, .pin:hover .title, .librepin:hover .title{
     position: relative;
-    top: -2.5em;
+    top: -2.2em;
     left: -5.5em;
     background: white;
     color: #363636;
@@ -1059,6 +1059,7 @@ img.grayScale{
     padding: 4px;
     border-radius: 3px;
     overflow: visible;
+    z-index: 9999;
 }
 
 #battleStatus .w0 .pin:hover .title, #battleStatus .w1 .pin:hover .title, #battleStatus .w2 .pin:hover .title{
