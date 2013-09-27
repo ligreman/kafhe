@@ -235,4 +235,8 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('informacionCafeteria', 'El Espiral (987 213 178)', 'Información', 'Datos de la cafetería a la que se llama.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('sobrecargaPorcentajeTuesteExtra', '25', 'Juego', 'Porcentaje de tueste extra que cuesta una habilidad por cada vez que aparece en el histórico de ejecuciones.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('sobrecargaTamañoHistorico', '3', 'Juego', 'Tamaño del histórico de ejecuciones de habilidades.');
-
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('expParticipar', '500', 'Juego', 'Experiencia recibida por participar en un evento.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('expNoLlamar', '500', 'Juego', 'Experiencia recibida por evitar llamar en un evento.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('expPorRango', '250', 'Juego', 'Experiencia recibida por evitar llamar en un evento, por cada rango que tengas a partir de 1.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('expPorcentajeHabilidadPorTueste', '10', 'Juego', 'Experiencia recibida por ejecutar una habilidad. Porcentaje del coste de tueste.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('expPorcentajeHabilidadPorRetueste', '20', 'Juego', 'Experiencia recibida por ejecutar una habilidad. Porcentaje del coste de retueste.');
