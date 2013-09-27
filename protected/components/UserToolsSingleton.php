@@ -169,4 +169,21 @@ class UserToolsSingleton extends CApplicationComponent
         else return $eventoPasado->caller_side;
     }
 
+    /**
+     * Devuelve un listado con las notificaciones de las que es objetivo el usuario, ya sea como objetivo directo,
+     * o como parte de un objetivo mayor (grupo o broadcast)
+     * @param $userId Id del usuario del que se desean conocer las notificaciones
+     */
+    public function getNotificationsForUser(){
+        $criteria = New CDbCriteria;
+
+        $criteria->condition = '((recipient_final=:userId AND sender !=:userId AND type!="system") OR (type="omelettus")) AND timestamp>:userLastRead';
+
+        $criteria->params = array(':userId'=>Yii::app()->currentUser->id, ':userLastRead' => Yii::app()->currentUser->getLastNotificationRead());
+        $criteria->order = 'timestamp, id DESC';
+
+        $notifications = Notification::model()->findAll($criteria);
+        return $notifications;
+    }
+
 }
