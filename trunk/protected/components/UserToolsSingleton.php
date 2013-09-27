@@ -77,6 +77,32 @@ class UserToolsSingleton extends CApplicationComponent
         return $user;
     }
 
+    public function checkLvlUpUser(&$user, $save=true)
+    {
+        //Compruebo si sube nivel
+        if ($user->experience >= Yii::app()->config->getParam('maxExperienciaUsuario')) {
+            //Subo de nivel
+            $user->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
+            $user->sugarcubes += 1; //Sumo un azucarillo
+
+            //Salvo
+            if ($save) {
+                if (!$user->save())
+                    throw new CHttpException(400, 'Error al guardar el usuario '.$user->id.' tras subir nivel.');
+            }
+
+            //Notificación
+            $nota = new Notification;
+            $nota->recipient_original = $user->id;
+            $nota->recipient_final = $user->id;
+            $nota->message = '¡Felicidades! Has aumentado tu conocimiento en los talentos y artes Omelettianas. Ganas un azucarillo.'; //Mensaje para el muro
+            $nota->type = 'system';
+
+            if (!$nota->save())
+                throw new CHttpException(400, 'Error al guardar una notificación por subir nivel al usuario ('.$user->id.').');
+        }
+    }
+
 
     /** Calculo las probabilidades para cada usuario del grupo
      * @param bool $soloAlistados True si sólo quiero tener en cuenta los alistados.
