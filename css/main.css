@@ -700,9 +700,34 @@ label.title{
     top:-3.5em;
 }
 
-#xp0 .pin:hover .title{
+#experiencia .w1 .pin:hover .title{
     top:-3.5em;
     left:1em;
+}
+
+#experiencia .w2 .pin:hover .title,#experiencia .w3 .pin:hover .title{
+    top:-3.5em;
+    left:0em;
+}
+
+#experiencia .w4 .pin:hover .title,#experiencia .w5 .pin:hover .title{
+    top:-3.5em;
+    left:-2em;
+}
+
+#experiencia .w95 .pin:hover .title,#experiencia .w96 .pin:hover .title{
+    top:-3.5em;
+    left:-7em;
+}
+
+#experiencia .w97 .pin:hover .title,#experiencia .w98 .pin:hover .title{
+    top:-3.5em;
+    left:-9em;
+}
+
+#experiencia .w99 .pin:hover .title,#experiencia .w100 .pin:hover .title{
+    top:-3.5em;
+    left:-11em;
 }
 
 .dato{
