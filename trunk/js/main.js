@@ -244,18 +244,13 @@ function prepareUnreadNotifications(){
         $("#unreadSelfNotificationsList").toggle();
 
         if($visible){
-            $("#unreadSelfNotificationsList").addClass("read");
             $("#numberUnreadNotifications").hide();
         }
 
         return false;
     });
 
-    $("article.unread[target-rel=self]").not(".unread[sender-rel=self]").each(function(index){
-        $("#unreadSelfNotificationsList").append('<li><strong>'+$(this).children('h1').text()+'</strong>: '+$(this).children('.notification_message').text()+'</li>');
-    });
-
-    $num = $("article.unread[target-rel=self]").not(".unread[sender-rel=self]").size();
+    $num = $("#unreadSelfNotificationsList li").size();
     if($num > 0){
         $("#numberUnreadNotifications").text($num);
         $("#numberUnreadNotifications").show();

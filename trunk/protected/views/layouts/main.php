@@ -1,5 +1,9 @@
 <?php
     $userPanelHidden = isset(Yii::app()->request->cookies['userPanelHidden']) ? Yii::app()->request->cookies['userPanelHidden']->value : '1';
+    define('KAFHE','kafhe');
+    define('ACHIKHORIA','achikhoria');
+    define('OMELETTUS','omelettus');
+    define('SYSTEM','system');
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,8 +56,23 @@
                                 echo CHtml::link($img,array('/'),array('id' => 'notificationsMainLink'));
                             ?>
                                 <span id="numberUnreadNotifications" class="<?php echo Yii::app()->currentUser->side;?>"></span>
-                                <ul id="unreadSelfNotificationsList">
-                                </ul>
+
+                                <?php
+                                    $notifications = Yii::app()->usertools->getNotificationsForUser();
+                                    if(count($notifications)>0):?>
+                                        <?php $aliases = Yii::app()->usertools->getAlias();?>
+                                        <ul id="unreadSelfNotificationsList">
+                                            <?php foreach($notifications as $n):?>
+                                                <?php
+                                                if($n->type == OMELETTUS) $nombre = 'Omelettus';
+                                                elseif($n->type == SYSTEM) $nombre = 'System';
+                                                else $nombre = $aliases[$n->sender];
+                                                ?>
+                                                <li><strong><?php echo $nombre;?></strong>: <?php echo $n->message;?></li>
+                                            <?php endforeach;?>
+                                        </ul>
+                                <?php endif;?>
+
                             </li>
                             <li>
                             <?php
