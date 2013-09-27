@@ -214,7 +214,14 @@ class EventController extends Controller
 				$usuario->rank = 1;
 				$usuario->side = 'libre';
 				$usuario->status = Yii::app()->params->statusIluminado;
-				//Salvo
+        $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
+           if ($usuario->experience > Yii::app()->config->getParam('maxExperienciaUsuario')) {
+             //Subo de nivel
+             $usuario->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
+             $usuario->sugarcubes += 1; //Sumo un azucarillo
+           }
+
+        //Salvo
 				if (!$usuario->save())
 					throw new CHttpException(400, 'Error al actualizar al usuario '.$usuario->id.' llamador, al cerrar el evento '.$event->id.'. ['.print_r($usuario->getErrors(),true).']');
 			} elseif ($usuario->status==Yii::app()->params->statusAlistado) {
@@ -222,6 +229,13 @@ class EventController extends Controller
 				$usuario->rank++;
 				$usuario->times++;
 				$usuario->status = Yii::app()->params->statusCriador;
+        $usuario->experience += ( Yii::app()->config->getParam('expParticipar') + Yii::app()->config->getParam('expNoLlamar') + ( ($usuario->rank-2) * Yii::app()->config->getParam('expPorRango') ) ); //Experiencia por participar + NoLLamar + Rango (de rango 1 a 2 no ganas exp)
+        if ($usuario->experience > Yii::app()->config->getParam('maxExperienciaUsuario')) {
+          //Subo de nivel
+          $usuario->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
+          $usuario->sugarcubes += 1; //Sumo un azucarillo
+        }
+           
 				$new_usuarios[$usuario->id] = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusIluminado) {
 				//Si era "libre" pero no fue al desayuno
@@ -232,6 +246,13 @@ class EventController extends Controller
 				$usuario->rank++;
 				$usuario->times++;
 				$usuario->status = Yii::app()->params->statusCriador;
+        $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
+        if ($usuario->experience > Yii::app()->config->getParam('maxExperienciaUsuario')) {
+          //Subo de nivel
+          $usuario->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
+          $usuario->sugarcubes += 1; //Sumo un azucarillo
+        }
+        
 				$anterior_llamador = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusCriador  ||  $usuario->status==Yii::app()->params->statusCazador) {
 				//Al resto sólo les pongo de criadores
