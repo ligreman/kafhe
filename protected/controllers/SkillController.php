@@ -47,18 +47,13 @@ class SkillController extends Controller
 			if (!Yii::app()->skill->executeSkill($skill, $target, $side)) {
                 Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".Yii::app()->skill->error);
 			} else {
-           //Doy experiencia por ejecutar la habilidad
-           $exp_ganada = round(Yii::app()->config->getParam('expPorcentajeHabilidadPorTueste')*$skill->cost_tueste/100) + round(Yii::app()->config->getParam('expPorcentajeHabilidadPorRetueste')*$skill->cost_retueste/100);
-           $caster->experience += $exp_ganada;
-           if ($caster->experience >= Yii::app()->config->getParam('maxExperienciaUsuario')) {
-              //Subo de nivel
-              $caster->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
-              $caster->sugarcubes += 1; //Sumo un azucarillo
-           }
-           
-           if (!$caster->save())
-                    throw new CHttpException(400, 'Error al guardar el usuario '.$caster->id.' tras darle experiencia por ejecutar una habilidad ('.$skill_id.').');           
-           
+                //Doy experiencia por ejecutar la habilidad si no es pifia
+                if (Yii::app()->skill->result != 'fail') {
+                    $exp_ganada = round(Yii::app()->config->getParam('expPorcentajeHabilidadPorTueste')*$skill->cost_tueste/100) + round(Yii::app()->config->getParam('expPorcentajeHabilidadPorRetueste')*$skill->cost_retueste/100);
+                    $caster->experience += $exp_ganada;
+                    Yii::app()->usertools->checkLvlUpUser($caster);
+                }
+
 			    //Creo la notificación si no es la skill Disimular o tengo ésta activa
                 if (!$this->skillNotification(Yii::app()->skill))
                     throw new CHttpException(400, 'Error al guardar una notificación por habilidad ('.$skill_id.').');
