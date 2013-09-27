@@ -215,7 +215,7 @@ class EventController extends Controller
 				$usuario->side = 'libre';
 				$usuario->status = Yii::app()->params->statusIluminado;
         $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
-           if ($usuario->experience > Yii::app()->config->getParam('maxExperienciaUsuario')) {
+           if ($usuario->experience >= Yii::app()->config->getParam('maxExperienciaUsuario')) {
              //Subo de nivel
              $usuario->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
              $usuario->sugarcubes += 1; //Sumo un azucarillo
@@ -230,7 +230,7 @@ class EventController extends Controller
 				$usuario->times++;
 				$usuario->status = Yii::app()->params->statusCriador;
         $usuario->experience += ( Yii::app()->config->getParam('expParticipar') + Yii::app()->config->getParam('expNoLlamar') + ( ($usuario->rank-2) * Yii::app()->config->getParam('expPorRango') ) ); //Experiencia por participar + NoLLamar + Rango (de rango 1 a 2 no ganas exp)
-        if ($usuario->experience > Yii::app()->config->getParam('maxExperienciaUsuario')) {
+        if ($usuario->experience >= Yii::app()->config->getParam('maxExperienciaUsuario')) {
           //Subo de nivel
           $usuario->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
           $usuario->sugarcubes += 1; //Sumo un azucarillo
@@ -247,7 +247,7 @@ class EventController extends Controller
 				$usuario->times++;
 				$usuario->status = Yii::app()->params->statusCriador;
         $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
-        if ($usuario->experience > Yii::app()->config->getParam('maxExperienciaUsuario')) {
+        if ($usuario->experience >= Yii::app()->config->getParam('maxExperienciaUsuario')) {
           //Subo de nivel
           $usuario->experience -= Yii::app()->config->getParam('maxExperienciaUsuario'); //Quito el máximo
           $usuario->sugarcubes += 1; //Sumo un azucarillo
