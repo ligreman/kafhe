@@ -47,7 +47,7 @@ if [ -f "$1" ]
 
       #Email usuarios test
         sed -i 's/mod@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-	sed -i 's/test1mod@mail.com/cgoo85@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	sed -i 's/test1@mail.com/cgoo85@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
         sed -i 's/test2@mail.com/mazzzta.gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
         sed -i 's/test3@mail.com/almavic@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
         sed -i 's/test4@mail.com/migcampo@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php

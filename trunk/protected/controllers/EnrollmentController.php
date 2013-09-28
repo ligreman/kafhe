@@ -131,7 +131,7 @@ class EnrollmentController extends Controller
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusAlistado)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Se ha alistado en el bando de '.Yii::app()->currentUser->side;
+                        $message = ':'.Yii::app()->currentUser->side.': Se ha alistado en el bando de '.ucfirst(Yii::app()->currentUser->side);
 					}
 
                     //Si ha cambiado de estado creo la notificación, es decir, si hay mensaje
@@ -139,7 +139,7 @@ class EnrollmentController extends Controller
                         $nota = new Notification;
                         $nota->recipient_original = Yii::app()->currentUser->id;
                         $nota->recipient_final = Yii::app()->currentUser->id;
-                        $nota->message = $message; //Mensaje para el muro
+                        $nota->message = $message.'.'; //Mensaje para el muro
                         $nota->type = Yii::app()->currentUser->side;
                         $nota->sender = Yii::app()->currentUser->id;
 
@@ -168,13 +168,13 @@ class EnrollmentController extends Controller
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Ha causado baja del bando de '.Yii::app()->currentUser->side;
+                        $message = ':'.Yii::app()->currentUser->side.': Ha causado baja del bando de '.ucfirst(Yii::app()->currentUser->side);
 					}
 
                     $nota = new Notification;
                     $nota->recipient_original = Yii::app()->currentUser->id;
                     $nota->recipient_final = Yii::app()->currentUser->id;
-                    $nota->message = $message; //Mensaje para el muro
+                    $nota->message = $message.'.'; //Mensaje para el muro
                     $nota->type = Yii::app()->currentUser->side;
                     $nota->sender = Yii::app()->currentUser->id;
 
