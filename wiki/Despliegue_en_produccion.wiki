@@ -10,7 +10,7 @@ El despliegue o pase a producción se realiza mediante un script que se encuentr
 Lo primero es hacer un zip con toda la carpeta trunk del entorno de desarrollo. Para ello:
 
   # Borrar el contenido "basura" de las carpetas *assets* (vaciarla) y *logs* (borrar los archivos de log y los correos almacenados .eml).
-  # Empaquetar en un zip toda la carpeta trunk. Pinchamos sobre *trunk* y le damos a comprimir en un zip. La estructura de este zip debe contener una carpeta trunk y dentro todo el contenido.
+  # Empaquetar en un zip toda la carpeta trunk. Pinchamos sobre *trunk* y le damos a comprimir en un zip. La estructura de este zip puede crearse así conteniendo la carpeta trunk, o bien sin ella con todo el contenido directamente. Funciona de ambas maneras.
   # Por último nos conectamos al FTP y subimos el zip en el directorio en donde se encuentra el script desplegar.sh.
 
 == Despliegue de la nueva versión ==
