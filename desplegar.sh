@@ -1,19 +1,11 @@
 #!/bin/bash
 
 FECHA=`date +%d%m%Y`
+DIR=kafhe/trunk
 
-#if [ "$1" == "0" ]
-#  then
-#    echo "Falta un parámetro, el archivo a desplegar. Formato: desplegar <archivo.zip>"
 if [ -f "$1" ]
   then
     echo "Creando backup..."
-
-    #if [ -f "backup-${FECHA}.zip" ]
-    #  then
-    #    rm backup-${FECHA}.zip
-    #fi
-    
     tar -zcf backups/backup-${FECHA}.tar.gz kafhe/*
 
     echo "Creando backup de base de datos..."
@@ -24,6 +16,14 @@ if [ -f "$1" ]
 
     echo "Desplegando $1..."
     unzip -o "$1" -d kafhe/
+
+    #compruebo si el zip tenia una carpeta trunk o no
+    if [ -d $DIR ]
+      then
+        echo "Moviendo contenido de la carpeta trunk a raíz"
+	mv kafhe/trunk/* kafhe/
+	rm -r kafhe/trunk
+    fi
 
     echo "Modificando archivos de configuración..."
       #Gii
