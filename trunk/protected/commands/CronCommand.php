@@ -248,12 +248,14 @@ class CronCommand extends CConsoleCommand {
     public function actionRepopulateGungubos()
     {
         //Yii::log('CCCXXX', 'info');
+        echo "Iniciando repoblación\n";
+
         //Para todos los eventos de estado "iniciado" (1)
         $events = Event::model()->findAll(array('condition'=>'status=:status', 'params'=>array(':status'=>Yii::app()->params->statusIniciado)));
         if ($events != null) {
             foreach($events as $event) {
                 //Miro a ver si ya he repoblado hoy en este evento
-                if (date('Y-m-d') == $event->last_gungubos_repopulation) {
+                if ($event->last_gungubos_repopulation!=""  &&  date('Y-m-d') == $event->last_gungubos_repopulation) {
                     echo "Todavía no se puede repoblar en el evento ".$event->id.".\n";
                     continue;
                 }
