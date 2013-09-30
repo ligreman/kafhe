@@ -125,8 +125,8 @@ class CronCommand extends CConsoleCommand {
 
                         echo "    Usuario ".$usuario->username." - Tueste regenerado: " . $regenerado."\n";
 
-                        //Guardo el tueste desbordado si hay, en el evento, si es un Criador
-                        if ($event!=null && $desbordeTueste>0 && $usuario->status==Yii::app()->params->statusCriador) {
+                        //Guardo el tueste desbordado si hay, en el evento, si es un Criador o Baja
+                        if ($event!=null && $desbordeTueste>0 && ($usuario->status==Yii::app()->params->statusCriador || $usuario->status==Yii::app()->params->statusBaja) ) {
                             if ($usuario->side == 'kafhe')
                                 $event->stored_tueste_kafhe += $desbordeTueste;
                             elseif ($usuario->side == 'achikhoria')
