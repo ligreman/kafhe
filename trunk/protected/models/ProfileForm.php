@@ -10,7 +10,7 @@ class ProfileForm extends CFormModel
 	public $alias;
 	public $email;
 	public $password;
-  public $repeat_password;
+  public $password_repeat;
 
 	/**
 	 * Declares the validation rules.
@@ -18,11 +18,12 @@ class ProfileForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('meal_id, drink_id', 'alMenosUno', 'on'=>'create, update', 'message'=>'Debes elegir {attribute}.'), //no hace falta aquí el on, pero lo dejo como ejemplo
-            //array('meal_id', 'exist', 'attributeName'=>'id', 'className'=>'Meal'),
-            //array('drink_id', 'exist', 'attributeName'=>'id', 'className'=>'Drink'),
-            array('ito', 'boolean'),
-            array('ito', 'esIto'),
+            array('alias, email, password', 'required'),
+            array('alias', 'unique'),
+            array('alias', 'length', 'min'=>3, 'max'=>10),
+            array('email', 'email'),
+            array('password_repeat', 'required'),
+            array('password', 'compare', 'compareAttribute'=>'password_repeat'),
 		);
 	}
 
@@ -35,9 +36,10 @@ class ProfileForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'meal_id'=>'Comidas',
-            'drink_id'=>'Bebidas',
-            'ito'=>'Desayuno ITO',
+			'alias'=>'Apodo',
+            'email'=>'Email',
+            'password'=>'Contraseña',
+            'password_repeat'=>'Repite la contraseña',
 		);
 	}
 }
