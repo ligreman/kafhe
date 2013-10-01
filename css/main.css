@@ -929,10 +929,14 @@ img.grayScale{
     width: 30%;
 }
 
+.flashes{
+    padding: 1em 3em 0;
+}
+
 .flashes div{
     padding: 1.5em;
     text-align: center;
-    margin: 1em 3em 0;
+    /*margin: 1em 3em 0;*/
     color: #ffffff;
     border:1px solid #ffffff;
 }
@@ -1404,7 +1408,7 @@ p.bebida{
     color:#333333;
     font-size: .8em;
     line-height: 1.2em;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 #unreadSelfNotificationsList.read li{

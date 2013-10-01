@@ -70,7 +70,7 @@
                                                 elseif($n->type == SYSTEM) $nombre = 'System';
                                                 else $nombre = $aliases[$n->sender];
                                                 ?>
-                                                <li><strong><?php echo $nombre;?></strong>: <?php echo $n->message;?></li>
+                                                <li><strong><?php echo $nombre;?></strong>: <?php echo preg_replace('/(\:.*\:)([A-Z]*)/i', '$4', $n->message);?></li>
                                             <?php endforeach;?>
                                         </ul>
                                 <?php endif;?>
@@ -180,14 +180,14 @@
         </section>
         <section id="main">
             <?php
-            $flashMessages = Yii::app()->user->getFlashes();
+            /*$flashMessages = Yii::app()->user->getFlashes();
             if ($flashMessages) {
                 echo '<ul class="flashes">';
                 foreach($flashMessages as $key => $message) {
                     echo '<li><div class="flash-' . $key . '">' . $message . "</div></li>\n";
                 }
                 echo '</ul>';
-            }
+            }*/
             ?>
             <?php echo $content; ?>
         </section>
