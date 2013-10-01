@@ -38,9 +38,9 @@
                 if($battleEqual){
                     echo '<p id="battleResult">La batalla finalizó en igualdad de condiciones. '.$battleResult.'</p>';
                 }elseif($kafheVictory){
-                    echo '<p id="battleResult">La batalla finalizó con una victoria del <strong>bando de '.Yii::app()->params->sideNames["kafhe"].' '.$battleResult.'</strong>.</p>';
+                    echo '<p id="battleResult">La batalla finalizó con una victoria de los <strong>Kafheitas '.$battleResult.'</strong>.</p>';
                 }else{
-                    echo '<p id="battleResult">La batalla finalizó con una victoria del <strong>bando de '.Yii::app()->params->sideNames["achikhoria"].' '.$battleResult.'</strong>.</p>';
+                    echo '<p id="battleResult">La batalla finalizó con una victoria de los <strong>Renunciantes '.$battleResult.'</strong>.</p>';
                 }
             ?>
             <p><?php
@@ -49,7 +49,7 @@
                     }else{
                         echo 'Así fue como ';
                     }
-                ?>el destino quiso que fuese <strong><?php echo Yii::app()->usertools->getAlias($event->caller_id); ?></strong> (bando de <?php echo Yii::app()->params->sideNames[$event->caller_side]?>) el elegido para llamar.</p>
+                ?>el destino quiso que fuese <strong><?php echo Yii::app()->usertools->getAlias($event->caller_id); ?></strong> (<?php if($event->caller_side ===  "kafhe") echo "Kafheita"; else echo "Renunciante";?>) el elegido para llamar.</p>
         </div>
         <div id="lastBattleStatusChart"></div>
 
@@ -59,8 +59,8 @@
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Bando', 'Gungubos'],
-                    ['Achikhoria', <?php echo $event->gungubos_achikhoria; ?>],
-                    ['Kafhe', <?php echo $event->gungubos_kafhe; ?>]
+                    ['Renunciantes', <?php echo $event->gungubos_achikhoria; ?>],
+                    ['Kafheitas', <?php echo $event->gungubos_kafhe; ?>]
 
                 ]);
 

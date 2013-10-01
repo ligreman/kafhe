@@ -8,7 +8,11 @@
                 //Modificadores
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     //Bando y estado
-                    echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",Yii::app()->params->sideNames[$user->side],array('class' => 'modifier','title' => 'Perteneces al bando de '.Yii::app()->params->sideNames[$user->side]));
+                    if(Yii::app()->user->side ===  "kafhe")
+                        $side = "Kafheita";
+                    else
+                        $side = "Renunciante";
+                    echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",Yii::app()->params->sideNames[$user->side],array('class' => 'modifier','title' => $side));
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
                 }
                 ?>
@@ -166,7 +170,7 @@
                                         <dd class="targetList">
                                             <ul>
 												<li class="kafhe" target_id="kafhe">Kafheítas</li>
-                                                <li class="achikhoria" target_id="achikhoria">Achikhoritas</li>
+                                                <li class="achikhoria" target_id="achikhoria">Renunciantes</li>
                                             </ul>
                                         </dd>
 										
