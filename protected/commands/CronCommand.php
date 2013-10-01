@@ -247,7 +247,7 @@ class CronCommand extends CConsoleCommand {
      */
     public function actionRepopulateGungubos()
     {
-        //Yii::log('CCCXXX', 'info');
+        Yii::log('Vamos a repoblar', 'info');
         echo "Iniciando repoblación\n";
 
         //Para todos los eventos de estado "iniciado" (1)
@@ -257,6 +257,7 @@ class CronCommand extends CConsoleCommand {
                 //Miro a ver si ya he repoblado hoy en este evento
                 if ($event->last_gungubos_repopulation!=""  &&  date('Y-m-d') == $event->last_gungubos_repopulation) {
                     echo "Todavía no se puede repoblar en el evento ".$event->id.".\n";
+                    Yii::log('Aún no repueblo', 'info');
                     continue;
                 }
 
@@ -284,6 +285,7 @@ class CronCommand extends CConsoleCommand {
                     echo "** ERROR al guardar el evento (".$event->id.") repoblando gungubos.\n";
 
                 echo "Repoblados ".$cuantos." gungubos en el evento ".$event->id.".\n";
+                Yii::log('Repoblados', 'info');
             }
         }
 
