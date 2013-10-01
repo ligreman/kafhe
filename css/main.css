@@ -1052,7 +1052,7 @@ img.grayScale{
 
 .kafhepin:hover .title, .pin:hover .title, .librepin:hover .title{
     position: relative;
-    top: -2.2em;
+    top: -3.2em;
     left: -5.5em;
     background: white;
     color: #363636;
@@ -1064,6 +1064,10 @@ img.grayScale{
     border-radius: 3px;
     overflow: visible;
     z-index: 9999;
+}
+
+#tueste .pin:hover .title{
+    top:-2.2em;
 }
 
 #battleStatus .w0 .pin:hover .title, #battleStatus .w1 .pin:hover .title, #battleStatus .w2 .pin:hover .title{
@@ -1219,7 +1223,7 @@ img.grayScale{
 }
 
 #bandoAchikhoria ul,#bandoKafhe ul,#bandoLibre ul{
-    padding: .5em 0 0 3em;
+    padding: .5em 0 0 2.3em;
 }
 
 #bandoAchikhoria li,#bandoKafhe li,#bandoLibre li{
