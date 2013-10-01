@@ -131,7 +131,12 @@ class EnrollmentController extends Controller
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusAlistado)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Se ha alistado en el bando de '.ucfirst(Yii::app()->currentUser->side);
+                        if(Yii::app()->user->side ===  "kafhe")
+                            $side = "Kafheita";
+                        else
+                            $side = "Renunciante";
+
+                        $message = ':'.Yii::app()->currentUser->side.': Se ha alistado como '.$side.' para participar en la batalla.';
 					}
 
                     //Si ha cambiado de estado creo la notificación, es decir, si hay mensaje
@@ -168,7 +173,12 @@ class EnrollmentController extends Controller
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Ha causado baja del bando de '.ucfirst(Yii::app()->currentUser->side);
+                        if(Yii::app()->user->side ===  "kafhe")
+                            $side = "Kafheita";
+                        else
+                            $side = "Renunciante";
+
+                        $message = ':'.Yii::app()->currentUser->side.': Ha causado baja como '.$side;
 					}
 
                     $nota = new Notification;

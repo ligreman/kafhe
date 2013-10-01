@@ -19,8 +19,8 @@
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Bando', 'Gungubos'],
-                ['Achikhoria', <?php echo $battle->gungubos_achikhoria; ?>],
-                ['Kafhe', <?php echo $battle->gungubos_kafhe; ?>]
+                ['Renunciantes', <?php echo $battle->gungubos_achikhoria; ?>],
+                ['Kafheitas', <?php echo $battle->gungubos_kafhe; ?>]
 
             ]);
 
@@ -54,13 +54,13 @@
         }
     ?>
     <div id="bandoKafhe">
-        <h2>bando de <?php echo Yii::app()->params->sideNames['kafhe']; ?></h2>
+        <h2>Kafheitas</h2>
         <?php
             echo $kafheMembers.'</ul>';
         ?>
     </div>
     <div id="bandoAchikhoria">
-        <h2>bando de <?php echo Yii::app()->params->sideNames['achikhoria']; ?></h2>
+        <h2>Renunciantes</h2>
         <?php
         echo $achikhoriaMembers.'</ul>';
         ?>
