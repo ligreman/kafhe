@@ -49,17 +49,21 @@ class EventSingleton extends CApplicationComponent
 		
 		return array('side'=>$bandoPerdedor, 'userId'=>$caller);
 	}
-   
-  public function hasEnrollments($eventId=null) {
-    if ($eventId===null)
-      $eventId = Yii::app()->event->id; //El del evento actual
-     
-    $enrolls = Enrollment::model()->findAll('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$eventId));
-    if ($enrolls===false)
-      return false;
-    else
-      return true;
-  }
+
+    /** Comprueba si un evento tiene gente alistada o no
+     * @param null $eventId Evento del que obtener el pedido. Si es null toma el evento actual.
+     * @return bool True si hay gente alistada, false si no hay
+     */
+    public function hasEnrollments($eventId=null) {
+        if ($eventId===null)
+            $eventId = Yii::app()->event->id; //El del evento actual
+
+        $enrolls = Enrollment::model()->findAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$eventId)));
+        if (empty($enrolls))
+            return false;
+        else
+        return true;
+    }
 
     /** Obtiene el pedido del evento actual o del que le pases
      * @param null $eventId Evento del que obtener el pedido. Si es null toma el evento actual.
