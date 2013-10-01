@@ -700,7 +700,7 @@ label.title{
     top:-3.5em;
 }
 
-#experiencia .w1 .pin:hover .title{
+#experiencia .w0 .pin:hover .title, #experiencia .w1 .pin:hover .title{
     top:-3.5em;
     left:1em;
 }
