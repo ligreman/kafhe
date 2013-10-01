@@ -1,4 +1,3 @@
-
 <div id="upContent">
     <div id="mainUserBlock">
         <p id="user">
@@ -65,7 +64,7 @@
 
         <p class="dato">
             <span class="numero"><?php echo $user->ptos_relanzamiento; ?></span>
-            <span class="concepto">p. relance</span>
+          <span class="concepto"><abbr title="lágrimas de gungubo">lágrimas</abbr></span>
         </p>
 
         <?php /*
