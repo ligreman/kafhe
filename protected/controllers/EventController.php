@@ -65,6 +65,13 @@ class EventController extends Controller
 					
 		//Elijo al primer llamador
 		$battleResult = Yii::app()->event->selectCaller();
+      
+     if ($battleResult === null) {
+        Yii::app()->user->setFlash('error', 'No se ha podido iniciar la batalla ya que no se había alistado nadie.');
+        $this->redirect(array('event/index'));
+        return false;
+     }
+      
 		$event->caller_id = $battleResult['userId'];
 		$event->caller_side = $battleResult['side'];
 		
