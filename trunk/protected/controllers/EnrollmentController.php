@@ -214,6 +214,7 @@ class EnrollmentController extends Controller
         $prev_enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id!=:event_id', 'params'=>array(':user_id'=>Yii::app()->currentUser->id, 'event_id'=>Yii::app()->event->id), 'order'=>'timestamp DESC', 'limit'=>'1'));
         $data['prev_meal'] = $prev_enroll->meal_id;
         $data['prev_drink'] = $prev_enroll->drink_id;
+        $data['prev_ito'] = $prev_enroll->ito;
 
         // displays the login form
         $this->render('index', $data);
