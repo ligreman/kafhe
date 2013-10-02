@@ -38,29 +38,26 @@ class ProfileController extends Controller
         //Si viene del formulario....
         if(isset($_POST['ProfileForm']))
         {
+            // collects user input data
+            $model->attributes=$_POST['ProfileForm'];
 
-            if (isset($_POST['btn_submit'])) {
-                // collects user input data
-                $model->attributes=$_POST['ProfileForm'];
+            // validates user input and redirect to previous page if validated
+            if($model->validate())
+            {
+                //Actualizo
+                $user->alias = $model->alias;
+                $user->email = $model->email;
+                $user->password = crypt($model->password, self::blowfishSalt());
+                Yii::app()->user->setFlash('normal', 'Has actualizado tu perfil correctamente');
 
-                // validates user input and redirect to previous page if validated
-                if($model->validate())
-                {
-                    //Actualizo
-                    $user->alias = $model->alias;
-                    $user->email = $model->email;
-                    $user->password = crypt($model->password, self::blowfishSalt());                  
-                    Yii::app()->user->setFlash('normal', 'Has actualizado tu perfil correctamente');
-                    
-                    if (!$user->save())
-                        throw new CHttpException(400, 'Error al actualizar el perfil de usuario.');                    
-                }
+                if (!$user->save())
+                    throw new CHttpException(400, 'Error al actualizar el perfil de usuario.');
             }
         }					
         //Si el usuario simplemente accede a la página...
         else 
         {
-            //Toy actualizando así que pongo los valores de BBDD para el formulario
+            //Toy entrando simplemente
             $model->alias = $user->alias;
             $model->email = $user->email;
         }

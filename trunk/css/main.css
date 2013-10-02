@@ -1389,6 +1389,14 @@ p.bebida{
     margin: 0.5em 31%;
 }
 
+#profile-form {
+    text-align: center;
+}
+#profile-form div.errorMessage {
+    display:inline;
+    margin: 0 0 0 10px;
+}
+
 #moreNotifications{
     clear:both;
     text-align: center;
