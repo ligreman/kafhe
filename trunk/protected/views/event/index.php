@@ -9,7 +9,7 @@
         echo '</ul>';
     }
     ?>
-    <h1 class="battle">Estado de la batalla *</h1>
+    <h1 class="battle">Estado de la batalla: <?php echo Yii::app()->params->eventStatusNames[$battle->status]; ?> *</h1>
 
     <div id="battleStatusChart"></div>
 
@@ -81,7 +81,7 @@
         /*print_r($arr);*/
     ?>
 	
-	<p class="clear noteProbs">* Nota: las probabilidades de un bando de salir elegido son inversamente proporcionales a la cantidad de gungubos que tiene.</p>
+	<p class="clear noteProbs">* Nota: la probabilidad de un bando de salir elegido es inversamente proporcional a la cantidad de gungubos que tiene.</p>
 
     <div id="generalProbs">
         <h2>Probabilidad por usuario</h2>
