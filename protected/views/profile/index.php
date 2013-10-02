@@ -41,33 +41,26 @@
     ?>
         <!--<p class="floatedLink"><a href="#" class="closeSubmenuLink">Cerrar</a></p>-->
       <p>Información de tu cuenta de usuario:</p>
-
-      <div class="itoSelect">
-            <?php echo $form->checkBox($model,'ito',array('class' => 'oculto')); ?>
-            <?php echo $form->labelEx($model,'ito'); ?>
-            <?php //echo $form->error($model,'ito'); ?>
-        </div>
-
-
-        <div class="centerContainer">
-            <div class="blockCentered">
-                <div id="drinks">
-                    <?php echo $form->label($model,'drink_id',array('class' => 'title')); ?>
-                    <?php echo $form->radioButtonList($model,'drink_id', CHtml::listData($drinks, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
-                    <?php //echo $form->error($model,'drink_id'); ?>
-                </div>
-
-                <div id="meals">
-                    <?php echo $form->label($model,'meal_id',array('class' => 'title')); ?>
-                    <?php echo $form->radioButtonList($model,'meal_id', CHtml::listData($meals, 'id', 'name'), array('container'=>'ul', 'template' => '<li class="radio_row">{input}{label}</li>','separator' => '')); ?>
-                    <?php //echo $form->error($model,'meal_id'); ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="otherDay">
-            <?php echo CHtml::linkButton('Lo del otro día', array('name'=>'btn_otroDia', 'class'=>'btn btncommon', 'rel-meal'=>$prev_meal, 'rel-drink'=>$prev_drink, 'rel-ito'=>$prev_ito, 'onclick'=>'return false;')); ?>
-        </div>
+      
+      <div class="row">
+          <?php echo $form->labelEx($model,'alias'); ?>
+          <?php echo $form->textField($model,'alias',array('maxlength'=>10)); ?>
+          <?php echo $form->error($model,'alias'); ?>
+      </div>
+      
+      <div class="row">
+          <?php echo $form->labelEx($model,'email'); ?>
+          <?php echo $form->emailField($model,'email',array('maxlength'=>128)); ?>
+          <?php echo $form->error($model,'email'); ?>
+      </div>
+      
+      <div class="row">
+          <?php echo $form->labelEx($model,'password'); ?>
+          <?php echo $form->passwordField($model,'password',array('maxlength'=>128)); ?>
+          <?php echo $form->passwordField($model,'password_repeat',array('maxlength'=>128)); ?>          
+          <?php echo $form->error($model,'password'); ?>
+      </div>   
+      
 
         <div class="buttons">            
             <?php echo CHtml::submitButton('Guardar cambios'); ?>
