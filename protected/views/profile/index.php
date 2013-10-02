@@ -57,9 +57,14 @@
       <div class="row">
           <?php echo $form->labelEx($model,'password'); ?>
           <?php echo $form->passwordField($model,'password',array('maxlength'=>128,'placeholder' => 'Nueva contraseña')); ?>
-          <?php echo $form->passwordField($model,'password_repeat',array('maxlength'=>128, 'placeholder' => 'Verifica la contraseña')); ?>
           <?php echo $form->error($model,'password'); ?>
-      </div>   
+      </div>
+
+      <div class="row">
+          <?php echo $form->labelEx($model,'password_repeat'); ?>
+          <?php echo $form->passwordField($model,'password_repeat',array('maxlength'=>128, 'placeholder' => 'Verifica la contraseña')); ?>
+          <?php echo $form->error($model,'password_repeat'); ?>
+      </div>
       
 
         <div class="buttons">            
