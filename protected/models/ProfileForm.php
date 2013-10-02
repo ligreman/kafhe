@@ -10,7 +10,7 @@ class ProfileForm extends CFormModel
 	public $alias;
 	public $email;
 	public $password;
-  public $password_repeat;
+    public $password_repeat;
 
 	/**
 	 * Declares the validation rules.
@@ -18,12 +18,12 @@ class ProfileForm extends CFormModel
 	public function rules()
 	{
 		return array(
-            array('alias, email, password', 'required'),
-            array('alias', 'unique'),
+            array('alias, email', 'required'),
+            //array('alias', 'unique', 'className'=>'User'),
             array('alias', 'length', 'min'=>3, 'max'=>10),
             array('email', 'email'),
-            array('password_repeat', 'required'),
-            array('password', 'compare', 'compareAttribute'=>'password_repeat'),
+            array('password, password_repeat', 'length', 'min'=>6, 'max'=>128),
+            array('password_repeat', 'compare', 'compareAttribute'=>'password'),
 		);
 	}
 
