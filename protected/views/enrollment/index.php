@@ -67,7 +67,7 @@
         </div>
 
         <div class="otherDay">
-            <?php echo CHtml::linkButton('Lo del otro día', array('name'=>'btn_otroDia', 'class'=>'btn btncommon', 'rel-meal'=>$prev_meal, 'rel-drink'=>$prev_drink, 'onclick'=>'return false;')); ?>
+            <?php echo CHtml::linkButton('Lo del otro día', array('name'=>'btn_otroDia', 'class'=>'btn btncommon', 'rel-meal'=>$prev_meal, 'rel-drink'=>$prev_drink, 'rel-ito'=>$prev_ito, 'onclick'=>'return false;')); ?>
         </div>
 
         <div class="buttons">
