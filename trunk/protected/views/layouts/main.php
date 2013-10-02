@@ -55,6 +55,13 @@
                         <?php if (!Yii::app()->user->checkAccess('Administrador')): ?>
                             <li>
                             <?php
+                                $img = CHtml::image(Yii::app()->request->baseUrl.'/images/profileIcon.png','Mi cuenta');
+                                echo CHtml::link($img,array('/profile'), array('id'=>'profileMainLink'));
+                            ?>
+                            </li>
+                        
+                            <li>
+                            <?php
                                 $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
                                 echo CHtml::link($img,array('/'),array('id' => 'notificationsMainLink'));
                             ?>
