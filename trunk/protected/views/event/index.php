@@ -60,7 +60,6 @@
         ?>
     </div>
     <div id="bandoAchikhoria">
-        <h2>Renunciantes</h2>
         <?php
         echo $achikhoriaMembers.'</ul>';
         ?>
