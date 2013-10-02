@@ -1,4 +1,4 @@
-<div id="menuContent">
+<div id="menuContent" class="paddedContent">
     <?php
     $flashMessages = Yii::app()->user->getFlashes();
     if ($flashMessages) {
@@ -56,14 +56,14 @@
       
       <div class="row">
           <?php echo $form->labelEx($model,'password'); ?>
-          <?php echo $form->passwordField($model,'password',array('maxlength'=>128)); ?>
-          <?php echo $form->passwordField($model,'password_repeat',array('maxlength'=>128)); ?>          
+          <?php echo $form->passwordField($model,'password',array('maxlength'=>128,'placeholder' => 'Nueva contraseña')); ?>
+          <?php echo $form->passwordField($model,'password_repeat',array('maxlength'=>128, 'placeholder' => 'Verifica la contraseña')); ?>
           <?php echo $form->error($model,'password'); ?>
       </div>   
       
 
         <div class="buttons">            
-            <?php echo CHtml::submitButton('Guardar cambios'); ?>
+            <?php echo CHtml::submitButton('Guardar cambios', array('class' => 'btn btncommon')); ?>
         </div>
 
     <?php $this->endWidget(); ?>
