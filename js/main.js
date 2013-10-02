@@ -88,7 +88,8 @@ function prepareEnrollmentForm(){
     $("a[name='btn_otroDia']").on('click', function(){
         var meal = $(this).attr('rel-meal'),
         drink = $(this).attr('rel-drink'),
-        ito = $(this).attr('rel-ito');
+        ito = $(this).attr('rel-ito'),
+        labelito = $("div.itoSelect label");
 
         //Quito todas las selecciones
         $('#meals ul label,#drinks ul label').each(function(){
@@ -98,11 +99,11 @@ function prepareEnrollmentForm(){
         });
 
         //Quito el checkbox también
-        $("div.itoSelect input[type='checkbox']").prop('checked', false).siblings('label').removeClass('selected');
+        $("div.itoSelect input[type='checkbox']").prop('checked', false);
 
         //Marco si es o no desayuno ITO
-        if (ito==1) {
-            $("div.itoSelect label").click(); //simulo click
+        if ((ito==0 && labelito.hasClass('selected')) || (ito==1 && !labelito.hasClass('selected'))) {
+                $("div.itoSelect label").click(); //simulo click para quitar o poner el label según corresponda
         }
 
         $("#meals ul input[value='"+meal+"']").prop('checked', true).siblings('label').addClass('selected');
