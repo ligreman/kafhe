@@ -80,14 +80,15 @@ function prepareEnrollmentForm(){
             $(this).addClass('selected');
 			$('input[rel-ito="no"]').parents('li.radio_row').hide();
             $('input[rel-ito="no"]:checked').siblings('label').removeClass('selected');
-            $('input[rel-ito="no"]:checked').attr('checked' , 'false');
+            $('input[rel-ito="no"]:checked').prop('checked' , false);
         }
     });
 
     //Lo del otro día
     $("a[name='btn_otroDia']").on('click', function(){
         var meal = $(this).attr('rel-meal'),
-        drink = $(this).attr('rel-drink');
+        drink = $(this).attr('rel-drink'),
+        ito = $(this).attr('rel-ito');
 
         //Quito todas las selecciones
         $('#meals ul label,#drinks ul label').each(function(){
@@ -95,6 +96,13 @@ function prepareEnrollmentForm(){
             $(this).removeClass('selected');
             $(this).siblings(':radio').prop('checked', false);
         });
+        
+        //Marco si es o no desayuno ITO
+      if (ito==0) {
+        $("div.itoSelect input[type='checkbox']").prop('checked', false);
+      } else {
+        $("div.itoSelect input[type='checkbox']").prop('checked', true);
+      }
 
         $("#meals ul input[value='"+meal+"']").prop('checked', true).siblings('label').addClass('selected');
         $("#drinks ul input[value='"+drink+"']").prop('checked', true).siblings('label').addClass('selected');
