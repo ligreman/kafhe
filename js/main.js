@@ -96,13 +96,14 @@ function prepareEnrollmentForm(){
             $(this).removeClass('selected');
             $(this).siblings(':radio').prop('checked', false);
         });
-        
+
+        //Quito el checkbox también
+        $("div.itoSelect input[type='checkbox']").prop('checked', false).siblings('label').removeClass('selected');
+
         //Marco si es o no desayuno ITO
-      if (ito==0) {
-        $("div.itoSelect input[type='checkbox']").prop('checked', false);
-      } else {
-        $("div.itoSelect input[type='checkbox']").prop('checked', true);
-      }
+        if (ito==1) {
+            $("div.itoSelect label").click(); //simulo click
+        }
 
         $("#meals ul input[value='"+meal+"']").prop('checked', true).siblings('label').addClass('selected');
         $("#drinks ul input[value='"+drink+"']").prop('checked', true).siblings('label').addClass('selected');
