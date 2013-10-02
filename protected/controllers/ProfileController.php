@@ -30,163 +30,39 @@ class ProfileController extends Controller
     public function actionIndex()
 	{
         $data = array();
-
-        //Primero comprobaré si ya he metido mi desayuno o no (si hay enrollment de mi usuario para este evento)
-        $enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id=:event_id', 'params'=>array(':user_id'=>Yii::app()->currentUser->id, 'event_id'=>Yii::app()->event->id)));
-
-        if ($enroll===null) { //Si no hay creo uno nuevo
-            $enroll = new Enrollment;
-            $data['already_enroll'] = false;
-            $model = new EnrollmentForm('create'); //Modelo de formulario en modo crear
-        } else {
-            $data['already_enroll'] = true;
-            $model = new EnrollmentForm('update');
-        }
-
-        $data['output'] = 'nada';
-
-        //Recojo los meals y drinks para pasarselo a la vista
-        $data['meals'] = Meal::model()->findAll(array('order'=>'type, name'));
-        $data['drinks'] = Drink::model()->findAll(array('order'=>'type, name'));
-        //findAll(array('order'=>'somefield', 'condition'=>'otherfield=:x', 'params'=>array(':x'=>$x)));
-
-
-        /*
-        // if it is ajax validation request
-        if(isset($_POST['ajax']) && $_POST['ajax']==='enrollment-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }*/
+        
+       //Saco los datos del usuario de BBDD
+       $user= Yii::app()->currentUser->model;
+       $model = new ProfileForm();       
 
         //Si viene del formulario....
-        if(isset($_POST['EnrollmentForm']))
+        if(isset($_POST['ProfileForm']))
         {
 
             if (isset($_POST['btn_submit'])) {
                 // collects user input data
-                $model->attributes=$_POST['EnrollmentForm'];
+                $model->attributes=$_POST['ProfileForm'];
 
                 // validates user input and redirect to previous page if validated
                 if($model->validate())
                 {
-                    if (!$enroll->isNewRecord) {
-                        //Actualizo (cojo el enroll de antes)
-                        $enroll->meal_id = $model->meal_id;
-                        $enroll->drink_id = $model->drink_id;
-                        $enroll->ito = $model->ito;
-                        //Yii::log('actualizo enroll', 'warning', 'ENROLL');
-                        Yii::app()->user->setFlash('normal', 'Has actualizado tu alistamiento en la batalla actual');
-                    } else {
-                        //Guardo campo nuevo
-                        $enroll->user_id = Yii::app()->currentUser->id;
-                        $enroll->event_id = Yii::app()->event->id;
-                        $enroll->meal_id = $model->meal_id;
-                        $enroll->drink_id = $model->drink_id;
-                        $enroll->ito = $model->ito;
-                        //Yii::log('nuevo enroll', 'warning', 'ENROLL');
-                        Yii::app()->user->setFlash('normal', 'Te has alistado en la batalla actual');
-                    }
-    
-                    //Yii::log(print_r($enroll, true), 'error', 'ENROLL');
-					//Le alisto
-                    if (!$enroll->save()){
-                        throw new CHttpException(400, 'Error al guardar o actualizar el pedido. ['.print_r($enroll->getErrors(),true).']');
-                    }
-
-                    $data['already_enroll'] = true;
-                    //var_dump($enroll->errors);
-
-                    $message = "";
-
-					//Si el estado del usuario cambia (no es una actualización del pedido) le pongo libre ó alistado según corresponda
-					if (Yii::app()->currentUser->status==Yii::app()->params->statusIluminado) {
-
-						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusLibertador)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario Iluminado ('.Yii::app()->currentUser->id.') a Libertador.');
-
-                        $message = ':'.Yii::app()->currentUser->side.': Ahora es un Libertador ';
-					} elseif (Yii::app()->currentUser->status!=Yii::app()->params->statusLibertador  &&  Yii::app()->currentUser->status!=Yii::app()->params->statusAlistado) {
-
-
-						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusAlistado)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
-
-                        if(Yii::app()->user->side ===  "kafhe")
-                            $side = "Kafheita";
-                        else
-                            $side = "Renunciante";
-
-                        $message = ':'.Yii::app()->currentUser->side.': Se ha alistado como '.$side.' para participar en la batalla.';
-					}
-
-                    //Si ha cambiado de estado creo la notificación, es decir, si hay mensaje
-                    if ($message!="") {
-                        $nota = new Notification;
-                        $nota->recipient_original = Yii::app()->currentUser->id;
-                        $nota->recipient_final = Yii::app()->currentUser->id;
-                        $nota->message = $message.'.'; //Mensaje para el muro
-                        $nota->type = Yii::app()->currentUser->side;
-                        $nota->sender = Yii::app()->currentUser->id;
-
-                        if (!$nota->save())
-                            throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Alistado. ['.print_r($nota->getErrors(),true).']');
-                    }
-
-                    //hago un redirect para actualizar el userPanel
-                    $this->redirect(array('/enrollment'));
+                    //Actualizo
+                    $user->alias = $model->alias;
+                    $user->email = $model->email;
+                    $user->password = crypt($model->password, self::blowfishSalt());                  
+                    Yii::app()->user->setFlash('normal', 'Has actualizado tu perfil correctamente');
+                    
+                    if (!$user->save())
+                        throw new CHttpException(400, 'Error al actualizar el perfil de usuario.');                    
                 }
             }
-            else if (isset($_POST['btn_cancel'])) {                
-                //Elimino mi alistamiento
-                if (!$enroll->isNewRecord) {
-                    $enroll->delete();
-                    $data['already_enroll'] = false;
-
-					//Actualizao mi estado a Baja/Desertor
-					if (Yii::app()->currentUser->status==Yii::app()->params->statusLibertador) {
-
-						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusIluminado)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Iluminado.');
-
-                        $message = ':'.Yii::app()->currentUser->side.': Ha dejado de ser Libertador';
-					} else {
-						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
-
-                        if(Yii::app()->user->side ===  "kafhe")
-                            $side = "Kafheita";
-                        else
-                            $side = "Renunciante";
-
-                        $message = ':'.Yii::app()->currentUser->side.': Ha causado baja como '.$side;
-					}
-
-                    $nota = new Notification;
-                    $nota->recipient_original = Yii::app()->currentUser->id;
-                    $nota->recipient_final = Yii::app()->currentUser->id;
-                    $nota->message = $message.'.'; //Mensaje para el muro
-                    $nota->type = Yii::app()->currentUser->side;
-                    $nota->sender = Yii::app()->currentUser->id;
-
-                    if (!$nota->save())
-                        throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Baja. ['.print_r($nota->getErrors(),true).']');
-
-                    Yii::app()->user->setFlash('normal', 'Te has dado de baja en la batalla actual');
-
-                    //hago un redirect para actualizar el userPanel
-                    $this->redirect(array('/enrollment'));
-                } else
-                    throw new CHttpException(400,'Error al darse de baja: No se han encontrado tus datos de alistamiento.');
-            }
-        }
+        }					
         //Si el usuario simplemente accede a la página...
-        else if (!$enroll->isNewRecord)
+        else 
         {
             //Toy actualizando así que pongo los valores de BBDD para el formulario
-            $model->meal_id = $enroll->meal_id;
-            $model->drink_id = $enroll->drink_id;
-            $model->ito = $enroll->ito;
+            $model->alias = $user->alias;
+            $model->email = $user->email;
         }
 
         $data['model'] = $model;
@@ -194,4 +70,33 @@ class ProfileController extends Controller
         // displays the login form
         $this->render('index', $data);
 	}
+   
+   
+      /**
+     * Generate a random salt in the crypt(3) standard Blowfish format.
+     *
+     * @param int $cost Cost parameter from 4 to 31.
+     *
+     * @throws Exception on invalid cost parameter.
+     * @return string A Blowfish hash salt for use in PHP's crypt()
+     */
+    private static function blowfishSalt($cost = 13)
+    {
+        if (!is_numeric($cost) || $cost < 4 || $cost > 31) {
+        throw new Exception("cost parameter must be between 4 and 31");
+        }
+
+        $rand = array();
+
+        for ($i = 0; $i < 8; $i += 1) {
+            $rand[] = pack('S', mt_rand(0, 0xffff));
+        }
+
+        $rand[] = substr(microtime(), 2, 6);
+        $rand = sha1(implode('', $rand), true);
+        $salt = '$2a$' . sprintf('%02d', $cost) . '$';
+        $salt .= strtr(substr(base64_encode($rand), 0, 22), array('+' => '.'));
+
+        return $salt;
+    }
 }
