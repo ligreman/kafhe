@@ -1487,6 +1487,15 @@ h2.error404{
     margin: .5em 0 .5em 4em;
 }
 
+.row{
+    margin: .5em 3em .5em;
+}
+
+.row label{
+    display: inline-block;
+    width: 7em;
+}
+
 .w0{width:0%;}
 .w1{width:1%;}
 .w2{width:2%;}
