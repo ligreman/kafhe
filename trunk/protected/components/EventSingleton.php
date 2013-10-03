@@ -342,20 +342,22 @@ class EventSingleton extends CApplicationComponent
         } while( abs(array_sum($kafheT) - array_sum($achiT)) >= $limite_diferencia_rangos );
 
         //Ahora miro si algún bando abusa, siendo el que más usuarios tiene y además el que más rango tiene
-        $maxL = max( count($kafheT), count($achiT) );
-        $maxR = max( array_sum($kafheT), array_sum($achiT) );
-		
-		////Yii::log('----------------------------','info');
-		////Yii::log(print_r($kafheT,true), 'info', 'KafheT');
-		////Yii::log(print_r($achiT,true), 'info', 'AchiT');
+		if ( !(count($kafheT)==count($achiT)  &&  array_sum($kafheT)==array_sum($achiT)) ) {			
+			$maxL = max( count($kafheT), count($achiT) );
+			$maxR = max( array_sum($kafheT), array_sum($achiT) );
+			
+			////Yii::log('----------------------------','info');
+			////Yii::log(print_r($kafheT,true), 'info', 'KafheT');
+			////Yii::log(print_r($achiT,true), 'info', 'AchiT');
 
-        if ($maxL==count($kafheT) && $maxR==array_sum($kafheT)) { //Kafhe abusón
-            $this->desabusar($kafheT, $achiT, abs(array_sum($kafheT)-array_sum($achiT)));
-        }
+			if ($maxL==count($kafheT) && $maxR==array_sum($kafheT)) { //Kafhe abusón
+				$this->desabusar($kafheT, $achiT, abs(array_sum($kafheT)-array_sum($achiT)));
+			}
 
-        if ($maxL==count($achiT) && $maxR==array_sum($achiT)) { //Achikhoria abusón
-            $this->desabusar($achiT, $kafheT, abs(array_sum($kafheT)-array_sum($achiT)));
-        }
+			if ($maxL==count($achiT) && $maxR==array_sum($achiT)) { //Achikhoria abusón
+				$this->desabusar($achiT, $kafheT, abs(array_sum($kafheT)-array_sum($achiT)));
+			}		
+		}
 		
 		////Yii::log('----------------------------','info');
 		////Yii::log(print_r($kafheT,true), 'info', 'KafheT after desabusar');
