@@ -1408,7 +1408,7 @@ p.bebida{
     right: 8em;
     width: 13em;
     z-index: 101010101010;
-    background: #ffffff;
+    background: #c5c5c5;
     top: 4em;
 }
 
@@ -1416,15 +1416,10 @@ p.bebida{
     margin: 0 0 1px 0;
     display: inline-block;
     padding: .5em 1em ;
-    border-bottom: 1px solid #ffffff;
     color:#333333;
     font-size: .8em;
     line-height: 1.2em;
     /*width: 100%;*/
-}
-
-#unreadSelfNotificationsList.read li{
-    background-color: #e0e0e0;
 }
 
 #numberUnreadNotifications{
@@ -1502,6 +1497,17 @@ h2.error404{
 .row label{
     display: inline-block;
     width: 7em;
+    text-align: right;
+    padding: 0 5% 0 0;
+}
+
+.row input[type="text"], .row input[type="password"], .row input[type="email"]{
+    display: inline-block;
+    width: 12em;
+    padding: .7em;
+    margin: .5em 0;
+    border: none;
+    background: #e1e1e1;
 }
 
 .w0{width:0%;}
