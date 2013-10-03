@@ -273,16 +273,16 @@ class EventSingleton extends CApplicationComponent
 	        }
         }
 
-		////Yii::log('----------------------------','info');
-		////Yii::log(print_r($listaRangos,true), 'info', 'Lista rangos');
-		////Yii::log(print_r($listaUsuarios,true), 'info', 'Lista usuarios');
+		//Yii::log('----------------------------','info');
+		//Yii::log(print_r($listaRangos,true), 'info', 'Lista rangos');
+		//Yii::log(print_r($listaUsuarios,true), 'info', 'Lista usuarios');
 		
         //Calculo reparto de rangos
         $teams = $this->bruteForceTeamDivision($listaRangos);
-		////Yii::log('----------------------------','info');
-		////Yii::log(print_r($teams,true), 'info', 'TEAMS');
+		//Yii::log('----------------------------','info');
+		//Yii::log(print_r($teams,true), 'info', 'TEAMS');
         $teams = $this->distributeUsersPerRank($teams, $listaUsuarios);
-		////Yii::log(print_r($teams,true), 'info', 'TEAMS AFTER Distribute');
+		//Yii::log(print_r($teams,true), 'info', 'TEAMS AFTER Distribute');
 
         if ($exAgenteLibre === null) {
             $finalteams['kafhe'] = $teams['teamA'];
@@ -311,6 +311,8 @@ class EventSingleton extends CApplicationComponent
                 }
             }
         }
+
+        //Yii::log(print_r($finalteams,true), 'info', 'FINAL TEAMS');
 
 		if (count($finalteams['kafhe'])==0  &&  count($finalteams['achikhoria'])==0) return false;
 		else return $finalteams;

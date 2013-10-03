@@ -1395,6 +1395,8 @@ p.bebida{
 #profile-form div.errorMessage {
     display:inline;
     margin: 0 0 0 10px;
+    position: absolute;
+    top: 15px;
 }
 
 #moreNotifications{
@@ -1492,6 +1494,7 @@ h2.error404{
 
 .row{
     margin: .5em 3em .5em;
+    position: relative;
 }
 
 .row label{

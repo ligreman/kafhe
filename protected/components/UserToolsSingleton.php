@@ -152,9 +152,14 @@ class UserToolsSingleton extends CApplicationComponent
 		$totalGungubos = $kafhe + $achikhoria;
 		$kafhe = $totalGungubos - $kafhe;
 		$achikhoria = $totalGungubos - $achikhoria;
-		
-		$bando['kafhe'] = round( ($kafhe / ($kafhe + $achikhoria)) * 100 , 2);
-		$bando['achikhoria'] = round( ($achikhoria / ($kafhe + $achikhoria)) * 100 , 2);
+
+		if ($totalGungubos == 0) { //Igualados
+            $bando['kafhe'] = 50;
+            $bando['achikhoria'] = 50;
+		} else {
+		    $bando['kafhe'] = round( ($kafhe / ($kafhe + $achikhoria)) * 100 , 2);
+		    $bando['achikhoria'] = round( ($achikhoria / ($kafhe + $achikhoria)) * 100 , 2);
+        }
 		return $bando;
 	}
 
