@@ -119,7 +119,7 @@
                                 <h1><span><?php echo $skill->name; ?></span><?php echo CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('class' => $class)); ?></h1>
                                 <p class="skillDesc"><?php echo $skill->description; ?></p>
                                 <?php if($execCode == 2):?>
-                                    <p class="mensajeDesactivado">No tienes suficiente tueste, retueste, tostólares o puntos de relanzamiento para pagar el coste de la habilidad.</p>
+                                    <p class="mensajeDesactivado">No tienes suficiente tueste, retueste, tostólares o lágrimas de gungubo para pagar el coste de la habilidad.</p>
                                 <?php endif; ?>
                                 <?php if($execCode == 8): ?>
                                     <p class="mensajeDesactivado">Hay modificadores que te impiden ejecutar la habilidad.</p>
@@ -136,7 +136,7 @@
                                             echo ' (tueste)';
                                         }
                                         if($skill->cost_retueste!==null && $skill->cost_retueste > 0) echo ' '.$skill->cost_retueste.' (retueste)';
-                                        if($skill->cost_relanzamiento!==null && $skill->cost_relanzamiento > 0) echo ' '.$skill->cost_relanzamiento.' (relanzamiento)';
+                                        if($skill->cost_relanzamiento!==null && $skill->cost_relanzamiento > 0) echo ' '.$skill->cost_relanzamiento.' (lágrimas)';
                                         if($skill->cost_tostolares!==null && $skill->cost_tostolares > 0) echo ' '.$skill->cost_tostolares.' (tostólares)';
                                         ?></dd>
                                     <dt>Probabilidad de Crítico:</dt>
