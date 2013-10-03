@@ -45,17 +45,32 @@ if [ -f "$1" ]
         #sed -i "s/'',\/\/#mysqlUsername/'kafhe',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
         #sed -i "s/'',\/\/#mysqlPassword/'F1tsjA5V',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
 
-      #Email usuarios test
-        sed -i 's/mod@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-	sed -i 's/test1@mail.com/cgoo85@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-        sed -i 's/test2@mail.com/mazzzta.gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-        sed -i 's/test3@mail.com/almavic@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-        sed -i 's/test4@mail.com/migcampo@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-        sed -i 's/test5@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
 
+      #Es producción o test
+	read -p "Estas desplegando una version de prueba? [y o n] " 
+        if [[ $REPLY =~ ^[Yy]$ ]]
+          then
+	    echo "Configurando correos de cuentas dummy"
+	    #Email usuarios test
+	        sed -i 's/mod@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test1@mail.com/cgoo85@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test2@mail.com/mazzzta.gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test3@mail.com/almavic@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test4@mail.com/migcampo@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test5@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	  else
+            echo "Borrando archivos dummy..."
+	    rm kafhe/protected/migrations/m130814_195553_dummy_data.php 
+        fi
 
-
-
+    #Lanzo las migraciones
+    read -p "Deseas buscar migraciones nuevas? [y o n] " -n 1 -r
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	  then
+	    echo "Buscando migraciones..."
+	    cd kafhe/protected/
+	    php yiic migrate
+	fi
 
     echo "Terminado"
     
