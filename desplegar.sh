@@ -32,7 +32,7 @@ if [ -f "$1" ]
 
       #MySQL
         sed -i 's/mysql:host=localhost;dbname=kafhe_refactor/mysql:host=localhost;dbname=kafhe/g' kafhe/protected/config/*.php
-        #sed -i "s/'kafhe',\/\/#mysqlUsername/'kafhe',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
+        #sed -i "s/'kafhe',\/\/#mysqlUsername/'XXXXX',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
         sed -i "s/'',\/\/#mysqlPassword/'XXXXX',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
 
       #Log
@@ -42,7 +42,7 @@ if [ -f "$1" ]
       #Email
         sed -i 's/true,\/\/#testMode/false,\/\/#testMode/g' kafhe/protected/config/mail.php
         sed -i 's/@gmail.com/@kafhe.chequerestaurante.com/g' kafhe/protected/config/*.php
-        #sed -i "s/'',\/\/#mysqlUsername/'kafhe',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
+        #sed -i "s/'',\/\/#mysqlUsername/'XXXXX',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
         #sed -i "s/'',\/\/#mysqlPassword/'XXXXX',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
 
 
