@@ -212,7 +212,7 @@ class EventController extends Controller
 		foreach($usuarios as $usuario) {			
 			$usuario->ptos_relanzamiento = 0;
 			$usuario->ptos_tueste = Yii::app()->config->getParam('maxTuesteUsuario'); //Tueste al máximo
-			
+
 			//Al llamador le pongo rango 1 y estado desertor, y side libre
 			if ($usuario->id == $event->caller_id) {
 			    $llamador_id = $usuario->id;
@@ -221,8 +221,8 @@ class EventController extends Controller
 				$usuario->rank = 1;
 				$usuario->side = 'libre';
 				$usuario->status = Yii::app()->params->statusIluminado;
-                $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
 
+                $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
 
                 //Salvo
@@ -233,8 +233,8 @@ class EventController extends Controller
 				$usuario->rank++;
 				$usuario->times++;
 				$usuario->status = Yii::app()->params->statusCriador;
-                $usuario->experience += ( Yii::app()->config->getParam('expParticipar') + Yii::app()->config->getParam('expNoLlamar') + ( ($usuario->rank-2) * Yii::app()->config->getParam('expPorRango') ) ); //Experiencia por participar + NoLLamar + Rango (de rango 1 a 2 no ganas exp)
 
+                $usuario->experience += ( Yii::app()->config->getParam('expParticipar') + Yii::app()->config->getParam('expNoLlamar') + ( ($usuario->rank-2) * Yii::app()->config->getParam('expPorRango') ) ); //Experiencia por participar + NoLLamar + Rango (de rango 1 a 2 no ganas exp)
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
            
 				$new_usuarios[$usuario->id] = $usuario;
@@ -247,12 +247,12 @@ class EventController extends Controller
 				$usuario->rank++;
 				$usuario->times++;
 				$usuario->status = Yii::app()->params->statusCriador;
-                $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
 
+                $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
         
 				$anterior_llamador = $usuario;
-			} elseif ($usuario->status==Yii::app()->params->statusCriador  ||  $usuario->status==Yii::app()->params->statusCazador) {
+			} elseif ($usuario->status==Yii::app()->params->statusCriador  ||  $usuario->status==Yii::app()->params->statusCazador  ||  $usuario->status==Yii::app()->params->statusBaja) {
 				//Al resto sólo les pongo de criadores
 				$usuario->status = Yii::app()->params->statusCriador;
                 $new_usuarios[$usuario->id] = $usuario;
