@@ -240,3 +240,5 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('expPorRango', '250', 'Juego', 'Experiencia recibida por evitar llamar en un evento, por cada rango que tengas a partir de 1.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('expPorcentajeHabilidadPorTueste', '10', 'Juego', 'Experiencia recibida por ejecutar una habilidad. Porcentaje del coste de tueste.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('expPorcentajeHabilidadPorRetueste', '20', 'Juego', 'Experiencia recibida por ejecutar una habilidad. Porcentaje del coste de retueste.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES('porcentajeTuesteExtraPorRango', '20', 'Juego', 'Porcentaje de tueste extra que se regenera por rango.');
+
