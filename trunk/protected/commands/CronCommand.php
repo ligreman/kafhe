@@ -123,7 +123,7 @@ class CronCommand extends CConsoleCommand {
                         if (!$usuario->save())
                             echo "** ERROR al guardar el usuario (".$usuario->id.") regenerando su tueste.\n";
 
-                        echo "    Usuario ".$usuario->username." - Tueste regenerado: " . $regenerado."\n";
+                        echo "    Usuario ".$usuario->username." (rango ".$usuario->rank.") - Tueste regenerado: " . $regenerado."\n";
 
                         //Guardo el tueste desbordado si hay, en el evento, si es un Criador o Baja
                         if ($event!=null && $desbordeTueste>0 && ($usuario->status==Yii::app()->params->statusCriador || $usuario->status==Yii::app()->params->statusBaja) ) {
