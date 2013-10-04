@@ -203,11 +203,12 @@
 
         <footer>
             <ul>
+                <li><a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a></li>
+                <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a></li>
+                <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a></li>
                 <?php if (!Yii::app()->user->isGuest): ?>
-                <li><a href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a></li>
+                    <li><a href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a></li>
                 <?php endif;?>
-                <li><a target="_blank" href="http://wiki.kafhe.com">kafhe wiki</a></li>
-                <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about'?>">Acerca de</a></li>
             </ul>
         </footer>
 
