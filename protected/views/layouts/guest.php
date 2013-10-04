@@ -83,7 +83,9 @@
 
 	<footer>
 		<ul>
-            <li><a href="<?php echo Yii::app()->request->baseUrl.'/wiki'?>">kafhe wiki</a></li>
+            <li><a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a></li>
+            <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a></li>
+            <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a></li>
 		</ul>
 	</footer>
 
