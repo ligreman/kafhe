@@ -176,7 +176,7 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName'] ó Yii::app()->params->paramName
 	'params'=>array(
-	    'appVersion'=>'b.3',
+	    'appVersion'=>'v1.0',
 
 	    //Servidor de correo
 		'adminEmail'=>'omelettus@gmail.com',//#mailEmail
