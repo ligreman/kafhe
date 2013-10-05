@@ -77,7 +77,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration'  =>  NULL,       // Int cantidad para la duración
             'duration_type'  =>  NULL,  // horas, evento, usos
             'critic'  =>  15,
-            'fail'  =>  15,
+            'fail'  =>  10,
             'extra_param' => '100',
             'cost_tueste'  =>  100,
             'cost_retueste'  =>  NULL,
@@ -139,7 +139,7 @@ class m130814_195451_habilidades extends CDbMigration
             'duration'  =>  NULL,       // Int cantidad para la duración
             'duration_type'  =>  NULL,  // horas, evento, usos
             'critic'  =>  10,
-            'fail'  =>  10,
+            'fail'  =>  15,
             'extra_param' => '100',
             'cost_tueste'  =>  250,
             'cost_retueste'  =>  NULL,

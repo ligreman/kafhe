@@ -175,7 +175,7 @@ footer
 
 footer li{
     display:inline-block;
-    width:25%;
+    width:20%;
 }
 
 footer a{
@@ -339,7 +339,7 @@ article.notification .timestamp{
 #meals ul, #drinks ul{
     padding: 1em 0;
     overflow: hidden;
-    width:13em;
+    width:18em;
 }
 
 #meals li, #drinks li{
@@ -519,7 +519,7 @@ label.title{
 
 .blockCentered{
     display: inline-block;
-    width: 28em;
+    width: 40em;
     margin: 0 auto;
     text-align: left;
 }

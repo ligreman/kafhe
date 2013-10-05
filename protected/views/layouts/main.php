@@ -56,14 +56,14 @@
                             <li>
                             <?php
                                 $img = CHtml::image(Yii::app()->request->baseUrl.'/images/profileIcon.png','Mi cuenta');
-                                echo CHtml::link($img,array('/profile'), array('id'=>'profileMainLink'));
+                                echo CHtml::link($img,array('/profile'), array('id'=>'profileMainLink', 'title'=>'Mi cuenta'));
                             ?>
                             </li>
                         
                             <li>
                             <?php
                                 $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
-                                echo CHtml::link($img,array('/'),array('id' => 'notificationsMainLink'));
+                                echo CHtml::link($img,array('/'),array('id' => 'notificationsMainLink', 'title'=>'Destacados'));
                             ?>
                                 <?php
                                     $notifications = Yii::app()->usertools->getNotificationsForUser();
@@ -87,11 +87,11 @@
                             <?php
                                 if($userPanelHidden=="1"){
                                     $img = CHtml::image(Yii::app()->request->baseUrl.'/images/showUserBlock.png','Quiero ver el panel de usuario');
+                                    echo CHtml::link($img,Yii::app()->request->baseUrl, array('title' => 'Quiero ver el panel de usuario','id' => 'userpanelMainLink'));
                                 }else{
                                     $img = CHtml::image(Yii::app()->request->baseUrl.'/images/hideUserBlock.png','No quiero ver el panel de usuario');
+                                    echo CHtml::link($img,Yii::app()->request->baseUrl, array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
                                 }
-
-                                echo CHtml::link($img,Yii::app()->request->baseUrl, array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
                             ?>
                             </li>
                         <?php endif; ?>
@@ -205,10 +205,12 @@
             <ul>
                 <li><a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a></li>
                 <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a></li>
-                <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a></li>
+
                 <?php if (!Yii::app()->user->isGuest): ?>
                     <li><a href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a></li>
                 <?php endif;?>
+
+                <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a></li>
             </ul>
         </footer>
 

@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `group` (
 CREATE TABLE IF NOT EXISTS `meal` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `type` enum('tostada','pulga','bolleria','otro') NOT NULL DEFAULT 'otro',
+  `type` enum('tostada','pulga','bolleria','tortilla','otro') NOT NULL DEFAULT 'otro',
   `ito` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
