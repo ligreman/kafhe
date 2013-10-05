@@ -27,6 +27,8 @@
     <div id="battleResults">
 		<h1 class="battle">Histórico de batallas</h1>
 
+		<?php if ($event!==null): ?>
+
         <div id="lastBattleResult">
             <h2>Última batalla</h2>
             <!-- LLAMADOR ANTERIOR -->
@@ -129,7 +131,8 @@
                     </ul>
                 </div>
             </div>
-        <?php endif; ?>
+          <?php endif; //orders ?>
+        <?php endif; //event ?>
         <p class="clear"><em>Más datos próximamente.</em></p>
 
     </div>
