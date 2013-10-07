@@ -47,7 +47,10 @@ class ProfileController extends Controller
                 //Actualizo
                 $user->alias = $model->alias;
                 $user->email = $model->email;
-                $user->password = crypt($model->password, self::blowfishSalt());
+                
+                if ($model->password != '')
+                  $user->password = crypt($model->password, self::blowfishSalt());
+                  
                 Yii::app()->user->setFlash('normal', 'Has actualizado tu perfil correctamente');
 
                 if (!$user->save())
