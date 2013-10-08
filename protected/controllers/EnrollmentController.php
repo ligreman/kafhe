@@ -124,19 +124,19 @@ class EnrollmentController extends Controller
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusLibertador)))
 							throw new CHttpException(400, 'Error al actualizar el estado del usuario Iluminado ('.Yii::app()->currentUser->id.') a Libertador.');
 
-                        $message = ':'.Yii::app()->currentUser->side.': Ahora es un Libertador ';
+                        $message = ':'.Yii::app()->currentUser->side.': Ahora es un Libertador';
 					} elseif (Yii::app()->currentUser->status!=Yii::app()->params->statusLibertador  &&  Yii::app()->currentUser->status!=Yii::app()->params->statusAlistado) {
 
 
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusAlistado)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado.');
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Alistado');
 
                         if(Yii::app()->user->side ===  "kafhe")
                             $side = "Kafheita";
                         else
                             $side = "Renunciante";
 
-                        $message = ':'.Yii::app()->currentUser->side.': Se ha alistado como '.$side.' para participar en la batalla.';
+                        $message = ':'.Yii::app()->currentUser->side.': Se ha alistado como '.$side.' para participar en la batalla';
 					}
 
                     //Si ha cambiado de estado creo la notificación, es decir, si hay mensaje
