@@ -28,6 +28,7 @@
             Yii::app()->clientScript->registerCoreScript('jquery'); //JQuery viene con Yii, simplemente lo cojo del Core para no duplicarlo
             Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.cookie.js');
         Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/sly.min.js');
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/favico.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/main.js');
         ?>
 
