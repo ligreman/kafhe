@@ -1,3 +1,8 @@
+var badge = 0;
+var favicon = new Favico({
+    animation : 'fade'
+});
+
 $(document).ready(function() {
     resizeNavBar();
     prepareUserPanel();
@@ -12,6 +17,9 @@ $(document).ready(function() {
     loadMoreNotifications();
     askForNews();
     $('#LoginForm_username').focus();
+    //Uso de Favico
+
+
     //DESCOMENTAR SI NO SE USA SLY
     //$('#skillsUserBlock ul').width($('#skillsUserBlock ul li').outerWidth()*$('#skillsUserBlock ul li').size());
     //DESCOMENTAR SI SE USA SLY
@@ -258,6 +266,10 @@ function askForNewNotifications(){
                         $('#newNotifications').detach();
                         $('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data+' nueva notificación.</a></p>');
                         resizeNavBar();
+                    }
+                    if(badge != data){
+                        badge = data;
+                        favicon.badge(badge);
                     }
             });
         askForNews();
