@@ -1,6 +1,7 @@
 var badge = 0;
 var favicon = new Favico({
-    animation : 'fade'
+    animation : 'fade',
+    bgcolor: '#bf3950'
 });
 
 $(document).ready(function() {
