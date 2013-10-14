@@ -102,6 +102,7 @@ class CronCommand extends CConsoleCommand {
 
                 echo "  Usuarios del grupo ".$grupo->name." (".$grupo->id.").\n";
                 $usuarios = User::model()->findAll(array('condition'=>'group_id=:groupId', 'params'=>array(':groupId'=>$grupo->id)));
+                $kafheitas = $achikhoritas = 0;
 
                 foreach ($usuarios as $usuario) {
                     $regenerado = Yii::app()->tueste->getTuesteRegenerado($usuario);
@@ -131,14 +132,41 @@ class CronCommand extends CConsoleCommand {
                                 $event->stored_tueste_kafhe += $desbordeTueste;
                             elseif ($usuario->side == 'achikhoria')
                                 $event->stored_tueste_achikhoria += $desbordeTueste;
-
-                            if (!$event->save())
-                                echo "** ERROR al guardar el evento (".$event->id.") guardando el tueste desbordado.\n";
                         }
                     } else
                         echo "    Usuario ".$usuario->username." - Todavia no puede regenerar tueste.\n";
+
+                    //Cuento kafheitas y achis para ver si hay desequilibrio
+                    if ($usuario->side == 'kafhe') $kafheitas++;
+                    elseif ($usuario->side == 'achikhoria') $achikhoritas++;
                 }
-            }
+
+                //Si están desequilibrados los grupos, genero tueste extra para el que menos tenga
+                if ($kafheitas != $achikhoritas) {
+                    echo "Bandos desequilibrados, genero tueste extra para el mas debil.\n";
+                    $dummy = User::model()->findByPk(1);
+                    $extra = Yii::app()->tueste->getTuesteRegenerado($dummy);
+
+                    if ($extra!==false) {
+                        $dummy->last_regen_timestamp = date('Y-m-d H:i:s');
+                        if (!$dummy->save())
+                            echo "** ERROR al guardar el usuario (".$dummy->id.") simulando regenerar su tueste.\n";
+
+                        //Guardo en el almacén
+                        if ($kafheitas>$achikhoritas) {
+                            $event->stored_tueste_achikhoria += $extra;
+                            echo "Extra de tueste para Achikhoria de ".$extra."\n";
+                        } else {
+                            $event->stored_tueste_kafhe += $extra;
+                            echo "Extra de tueste para Kafhe de ".$extra."\n";
+                        }
+                    }
+                }
+
+                //Guardo el evento
+                if (!$event->save())
+                    echo "** ERROR al guardar el evento (".$event->id.") guardando el tueste desbordado.\n";
+            } //foreach group
 
         } else {
             //Regenero a un usuario concreto
@@ -160,7 +188,7 @@ class CronCommand extends CConsoleCommand {
     }
 
 
-    /** Cría gungubos cada hora para cada bando
+    /** Los criadores cazan gungubos cada hora para cada bando
      * @param null $eventId Evento para el que criar gungubos. Si es null miro todos los eventos en estado iniciado (1).
      */
     public function actionCriarGungubos($eventId=null)
@@ -173,7 +201,8 @@ class CronCommand extends CConsoleCommand {
             $events = Event::model()->findAll(array('condition'=>'status=:status', 'params'=>array(':status'=>Yii::app()->params->statusIniciado)));
             if ($events != null) {
                 foreach($events as $event) {
-                    $criados = Yii::app()->gungubos->getGungubosCriados($event);
+                    $criados = Yii::app()->gungubos->getGungubosCazados($event);
+                    $tuesteRestante = array('kafhe'=>0, 'achikhoria'=>0);
 
                     if ($criados !== false) {
 
@@ -181,32 +210,35 @@ class CronCommand extends CConsoleCommand {
                         if($event->gungubos_population == 0){
                             $criados['kafhe'] = 0;
                             $criados['achikhoria'] = 0;
-                        }else if(($criados['kafhe']+$criados['achikhoria']) > $event->gungubos_population){
+
+                            //Como no había gungubos, lo que hago es repartir el tueste entre los demás jugadores
+                            $tuesteRestante = Yii::app()->tueste->repartirTueste($event);
+                            echo "No habia gungubos libres asi que reparto el tueste. Sobra: ".$tuesteRestante['kafhe']." kafhe; ".$tuesteRestante['achikhoria']." achikhoria.\n";
+                        } else if(($criados['kafhe']+$criados['achikhoria']) > $event->gungubos_population) {
                             $proporcionKafhe = $criados['kafhe']/($criados['kafhe']+$criados['achikhoria']);
-                            $criados['kafhe'] = $event->gungubos_population*$proporcionKafhe;
+                            $criados['kafhe'] = intval($event->gungubos_population*$proporcionKafhe);
                             $criados['achikhoria'] = $event->gungubos_population - $criados['kafhe'];
 
+                            echo "Criados ".$criados['kafhe']." gungubos para Kafhe. Evento ".$event->id.".\n";
+                            echo "Criados ".$criados['achikhoria']." gungubos para Achikhoria. Evento ".$event->id.".\n";
                         }
 
                         //Guardo el evento
                         $event->gungubos_kafhe += $criados['kafhe'];
                         $event->gungubos_achikhoria += $criados['achikhoria'];
-                        $event->stored_tueste_kafhe = 0; //lo pongo a 0 porque se ha utilizado para generar gungubos
-                        $event->stored_tueste_achikhoria = 0;
+                        $event->stored_tueste_kafhe = $tuesteRestante['kafhe'];
+                        $event->stored_tueste_achikhoria = $tuesteRestante['achikhoria'];
                         $event->last_gungubos_criadores = date('Y-m-d H:i:s');
                         $event->gungubos_population -= $criados['kafhe']+$criados['achikhoria'];
 
                         if (!$event->save())
                             echo "** ERROR al guardar el evento (".$event->id.") criando gungubos.\n";
-
-                        echo "Criados ".$criados['kafhe']." gungubos para Kafhe. Evento ".$event->id.".\n";
-                        echo "Criados ".$criados['achikhoria']." gungubos para Achikhoria. Evento ".$event->id.".\n";
                     } else
                         echo "Todavia no puedo criar gungubos en el evento ".$event->id.".\n";
                 }
             }
         } else {
-            //Para el evento concreto. Compruebo que está en estado (1) antes
+           /* //Para el evento concreto. Compruebo que está en estado (1) antes
             $event = Event::model()->findByPk($eventId);
             if ($event->status != Yii::app()->params->statusIniciado) return 0;
 
@@ -237,7 +269,7 @@ class CronCommand extends CConsoleCommand {
                 echo "Criados ".$criados['kafhe']." gungubos para Kafhe. Evento ".$event->id.".\n";
                 echo "Criados ".$criados['achikhoria']." gungubos para Achikhoria. Evento ".$event->id.".\n";
             } else
-                echo "Todavía no puede criar gungubos.\n";
+                echo "Todavía no puede criar gungubos.\n";*/
         }
 
         return 0;
