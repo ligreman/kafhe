@@ -4,12 +4,12 @@
  */
 class GungubosSingleton extends CApplicationComponent
 {
-    /** Obtiene los gungubos criados por intervalo para un evento concreto.
+    /** Obtiene los gungubos cazados por intervalo para un evento concreto.
      * @param $event Objeto del evento que mirar.
-     * @param bool $checkTime si es true hace comprobación de la última vez que se criaron gungubos, si es false devuelve los gungubos que se crian por tick
+     * @param bool $checkTime si es true hace comprobación de la última vez que se cazaron gungubos, si es false devuelve los gungubos que se crian por tick
      * @return array Array con dos claves, 'kafhe' y 'achikhoria', cada una de ellas con el número de gungubos generados.
      */
-    public function getGungubosCriados($event, $checkTime=true)
+    public function getGungubosCazados($event, $checkTime=true)
     {		
         if ($checkTime) {
             //Compruebo si ha pasado el tiempo suficiente para criar en el evento
@@ -19,7 +19,7 @@ class GungubosSingleton extends CApplicationComponent
                 return false; //no ha pasado el tiempo suficiente
         }
 
-		//Cantidad base de gungubos criados		
+		//Cantidad base de gungubos cazados
 		$gungubos['kafhe'] = $gungubos['achikhoria'] = intval(Yii::app()->config->getParam('gungubosCriadosIntervalo'));
 
 		//Gungubos por criadores de cada bando. Cojo la skill cazar gungubos como referencia

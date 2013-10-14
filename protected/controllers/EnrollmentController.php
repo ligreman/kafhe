@@ -162,7 +162,7 @@ class EnrollmentController extends Controller
                     $enroll->delete();
                     $data['already_enroll'] = false;
 
-					//Actualizao mi estado a Baja/Desertor
+					//Actualizo mi estado a Baja/Desertor
 					if (Yii::app()->currentUser->status==Yii::app()->params->statusLibertador) {
 
 						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusIluminado)))
@@ -170,15 +170,15 @@ class EnrollmentController extends Controller
 
                         $message = ':'.Yii::app()->currentUser->side.': Ha dejado de ser Libertador';
 					} else {
-						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusBaja)))
-							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Baja.');
+						if (!User::model()->updateByPk(Yii::app()->currentUser->id, array('status'=>Yii::app()->params->statusCazador)))
+							throw new CHttpException(400, 'Error al actualizar el estado del usuario ('.Yii::app()->currentUser->id.') a Cazador tras darse de baja.');
 
                         if(Yii::app()->user->side ===  "kafhe")
                             $side = "Kafheita";
                         else
                             $side = "Renunciante";
 
-                        $message = ':'.Yii::app()->currentUser->side.': Ha causado baja como '.$side;
+                        $message = ':'.Yii::app()->currentUser->side.': Ha causado baja como '.$side.' y vuelve a ser un cazador';
 					}
 
                     $nota = new Notification;
