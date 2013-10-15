@@ -22,8 +22,9 @@ class TuesteSingleton extends CApplicationComponent
         }
 
 		//Calculo el tueste que regenera en función de su rango
-		$porcentajePorRango = ($user->rank-1) * intval(Yii::app()->config->getParam('porcentajeTuesteExtraPorRango')); //tueste extra por cada rango a partir del 2
-		$tuesteExtraPorRango = round(intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) * $porcentajePorRango / 100);
+		//$porcentajePorRango = ($user->rank-1) * intval(Yii::app()->config->getParam('porcentajeTuesteExtraPorRango')); //tueste extra por cada rango a partir del 2
+		//$tuesteExtraPorRango = round(intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) * $porcentajePorRango / 100);
+		$tuesteExtraPorRango = $this->getTuesteRegeneradoPorRango($user);
 				
 		///IDEA Los talentos crean modificadores con duración null
 		
@@ -42,7 +43,11 @@ class TuesteSingleton extends CApplicationComponent
             if($mods!=null  &&  Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDesecado, $mods)) $estaDesecado = true;
 		}
 		
-		if($estaHidratado) $porcentajePorModificadores = 25; //25% más rápido por estar hidratado
+		if($estaHidratado) {
+		    $skillH = Skill::model()->findByAttributes(array('keyword'=>Yii::app()->params->skillHidratar));
+            $porcentajePorModificadores = $skillH->extra_param; //Este extra param indica el % de regeneración extra
+        } //más rápido por estar hidratado
+
         if($estaDesecado) $signoRegeneracion = -1; //Regeneración negativa
 
 		$tuesteExtraPorModificadores = round(intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) * $porcentajePorModificadores / 100);
@@ -50,6 +55,17 @@ class TuesteSingleton extends CApplicationComponent
 		//Devuelvo el tueste regenerado
         $tuesteRegenerado = $signoRegeneracion * ( intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + $tuesteExtraPorRango + $tuesteExtraPorModificadores );
 		return $tuesteRegenerado;
+    }
+
+    /** Obtiene el tueste regenerado por cada rango de un usuario
+     * @param $user Objeto del usuario
+     * @return float Tueste extra por rango
+     */
+    public function getTuesteRegeneradoPorRango($user) {
+        $porcentajePorRango = ($user->rank-1) * intval(Yii::app()->config->getParam('porcentajeTuesteExtraPorRango')); //tueste extra por cada rango a partir del 2
+        $tuesteExtraPorRango = round(intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) * $porcentajePorRango / 100);
+
+        return $tuesteExtraPorRango;
     }
 
 
@@ -114,5 +130,16 @@ class TuesteSingleton extends CApplicationComponent
 
         return $sobra;
     }
-	
+
+
+    /** Obtiene el tueste máximo que puede tener el usuario
+     * @param $user Objeto usuario
+     * @return float Máximo de tueste del usuario
+     */
+    public function getMaxTuesteUser($user) {
+	    $max = intval(Yii::app()->config->getParam('maxTuesteUsuario'));
+	    $max -= $user->ptos_retueste; //Le quito el retueste que tenga
+
+	    return $max;
+	}
 }

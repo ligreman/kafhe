@@ -102,7 +102,7 @@ class CronCommand extends CConsoleCommand {
 
                 echo "  Usuarios del grupo ".$grupo->name." (".$grupo->id.").\n";
                 $usuarios = User::model()->findAll(array('condition'=>'group_id=:groupId', 'params'=>array(':groupId'=>$grupo->id)));
-                $kafheitas = $achikhoritas = 0;
+                $kafheitas = $achikhoritas = array('numero'=>0, 'tueste'=>0);
 
                 foreach ($usuarios as $usuario) {
                     $regenerado = Yii::app()->tueste->getTuesteRegenerado($usuario);
@@ -137,15 +137,23 @@ class CronCommand extends CConsoleCommand {
                         echo "    Usuario ".$usuario->username." - Todavia no puede regenerar tueste.\n";
 
                     //Cuento kafheitas y achis para ver si hay desequilibrio
-                    if ($usuario->side == 'kafhe') $kafheitas++;
-                    elseif ($usuario->side == 'achikhoria') $achikhoritas++;
+                    if ($usuario->side == 'kafhe') {
+                        $kafheitas['numero']++;
+                        $kafheitas['tueste'] += intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + Yii::app()->tueste->getTuesteRegeneradoPorRango($usuario);
+                    }
+                    elseif ($usuario->side == 'achikhoria') {
+                        $achikhoritas['numero']++;
+                        $achikhoritas['tueste'] += intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + Yii::app()->tueste->getTuesteRegeneradoPorRango($usuario);
+                    }
                 }
 
                 //Si están desequilibrados los grupos, genero tueste extra para el que menos tenga
-                if ($kafheitas != $achikhoritas) {
+                if ($kafheitas['numero'] != $achikhoritas['numero']) {
                     echo "Bandos desequilibrados, genero tueste extra para el mas debil.\n";
                     $dummy = User::model()->findByPk(1);
-                    $extra = Yii::app()->tueste->getTuesteRegenerado($dummy);
+                    //$extra = Yii::app()->tueste->getTuesteRegenerado($dummy);
+                    $extra = abs($kafheitas['tueste'] - $achikhoritas['tueste']); //La diferencia de tueste base de ambos bandos
+                    echo "El extra de tueste es ".$extra." (kafhe->".$kafheitas['tueste']." // achi->".$achikhoritas['tueste'].").\n";
 
                     if ($extra!==false) {
                         $dummy->last_regen_timestamp = date('Y-m-d H:i:s');
@@ -153,7 +161,7 @@ class CronCommand extends CConsoleCommand {
                             echo "** ERROR al guardar el usuario (".$dummy->id.") simulando regenerar su tueste.\n";
 
                         //Guardo en el almacén
-                        if ($kafheitas>$achikhoritas) {
+                        if ($kafheitas['numero'] > $achikhoritas['numero']) {
                             $event->stored_tueste_achikhoria += $extra;
                             echo "Extra de tueste para Achikhoria de ".$extra."\n";
                         } else {
