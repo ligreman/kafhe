@@ -83,28 +83,30 @@ return array(
 		'statusIniciado'=>1,
 		'statusBatalla'=>2,
 		'statusFinalizado'=>3,
-		
-		//Modificadores. Están aquí y en BBDD
-		'modifierHidratado'=>'hidratado',
-		'modifierDisimulando'=>'disimulando',
+
+        //Modificadores. Están aquí y en BBDD
+        'modifierHidratado'=>'hidratado',
+        'modifierDisimulando'=>'disimulando',
         'modifierImpersonando'=>'impersonando',
-		'modifierDesecado'=>'desecado',
+        'modifierDesecado'=>'desecado',
         'modifierTrampa'=>'trampa',
         'modifierProtegiendo'=>'protegiendo',
-		
-		//Habilidades. Están aquí y en BBDD
-		'skillHidratar'=>'hidratar', //Asocia el parámetro skillHidratar con el keyword de la habilidad
+        'modifierOteando'=>'oteando',
+
+        //Habilidades. Están aquí y en BBDD
+        'skillHidratar'=>'hidratar',
         'skillDesecar'=>'desecar',
         'skillDisimular'=>'disimular',
         'skillImpersonar'=>'impersonar',
-		'skillCazarGungubos'=>'cazarGungubos',
-		'skillEscaquearse'=>'escaquearse',
+        'skillCazarGungubos'=>'cazarGungubos',
+        'skillEscaquearse'=>'escaquearse',
         'skillRescatarGungubos'=>'rescatarGungubos',
-		'skillVendetta'=>'vendetta',
-		'skillTrampa'=>'trampa',
+        'skillVendetta'=>'vendetta',
+        'skillTrampa'=>'trampa',
         'skillLiberarGungubos'=>'liberarGungubos',
         'skillAtraerGungubos'=>'atraerGungubos',
         'skillProtegerGungubos'=>'protegerGungubos',
+        'skillOtear'=>'otear',
 
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Iluminado'),

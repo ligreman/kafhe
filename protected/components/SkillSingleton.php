@@ -86,6 +86,7 @@ class SkillSingleton extends CApplicationComponent
                 case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
                 case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
                 case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill,$finalTarget); break;
+                case Yii::app()->params->skillOtear: $this->otear($skill); break;
 			}
 			
 		}
@@ -254,6 +255,7 @@ class SkillSingleton extends CApplicationComponent
             throw new CHttpException(400, 'Error al sumar gungubos al bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
 
         $this->_publicMessage = 'Ha logrado hacerse con '.$amount.' gungubos.';
+        $this->_privateMessage = 'Has logrado hacerte con '.$amount.' gungubos.';
 
 		return true;
 	}
@@ -320,9 +322,18 @@ class SkillSingleton extends CApplicationComponent
         if (!$event->save())
             throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
 
-        if(!$protected) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos.';
-        if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido liberarlos.';
-        if($protected && $finalAmount > 0) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos rompiendo la protección.';
+        if(!$protected) {
+            $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos.';
+            $this->_privateMessage = 'Has logrado liberar a '.$finalAmount.' gungubos.';
+        }
+        if($protected && $finalAmount == 0) {
+            $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido liberarlos.';
+            $this->_privateMessage = 'Los gungubos estaban protegidos y no has podido liberarlos.';
+        }
+        if($protected && $finalAmount > 0) {
+            $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos rompiendo la protección.';
+            $this->_privateMessage = 'Has logrado liberar a '.$finalAmount.' gungubos rompiendo la protección.';
+        }
 
         return true;
     }
@@ -390,9 +401,18 @@ class SkillSingleton extends CApplicationComponent
         if (!$event->save())
             throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
 
-        if(!$protected) $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos.';
-        if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido atraerlos.';
-        if($protected && $finalAmount > 0) $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos rompiendo la protección.';
+        if(!$protected) {
+            $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos.';
+            $this->_privateMessage = 'Has logrado atraer a tu bando a '.$finalAmount.' gungubos.';
+        }
+        if($protected && $finalAmount == 0) {
+            $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido atraerlos.';
+            $this->_privateMessage = 'Los gungubos estaban protegidos y no has podido atraerlos.';
+        }
+        if($protected && $finalAmount > 0) {
+            $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos rompiendo la protección.';
+            $this->_privateMessage = 'Has logrado atraer a tu bando a '.$finalAmount.' gungubos rompiendo la protección.';
+        }
 
         return true;
     }
@@ -565,6 +585,41 @@ class SkillSingleton extends CApplicationComponent
 
         if (!$modificador->save())
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
+
+        return true;
+    }
+
+
+    /** Crea un modificador de "oteando"
+     * @param $skill Obj de la skill
+     * @return bool
+     */
+    private function otear($skill)
+    {
+        //si ya tengo oteando, lo que hago es renovar su tiempo de ejecución y punto
+        $modificador = Modifier::model()->find(array('condition'=>'keyword=:keyword', 'params'=>array(':keyword'=>$skill->modifier_keyword)));
+
+        if ($modificador === null) {
+            $modificador = new Modifier;
+            $modificador->duration = $skill->duration;
+        }
+
+        $modificador->duration_type = $skill->duration_type;
+        $modificador->event_id = Yii::app()->event->id;
+        $modificador->caster_id = Yii::app()->currentUser->id;
+        $modificador->target_final = Yii::app()->currentUser->id; //Siempre va a ser el usuario actual
+        $modificador->skill_id = $skill->id;
+        $modificador->keyword = $skill->modifier_keyword;
+        $modificador->hidden = $skill->modifier_hidden;
+        $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
+
+        if (!$modificador->save())
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
+
+        //Oteo para mostrar el resultado
+        $oteados = Yii::app()->gungubos->otearGungubos(Yii::app()->event->model);
+
+        $this->_privateMessage = $oteados['texto'];
 
         return true;
     }
