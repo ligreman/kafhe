@@ -33,12 +33,27 @@ class GungubosSingleton extends CApplicationComponent
         $gungubos['kafhe'] += $extraKafhe;
         $gungubos['achikhoria'] += $extraAchikhoria;
 				
-        //Aquí irán otros modificadores, etc...
+        //TODO Aquí irán otros modificadores, etc...
 		
 		//Devuelvo los gungubos criados        
 		return $gungubos;
     }
 
+
+    public function getGungubosOteados($event) {
+        $libres = $event->gungubos_population;
+
+        if ($libres == 0)
+            $aproximacion = 'No consigues ver ningún gungubo libre.';
+        if ($libres>0 && $libres<200)
+            $aproximacion = 'Te cuesta ver gungubos en libertad.';
+        if ($libres>=200 && $libres<500)
+            $aproximacion = 'Ves unos cuantos gungubos libres.';
+        if ($libres>=500)
+            $aproximacion = 'Ves gran cantidad de gungubos en libertad.';
+
+        return array('numero'=>$libres, 'texto'=>$aproximacion);
+    }
 	
 }
 
