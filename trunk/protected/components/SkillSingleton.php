@@ -209,7 +209,7 @@ class SkillSingleton extends CApplicationComponent
 
         $modificador->event_id = Yii::app()->event->id;
 		$modificador->caster_id = Yii::app()->currentUser->id;
-	    $modificador->target_final = $target->id;
+	    $modificador->target_final = $user->id;
 	    $modificador->skill_id = $skill->id;
 	    $modificador->value = $skill->extra_param;
 	    $modificador->keyword = $skill->modifier_keyword;	    
@@ -517,7 +517,6 @@ class SkillSingleton extends CApplicationComponent
 		    ));
 		if ($sent !== true)
 		    Yii::log($sent, 'error', 'Email escaqueo');
-            //throw new CHttpException(400, $sent);
 		
 		return true;
 	}
