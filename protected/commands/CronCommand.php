@@ -76,8 +76,12 @@
 // #Cada hora compruebo si hay algo en cola del cronPile
 // * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron processCronPile
 
+// #Los viernes por la noche (el servidor tiene otra hora) pone los eventos en Calma
+// 1 2 * * 5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron eventosEnCalma
+
 // #Todos los días a las 4 de la mañana hago backup de base de datos
 // 0 4 * * * sh /home/kafhe/mysql_backup.sh
+
 
 
 class CronCommand extends CConsoleCommand {
@@ -285,7 +289,7 @@ class CronCommand extends CConsoleCommand {
 
     /** Repuebla los gungubos cada día
      */
-    public function actionRepopulateGungubos()
+    /*public function actionRepopulateGungubos()
     {
         Yii::log('Vamos a repoblar', 'info');
         echo "Iniciando repoblación\n";
@@ -330,24 +334,59 @@ class CronCommand extends CConsoleCommand {
         }
 
         return 0;
-    }
+    }*/
+	
+	/** Pone en estado Calma todos los eventos Iniciados de tipo desayuno
+	*/
+	public function actionEventosEnCalma() {
+		//Cojo todos los eventos iniciados
+		$events = Event::model()->find(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+		
+		foreach($events as $event) {
+			$event->status = Yii::app()->params->statusCalma;
+			
+			if (!$event->save())
+                echo "** ERROR al guardar el evento (".$event->id.") poniendolo en estado Calma.\n";
+		}
+		
+		return 0;
+	}	
+	
 
     /** Procesa la pila de tareas Cron
      */
     public function actionProcessCronPile()
-    {
+    {		
         $pila = Cronpile::model()->findAll();
+		$now = time();
 
         echo "Hay ".count($pila)." tareas en la pila de Cron.\n";
 
         foreach($pila as $cronjob) {
+			$result = true;
             echo "Procesando ".$cronjob->operation." [".$cronjob->params."].\n";
+			
+			if ($cronjob->due_date !== NULL) {
+				echo "  La tarea cron tiene fecha programada.\n";
+				$fecha = strtotime($cronjob->due_date);
+				
+				if ($now <= $fecha) {
+					echo "  Todavía no se tiene que ejecutar esta tarea.\n";
+					continue; //Me salto la tarea porque aún no ha de lanzarse
+				}
+			}
 
             switch($cronjob->operation) {
                 case 'generateRanking':
-                        Yii::app()->event->generateRanking();
+                        $result = Yii::app()->event->generateRanking();
                     break;
+				case 'repopulateGungubos':
+						$result = Yii::app()->event->repopulateGungubos($cronjob->params); //En params está el id del evento a repoblar
+					break;
             }
+			
+			if ($result !== true)
+				echo "  Error en la tarea cron: ".$result.".\n";
 
             echo "Elimino la tarea ".$cronjob->operation." [".$cronjob->params."] de la pila.\n";
             $cronjob->delete();

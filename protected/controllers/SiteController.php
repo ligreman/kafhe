@@ -186,7 +186,7 @@ class SiteController extends Controller
     {
         $this->render('prueba');
     }*/
-    public function actionPruebaAjax()
+    /*public function actionPruebaAjax()
     {
         $data = array();
         $data["valor"] = 'Funciono con AJAX';
@@ -226,7 +226,7 @@ class SiteController extends Controller
             $data["notifications"] = $notifications;
             echo $notifications;
         }
-    }
+    }*/
 
 
 

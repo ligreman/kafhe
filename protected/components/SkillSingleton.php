@@ -41,8 +41,8 @@ class SkillSingleton extends CApplicationComponent
         //Calculo cuál es el objetivo final, por si hay escudos y demás cosas por ahí
         $finalTarget = $this->calculateFinalTarget($skill, $target, $side);
 
-        //Compruebo si caigo en una Trampa y no estoy ejecutando una habilidad de relanzamiento
-        if($this->caigoTrampa() && $skill->category!='relanzamiento') {
+        //Compruebo si caigo en una Trampa
+        if($this->caigoTrampa($skill)) {
             //Hago que pifie
             $tirada = $fail = 0;
 
@@ -78,15 +78,15 @@ class SkillSingleton extends CApplicationComponent
 			switch ($skill->keyword) {
 				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $finalTarget); break;
                 case Yii::app()->params->skillDesecar: $this->desecar($skill, $finalTarget); break;
-				case Yii::app()->params->skillDisimular: $this->disimular($skill, $finalTarget); break;
+				case Yii::app()->params->skillDisimular: $this->disimular($skill); break;
 				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
 				case Yii::app()->params->skillRescatarGungubos: $this->rescatarGungubos($skill); break; //agente libre
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
                 case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
                 case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
-                case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill,$finalTarget); break;
-                case Yii::app()->params->skillOtear: $this->otear($skill); break;
+                case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill, $finalTarget); break;
+                case Yii::app()->params->skillOtear: $this->otear($skill, $finalTarget); break;
 			}
 			
 		}
@@ -193,13 +193,13 @@ class SkillSingleton extends CApplicationComponent
 
     /** Crea un modificador de "disimulando"
      * @param $skill Obj de la skill
-     * @param $target Obj del target
      * @return bool
      */
-	private function disimular($skill, $target)
+	private function disimular($skill)
 	{
+	    $user = Yii::app()->currentUser->model;
 		//Si ya tengo disimular lo que haré será sumar 1 uso
-		$modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
+		$modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$user->id, ':keyword'=>$skill->modifier_keyword)));
 
         if ($modificador == null) {
             $modificador = new Modifier;
@@ -211,6 +211,7 @@ class SkillSingleton extends CApplicationComponent
 		$modificador->caster_id = Yii::app()->currentUser->id;
 	    $modificador->target_final = $target->id;
 	    $modificador->skill_id = $skill->id;
+	    $modificador->value = $skill->extra_param;
 	    $modificador->keyword = $skill->modifier_keyword;	    
 	    $modificador->duration_type = $skill->duration_type;
 		$modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
@@ -227,7 +228,22 @@ class SkillSingleton extends CApplicationComponent
 	private function cazarGungubos($skill)
 	{
 		$user = Yii::app()->currentUser->model; //cojo el usuario actual
-		$amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+		$proportion = 0.5; //Precisión a la hora de cazar
+		
+		//Miro a ver si tengo modificador de Otear		
+        $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$user->id, ':keyword'=>Yii::app()->params->modifierOteando)));
+
+		if ($modificador!==null) {
+			$proportion += intval($modificador->value)/100;
+			$proportion = min($proportion, 1);
+
+			//Elimino el modificador
+			if (!$modificador->delete())
+                throw new CHttpException(400, 'Error al eliminar el modificador ('.Yii::app()->params->modifierOteando.'). ['.print_r($modificador->getErrors(),true).']');
+		}
+		
+		
+		$amount = $this->randomWithRangeProportion(intval($skill->extra_param), $proportion);
 	
 		//Cambio al usuario a Cazador si era criador
 		if ($user->status == Yii::app()->params->statusCriador) {
@@ -417,7 +433,7 @@ class SkillSingleton extends CApplicationComponent
         return true;
     }
 
-    /** Protegere una cantidad de gungubos de ser liberados o robados
+    /** Protegeré una cantidad de gungubos de ser liberados o robados
      * @return bool
      */
     private function protegerGungubos($skill, $target)
@@ -430,6 +446,12 @@ class SkillSingleton extends CApplicationComponent
             if (!$user->save())
                 throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
         }
+		
+		//Saco el máximo de gungubos que se pueden proteger en el bando del usuario actual
+		if (Yii::app()->currentUser->side=='kafhe')
+			$max_proteger = Yii::app()->event->gungubosKafhe;
+		elseif (Yii::app()->currentUser->side=='achikhoria')
+			$max_proteger = Yii::app()->event->gungubosAchikhoria;
 
         //Si ya tengo proteger lo que haré será sumar al valor los gungubos nuevos que puedo proteger
         $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->side, ':keyword'=>$skill->modifier_keyword)));
@@ -438,23 +460,30 @@ class SkillSingleton extends CApplicationComponent
             $modificador = new Modifier;
             $modificador->duration = $skill->duration;
             $modificador->value = 0;
-        }
+        } else {
+			//Como ya existe, miro cuántos gúngubos hay protegidos y lo resto al máximo posible a proteger
+			$max_proteger = max( ($max_proteger - $modificador->value) , 0); //Que no sea menor de cero
+		}
 
-        $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
+        $amount = $this->randomWithRangeProportion(intval($skill->extra_param), 0.5);		
+		$amount = min($max_proteger, $amount); //Protejo como mucho los que tengo desprotegidos
+		
+		if ($amount>0) {
+			$modificador->value += $amount;
+			$modificador->event_id = Yii::app()->event->id;
+			$modificador->caster_id = Yii::app()->currentUser->id;
+			$modificador->target_final = $target->side;
+			$modificador->skill_id = $skill->id;
+			$modificador->keyword = $skill->modifier_keyword;
+			$modificador->duration_type = $skill->duration_type;
+			$modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
-        $modificador->value += $amount;
-        $modificador->event_id = Yii::app()->event->id;
-        $modificador->caster_id = Yii::app()->currentUser->id;
-        $modificador->target_final = $target->side;
-        $modificador->skill_id = $skill->id;
-        $modificador->keyword = $skill->modifier_keyword;
-        $modificador->duration_type = $skill->duration_type;
-        $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
-
-        if (!$modificador->save())
-            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
-
-        $this->_privateMessage = 'Has logrado proteger a '.$amount.' gungubos.';
+			if (!$modificador->save())
+				throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
+			
+			$this->_privateMessage = 'Has logrado proteger a '.$amount.' gungubos.';
+		} else
+			$this->_privateMessage = 'No había gungubos a los que proteger.';      
 
         return true;
     }
@@ -594,10 +623,10 @@ class SkillSingleton extends CApplicationComponent
      * @param $skill Obj de la skill
      * @return bool
      */
-    private function otear($skill)
+    private function otear($skill, $target)
     {
-        //si ya tengo oteando, lo que hago es renovar su tiempo de ejecución y punto
-        $modificador = Modifier::model()->find(array('condition'=>'keyword=:keyword', 'params'=>array(':keyword'=>$skill->modifier_keyword)));
+        //si ya tengo oteando, lo que hago es renovar su tiempo de ejecución y punto        
+		$modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
 
         if ($modificador === null) {
             $modificador = new Modifier;
@@ -611,13 +640,14 @@ class SkillSingleton extends CApplicationComponent
         $modificador->skill_id = $skill->id;
         $modificador->keyword = $skill->modifier_keyword;
         $modificador->hidden = $skill->modifier_hidden;
+		$modificador->value = $skill->extra_param;
         $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
         if (!$modificador->save())
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
 
         //Oteo para mostrar el resultado
-        $oteados = Yii::app()->gungubos->otearGungubos(Yii::app()->event->model);
+        $oteados = Yii::app()->gungubos->getGungubosOteados(Yii::app()->event->model);
 
         $this->_privateMessage = $oteados['texto'];
 
@@ -668,14 +698,28 @@ class SkillSingleton extends CApplicationComponent
     /** Calcula el coste de tueste de una skill teniendo en cuenta todo: sobrecarga, etc.
      * @param $skill Objeto de la skill a calcular su coste
      */
-    public function calculateCostTueste($skill)
+    public function calculateCostTueste($skill, &$desglose=null)
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
         $costeFinal = $skill->cost_tueste;
+		
+		//DISIMULAR
+			$extraDisimular = 0;
+			
+			//Saco el modificador de disimular si lo tengo
+			$modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDisimulando);
+			if ($modifier !== false) {
+				$porcentajeExtraDisimular = intval($modifier->value);
+
+				$extraDisimular = round( ($costeFinal * $porcentajeExtraDisimular) / 100 );
+			}
 
         //SOBRECARGA
-            $porcentajeExtra = Yii::app()->config->getParam('sobrecargaPorcentajeTuesteExtra');
-            $tamanoHistorico = Yii::app()->config->getParam('sobrecargaTamañoHistorico');
+            $porcentajeExtraSobrecarga = Yii::app()->config->getParam('sobrecargaPorcentajeTuesteExtra');
+            //$tamanoHistorico = Yii::app()->config->getParam('sobrecargaTamañoHistorico');
+			$tamanoHistorico = max( ceil($user->rank/2) , 1); //Mínimo de 1
+			$tamanoHistorico = min($tamanoHistorico, 4); //Máximo de 4
+			$extraSobrecarga = 0;
 
             //Miro el histórico de ejecuciones del jugador
             $historico = HistorySkillExecution::model()->findAll(array('condition'=>'caster_id=:caster', 'params'=>array(':caster'=>$user->id), 'order'=>'timestamp DESC', 'limit'=>$tamanoHistorico));
@@ -689,9 +733,15 @@ class SkillSingleton extends CApplicationComponent
                 }
 
                 if ($repeticiones > 0) {
-                    $costeFinal = $costeFinal + round( ($costeFinal * ($porcentajeExtra * $repeticiones)) / 100 );
+                    $extraSobrecarga = round( ($costeFinal * ($porcentajeExtraSobrecarga * $repeticiones)) / 100 );
                 }
             }
+		
+		$costeFinal += $extraDisimular + $extraSobrecarga;
+		$desglose = array(
+			'disimular'=>$extraDisimular,
+			'sobrecarga'=>$extraSobrecarga
+		);
 
         return $costeFinal;
     }
@@ -747,10 +797,12 @@ class SkillSingleton extends CApplicationComponent
     /** Comprueba si el usuario activo tiene un modificador Trampa afectándole, y reduce el modificador en caso afirmativo
      * @return bool si está o no afectado por una trampa
      */
-    private function caigoTrampa() {
+    private function caigoTrampa($skill) {
 	    //Si existe el modificador "trampa" entre los que me afectan
 	    $modificadorTrampa = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierTrampa);
-	    if ($modificadorTrampa !== false) {
+
+	    //Caigo si existe trampa y no estoy ejecutando una habilidad de relanzamiento o Disimular
+	    if ($modificadorTrampa!==false && $skill->category!='relanzamiento' && $skill->keyword!='disimular') {
 	        //Reduzco los usos del modificador trampa
             if (!Yii::app()->modifier->reduceModifierUses($modificadorTrampa))
                 throw new CHttpException(400, 'Error al eliminar el modificador Trampa.');
