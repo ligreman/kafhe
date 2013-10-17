@@ -28,7 +28,8 @@ class m131013_211254_v1_1 extends CDbMigration
             'duration_type'  =>  'horas',  // horas, evento, usos
             'critic'  =>  5,
             'fail'  =>  15,
-            'cost_tueste'  =>  50,
+			'extra_param' => '20', //Porcentaje de precisión
+            'cost_tueste'  =>  75,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -45,11 +46,15 @@ class m131013_211254_v1_1 extends CDbMigration
             'require_event_status'  =>  1,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL
         ));
+		
+		//Alter tables
+		$this->execute('ALTER TABLE cronpile ADD due_date timestamp NULL DEFAULT NULL AFTER params;');
+		$this->execute('ALTER TABLE event DROP COLUMN last_gungubos_repopulation;');
 
 	    //Ajustes en valores ya existentes
 	    $this->update('user', array('rank'=>1), 'id=:id', array(':id'=>1));
 	    $this->update('skill', array('fail'=>5, 'extra_param'=>50), 'keyword=:key', array(':key'=>'hidratar'));
-        $this->update('skill', array('require_user_min_rank'=>3), 'keyword=:key', array(':key'=>'disimular'));
+        $this->update('skill', array('require_user_min_rank'=>3, 'require_user_status'=>'1,2', 'extra_param'=>50, 'cost_tueste'=>0, 'description'=>'La próxima habilidad que lances no aparecerá en el muro de notificaciones pero te costará un 50% más de tueste. No se acumula. Esta habilidad tampoco aparecerá en el muro.'), 'keyword=:key', array(':key'=>'disimular'));
         $this->update('skill', array('require_user_min_rank'=>4), 'keyword=:key', array(':key'=>'protegerGungubos'));
         $this->update('skill', array('description'=>'Atraes a tu bando entre 50 y 100 gungubos del bando contrario.', 'require_user_min_rank'=>5), 'keyword=:key', array(':key'=>'atraerGungubos'));
         $this->update('skill', array('fail'=>10, 'critic'=>15, 'require_user_min_rank'=>6), 'keyword=:key', array(':key'=>'desecar'));
@@ -64,10 +69,14 @@ class m131013_211254_v1_1 extends CDbMigration
 	    // OTEAR
 	    $this->delete('skill', 'keyword=:key', array(':key'=>'otear'));
 
+		//Alters
+		$this->execute('ALTER TABLE cronpile DROP COLUMN due_date;');
+		$this->execute('ALTER TABLE event ADD last_gungubos_repopulation date NULL DEFAULT NULL AFTER gungubos_achikhoria;');
+		
 	    //Ajustes
         $this->update('user', array('rank'=>0), 'id=:id', array(':id'=>1));
         $this->update('skill', array('fail'=>10, 'extra_param'=>NULL), 'keyword=:key', array(':key'=>'hidratar'));
-        $this->update('skill', array('require_user_min_rank'=>NULL), 'keyword=:key', array(':key'=>'disimular'));
+        $this->update('skill', array('require_user_min_rank'=>NULL, 'require_user_status'=>'2', 'extra_param'=>NULL, 'cost_tueste'=>0, 'description'=>'La próxima habilidad que lances no aparecerá en el muro de notificaciones. No se acumula. Esta habilidad tampoco aparecerá en el muro.'), 'keyword=:key', array(':key'=>'disimular'));
         $this->update('skill', array('require_user_min_rank'=>NULL), 'keyword=:key', array(':key'=>'protegerGungubos'));
         $this->update('skill', array('description'=>'Atraes a tu bando hasta a 100 gungubos del bando contrario.', 'require_user_min_rank'=>NULL), 'keyword=:key', array(':key'=>'atraerGungubos'));
         $this->update('skill', array('fail'=>15, 'critic'=>10, 'require_user_min_rank'=>3), 'keyword=:key', array(':key'=>'desecar'));

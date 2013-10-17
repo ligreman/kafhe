@@ -253,6 +253,57 @@ class EventSingleton extends CApplicationComponent
 
         return true;
     }
+	
+	/** Repoblar gungubos en un evento
+	* @param $event_id Id del evento que repoblar
+	*/
+	public function repopulateGungubos($event_id)
+    {        
+        $event = Event::model()->findByPk($event_id);
+        if ($event != null) {
+            //Repueblo gungubos en el evento
+			$cuantos = mt_rand(2,5)*100; // Entre 200 y 500
+			$event->gungubos_population += $cuantos; //Repueblo
+
+			if (!$event->save())				
+				return 'ERROR al guardar el evento ('.$event->id.') repoblando gungubos.';			
+        }
+
+        return true;
+    }
+	
+	/** Programa 3 repoblaciones de gungubos por día de lunes a jueves para el evento
+	* @param $event_id Id del evento que programar
+	*/
+	public function scheduleGungubosRepopulation($event_id)
+	{	
+		//Fechas
+		$dia[1] = date('Y-m-d', strtotime('next Monday')); //Lunes
+		$dia[2] = date('Y-m-d', strtotime('next Tuesday')); //Martes
+		$dia[3] = date('Y-m-d', strtotime('next Wednesday')); //Miércoles
+		$dia[4] = date('Y-m-d', strtotime('next Thursday')); //Jueves
+		
+		//Horas
+		for ($i=1; $i<=12; $i++) {
+			$randomHour = mt_rand(7,17); //Entre 7 y 18 horas (hasta 17:59)
+			$randomMinute = mt_rand(0,59);
+			
+			$randomHour = str_pad($randomHour, 2, '0', STR_PAD_LEFT);
+			$randomMinute = str_pad($randomMinute, 2, '0', STR_PAD_LEFT);
+			
+			$slot = ceil($i/3);			
+			
+			$cron = new Cronpile;
+			$cron->operation = 'repopulateGungubos';
+			$cron->params = $event_id;
+			$cron->due_date = $dia[$slot] .' '. $randomHour.':'.$randomMinute.':00';
+			
+			if (!$cron->save())
+				throw new CHttpException(400, 'Error al guardar en la pila de cron la programación de repoblación de gugnubos. ['.print_r($cron->getErrors(),true).']');
+		}
+		
+		return true;
+	}
 
 
 

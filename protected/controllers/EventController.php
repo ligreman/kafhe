@@ -56,9 +56,9 @@ class EventController extends Controller
      */
     public function actionStart()
 	{
-		//Cambio el evento a estado 2 (batalla!!)
-		if (!isset(Yii::app()->event->model))
-			throw new CHttpException(400, 'Error al iniciar la batalla ya que no hay ningún evento activo.');
+		//Cambio el evento a estado 2 (batalla!!) si existe y está en el estado correcto
+		if (!isset(Yii::app()->event->model) || !Yii::app()->event->status==Yii::app()->params->statusCalma)
+			throw new CHttpException(400, 'Error al iniciar la batalla ya que no hay ningún evento activo, o en el estado correcto.');
 		
 		$event = Yii::app()->event->model;
 		$event->status = Yii::app()->params->statusBatalla;
@@ -267,15 +267,19 @@ class EventController extends Controller
         $nuevoEvento->group_id = $event->group_id;
         $nuevoEvento->status = Yii::app()->params->statusIniciado;
         $nuevoEvento->type = 'desayuno';
-        $nuevoEvento->gungubos_population = mt_rand(7,13)*100; //mt_rand(5,10)*1000;
-        $nuevoEvento->last_gungubos_repopulation = date('Y-m-d'); //ya he repopulado hoy
+        $nuevoEvento->gungubos_population = 0; //se inicia vacío el evento //mt_rand(7,13)*100; //mt_rand(5,10)*1000;
+        //$nuevoEvento->last_gungubos_repopulation = date('Y-m-d'); //ya he repoblado hoy		
 
-        $fecha = new DateTime();
-        $fecha->add(new DateInterval('P7D'));
-        $nuevoEvento->date = $fecha->format('Y-m-d');
+        //$fecha = new DateTime();
+        //$fecha->add(new DateInterval('P7D'));
+		$fecha = strtotime('next Friday');
+        $nuevoEvento->date = date('Y-m-d', $fecha); //$fecha->format('Y-m-d');
 
         if (!$nuevoEvento->save())
             throw new CHttpException(400, 'Error al crear un nuevo evento. ['.print_r($nuevoEvento->getErrors(),true).']');
+			
+		//Creo las entradas de repoblar para la pila cron
+		Yii::app()->event->scheduleGungubosRepopulation($nuevoEvento->getPrimaryKey());
 
         //Salvo usuarios
         if (count($final_users['kafhe'])>0) {
@@ -295,7 +299,8 @@ class EventController extends Controller
 
                 $user->side = 'achikhoria';
                 //Salvo
-                if (!$user->save()) throw new CHttpException(400, 'Error al actualizar al usuario '.$id.' al cerrar el evento '.$event->id.'.');
+                if (!$user->save()) 
+					throw new CHttpException(400, 'Error al actualizar al usuario '.$id.' al cerrar el evento '.$event->id.'. ['.print_r($user->getErrors(),true).']');
             }
         }
 
