@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $operation
  * @property string $params
+ * @property string $due_date
  */
 class Cronpile extends CActiveRecord
 {
@@ -39,9 +40,10 @@ class Cronpile extends CActiveRecord
 			array('operation', 'required'),
 			array('operation', 'length', 'max'=>50),
 			array('params', 'length', 'max'=>100),
+			array('due_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, operation, params', 'safe', 'on'=>'search'),
+			array('id, operation, params, due_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,6 +67,7 @@ class Cronpile extends CActiveRecord
 			'id' => 'ID',
 			'operation' => 'Operation',
 			'params' => 'Params',
+			'due_date' => 'Due Date',
 		);
 	}
 
@@ -82,6 +85,7 @@ class Cronpile extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('operation',$this->operation,true);
 		$criteria->compare('params',$this->params,true);
+		$criteria->compare('due_date',$this->due_date,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -9,6 +9,8 @@
 
 	<?php echo $form->textFieldRow($model,'params',array('class'=>'span5','maxlength'=>100)); ?>
 
+	<?php echo $form->textFieldRow($model,'due_date',array('class'=>'span5')); ?>
+
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
