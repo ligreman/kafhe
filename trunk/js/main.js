@@ -214,7 +214,7 @@ function readOldNotifications(){
 
         if(date != null){
             $.ajax({
-               url:base_url+'/site/read?date='+date
+               url:base_url+'/ajax/markAsRead?date='+date
             }).done(function(){ });
         }
     },5000);
@@ -232,20 +232,20 @@ function loadMoreNotifications(){
 
         var base_url = $('#baseUrl').text();
         $.ajax({
-            url:base_url+'/site/load?date='+date+'&type='+type,
+            url:base_url+'/ajax/loadMoreNotifications?date='+date+'&type='+type,
             datatype: 'html'
         }).done(function(data){
-                if(data==""){
-                    $('#moreNotifications').addClass('categoriaNotif');
-                    $('#moreNotifications').html('<span>No hay más notificaciones</span>');
-                }else{
-                    $(".categoriaNotif.hidden").addClass("visible");
-                    $(".categoriaNotif.hidden").removeClass("hidden");
-                    $('#moreNotifications').detach();
-                    $('#muro').html($('#muro').html()+data);
-                    resizeNavBar();
-                }
-            });
+			if(data==""){
+				$('#moreNotifications').addClass('categoriaNotif');
+				$('#moreNotifications').html('<span>No hay más notificaciones</span>');
+			}else{
+				$(".categoriaNotif.hidden").addClass("visible");
+				$(".categoriaNotif.hidden").removeClass("hidden");
+				$('#moreNotifications').detach();
+				$('#muro').html($('#muro').html()+data);
+				resizeNavBar();
+			}
+		});
         return false;
     });
 }
@@ -256,23 +256,32 @@ function askForNewNotifications(){
     if(date != null){
         var base_url = $('#baseUrl').text();
         $.ajax({
-            url:base_url+'/site/askForNew?date='+date,
-            datatype: 'json'
+            url:base_url+'/ajax/askForUpdates?date='+date,
+            dataType: 'json'
         }).done(function(data){
-                    if(data > 1){
-                        $('#newNotifications').detach();
-                        $('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data+' nuevas notificaciones.</a></p>');
-                        resizeNavBar();
-                    }else if(data > 0){
-                        $('#newNotifications').detach();
-                        $('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data+' nueva notificación.</a></p>');
-                        resizeNavBar();
-                    }
-                    if(badge != data){
-                        badge = data;
-                        favicon.badge(badge);
-                    }
-            });
+			//Notifications
+			if(data.notifications > 1){
+				$('#newNotifications').detach();
+				$('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data.notifications+' nuevas notificaciones.</a></p>');
+				resizeNavBar();
+			}else if(data.notifications > 0){
+				$('#newNotifications').detach();
+				$('#muro .categoriaNotif:first').before('<p id="newNotifications" class="centerContainer"><a href="'+location.pathname+'" class="'+$('#moreNotifications a').attr('class')+'">Cargar '+data.notifications+' nueva notificación.</a></p>');
+				resizeNavBar();
+			}
+			if(badge != data.notifications){
+				badge = data.notifications;
+				favicon.badge(badge);
+			}
+			
+			//Tueste
+			$("span#tueste").removeClass().addClass('w'+data.ptos_tueste_percent);
+			$("span#tueste span.title").text(data.ptos_tueste+' puntos de tueste');
+			
+			//Batalla
+			$("span#batteStatusKafhe").removeClass().addClass('w'+data.gungubos_percent);
+			$("span#batteStatusKafhe span.score").text(data.gungubos_kafhe + ' - ' + data.gungubos_achikhoria);
+		});
         askForNews();
     }
 }

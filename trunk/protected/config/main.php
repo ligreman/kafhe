@@ -196,6 +196,7 @@ return array(
 		'statusIniciado'=>1,
 		'statusBatalla'=>2,
 		'statusFinalizado'=>3,
+		'statusCalma'=>4,
 		
 		//Modificadores. Están aquí y en BBDD
 		'modifierHidratado'=>'hidratado',

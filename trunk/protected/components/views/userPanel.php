@@ -127,11 +127,18 @@
                                 <dl>
                                     <dt>Coste: </dt>
                                     <dd><?php
-                                        if($skill->cost_tueste!==null && $skill->cost_tueste > 0) {
-                                            $costeFinal = Yii::app()->skill->calculateCostTueste($skill);
+                                        if($skill->cost_tueste!==null && $skill->cost_tueste >= 0) {
+                                            $costeFinal = Yii::app()->skill->calculateCostTueste($skill, $desgloseCostes);
                                             echo ' '.$skill->cost_tueste;
-                                            if ($costeFinal > $skill->cost_tueste)
-                                                echo ' <span title="Tueste extra por sobrecarga, etc." class="rojo">+ '.($costeFinal - $skill->cost_tueste).'</span> = '.$costeFinal;
+                                            if ($costeFinal > $skill->cost_tueste) {
+                                                if ($desgloseCostes['disimular']>0)
+                                                    echo ' <span title="Tueste extra por disimular" class="rojo">+ '.$desgloseCostes['disimular'].'</span>';
+
+                                                if ($desgloseCostes['sobrecarga']>0)
+                                                    echo ' <span title="Tueste extra por sobrecarga" class="rojo">+ '.$desgloseCostes['sobrecarga'].'</span>';
+
+                                                echo ' = '.$costeFinal;
+                                            }
 
                                             echo ' (tueste)';
                                         }
