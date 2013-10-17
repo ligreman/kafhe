@@ -102,9 +102,9 @@ class EventController extends Controller
         $users = Yii::app()->db->createCommand($sql)->queryAll();
         if (count($users)>0) {
             foreach($users as $user) {
-				///TODO eliminar esto: le doy 4 ptos relance a todos los usuarios
+				///TODO eliminar esto: le doy ptos relance a todos los usuarios
                     $us = User::model()->findByPk($user['id']);
-                    $us->ptos_relanzamiento+=4;
+                    $us->ptos_relanzamiento += 3;
                     $us->save();
 			
                 if ($user['id'] != $event->caller_id)
