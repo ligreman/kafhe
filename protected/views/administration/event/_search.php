@@ -21,8 +21,6 @@
 
 	<?php echo $form->textFieldRow($model,'gungubos_achikhoria',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'last_gungubos_repopulation',array('class'=>'span5')); ?>
-
 	<?php echo $form->textFieldRow($model,'last_gungubos_criadores',array('class'=>'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'stored_tueste_kafhe',array('class'=>'span5')); ?>

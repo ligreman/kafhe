@@ -21,5 +21,6 @@ $this->menu=array(
 		'id',
 		'operation',
 		'params',
+		'due_date',
 	),
 )); ?>

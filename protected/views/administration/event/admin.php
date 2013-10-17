@@ -51,7 +51,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'gungubos_population',
 		'gungubos_kafhe',
 		'gungubos_achikhoria',
-		'last_gungubos_repopulation',
 		'last_gungubos_criadores',
 		'stored_tueste_kafhe',
 		'stored_tueste_achikhoria',
