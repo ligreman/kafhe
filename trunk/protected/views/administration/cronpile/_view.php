@@ -12,5 +12,9 @@
 	<?php echo CHtml::encode($data->params); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('due_date')); ?>:</b>
+	<?php echo CHtml::encode($data->due_date); ?>
+	<br />
+
 
 </div>

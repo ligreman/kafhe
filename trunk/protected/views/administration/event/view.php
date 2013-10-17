@@ -27,7 +27,6 @@ $this->menu=array(
 		'gungubos_population',
 		'gungubos_kafhe',
 		'gungubos_achikhoria',
-		'last_gungubos_repopulation',
 		'last_gungubos_criadores',
 		'stored_tueste_kafhe',
 		'stored_tueste_achikhoria',

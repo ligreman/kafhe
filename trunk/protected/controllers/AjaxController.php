@@ -6,7 +6,7 @@ class AjaxController extends Controller
 	{
         $d = date_parse($date);
         if($d != false){
-            $notifications = User::model()->updateByPk(Yii::app()->currentUser->id,array("last_notification_read" => $date));
+            User::model()->updateByPk(Yii::app()->currentUser->id,array("last_notification_read" => $date));
         }
 		Yii::app()->end(); //Para terminar ya que no devuelvo ni view ni nada.
     }
