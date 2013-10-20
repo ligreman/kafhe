@@ -225,6 +225,6 @@ return array(
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Iluminado'),
         'userStatusNames'=>array(0=>'Criador', 1=>'Cazador', 2=>'Alistado', 3=>'Baja', 4=>'Iluminado', 5=>'Libertador'),
-        'eventStatusNames'=>array(0=>'Cerrada', 1=>'Gungubos', 2=>'Batalla', 3=>'Finalizada'),
+        'eventStatusNames'=>array(0=>'Cerrada', 1=>'Gungubos', 2=>'Batalla', 3=>'Finalizada', 4=>'En calma'),
 	),
 );
