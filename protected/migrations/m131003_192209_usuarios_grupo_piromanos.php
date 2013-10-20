@@ -311,13 +311,13 @@ class m131003_192209_usuarios_grupo_piromanos extends CDbMigration
 
 	public function safeDown()
 	{
-        $this->delete('user', "username='carlos' OR username='fernando' OR username='jorge' OR username='alejandro' OR username='dani' OR username='juan' OR username='leandro' OR username='manuel' OR username='maria' OR username='miguel' OR username='mangel' OR username='vero' OR ");
-        $this->execute("TRUNCATE TABLE group;");
-        $this->execute("TRUNCATE TABLE event;");
-        $this->execute("TRUNCATE TABLE notification;");
+        $this->delete('user', "username='carlos' OR username='fernando' OR username='jorge' OR username='alejandro' OR username='dani' OR username='juan' OR username='leandro' OR username='manuel' OR username='maria' OR username='miguel' OR username='mangel' OR username='vero'");
+        $this->execute("TRUNCATE TABLE `group`;");
+        $this->execute("TRUNCATE TABLE `event`;");
+        $this->execute("TRUNCATE TABLE `notification`;");
 
         $this->delete('authassignment', "itemname!='Administrador'");
-        $this->delete('authitem', "name!='Administrador' AND name!='Invitado' AND name!='Usuario'");
+        //$this->delete('authitem', "name!='Administrador' AND name!='Invitado' AND name!='Usuario'");
 	}
 
 }
