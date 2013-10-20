@@ -21,7 +21,7 @@ class EnrollmentController extends Controller
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('index'),
                 'roles'=>array('Usuario'),
-                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusBatalla))", //Dejo entrar si hay evento desayuno abierto sólo
+                'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusCalma || Yii::app()->event->status==Yii::app()->params->statusBatalla))", //Dejo entrar si hay evento desayuno abierto sólo
 
             ),
             array('deny',  // deny all users
@@ -212,9 +212,12 @@ class EnrollmentController extends Controller
 
         //Desayuno anterior
         $prev_enroll = Enrollment::model()->find(array('condition'=>'user_id=:user_id AND event_id!=:event_id', 'params'=>array(':user_id'=>Yii::app()->currentUser->id, 'event_id'=>Yii::app()->event->id), 'order'=>'timestamp DESC', 'limit'=>'1'));
-        $data['prev_meal'] = $prev_enroll->meal_id;
-        $data['prev_drink'] = $prev_enroll->drink_id;
-        $data['prev_ito'] = $prev_enroll->ito;
+        if ($prev_enroll!==null) {
+            $data['prev_meal'] = $prev_enroll->meal_id;
+            $data['prev_drink'] = $prev_enroll->drink_id;
+            $data['prev_ito'] = $prev_enroll->ito;
+        } else
+            $data['prev_meal'] = $data['prev_drink'] = $data['prev_ito'] = '';
 
         // displays the login form
         $this->render('index', $data);

@@ -23,7 +23,7 @@ class EventController extends Controller
 			array('allow', 
 				'actions'=>array('start'),
 				'roles'=>array('Usuario'),
-				'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusIniciado && Yii::app()->user->checkAccess('lanzar_evento'))", //Dejo entrar
+				'expression'=>"(isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusCalma && Yii::app()->user->checkAccess('lanzar_evento'))", //Dejo entrar
 			),
 			array('allow', 
 				'actions'=>array('finish'),

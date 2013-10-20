@@ -340,15 +340,17 @@ class CronCommand extends CConsoleCommand {
 	*/
 	public function actionEventosEnCalma() {
 		//Cojo todos los eventos iniciados
-		$events = Event::model()->find(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
-		
+		$events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+
 		foreach($events as $event) {
-			$event->status = Yii::app()->params->statusCalma;
-			
-			if (!$event->save())
+            $event->status = Yii::app()->params->statusCalma;
+
+            if (!$event->save())
                 echo "** ERROR al guardar el evento (".$event->id.") poniendolo en estado Calma.\n";
-		}
-		
+            else
+                echo "Evento ".$event->id." puesto en calma.\n";
+        }
+
 		return 0;
 	}	
 	
@@ -371,7 +373,7 @@ class CronCommand extends CConsoleCommand {
 				$fecha = strtotime($cronjob->due_date);
 				
 				if ($now <= $fecha) {
-					echo "  Todavía no se tiene que ejecutar esta tarea.\n";
+					echo "  Todavia no se tiene que ejecutar esta tarea.\n";
 					continue; //Me salto la tarea porque aún no ha de lanzarse
 				}
 			}
