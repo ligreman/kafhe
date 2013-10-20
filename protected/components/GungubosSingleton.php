@@ -33,7 +33,7 @@ class GungubosSingleton extends CApplicationComponent
         $gungubos['kafhe'] += $extraKafhe;
         $gungubos['achikhoria'] += $extraAchikhoria;
 				
-        //TODO Aquí irán otros modificadores, etc...
+        ///TODO Aquí irán otros modificadores, etc...
 		
 		//Devuelvo los gungubos criados        
 		return $gungubos;

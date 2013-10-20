@@ -15,37 +15,50 @@ class EventSingleton extends CApplicationComponent
             return null;
 				
 		$this->getModel(); //Por si acaso
-			
-		//Probabilidades de cada bando
+
+		//Saco los bandos de cada usuario
+		$usuarios = Yii::app()->usertools->users;
+        foreach ($usuarios as $usuario) {
+            $bandosUsers[$usuario->id] = $usuario->side;
+        }
+
+        //Probabilidades de cada bando
 		$bandos = Yii::app()->usertools->calculateSideProbabilities($this->getGungubosKafhe(), $this->getGungubosAchikhoria());
 		
 		//Elijo bando "perdedor"		
-		$kafhePerc = $bandos['kafhe'] * 100;
+		$kafhePerc = $bandos['kafhe'] * 100; //tiene 2 decimales así que lo convierto a entero
 		$randomSide = mt_rand(1, 10000);
 		if ( 1<=$randomSide && $randomSide<=$kafhePerc ) $bandoPerdedor = 'kafhe';
 		else  $bandoPerdedor = 'achikhoria';
+
+		Yii::log('Lanzamiento: pierde el bando '.$bandoPerdedor, 'info');
 		
-		//Preparo un array con las probabilidades de cada uno de los usuarios del bando perdedor
-		$probabilidades = Yii::app()->usertools->calculateProbabilities(true, $bandoPerdedor);
+		//Preparo un array con las probabilidades de cada uno de los usuarios
+		$probabilidades = Yii::app()->usertools->calculateProbabilities(true);
 		if ($probabilidades === null) return null;
 		
 		//Elijo llamador "ganador" dentro de ese bando
 		$randomCaller = mt_rand(1, 10000);
 		$anterior = 0;	
 		$caller = null;
-	
-		foreach($probabilidades as $user=>$valor) {
-			$valor = $valor * 100; //tiene 2 decimales así que lo convierto a entero
-			if ($valor == 0) continue;
-			
-			if ( (($anterior+1) <= $randomCaller) && ($randomCaller <= ($anterior+$valor)) ) {
-				$caller = $user;
-			}
-			
-			$anterior += $valor;
-		}
+
+	    do {
+            //Mientras no elija a un usuario del bando perdedor del sorteo, relanzo
+            foreach($probabilidades as $user=>$valor) {
+                $valor = $valor * 100; //tiene 2 decimales así que lo convierto a entero
+                if ($valor == 0) continue;
+
+                if ( (($anterior+1) <= $randomCaller) && ($randomCaller <= ($anterior+$valor)) ) {
+                    $caller = $user;
+                    break;
+                }
+
+                $anterior += $valor;
+            }
+        } while ($bandosUsers[$caller] != $bandoPerdedor);
 		
 		if ($caller === null) return null;
+        Yii::log('Llama: '.$caller, 'info');
 		
 		return array('side'=>$bandoPerdedor, 'userId'=>$caller);
 	}

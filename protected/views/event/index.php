@@ -77,14 +77,14 @@
 
          echo "<br><br>";*/
 
-         $arr = Yii::app()->usertools->calculateProbabilities(true);
-        /*print_r($arr);*/
+        $arr = Yii::app()->usertools->calculateProbabilities(true);
+        //print_r($arr);
     ?>
 	
 	<p class="clear noteProbs">* Nota: la probabilidad de un bando de salir elegido es inversamente proporcional a la cantidad de gungubos que tiene.</p>
 
     <div id="generalProbs">
-        <h2>Probabilidad por usuario</h2>
+        <h2>Probabilidad global por usuario</h2>
         <div id="userProbabilities"></div>
     </div>
 
@@ -95,19 +95,20 @@
             var data = google.visualization.arrayToDataTable([
             ['Usuario', 'Probabilidad'],
             <?php
-                $aArr = Yii::app()->usertools->calculateProbabilities(true, 'achikhoria');
-                $kArr = Yii::app()->usertools->calculateProbabilities(true, 'kafhe');
+                //$aArr = Yii::app()->usertools->calculateProbabilities(true, 'achikhoria');
+                //$kArr = Yii::app()->usertools->calculateProbabilities(true, 'kafhe');
 
                 $totalGungubos = $battle->gungubos_achikhoria + $battle->gungubos_kafhe;
                 if($totalGungubos > 0) $pAchikhoria = round(($battle->gungubos_kafhe / $totalGungubos), 3);
                 else $pAchikhoria = 0.5;
                 $pKafhe = 1 - $pAchikhoria;
+
                 foreach ($users as $user) {
                     if(isset($arr[$user->id])){
                         if($user->side == "kafhe")
-                            echo '["'.$user->alias.'",'.round($kArr[$user->id]*$pKafhe, 1).'],';
+                            echo '["'.$user->alias.'",'.round($arr[$user->id]*$pKafhe, 1).'],';
                         else
-                            echo '["'.$user->alias.'",'.round($aArr[$user->id]*$pAchikhoria, 1).'],';
+                            echo '["'.$user->alias.'",'.round($arr[$user->id]*$pAchikhoria, 1).'],';
                     }
                 }
             ?>
@@ -127,12 +128,15 @@
         }
     </script>
 
+
+
     <div id="sideProbs">
-        <h2>Probabilidad por bando</h2>
+        <h2>Probabilidad dentro del bando</h2>
         <div id="userProbabilitiesAchikhoriaSide"></div>
 
         <div id="userProbabilitiesKafheSide"></div>
     </div>
+
     <script type="text/javascript">
         google.load("visualization", "1", {packages:["corechart"]});
         google.setOnLoadCallback(drawChart);
@@ -140,8 +144,8 @@
             var data = google.visualization.arrayToDataTable([
                 ['Usuario', 'Probabilidad'],
                 <?php
-                    $kSide = 0;
-                    $aSide = 0;
+                    //$kSide = 0;
+                    //$aSide = 0;
                     foreach ($users as $user) {
                         if(isset($arr[$user->id]) && $user->side == 'achikhoria'){
                             echo '["'.$user->alias.'",'.$arr[$user->id].'],';
@@ -170,8 +174,8 @@
             var data = google.visualization.arrayToDataTable([
                 ['Usuario', 'Probabilidad'],
                 <?php
-                    $kSide = 0;
-                    $aSide = 0;
+                    //$kSide = 0;
+                    //$aSide = 0;
                     foreach ($users as $user) {
                         if(isset($arr[$user->id]) && $user->side == 'kafhe'){
                             echo '["'.$user->alias.'",'.$arr[$user->id].'],';

@@ -104,7 +104,7 @@ class EventController extends Controller
             foreach($users as $user) {
 				///TODO eliminar esto: le doy ptos relance a todos los usuarios
                     $us = User::model()->findByPk($user['id']);
-                    $us->ptos_relanzamiento += 3;
+                    $us->ptos_relanzamiento += 4;
                     $us->save();
 			
                 if ($user['id'] != $event->caller_id)
