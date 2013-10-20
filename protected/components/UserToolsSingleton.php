@@ -120,7 +120,7 @@ class UserToolsSingleton extends CApplicationComponent
 		
 		foreach($users as $user) {
 			if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
-			if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
+			//if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
 			
 			$proporcion = $user->times / ($user->calls + 1);			
 			$valor = ($xProporcion * $proporcion) + ( pow($user->rank, 2) * $xRango );
@@ -132,7 +132,7 @@ class UserToolsSingleton extends CApplicationComponent
 		//Segunda pasada, calculando ya el valor final
 		foreach($users as $user) {
 			if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
-			if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
+			//if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
 			
 			$finales[$user->id] = round( ($valores[$user->id] / $suma) * 100, 2);
 		}
