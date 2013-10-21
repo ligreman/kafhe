@@ -71,7 +71,7 @@
 // * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron criarGungubos
 
 // #Cada hora entre las 7-18 miro a ver si repueblo gungubos
-// 5 7-18 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron repopulateGungubos
+// #5 7-18 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron repopulateGungubos
 
 // #Cada hora compruebo si hay algo en cola del cronPile
 // * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron processCronPile
@@ -360,13 +360,13 @@ class CronCommand extends CConsoleCommand {
     public function actionProcessCronPile()
     {		
         $pila = Cronpile::model()->findAll();
-		$now = time();
-
-        echo "Hay ".count($pila)." tareas en la pila de Cron.\n";
+		//$now = time();
+		$dateNow = Yii::app()->event->getCurrentDate();
+		$now = strtotime($dateNow);
 
         foreach($pila as $cronjob) {
 			$result = true;
-            echo "Procesando ".$cronjob->operation." [".$cronjob->params."].\n";
+            echo "Procesando ".$cronjob->operation." [".$cronjob->params."] programado para ".$cronjob->due_date.".\n";
 			
 			if ($cronjob->due_date !== NULL) {
 				echo "  La tarea cron tiene fecha programada.\n";
@@ -390,11 +390,22 @@ class CronCommand extends CConsoleCommand {
 			if ($result !== true)
 				echo "  Error en la tarea cron: ".$result.".\n";
 
-            echo "Elimino la tarea ".$cronjob->operation." [".$cronjob->params."] de la pila.\n";
+            echo "  Elimino la tarea ".$cronjob->operation." [".$cronjob->params."] de la pila.\n";
             $cronjob->delete();
         }
 
         return 0;
+    }
+
+
+    /** Loguea un mensaje
+     * @param $message Mensaje en texto
+     * @param string $type Tipo de mensaje: info, error, trace
+     */
+    private function logCron($message, $type='info')
+    {
+        echo "[".strtoupper($type)."]".$message."\n";
+        Yii::log($message, $type);
     }
 
 }

@@ -272,7 +272,7 @@ class EventSingleton extends CApplicationComponent
 	*/
 	public function repopulateGungubos($event_id)
     {        
-        $event = Event::model()->findByPk($event_id);
+        $event = Event::model()->findByPk(intval($event_id));
         if ($event != null) {
             //Repueblo gungubos en el evento
 			$cuantos = mt_rand(2,5)*100; // Entre 200 y 500
@@ -298,7 +298,7 @@ class EventSingleton extends CApplicationComponent
 		
 		//Horas
 		for ($i=1; $i<=12; $i++) {
-			$randomHour = mt_rand(7,17); //Entre 7 y 18 horas (hasta 17:59)
+			$randomHour = mt_rand(7,17); //Entre 7 y 18 horas (hasta 17:59) GMT+1
 			$randomMinute = mt_rand(0,59);
 			
 			$randomHour = str_pad($randomHour, 2, '0', STR_PAD_LEFT);
@@ -312,12 +312,27 @@ class EventSingleton extends CApplicationComponent
 			$cron->due_date = $dia[$slot] .' '. $randomHour.':'.$randomMinute.':00';
 			
 			if (!$cron->save())
-				throw new CHttpException(400, 'Error al guardar en la pila de cron la programación de repoblación de gugnubos. ['.print_r($cron->getErrors(),true).']');
+				throw new CHttpException(400, 'Error al guardar en la pila de cron la programación de repoblación de gungubos. ['.print_r($cron->getErrors(),true).']');
 		}
 		
 		return true;
 	}
 
+
+    /** Obtiene la fecha y hora actual en formato GMT+1 Europa/Madrid
+     * @param string $format Formato para la fecha de salida
+     * @return string La fecha GMT+1 (con horario verano) en el formato indicado
+     */
+    public function getCurrentDate($format='Y-m-d H:i:s')
+    {
+        $actual = date_default_timezone_get(); //Timezone actual
+
+        date_default_timezone_set('Europe/Madrid');
+        $date = date('Y-m-d H:i:s');//, new DateTimeZone('Europe/Madrid'));
+        date_default_timezone_set($actual); //Lo dejo como estaba
+
+        return $date;
+    }
 
 
     /** Distribuye en bandos a los usuarios
