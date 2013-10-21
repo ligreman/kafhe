@@ -48,7 +48,11 @@ class AjaxController extends Controller
 		$event = Event::model()->findByPk(Yii::app()->event->id);
 		$data['gungubos_kafhe'] = $event->gungubos_kafhe;
 		$data['gungubos_achikhoria'] = $event->gungubos_achikhoria;
-		$data['gungubos_percent'] = floor(($event->gungubos_kafhe/($event->gungubos_kafhe+$event->gungubos_achikhoria))*100);
+    
+    if ($event->gungubos_kafhe+$event->gungubos_achikhoria == 0)
+      $data['gungubos_percent'] = 50;
+    else
+      $data['gungubos_percent'] = floor(($event->gungubos_kafhe/($event->gungubos_kafhe+$event->gungubos_achikhoria))*100);
 		
 		//Estado modificadores ¿?
 			
