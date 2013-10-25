@@ -32,8 +32,8 @@ if [ -f "$1" ]
 
       #MySQL
         sed -i 's/mysql:host=localhost;dbname=kafhe_refactor/mysql:host=localhost;dbname=kafhe/g' kafhe/protected/config/*.php
-        #sed -i "s/'kafhe',\/\/#mysqlUsername/'XXXXX',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
-        sed -i "s/'',\/\/#mysqlPassword/'XXXXX',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
+        #sed -i "s/'kafhe',\/\/#mysqlUsername/'kafhe',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
+        sed -i "s/'',\/\/#mysqlPassword/'nhKF57LsMy',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
 
       #Log
         sed -i 's/\/\/#iniLog/\/*\/\/#iniLog/g' kafhe/protected/config/*.php
@@ -42,8 +42,8 @@ if [ -f "$1" ]
       #Email
         sed -i 's/true,\/\/#testMode/false,\/\/#testMode/g' kafhe/protected/config/mail.php
         sed -i 's/@gmail.com/@kafhe.chequerestaurante.com/g' kafhe/protected/config/*.php
-        #sed -i "s/'',\/\/#mysqlUsername/'XXXXX',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
-        #sed -i "s/'',\/\/#mysqlPassword/'XXXXX',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
+        #sed -i "s/'',\/\/#mysqlUsername/'kafhe',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
+        #sed -i "s/'',\/\/#mysqlPassword/'',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
 
 
       #Es producción o test
@@ -52,15 +52,15 @@ if [ -f "$1" ]
           then
 	    echo "Configurando correos de cuentas dummy"
 	    #Email usuarios test
-	        sed -i 's/mod@mail.com/XXXX@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-	        sed -i 's/test1@mail.com/XXXX@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-	        sed -i 's/test2@mail.com/XXXX@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-	        sed -i 's/test3@mail.com/XXXX@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-	        sed -i 's/test4@mail.com/XXXX@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
-	        sed -i 's/test5@mail.com/XXXX@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/mod@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test1@mail.com/cgoo85@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test2@mail.com/mazzzta@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test3@mail.com/almavic@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test4@mail.com/migcampo@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
+	        sed -i 's/test5@mail.com/crystaltales@gmail.com/g' kafhe/protected/migrations/m130814_195553_dummy_data.php
 	  else
             echo "Borrando archivos dummy..."
-	    rm kafhe/protected/migrations/m130814_195553_dummy_data.php 
+	    #rm kafhe/protected/migrations/m130814_195553_dummy_data.php 
         fi
 
     #Lanzo las migraciones
