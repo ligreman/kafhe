@@ -193,9 +193,13 @@ class SkillValidator
 	}
 
     private function checkEventStatus($skill) {
+        $event = Yii::app()->event->model;
+
         if ($skill->require_event_status == null) return true;
-        else if (isset(Yii::app()->event->model)) {
-            if ($skill->require_event_status == Yii::app()->event->status) return true;
+        else if (isset($event)) {
+            $statuses = explode(',', $skill->require_event_status);
+
+            if (in_array($event->status, $statuses)) return true;
             else {
                 $this->_lastError = 'No puedes ejecutar la habilidad en este momento.';
                 return false;

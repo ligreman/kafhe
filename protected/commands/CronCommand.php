@@ -67,7 +67,7 @@
 // #Cada 10 minutos regenero tueste
 // */10 * * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron regenerarTueste
 
-// #Cada hora genero gungubos por criadores
+// #Cada hora activo a los criadores
 // * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron criadores
 
 // #Cada hora entre las 7-18 miro a ver si repueblo gungubos
