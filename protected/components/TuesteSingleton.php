@@ -42,8 +42,9 @@ class TuesteSingleton extends CApplicationComponent
 			if($mods!=null  &&  Yii::app()->modifier->inModifiers(Yii::app()->params->modifierHidratado, $mods)) $estaHidratado = true;
             if($mods!=null  &&  Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDesecado, $mods)) $estaDesecado = true;
 		}
-		
-		if($estaHidratado) {
+
+		//Si el usuario no es cazador o alistado o libertador no le afectará la hidratación
+		if($estaHidratado && ($user->status==Yii::app()->params->statusCazador || $user->status==Yii::app()->params->statusAlistado || $user->status==Yii::app()->params->statusLibertador)) {
 		    $skillH = Skill::model()->findByAttributes(array('keyword'=>Yii::app()->params->skillHidratar));
             $porcentajePorModificadores = $skillH->extra_param; //Este extra param indica el % de regeneración extra
         } //más rápido por estar hidratado

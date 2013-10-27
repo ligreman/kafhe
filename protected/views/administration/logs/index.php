@@ -44,10 +44,11 @@ if ($flashMessages) {
                     'url'=>Yii::app()->baseUrl.'/administration/logs/delete?file='.$file
                 ));
 
+
                 $this->widget('bootstrap.widgets.TbGridView', array(
                     'type'=>'striped bordered condensed',
                     'dataProvider'=>$contenido,
-                    'template'=>"{pager}\n{items}\n{pager}",
+                    'template'=>"{pager}{items}{pager}",
                     'columns'=>array(
                         array('name'=>'date', 'header'=>'Fecha'),
                         array('name'=>'type', 'header'=>'Tipo'),

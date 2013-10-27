@@ -35,12 +35,12 @@ return array(
                     'logFile'=>date('Y-m-d').'-console-error.log',
                     'levels'=>'error, warning',
                 ),
-                array(
+                /*array(
                     'class'=>'CFileLogRoute',
                     //'logPath'=>'logs',
                     'logFile'=>date('Y-m-d').'-console-trace.log',
                     'levels'=>'profile, trace',
-                ),
+                ),*/
                 array(
                     'class'=>'CFileLogRoute',
                     //'logPath'=>'logs',
@@ -84,6 +84,7 @@ return array(
 		'statusBatalla'=>2,
 		'statusFinalizado'=>3,
 		'statusCalma'=>4,
+        'statusPreparativos'=>5,
 
         //Modificadores. Están aquí y en BBDD
         'modifierHidratado'=>'hidratado',
@@ -112,6 +113,6 @@ return array(
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Iluminado'),
         'userStatusNames'=>array(0=>'Criador', 1=>'Cazador', 2=>'Alistado', 3=>'Baja', 4=>'Iluminado', 5=>'Libertador'),
-        'eventStatusNames'=>array(0=>'Cerrado', 1=>'Iniciado', 2=>'Batalla', 3=>'Finalizado', 4=>'En calma'),
+        'eventStatusNames'=>array(0=>'Cerrado', 1=>'Iniciado', 2=>'Batalla', 3=>'Finalizado', 4=>'En calma', 5=>'Preparativos'),
 	),
 );
