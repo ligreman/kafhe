@@ -62,6 +62,7 @@ class LogsController extends Controller
                         if (!isset($anterior['trace'])) $anterior['trace'] = '';
 
                         $final[] = array(
+                            'id'=>1, //Por rellenar el campo
                             'date'=>$anterior['fecha'],
                             'type'=>$anterior['tipo'],
                             'description'=>$anterior['descripcion'],
@@ -88,6 +89,7 @@ class LogsController extends Controller
             if (!isset($anterior['trace'])) $anterior['trace'] = '';
 
             $final[] = array(
+                'id'=>1,
                 'date'=>$anterior['fecha'],
                 'type'=>$anterior['tipo'],
                 'description'=>$anterior['descripcion'],

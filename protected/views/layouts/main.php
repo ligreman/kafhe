@@ -208,6 +208,7 @@
                 <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a></li>
 
                 <?php if (!Yii::app()->user->isGuest): ?>
+                    <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=skillList';?>">Lista de Habilidades</a></li>
                     <li><a href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a></li>
                 <?php endif;?>
 

@@ -182,7 +182,7 @@ class EventController extends Controller
      */
     public function actionClose()
     {
-        //Cambio el evento a estado 4 de "cerrado"
+        //Cambio el evento a estado de "cerrado"
         if (!isset(Yii::app()->event->model))
             throw new CHttpException(400, 'Error al cerrar la batalla tras haber llamado el usuario '.Yii::app()->currentUser->id);
 
@@ -213,7 +213,7 @@ class EventController extends Controller
 			$usuario->ptos_relanzamiento = 0;
 			$usuario->ptos_tueste = Yii::app()->config->getParam('maxTuesteUsuario'); //Tueste al máximo
 
-			//Al llamador le pongo rango 1 y estado desertor, y side libre
+			//Al llamador le pongo rango 1 y estado iluminado, y side libre
 			if ($usuario->id == $event->caller_id) {
 			    $llamador_id = $usuario->id;
 				$usuario->calls++;
@@ -240,6 +240,7 @@ class EventController extends Controller
 				$new_usuarios[$usuario->id] = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusIluminado) {
 				//Si era "libre" pero no fue al desayuno
+                $usuario->rank++; //Aunque no fue al desayuno le subo de nivel igualmente para que todos los de bando sean nivel 2
 				$usuario->status = Yii::app()->params->statusCriador;
 				$anterior_llamador = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusLibertador) {
@@ -265,7 +266,7 @@ class EventController extends Controller
         //Abro un evento nuevo de desayuno
         $nuevoEvento = new Event;
         $nuevoEvento->group_id = $event->group_id;
-        $nuevoEvento->status = Yii::app()->params->statusIniciado;
+        $nuevoEvento->status = Yii::app()->params->statusPreparativos;
         $nuevoEvento->type = 'desayuno';
         $nuevoEvento->gungubos_population = 0; //se inicia vacío el evento //mt_rand(7,13)*100; //mt_rand(5,10)*1000;
         //$nuevoEvento->last_gungubos_repopulation = date('Y-m-d'); //ya he repoblado hoy		

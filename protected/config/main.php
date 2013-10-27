@@ -142,20 +142,22 @@ return array(
 					'logFile'=>date('Y-m-d').'-error.log',
 					'levels'=>'error, warning',
 				),
+                array(
+                    'class'=>'CFileLogRoute',
+                    'logPath'=>'logs',
+                    'logFile'=>date('Y-m-d').'-info.log',
+                    'levels'=>'info',
+                ),
+
+                //#iniLog
 				array(
 					'class'=>'CFileLogRoute',
 					'logPath'=>'logs',
 					'logFile'=>date('Y-m-d').'-trace.log',
 					'levels'=>'profile, trace',
 				),
-				array(
-					'class'=>'CFileLogRoute',
-					'logPath'=>'logs',
-					'logFile'=>date('Y-m-d').'-info.log',
-					'levels'=>'info',
-				),
+
 				// uncomment the following to show log messages on web pages
-				//#iniLog
 				array(
 					'class'=>'CWebLogRoute',
 					'levels' =>'error, warning, profile, info' //trace
@@ -176,7 +178,7 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName'] ó Yii::app()->params->paramName
 	'params'=>array(
-	    'appVersion'=>'v1.1',
+	    'appVersion'=>'v1.2',
 
 	    //Servidor de correo
 		'adminEmail'=>'omelettus@gmail.com',//#mailEmail
@@ -197,6 +199,7 @@ return array(
 		'statusBatalla'=>2,
 		'statusFinalizado'=>3,
 		'statusCalma'=>4,
+        'statusPreparativos'=>5,
 		
 		//Modificadores. Están aquí y en BBDD
 		'modifierHidratado'=>'hidratado',
@@ -225,6 +228,6 @@ return array(
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Iluminado'),
         'userStatusNames'=>array(0=>'Criador', 1=>'Cazador', 2=>'Alistado', 3=>'Baja', 4=>'Iluminado', 5=>'Libertador'),
-        'eventStatusNames'=>array(0=>'Cerrada', 1=>'Gungubos', 2=>'Batalla', 3=>'Finalizada', 4=>'En calma'),
+        'eventStatusNames'=>array(0=>'Cerrada', 1=>'Gungubos', 2=>'Batalla', 3=>'Finalizada', 4=>'En calma', 5=>'Preparativos'),
 	),
 );
