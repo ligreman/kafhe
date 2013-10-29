@@ -19,34 +19,11 @@ Para ello cargamos la migración inicial. En una consola del sistema vamos al di
 
 Nos pedirá confirmación de la migración inicial. Le damos yes y debería crear toda la estructura en la base de datos.
 
-
-== ECLIPSE ==
-=== Instalación ===
-  * [http://www.eclipse.org/downloads/packages/eclipse-php-developers/heliossr2 Eclipse Helios para PHP]
-  * [http://yiiclipse.maziarz.org/ YiiClipse]
-
-=== Configurar Eclipse ===
-
-Para instalar plugins, ir a Help ->Install New Software
-
-==== SVN ====
-  * Instalar Subclipse: http://subclipse.tigris.org/update_1.10.x
-  * Botón derecho en el panel de proyectos PHP y dar New -> Other, checkout from SVN.
-  * Use existing repository: https://kafhe.googlecode.com/svn
-  * Seleccionar el directorio raíz (el https://kafhe.googlecode.com/svn)
-  * Seleccionar Checkout as a project in the workspace y poner de nombre kafhe_3,0, dar siguiente, luego indicar la carpeta htdocs del XAMPP. No hace falta crear una carpeta nueva ya que nos la creará automáticamente.
-
-==== MyLyn (bug tracker de Google Code) ====
-  * Instalar el conector para Google Code. Help -> Install New Software. Repositorio: http://knittig.de/googlecode-mylyn-connector/update/
-  * Abrir ventana de Tasks (Widnow -> Show View -> Other -> MyLyn -> Task Repositories.
-  * Pulsar en Ass Task Repository...
-  * Seleccionar el Google Code
-    * Project URL: https://code.google.com/p/kafhe/
-    * Label: Kafhe 3.0
-    * Usuario y contraseña los de la cuenta de gmail que vayáis a usar.
+Nota: Para esto hay que tener el php en la variable de entorno PATH del sistema. Si no está, hay que añadirla, metiendo a la variable de entorno la ruta de la carpeta php dentro de xampp (ejemplo c:/xampp/php)
 
 
-== PHPStorm ==
+
+== PHPStorm (Recomendado) ==
 
 === Instalación ===
   * Install PHPStorm trial: http://confluence.jetbrains.com/display/PhpStorm/PhpStorm+Early+Access+Program
@@ -93,3 +70,29 @@ Para instalar plugins, ir a Help ->Install New Software
 
 === Tasks y Bug Tracker ===
 No he conseguido configurar Google Code como bug tracker para el proyecto, si alguien lo consigue que escriba aquí cómo.
+
+
+== ECLIPSE ==
+=== Instalación ===
+  * [http://www.eclipse.org/downloads/packages/eclipse-php-developers/heliossr2 Eclipse Helios para PHP]
+  * [http://yiiclipse.maziarz.org/ YiiClipse]
+
+=== Configurar Eclipse ===
+
+Para instalar plugins, ir a Help ->Install New Software
+
+==== SVN ====
+  * Instalar Subclipse: http://subclipse.tigris.org/update_1.10.x
+  * Botón derecho en el panel de proyectos PHP y dar New -> Other, checkout from SVN.
+  * Use existing repository: https://kafhe.googlecode.com/svn
+  * Seleccionar el directorio raíz (el https://kafhe.googlecode.com/svn)
+  * Seleccionar Checkout as a project in the workspace y poner de nombre kafhe_3,0, dar siguiente, luego indicar la carpeta htdocs del XAMPP. No hace falta crear una carpeta nueva ya que nos la creará automáticamente.
+
+==== MyLyn (bug tracker de Google Code) ====
+  * Instalar el conector para Google Code. Help -> Install New Software. Repositorio: http://knittig.de/googlecode-mylyn-connector/update/
+  * Abrir ventana de Tasks (Widnow -> Show View -> Other -> MyLyn -> Task Repositories.
+  * Pulsar en Ass Task Repository...
+  * Seleccionar el Google Code
+    * Project URL: https://code.google.com/p/kafhe/
+    * Label: Kafhe 3.0
+    * Usuario y contraseña los de la cuenta de gmail que vayáis a usar.
