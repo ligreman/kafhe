@@ -42,29 +42,29 @@ class EventSingleton extends CApplicationComponent
 		$anterior = 0;	
 		$caller = null;
 
-        Yii::log('  El randomCaller: '.$randomCaller.' y los bandosUser: '.print_r($bandosUsers, true));
+        //Yii::log('  El randomCaller: '.$randomCaller.' y los bandosUser: '.print_r($bandosUsers, true));
 
 	    do {
             //Mientras no elija a un usuario del bando perdedor del sorteo, relanzo
             foreach($probabilidades as $user=>$valor) {
-                Yii::log('  Miramos el usuario '.$user.' con valor '.$valor);
+                //Yii::log('  Miramos el usuario '.$user.' con valor '.$valor);
                 $valor = $valor * 100; //tiene 2 decimales así que lo convierto a entero
                 if ($valor == 0) continue;
 
                 if ( (($anterior+1) <= $randomCaller) && ($randomCaller <= ($anterior+$valor)) ) {
                     $caller = $user;
-                    Yii::log('  Bingo');
+                    //Yii::log('  Bingo');
                     break;
                 }
 
-                Yii::log('  Nada, continuo');
+                //Yii::log('  Nada, continuo');
 
                 $anterior += $valor;
             }
-            Yii::log('  Compruebo bando de '.$caller.' que es '.$bandosUsers[$caller]);
+            //Yii::log('  Compruebo bando de '.$caller.' que es '.$bandosUsers[$caller]);
         } while ($bandosUsers[$caller] != $bandoPerdedor);
 
-        Yii::log('  Salgo del do while y el caller definitivo será '.$caller);
+        //Yii::log('  Salgo del do while y el caller definitivo será '.$caller);
 		if ($caller === null) return null;
         Yii::log('Llama: '.$caller, 'info');
 		
