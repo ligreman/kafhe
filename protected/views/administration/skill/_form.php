@@ -61,7 +61,7 @@
 
 	<?php echo $form->textFieldRow($model,'require_user_status',array('class'=>'span5','maxlength'=>255)); ?>
 
-	<?php echo $form->textFieldRow($model,'require_event_status',array('class'=>'span5')); ?>
+	<?php echo $form->textFieldRow($model,'require_event_status',array('class'=>'span5','maxlength'=>50)); ?>
 
 	<?php echo $form->textFieldRow($model,'require_talent_id',array('class'=>'span5')); ?>
 

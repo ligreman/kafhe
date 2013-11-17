@@ -465,7 +465,7 @@ class SkillSingleton extends CApplicationComponent
 			$max_proteger = max( ($max_proteger - $modificador->value) , 0); //Que no sea menor de cero
 		}
 
-        $amount = $this->randomWithRangeProportion(intval($skill->extra_param), 0.5);		
+        $amount = $this->randomWithRangeProportion(intval($skill->extra_param), 0.75);
 		$amount = min($max_proteger, $amount); //Protejo como mucho los que tengo desprotegidos
 		
 		if ($amount>0) {
