@@ -32,7 +32,7 @@
  * @property integer $require_user_min_rank
  * @property integer $require_user_max_rank
  * @property string $require_user_status
- * @property integer $require_event_status
+ * @property string $require_event_status
  * @property integer $require_talent_id
  */
 class Skill extends CActiveRecord
@@ -64,12 +64,12 @@ class Skill extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, description, category, type, keyword, modifier_keyword', 'required'),
-			array('modifier_hidden, duration, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_user_max_rank, require_event_status, require_talent_id', 'numerical', 'integerOnly'=>true),
+			array('modifier_hidden, duration, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_user_max_rank, require_talent_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>128),
 			array('description, require_user_status', 'length', 'max'=>255),
 			array('category', 'length', 'max'=>13),
 			array('type', 'length', 'max'=>8),
-			array('keyword, modifier_keyword, extra_param', 'length', 'max'=>50),
+			array('keyword, modifier_keyword, extra_param, require_event_status', 'length', 'max'=>50),
 			array('duration_type', 'length', 'max'=>6),
 			array('require_target_side, require_user_side', 'length', 'max'=>100),
 			// The following rule is used by search().
@@ -167,7 +167,7 @@ class Skill extends CActiveRecord
 		$criteria->compare('require_user_min_rank',$this->require_user_min_rank);
 		$criteria->compare('require_user_max_rank',$this->require_user_max_rank);
 		$criteria->compare('require_user_status',$this->require_user_status,true);
-		$criteria->compare('require_event_status',$this->require_event_status);
+		$criteria->compare('require_event_status',$this->require_event_status,true);
 		$criteria->compare('require_talent_id',$this->require_talent_id);
 
 		return new CActiveDataProvider($this, array(

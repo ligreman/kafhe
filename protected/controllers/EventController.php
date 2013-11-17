@@ -280,7 +280,7 @@ class EventController extends Controller
             throw new CHttpException(400, 'Error al crear un nuevo evento. ['.print_r($nuevoEvento->getErrors(),true).']');
 			
 		//Creo las entradas de repoblar para la pila cron
-		Yii::app()->event->scheduleGungubosRepopulation($nuevoEvento->getPrimaryKey());
+		//Yii::app()->event->scheduleGungubosRepopulation($nuevoEvento->getPrimaryKey());
 
         //Salvo usuarios
         if (count($final_users['kafhe'])>0) {

@@ -76,8 +76,8 @@
 // #Cada hora compruebo si hay algo en cola del cronPile
 // * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron processCronPile
 
-// #Los viernes por la noche (el servidor tiene otra hora) pone los eventos en Calma
-// 0 23 * * 4 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron eventosEnCalma
+// #Los jueves por la noche (el servidor tiene otra hora) pone los eventos en Calma
+// 0 22 * * 4 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron eventosEnCalma
 
 // #Los lunes a las 9 de la mañana pongo los eventos en Preparativos
 // 0 8 * * 1 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron iniciarEventos
@@ -349,6 +349,9 @@ class CronCommand extends CConsoleCommand {
                 $this->logCron('** ERROR al guardar el evento ('.$event->id.') Iniciándolo.', 'info');
             else {
                 $this->logCron('Evento '.$event->id.' iniciado.', 'info');
+
+                //Programo la cría de gungubos
+                Yii::app()->event->scheduleGungubosRepopulation($event->id);
 
                 //Creo la notificación
                 $nota = new Notification;
