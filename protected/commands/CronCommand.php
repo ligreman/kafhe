@@ -90,14 +90,14 @@
 class CronCommand extends CConsoleCommand {
     public $global_param = true;
 
-    /** Regenera el tueste del usuario $userId (ID User).
+    /** 10 minutos. Regenera el tueste del usuario $userId (ID User). Además comprueba si está activo o no el usuario.
      */
     public function actionRegenerarTueste()
     {
         $this->logCron('Compruebo caducidad de modificadores.', 'info');
         Yii::app()->modifier->checkModifiersExpiration();
 
-        $this->logCron('Iniciando regeneracion.', 'info');
+        $this->logCron('Iniciando regeneracion y chequeo de estado.', 'info');
 
         $grupos = Group::model()->findAll(array('condition'=>'active=1'));
 
@@ -111,87 +111,50 @@ class CronCommand extends CConsoleCommand {
 
             $this->logCron('  Usuarios del grupo '.$grupo->name.' ('.$grupo->id.').', 'info');
             $usuarios = User::model()->findAll(array('condition'=>'group_id=:groupId', 'params'=>array(':groupId'=>$grupo->id)));
-            $kafheitas = $achikhoritas = array('numero'=>0, 'tueste'=>0);
 
             foreach ($usuarios as $usuario) {
+                $this->logCron('    Usuario '.$usuario->username.' (rango '.$usuario->rank.'):', 'info');
                 $regenerado = Yii::app()->tueste->getTuesteRegenerado($usuario);
 
                 if ($regenerado !== false) {
-                    $desbordeTueste = 0;
-
                     //Si ya estoy al máximo de tueste cambio mi estado a Criador, si soy Cazador, y miro el desborde
                     $usuario->ptos_tueste += $regenerado;
-                    if ($usuario->ptos_tueste > intval(Yii::app()->config->getParam('maxTuesteUsuario')) ) {
-                        $desbordeTueste = $usuario->ptos_tueste - intval(Yii::app()->config->getParam('maxTuesteUsuario'));
+
+                    if ($usuario->ptos_tueste > intval(Yii::app()->config->getParam('maxTuesteUsuario')) )
                         $usuario->ptos_tueste = intval(Yii::app()->config->getParam('maxTuesteUsuario'));
 
-                        if ($usuario->status==Yii::app()->params->statusCazador)
-                            $usuario->status = Yii::app()->params->statusCriador;
-                    }
-
                     $usuario->last_regen_timestamp = date('Y-m-d H:i:s');
-                    if (!$usuario->save())
-                        $this->logCron('** ERROR al guardar el usuario ('.$usuario->id.') regenerando su tueste.', 'info');
-
-                    $this->logCron('    Usuario '.$usuario->username.' (rango '.$usuario->rank.') - Tueste regenerado: '.$regenerado.'.', 'info');
-
-                    //Guardo el tueste desbordado si hay, en el evento, si es un Criador o Baja
-                    if ($event!=null && $desbordeTueste>0 && ($usuario->status==Yii::app()->params->statusCriador || $usuario->status==Yii::app()->params->statusBaja) ) {
-                        if ($usuario->side == 'kafhe')
-                            $event->stored_tueste_kafhe += $desbordeTueste;
-                        elseif ($usuario->side == 'achikhoria')
-                            $event->stored_tueste_achikhoria += $desbordeTueste;
-                    }
+                    $this->logCron('        - Tueste regenerado: '.$regenerado.'.', 'info');
                 } else
-                    $this->logCron('Usuario '.$usuario->username.' - Todavia no puede regenerar tueste.', 'info');
+                    $this->logCron('        - Todavia no puede regenerar tueste.', 'info');
 
-                //Cuento kafheitas y achis para ver si hay desequilibrio
-                if ($usuario->side == 'kafhe') {
-                    $kafheitas['numero']++;
-                    $kafheitas['tueste'] += intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + Yii::app()->tueste->getTuesteRegeneradoPorRango($usuario);
+
+                //Compruebo si está inactivo el usuario
+                $user_inactive_time = strtotime($usuario->last_activity) + 25*60*60; //Le sumo 25 horas para ver si ha pasado
+                if (time() > $user_inactive_time) {
+                    $usuario->status = Yii::app()->params->statusInactivo;
+                    $this->logCron('        - Estado inactivo.', 'info');
                 }
-                elseif ($usuario->side == 'achikhoria') {
-                    $achikhoritas['numero']++;
-                    $achikhoritas['tueste'] += intval(Yii::app()->config->getParam('tuesteRegeneradoIntervalo')) + Yii::app()->tueste->getTuesteRegeneradoPorRango($usuario);
-                }
-            }
 
-            //Si están desequilibrados los grupos, genero tueste extra para el que menos tenga
-            if ($kafheitas['numero'] != $achikhoritas['numero']) {
-                $this->logCron('Bandos desequilibrados, genero tueste extra para el mas debil.', 'info');
+                if (!$usuario->save())
+                    $this->logCron('** ERROR al guardar el usuario ('.$usuario->id.') regenerando su tueste.', 'info');
 
-                $dummy = User::model()->findByPk(1); //Uso el usuario admin como contador de tiempo para dar tueste de compensación
-                $extra = abs($kafheitas['tueste'] - $achikhoritas['tueste']); //La diferencia de tueste base de ambos bandos
-                $this->logCron('El extra de tueste es '.$extra.' (kafhe->'.$kafheitas['tueste'].' // achi->'.$achikhoritas['tueste'].').', 'info');
 
-                if ($extra!==false) {
-                    $dummy->last_regen_timestamp = date('Y-m-d H:i:s');
-                    if (!$dummy->save())
-                        $this->logCron('** ERROR al guardar el usuario ('.$dummy->id.') simulando regenerar su tueste.', 'info');
-
-                    //Guardo en el almacén
-                    if ($kafheitas['numero'] > $achikhoritas['numero']) {
-                        $event->stored_tueste_achikhoria += $extra;
-                        $this->logCron('Extra de tueste para Achikhoria de '.$extra.'.', 'info');
-                    } else {
-                        $event->stored_tueste_kafhe += $extra;
-                        $this->logCron('Extra de tueste para Kafhe de '.$extra.'.', 'info');
-                    }
-                }
             }
 
             //Guardo el evento
-            if (!$event->save())
-                $this->logCron('** ERROR al guardar el evento ('.$event->id.') guardando el tueste desbordado.', 'info');
+            /*if (!$event->save())
+                $this->logCron('** ERROR al guardar el evento ('.$event->id.') guardando el tueste desbordado.', 'info');*/
         } //foreach group
 
         return 0;
     }
 
 
+
     /** Los criadores cazan gungubos cada hora para cada bando
      */
-    public function actionCriadores()
+    /*public function actionCriadores()
     {
         $this->logCron('Compruebo caducidad de modificadores.', 'info');
         Yii::app()->modifier->checkModifiersExpiration();
@@ -201,41 +164,6 @@ class CronCommand extends CConsoleCommand {
         $events = Event::model()->findAll(array('condition'=>'status=:status', 'params'=>array(':status'=>Yii::app()->params->statusIniciado)));
         if ($events != null) {
             foreach($events as $event) {
-                /*$criados = Yii::app()->gungubos->getGungubosCazados($event);
-                $tuesteRestante = array('kafhe'=>0, 'achikhoria'=>0);
-
-                if ($criados !== false) {
-
-                    //Si se van a criar más de los que hay en la población se reparten en la proporcion correspondiente
-                    if($event->gungubos_population == 0){
-                        $criados['kafhe'] = 0;
-                        $criados['achikhoria'] = 0;
-
-                        //Como no había gungubos, lo que hago es repartir el tueste entre los demás jugadores
-                        $tuesteRestante = Yii::app()->tueste->repartirTueste($event);
-                        echo "No habia gungubos libres asi que reparto el tueste. Sobra: ".$tuesteRestante['kafhe']." kafhe; ".$tuesteRestante['achikhoria']." achikhoria.\n";
-                    } else if(($criados['kafhe']+$criados['achikhoria']) > $event->gungubos_population) {
-                        $proporcionKafhe = $criados['kafhe']/($criados['kafhe']+$criados['achikhoria']);
-                        $criados['kafhe'] = intval($event->gungubos_population*$proporcionKafhe);
-                        $criados['achikhoria'] = $event->gungubos_population - $criados['kafhe'];
-
-                        echo "Criados ".$criados['kafhe']." gungubos para Kafhe. Evento ".$event->id.".\n";
-                        echo "Criados ".$criados['achikhoria']." gungubos para Achikhoria. Evento ".$event->id.".\n";
-                    }
-
-                    //Guardo el evento
-                    $event->gungubos_kafhe += $criados['kafhe'];
-                    $event->gungubos_achikhoria += $criados['achikhoria'];
-                    $event->stored_tueste_kafhe = $tuesteRestante['kafhe'];
-                    $event->stored_tueste_achikhoria = $tuesteRestante['achikhoria'];
-                    $event->last_gungubos_criadores = date('Y-m-d H:i:s');
-                    $event->gungubos_population -= $criados['kafhe']+$criados['achikhoria'];
-
-                    if (!$event->save())
-                        echo "** ERROR al guardar el evento (".$event->id.") criando gungubos.\n";
-                } else
-                    echo "Todavia no puedo criar gungubos en el evento ".$event->id.".\n";*/
-
                 //Reparto el tueste (*NEW)
                 //Compruebo si ha pasado el tiempo suficiente para criar en el evento
                 $last_born = strtotime($event->last_gungubos_criadores);
@@ -259,58 +187,165 @@ class CronCommand extends CConsoleCommand {
             $this->logCron('No hay eventos Iniciados.', 'info');
 
         return 0;
-    }
+    }*/
 
-    /** Repuebla los gungubos cada día
-     */
-    /*public function actionRepopulateGungubos()
+    /** 1 hora Repuebla los gungubos cada hora
+     */     
+    public function actionGungubosLifecycle()
     {
-        Yii::log('Vamos a repoblar', 'info');
-        echo "Iniciando repoblación\n";
+        $this->logCron('Iniciando la repoblacion.', 'info');
 
         //Para todos los eventos de estado "iniciado" (1)
-        $events = Event::model()->findAll(array('condition'=>'status=:status', 'params'=>array(':status'=>Yii::app()->params->statusIniciado)));
+        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
         if ($events != null) {
             foreach($events as $event) {
-                //Miro a ver si ya he repoblado hoy en este evento
-                if ($event->last_gungubos_repopulation!=""  &&  date('Y-m-d') == $event->last_gungubos_repopulation) {
-                    echo "Todavía no se puede repoblar en el evento ".$event->id.".\n";
-                    Yii::log('Aún no repueblo', 'info');
-                    continue;
-                }
+                //Miro a ver si ha pasado una hora desde la última repoblación
+                if ($event->last_gungubos_repopulate_timestamp!="") {
+                    $last_repopulate = strtotime($event->last_gungubos_repopulate_timestamp);
 
-                //A ver si el random dice que toca en esta hora. Repoblaré de 7am a 18pm.
-                $hora = intval(date('H'));
-                if ($hora>=7 && $hora<=18) { //Si son las 18 he de repoblar sí o sí, por lo que no comprobaré nada
-                    $rand = mt_rand($hora,18);
-                    if ($hora != $rand) { //Si es distino nada, no toca
-                        echo "Ahora no toca repoblar en el evento ".$event->id.".\n";
+                    if (time() < ($last_repopulate + 3600)) {
+                        $this->logCron('    Todavia no puedo repoblar gungubos en el evento '.$event->id.'.', 'info');
                         continue;
                     }
-                } elseif ($hora>18 && $hora<7) { //Las 18 la dejo fuera para repoblar sí o sí
-                    echo "Los gungubos están dormidos, estas no son horas de repoblar en el evento ".$event->id.".\n";
-                    continue;
                 }
 
-                //Repueblo gungubos en el evento
-                $cuantos = mt_rand(7,13)*100;
-                $event->gungubos_population += $cuantos; //Repueblo
+                $this->logCron('  Repoblando en el evento '.$event->id.'.', 'info');
+                $gungubosNuevosSQL = array();
+				
+				//Quito contador a Gungubos, tanto los que tienen Criadores como los que no
+				$this->reduceHealthGungubos($event->id);
 
-                //Pongo la fecha de hoy
-                $event->last_gungubos_repopulation = date('Y-m-d');
+                //Repueblo gungubos en cada corral de los jugadores
+                $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
+                foreach($jugadores as $jugador) {
+                    //Calculo cuántos le toca
+                    $gungubos_en_corral = intval(Gungubo::model()->count(array('condition'=>'owner_id=:owner AND location=:lugar', 'params'=>array(':owner'=>$jugador->id, ':lugar'=>'corral'))) );
+                    $max_repoblar = max($gungubos_en_corral, Yii::app()->config->getParam('maxGungubosCorral'));
 
+                    $a_repoblar = mt_rand(6,10); // 5 + [1-5]
+                    $a_repoblar = min($max_repoblar, $a_repoblar); //Calculo cuantos caben en el corral
+
+                    $this->logCron('     + Para el jugador '.$jugador->id.' corresponden '.$a_repoblar.' gungubos.', 'info');
+
+                    for($i=1; $i<=$a_repoblar; $i++) {
+                        $gungubosNuevosSQL[] = "(".$event->id.", ".$jugador->id.", ".Yii::app()->config->getParam('defaultGunguboHealth').", 'corral', 'normal', '".date('Y-m-d H:i:s')."')"; //event_id, owner_id, health, location, condition
+                    }
+
+                    //Notificación de corral para el jugador
+                    $noti = new NotificationCorral;
+                    $noti->event_id = $event->id;
+                    $noti->user_id = $jugador->id;
+                    $noti->message = 'Repoblados '.$a_repoblar.' Gungubos en tu corral.';
+
+                    if (!$noti->save())
+                        $this->logCron('** ERROR al guardar la notificación de gungubos repoblados para el jugador '.$jugador->username.' del evento ('.$event->id.').', 'info');
+                }              
+
+                //Salvo los gungubos nuevos
+                Yii::app()->db->createCommand('INSERT INTO gungubo (`event_id`, `owner_id`, `health`, `location`, `condition_status`, `birthdate`) VALUES '.implode(',', $gungubosNuevosSQL).';')->query();
+
+                $event->last_gungubos_repopulate_timestamp = date('Y-m-d H:i:s'); //Actualizo la hora de repoblación
                 if (!$event->save())
-                    echo "** ERROR al guardar el evento (".$event->id.") repoblando gungubos.\n";
+                    $this->logCron('** ERROR al guardar el evento ('.$event->id.') repoblando gungubos', 'info');
 
-                echo "Repoblados ".$cuantos." gungubos en el evento ".$event->id.".\n";
-                Yii::log('Repoblados', 'info');
+                $this->logCron('    Repoblados gungubos en el evento '.$event->id.'.', 'info');
             }
         }
 
         return 0;
-    }*/
+    }
+
+    /** 30 minutos. Reduce contadores de Gungubos sin criadores */
+    public function actionReduceHealthGungubosWithoutNurse()
+    {
+        $this->logCron('Reduzco los contadores de los Gungubos que no tienen un Criador en el corral.', 'info');
+
+        //Para todos los eventos de estado "iniciado" (1)
+        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+        if ($events != null) {
+            foreach($events as $event) {
+                $this->logCron('  Corrales del evento '.$event->id.'.', 'info');
+
+                //Repueblo gungubos en cada corral de los jugadores
+                $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
+                foreach($jugadores as $jugador) {
+                    $this->logCron('     Corral del jugador '.$jugador->username.'.', 'info');
+
+                    //Saco sus Gunbudos Criadores
+                    $gunbudos = Gunbudo::model()->count(array('condition'=>'owner_id=:owner AND event_id=:evento AND class=:clase', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':clase'=>Yii::app()->params->gunbudoClassCriador)));
+
+                    if (intval($gunbudos)==0) {
+                        //Quito contador a los Gungubos de este jugador que no tiene Criador
+                        $this->reduceHealthGungubos($event->id, $jugador->id);
+                        $this->logCron('      - No tiene Criador.', 'info');
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    /** 1 hora Cada hora ciclo de vida de gunbudos: activo guardianes,
+     */
+    public function actionGunbudosLifecycle() {
+        $this->logCron('Ciclo de vida de los Gunbudos.', 'info');
+
+        //Para todos los eventos de estado "iniciado" (1)
+        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+
+        if ($events != null) {
+            foreach($events as $event) {
+                $this->logCron('  Comprobando el evento '.$event->id.'.', 'info');
+
+                //Activo a los Gunbudos Guardianes normales para que defiendan.
+                Gunbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('defaultGunbudoGuardianActions')),'event_id=:evento', array(':evento'=>$event->id));
+
+                //Para los gunbudos guardianes con trait Acorazado es una defensa más de la de por defecto
+                Gunbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('defaultGunbudoGuardianActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitAcorazado));
+
+                $this->logCron('    Activados los Gunbudos guardianes en el evento '.$event->id.'.', 'info');
+            }
+        }
+
+        return 0;
+    }
+
+    /** 5 minutos
+     */
+    public function actionMuerteGunbudos() {
+        $this->logCron('Muerte de Gunbudos.', 'info');
+
+        //Para todos los eventos de estado "iniciado" (1)
+        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+
+        if ($events != null) {
+            foreach($events as $event) {
+                //Cojo Gunbudos que hayan caducado
+                $gunbudos = Gunbudo::model()->findAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+
+                //Mato a los gunbudos que se les haya pasado el arroz
+                Gunbudo::model()->deleteAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+                $this->logCron('    Eliminados los Gunbudos caducados en el evento '.$event->id.'.', 'info');
+
+                //Quito los pilacron de los gunbudos muertos
+                $ids = array();
+                foreach ($gunbudos as $gunbudo) {
+                    $ids[] = 'params='.$gunbudo->id;
+                }
+
+                if (!empty($ids)) {
+                    Cronpile::model()->deleteAll(array('condition'=>'type=:tipo AND ('.implode(' OR ', $ids).')', 'params'=>array(':tipo'=>'gunbudo')));
+                    $this->logCron('    Eliminadas las entradas en Cronpile de los Gunbudos caducados en el evento '.$event->id.'.', 'info');
+                }
+            }
+        }
+
+        return 0;
+    }
+
 	
-	/** Pone en estado Calma todos los eventos Iniciados de tipo desayuno
+	/** Pone en estado Calma todos los eventos Iniciados de tipo desayuno los Viernes
 	*/
 	public function actionEventosEnCalma() {
 		//Cojo todos los eventos iniciados
@@ -336,37 +371,40 @@ class CronCommand extends CConsoleCommand {
 		return 0;
 	}
 
-    /** Pone los eventos en estado Iniciado
+    /** Pone los eventos en estado Iniciado, los lunes. Ya sea un evento nuevo (que viene de Preparativos) o un evento que la semana anterior no se completó porque no hubo desayuno (en Calma)
      */
     public function actionIniciarEventos() {
         //Cojo todos los eventos en preparativos
-        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusPreparativos)));
+        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND (status=:estado OR status=:estado2)', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusPreparativos, ':estado2'=>Yii::app()->params->statusCalma)));
 
         foreach($events as $event) {
             $event->status = Yii::app()->params->statusIniciado;
 
             if (!$event->save())
-                $this->logCron('** ERROR al guardar el evento ('.$event->id.') Iniciándolo.', 'info');
+                $this->logCron('** ERROR al guardar el evento ('.$event->id.') Iniciandolo.', 'info');
             else {
                 $this->logCron('Evento '.$event->id.' iniciado.', 'info');
 
                 //Programo la cría de gungubos
-                Yii::app()->event->scheduleGungubosRepopulation($event->id);
+                //Yii::app()->event->scheduleGungubosRepopulation($event->id);
 
                 //Creo la notificación
                 $nota = new Notification;
-                $nota->message = 'Amados súbditos, un lunes os prometí y un lunes os doy, por lo tanto... ¡que se abra la veda de gungubos!';
+                $nota->message = 'Amados súbditos, un lunes os prometí y un lunes os doy, por lo tanto... ¡comienza la temporada de cría de gungubos!';
                 $nota->type = 'omelettus';
                 if (!$nota->save())
                     $this->logCron('** ERROR al guardar la notificación de inicio del evento ('.$event->id.').', 'info');
             }
         }
+		
+		//A todos los jugadores les pongo activos y actualizo su last_activity
+		User::model()->updateAll(array('status'=>Yii::app()->params->statusCazador, 'last_activity'=>date('Y-m-d H:i:s')));
 
         return 0;
     }
 	
 
-    /** Procesa la pila de tareas Cron
+    /** 5 minutos Procesa la pila de tareas Cron
      */
     public function actionProcessCronPile()
     {		
@@ -380,7 +418,6 @@ class CronCommand extends CConsoleCommand {
             $this->logCron('Procesando '.$cronjob->operation.' ['.$cronjob->params.'] programado para '.$cronjob->due_date.'.', 'info');
 
 			if ($cronjob->due_date !== NULL) {
-                $this->logCron('  La tarea cron tiene fecha programada.', 'info');
 				$fecha = strtotime($cronjob->due_date);
 				
 				if ($now <= $fecha) {
@@ -393,8 +430,14 @@ class CronCommand extends CConsoleCommand {
                 case 'generateRanking':
                         $result = Yii::app()->event->generateRanking();
                     break;
-				case 'repopulateGungubos':
+				/*case 'repopulateGungubos':
 						$result = Yii::app()->event->repopulateGungubos($cronjob->params); //En params está el id del evento a repoblar
+					break;*/
+                case 'gunbudoAsaltanteAttack':
+                        $result = Yii::app()->gunbudos->gunbudoAsaltanteAttack($cronjob->params); //En params va el id del gunbudo que ataca
+                    break;
+				case 'gunbudoNigromanteAttack':
+						$result = Yii::app()->gunbudos->gunbudoNigromanteAttack($cronjob->params); //En params va el id del gunbudo que ataca
 					break;
             }
 			
@@ -408,6 +451,27 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }
 
+
+    /********************************************************************************************************/
+    /********************************************************************************************************/
+
+
+    private function reduceHealthGungubos($event_id, $owner_id=null)
+    {
+        $owner = '';
+        if ($owner_id!==null) {
+            $owner = ' AND owner_id='.$owner_id.' ';
+        }
+
+        //Quito un contador de todos los gungubos de los corrales.
+        Gungubo::model()->updateCounters(array('health'=>-1),'event_id=:evento AND location=:lugar'.$owner,array(':evento'=>$event_id, ':lugar'=>'corral'));
+
+        //Los que hayan muerto fuera
+        Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND health<=0 AND location=:lugar AND condition_status=:condicion'.$owner, 'params'=>array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>'normal')));
+
+        //Actualizo los que mueran por causas no naturales pal cementerio
+        Gungubo::model()->updateAll(array('location'=>'cementerio'),'event_id=:evento AND health<=0 AND location=:lugar AND condition_status!=:condicion'.$owner,array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>'normal'));
+    }
 
 
     /** Loguea un mensaje

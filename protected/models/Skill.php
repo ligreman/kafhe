@@ -14,6 +14,8 @@
  * @property integer $modifier_hidden
  * @property integer $duration
  * @property string $duration_type
+ * @property integer $gunbudo_action_duration
+ * @property integer $gunbudo_action_rate
  * @property integer $critic
  * @property integer $fail
  * @property string $extra_param
@@ -21,6 +23,7 @@
  * @property integer $cost_retueste
  * @property integer $cost_relanzamiento
  * @property integer $cost_tostolares
+ * @property integer $cost_gungubos
  * @property integer $is_cooperative
  * @property integer $cost_tueste_cooperate
  * @property integer $cost_tostolares_cooperate
@@ -34,6 +37,7 @@
  * @property string $require_user_status
  * @property string $require_event_status
  * @property integer $require_talent_id
+ * @property integer $generates_notification
  */
 class Skill extends CActiveRecord
 {
@@ -64,17 +68,17 @@ class Skill extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, description, category, type, keyword, modifier_keyword', 'required'),
-			array('modifier_hidden, duration, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_user_max_rank, require_talent_id', 'numerical', 'integerOnly'=>true),
+			array('modifier_hidden, duration, gunbudo_action_duration, gunbudo_action_rate, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, cost_gungubos, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_user_max_rank, require_talent_id, generates_notification', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>128),
-			array('description, require_user_status', 'length', 'max'=>255),
+			array('description', 'length', 'max'=>255),
 			array('category', 'length', 'max'=>13),
 			array('type', 'length', 'max'=>8),
-			array('keyword, modifier_keyword, extra_param, require_event_status', 'length', 'max'=>50),
+			array('keyword, modifier_keyword, extra_param, require_user_status, require_event_status', 'length', 'max'=>50),
 			array('duration_type', 'length', 'max'=>6),
 			array('require_target_side, require_user_side', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description, category, type, keyword, modifier_keyword, modifier_hidden, duration, duration_type, critic, fail, extra_param, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_max_rank, require_user_status, require_event_status, require_talent_id', 'safe', 'on'=>'search'),
+			array('id, name, description, category, type, keyword, modifier_keyword, modifier_hidden, duration, duration_type, gunbudo_action_duration, gunbudo_action_rate, critic, fail, extra_param, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, cost_gungubos, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_max_rank, require_user_status, require_event_status, require_talent_id, generates_notification', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -105,6 +109,8 @@ class Skill extends CActiveRecord
 			'modifier_hidden' => 'Modifier Hidden',
 			'duration' => 'Duration',
 			'duration_type' => 'Duration Type',
+			'gunbudo_action_duration' => 'Gunbudo Action Duration',
+			'gunbudo_action_rate' => 'Gunbudo Action Rate',
 			'critic' => 'Critic',
 			'fail' => 'Fail',
 			'extra_param' => 'Extra Param',
@@ -112,6 +118,7 @@ class Skill extends CActiveRecord
 			'cost_retueste' => 'Cost Retueste',
 			'cost_relanzamiento' => 'Cost Relanzamiento',
 			'cost_tostolares' => 'Cost Tostolares',
+			'cost_gungubos' => 'Cost Gungubos',
 			'is_cooperative' => 'Is Cooperative',
 			'cost_tueste_cooperate' => 'Cost Tueste Cooperate',
 			'cost_tostolares_cooperate' => 'Cost Tostolares Cooperate',
@@ -125,6 +132,7 @@ class Skill extends CActiveRecord
 			'require_user_status' => 'Require User Status',
 			'require_event_status' => 'Require Event Status',
 			'require_talent_id' => 'Require Talent',
+			'generates_notification' => 'Generates Notification',
 		);
 	}
 
@@ -149,6 +157,8 @@ class Skill extends CActiveRecord
 		$criteria->compare('modifier_hidden',$this->modifier_hidden);
 		$criteria->compare('duration',$this->duration);
 		$criteria->compare('duration_type',$this->duration_type,true);
+		$criteria->compare('gunbudo_action_duration',$this->gunbudo_action_duration);
+		$criteria->compare('gunbudo_action_rate',$this->gunbudo_action_rate);
 		$criteria->compare('critic',$this->critic);
 		$criteria->compare('fail',$this->fail);
 		$criteria->compare('extra_param',$this->extra_param,true);
@@ -156,6 +166,7 @@ class Skill extends CActiveRecord
 		$criteria->compare('cost_retueste',$this->cost_retueste);
 		$criteria->compare('cost_relanzamiento',$this->cost_relanzamiento);
 		$criteria->compare('cost_tostolares',$this->cost_tostolares);
+		$criteria->compare('cost_gungubos',$this->cost_gungubos);
 		$criteria->compare('is_cooperative',$this->is_cooperative);
 		$criteria->compare('cost_tueste_cooperate',$this->cost_tueste_cooperate);
 		$criteria->compare('cost_tostolares_cooperate',$this->cost_tostolares_cooperate);
@@ -169,6 +180,7 @@ class Skill extends CActiveRecord
 		$criteria->compare('require_user_status',$this->require_user_status,true);
 		$criteria->compare('require_event_status',$this->require_event_status,true);
 		$criteria->compare('require_talent_id',$this->require_talent_id);
+		$criteria->compare('generates_notification',$this->generates_notification);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

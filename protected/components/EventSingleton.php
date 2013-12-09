@@ -278,7 +278,7 @@ class EventSingleton extends CApplicationComponent
 	/** Repoblar gungubos en un evento
 	* @param $event_id Id del evento que repoblar
 	*/
-	public function repopulateGungubos($event_id)
+	/*public function repopulateGungubos($event_id)
     {        
         $event = Event::model()->findByPk(intval($event_id));
         if ($event != null) {
@@ -291,22 +291,23 @@ class EventSingleton extends CApplicationComponent
         }
 
         return true;
-    }
+    }*/
 	
 	/** Programa 3 repoblaciones de gungubos por día de lunes a jueves para el evento
 	* @param $event_id Id del evento que programar
 	*/
-	public function scheduleGungubosRepopulation($event_id)
+	/*public function scheduleGungubosRepopulation($event_id)
 	{	
 		//Fechas
-		$dia[1] = date('Y-m-d', strtotime('next Monday')); //Lunes
+		//$dia[1] = date('Y-m-d', strtotime('next Monday')); //Lunes
+		$dia[1] = date('Y-m-d'); //Ahora se lanza los lunes esto, así que es hoy
 		$dia[2] = date('Y-m-d', strtotime('next Tuesday')); //Martes
 		$dia[3] = date('Y-m-d', strtotime('next Wednesday')); //Miércoles
 		$dia[4] = date('Y-m-d', strtotime('next Thursday')); //Jueves
 		
 		//Horas
 		for ($i=1; $i<=12; $i++) {
-			$randomHour = mt_rand(7,17); //Entre 7 y 18 horas (hasta 17:59) GMT+1
+			$randomHour = mt_rand(8,17); //Entre 9 y 18 horas (hasta 17:59) GMT+1
 			$randomMinute = mt_rand(0,59);
 			
 			$randomHour = str_pad($randomHour, 2, '0', STR_PAD_LEFT);
@@ -324,7 +325,7 @@ class EventSingleton extends CApplicationComponent
 		}
 		
 		return true;
-	}
+	}*/
 
 
     /** Obtiene la fecha y hora actual en formato GMT+1 Europa/Madrid

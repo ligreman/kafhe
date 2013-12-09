@@ -32,8 +32,8 @@ class GungubosSingleton extends CApplicationComponent
         $extraAchikhoria = round( ($event->stored_tueste_achikhoria * $gungubosSkill) / $costeTueste, 0);
         $gungubos['kafhe'] += $extraKafhe;
         $gungubos['achikhoria'] += $extraAchikhoria;
-				
-        ///TODO Aquí irán otros modificadores, etc...
+
+
 		
 		//Devuelvo los gungubos criados        
 		return $gungubos;

@@ -287,7 +287,7 @@ function askForNewNotifications(){
 }
 
 function askForNews(){
-    setTimeout(askForNewNotifications,20000);
+    //setTimeout(askForNewNotifications,20000);
 }
 
 function prepareUnreadNotifications(){

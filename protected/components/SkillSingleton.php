@@ -4,6 +4,13 @@
  * SkillSingleton para operaciones relacionadas con las habilidades
  * Podré acceder a resultMessage así: Yii::app()->skill->resultMessage; ya que es un CApplicationComponent.
  * Si no, tendría que acceder con Yii::app()->skill->getResultMessage();
+ *
+ * Para crear nueva habilidad:
+ *      Definir la habilidad en BBDD a través de una migration. Ver plantilla en migrations/m130814_195451_habilidades.php
+ *      En conf/main.php y conf/console.php añadir al final una entrada de parámetro nuevo para la habilidad y modificador (si se requiere). Formato: skill+(nombre de habilidad) => keyword.
+ *      Programar la habilidad en components/SkillSingleton.php
+ *      Crear los iconos correspondientes para la habilidad y modificador.
+ *
  */
 class SkillSingleton extends CApplicationComponent
 {	
@@ -16,19 +23,22 @@ class SkillSingleton extends CApplicationComponent
 	private $_publicMessage = ''; //Texto extra para el mensaje del muro de notificaciones
 	private $_privateMessage = ''; //Texto extra para el mensaje Flash
 	private $_error = '';
+	private $_generates_notification = '';
 
     /** Ejecuta una habilidad.
      * @param $skill Objeto Skill de la habilidad.
      * @param $target Objeto User del objetivo seleccionado, o null si no se seleccionó ninguno
      * @param $side Nombre del bando seleccionado, o null si no se seleccionó ninguno
+     * @param $extra_param Parámetros extra.
      * @return bool True si se ejecuta correctamente, false si hay fallos.
      */
-    public function executeSkill($skill, $target, $side)
+    public function executeSkill($skill, $target, $side, $extra_param)
     {
         $this->_error = '';
 		$this->_keyword = $skill->keyword;
         $this->_publicMessage = '';
 		$this->_privateMessage = '';
+		$this->_generates_notification = $skill->generates_notification;
 
         //Saco los nombres de los que intervienen
 		$this->_caster = Yii::app()->currentUser->id;
@@ -52,10 +62,11 @@ class SkillSingleton extends CApplicationComponent
         } else {
             //Compruebo si es crítico o pifia. Son porcentajes. PIFIA: de 1 a (1+(fail-1)) || CRÍTICO: de (100-(critic-1)) a 100
             $critic = 100 - ($this->criticValue($skill)-1);
-            $fail = 1 + ($this->failValue($skill)-1);
+            $fail = $this->failValue($skill);
             $tirada = mt_rand(1,100);
         }
-		
+
+
 		//Resultado de la ejecución
 		if ($tirada <= $fail) {
 			$this->_result = 'fail'; //Pifia
@@ -77,16 +88,23 @@ class SkillSingleton extends CApplicationComponent
 			//Ejecuto la skill
 			switch ($skill->keyword) {
 				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $finalTarget); break;
-                case Yii::app()->params->skillDesecar: $this->desecar($skill, $finalTarget); break;
+                //case Yii::app()->params->skillDesecar: $this->desecar($skill, $finalTarget); break;
 				case Yii::app()->params->skillDisimular: $this->disimular($skill); break;
-				case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
+				//case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
-				case Yii::app()->params->skillRescatarGungubos: $this->rescatarGungubos($skill); break; //agente libre
+				//case Yii::app()->params->skillRescatarGungubos: $this->rescatarGungubos($skill); break; //agente libre
                 case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
-                case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
-                case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
-                case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill, $finalTarget); break;
-                case Yii::app()->params->skillOtear: $this->otear($skill, $finalTarget); break;
+                //case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
+                //case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
+                //case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill, $finalTarget); break;
+                //case Yii::app()->params->skillOtear: $this->otear($skill, $finalTarget); break;
+
+                case Yii::app()->params->skillOtearKafhe: $this->otearKafhe($skill); break;
+                case Yii::app()->params->skillOtearAchikhoria: $this->otearAchikhoria($skill); break;
+
+                case Yii::app()->params->skillGunbudoAsaltante: $this->gunbudoAsaltante($skill, $extra_param); break;
+                case Yii::app()->params->skillGunbudoGuardian: $this->gunbudoGuardian($skill, $extra_param); break;
+                case Yii::app()->params->skillGunbudoCriador: $this->gunbudoCriador($skill); break;
 			}
 			
 		}
@@ -158,7 +176,7 @@ class SkillSingleton extends CApplicationComponent
      * @param $target Obj del target
      * @return bool
      */
-    private function desecar($skill, $target)
+    /*private function desecar($skill, $target)
     {
         //Si tiene Hidratar, lo que hago es quitarlo en vez de ejecutar desecar
         $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>Yii::app()->params->modifierHidratado)));
@@ -189,7 +207,7 @@ class SkillSingleton extends CApplicationComponent
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.') ['.print_r($modificador->getErrors(),true).'].');
 
         return true;
-    }
+    }*/
 
     /** Crea un modificador de "disimulando"
      * @param $skill Obj de la skill
@@ -225,7 +243,7 @@ class SkillSingleton extends CApplicationComponent
     /** Caza gungubos y me pone como Cazador si estaba como Criador
      * @return bool
      */
-	private function cazarGungubos($skill)
+	/*private function cazarGungubos($skill)
 	{
 		$user = Yii::app()->currentUser->model; //cojo el usuario actual
 		$proportion = 0.5; //Precisión a la hora de cazar
@@ -246,7 +264,7 @@ class SkillSingleton extends CApplicationComponent
 		$amount = $this->randomWithRangeProportion(intval($skill->extra_param), $proportion);
 	
 		//Cambio al usuario a Cazador si era criador
-		if ($user->status == Yii::app()->params->statusCriador) {
+		if ($user->status == Yii::app()->params->statusInactivo) {
 			$user->status = Yii::app()->params->statusCazador;
 		
 			if (!$user->save())
@@ -274,19 +292,19 @@ class SkillSingleton extends CApplicationComponent
         $this->_privateMessage = 'Has logrado hacerte con '.$amount.' gungubos.';
 
 		return true;
-	}
+	}*/
 
     /** Libera gungubos del bando oponente
      * @return bool
      */
-    private function liberarGungubos($skill)
+    /*private function liberarGungubos($skill)
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
         $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
         $protected = false;
 
         //Cambio al usuario a Cazador si era criador
-        if ($user->status == Yii::app()->params->statusCriador) {
+        if ($user->status == Yii::app()->params->statusInactivo) {
             $user->status = Yii::app()->params->statusCazador;
 
             if (!$user->save())
@@ -352,19 +370,19 @@ class SkillSingleton extends CApplicationComponent
         }
 
         return true;
-    }
+    }*/
 
     /** Le quita al bando oponente una cantidad de gungubos para darsela a tu bando
      * @return bool
      */
-    private function atraerGungubos($skill)
+    /*private function atraerGungubos($skill)
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
         $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
         $protected = false;
 
         //Cambio al usuario a Cazador si era criador
-		if ($user->status == Yii::app()->params->statusCriador) {
+		if ($user->status == Yii::app()->params->statusInactivo) {
             $user->status = Yii::app()->params->statusCazador;
 
             if (!$user->save())
@@ -431,16 +449,16 @@ class SkillSingleton extends CApplicationComponent
         }
 
         return true;
-    }
+    }*/
 
     /** Protegeré una cantidad de gungubos de ser liberados o robados
      * @return bool
      */
-    private function protegerGungubos($skill, $target)
+    /*private function protegerGungubos($skill, $target)
     {
         $user = Yii::app()->currentUser->model; //cojo el usuario actual
         //Cambio al usuario a Cazador si era criador
-        if ($user->status == Yii::app()->params->statusCriador) {
+        if ($user->status == Yii::app()->params->statusInactivo) {
             $user->status = Yii::app()->params->statusCazador;
 
             if (!$user->save())
@@ -486,7 +504,7 @@ class SkillSingleton extends CApplicationComponent
 			$this->_privateMessage = 'No había gungubos a los que proteger.';      
 
         return true;
-    }
+    }*/
 	
     /** Relanza el evento
      * @return bool
@@ -524,7 +542,7 @@ class SkillSingleton extends CApplicationComponent
     /** Libera gungubos de un bando aleatorio
      * @return bool
      */
-	private function rescatarGungubos($skill)
+	/*private function rescatarGungubos($skill)
 	{
 		//Elijo un bando aleatorio
 		$rand = mt_rand(0,1);
@@ -584,7 +602,7 @@ class SkillSingleton extends CApplicationComponent
         if($protected && $finalAmount > 0) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos del bando de '.ucfirst($bando).', rompiendo la protección.';
 			
 		return true;
-	}
+	}*/
 
 
     /** Crea un modificador de "trampa"
@@ -622,7 +640,7 @@ class SkillSingleton extends CApplicationComponent
      * @param $skill Obj de la skill
      * @return bool
      */
-    private function otear($skill, $target)
+    /*private function otear($skill, $target)
     {
         //si ya tengo oteando, lo que hago es renovar su tiempo de ejecución y punto        
 		$modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
@@ -651,12 +669,190 @@ class SkillSingleton extends CApplicationComponent
         $this->_privateMessage = $oteados['texto'];
 
         return true;
+    }*/
+
+    private function otearKafhe($skill)
+    {
+        //Saco los Gunbudos Asaltantes de Achikhorias en este evento
+        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
+
+        $gunbudos = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND class=:clase AND side=:bando', 'params'=>array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gunbudoClassAsaltante, ':bando'=>'achikhoria')));
+        $armas = array(Yii::app()->params->gunbudoWeapon1=>0, Yii::app()->params->gunbudoWeapon2=>0, Yii::app()->params->gunbudoWeapon3=>0);
+
+        foreach ($gunbudos as $gunbudo) {
+            $armas[$gunbudo->weapon]++;
+        }
+
+        if ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon2] && $armas[Yii::app()->params->gunbudoWeapon2]==$armas[Yii::app()->params->gunbudoWeapon3]) {
+            //Los tres iguales
+            if ($armas[Yii::app()->params->gunbudoWeapon1]==0)
+                $this->_privateMessage = 'No ves ningún Gunbudo '.Yii::app()->params->gunbudoClassNames['asaltante'].' Renunciante.';
+            else
+                $this->_privateMessage = 'No predomina ningún arma concreta entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
+        } elseif ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon2] && $armas[Yii::app()->params->gunbudoWeapon2]>$armas[Yii::app()->params->gunbudoWeapon3]) {
+            //Ganan 1=2 sobre 3
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon1].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon2].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
+        } elseif ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon3] && $armas[Yii::app()->params->gunbudoWeapon3]>$armas[Yii::app()->params->gunbudoWeapon2]) {
+            //Ganan 1=3 sobre 2
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon1].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon3].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
+        } elseif ($armas[Yii::app()->params->gunbudoWeapon2]==$armas[Yii::app()->params->gunbudoWeapon3] && $armas[Yii::app()->params->gunbudoWeapon2]>$armas[Yii::app()->params->gunbudoWeapon1]) {
+            //Ganan 2=3 sobre 1
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon2].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon3].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
+        } else {
+            //Los 3 diferentes o el que va solo mayor, por lo que gana 1 solo
+            arsort($armas);
+            $armas = array_flip($armas);
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[array_shift($armas)].' entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
+        }
+
+        return true;
     }
-	
-	
-	
+
+    private function otearAchikhoria($skill)
+    {
+        //Saco los Gunbudos Asaltantes de Achikhorias en este evento
+        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
+
+        $gunbudos = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND class=:clase AND side=:bando', 'params'=>array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gunbudoClassGuardian, ':bando'=>'kafhe')));
+        $armas = array(Yii::app()->params->gunbudoWeapon1=>0, Yii::app()->params->gunbudoWeapon2=>0, Yii::app()->params->gunbudoWeapon3=>0);
+
+        foreach ($gunbudos as $gunbudo) {
+            $armas[$gunbudo->weapon]++;
+        }
+
+        if ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon2] && $armas[Yii::app()->params->gunbudoWeapon2]==$armas[Yii::app()->params->gunbudoWeapon3]) {
+            //Los tres iguales
+            if ($armas[Yii::app()->params->gunbudoWeapon1]==0)
+                $this->_privateMessage = 'No ves ningún Gunbudo '.Yii::app()->params->gunbudoClassNames['guardian'].' Kafheíta.';
+            else
+                $this->_privateMessage = 'No predomina ningún arma concreta entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
+        } elseif ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon2] && $armas[Yii::app()->params->gunbudoWeapon2]>$armas[Yii::app()->params->gunbudoWeapon3]) {
+            //Ganan 1=2 sobre 3
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon1].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon2].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
+        } elseif ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon3] && $armas[Yii::app()->params->gunbudoWeapon3]>$armas[Yii::app()->params->gunbudoWeapon2]) {
+            //Ganan 1=3 sobre 2
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon1].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon3].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
+        } elseif ($armas[Yii::app()->params->gunbudoWeapon2]==$armas[Yii::app()->params->gunbudoWeapon3] && $armas[Yii::app()->params->gunbudoWeapon2]>$armas[Yii::app()->params->gunbudoWeapon1]) {
+            //Ganan 2=3 sobre 1
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon2].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon3].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
+        } else {
+            //Los 3 diferentes o el que va solo mayor, por lo que gana 1 solo
+            arsort($armas);
+            $armas = array_flip($armas);
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[array_shift($armas)].' entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
+        }
+
+        return true;
+    }
+
+
+    /*************************************************/
+	/************ GUNBUDOS ***************************/
+	private function gunbudoAsaltante($skill, $weapon)
+    {
+        //Creo un Gunbudo
+        $gunbudo = new Gunbudo;
+
+        $fecha = new DateTime();
+        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+
+        $gunbudo->class = Yii::app()->params->gunbudoClassAsaltante;
+        $gunbudo->owner_id = Yii::app()->currentUser->id;
+        $gunbudo->event_id = Yii::app()->event->id;
+        $gunbudo->side = Yii::app()->currentUser->side;
+        $gunbudo->actions = Yii::app()->config->getParam('defaultGunbudoAsaltanteActions');
+        $gunbudo->weapon = $weapon;
+        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+
+        //A ver si es sanguinario o no
+        $tirada = mt_rand(1,100);
+        $limit = intval($skill->extra_param);
+        if ($tirada <= $limit) {
+            //Es Sanguinario !!!!
+            $gunbudo->trait = Yii::app()->params->traitSanguinario;
+            $gunbudo->trait_value = 2;
+        }
+
+        if (!$gunbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+
+        //Con los datos de su actividad o action calculo los ataques
+        $fecha = new DateTime();
+        $ataques = array();
+        $num_ataques = intval($skill->gunbudo_action_duration / $skill->gunbudo_action_rate);
+        for($i=1; $i<=$num_ataques; $i++) {
+            $fecha->add(DateInterval::createFromDateString('2 hours')); //Añado dos horas
+            /*$attack = new Cronpile;
+            $attack->type = 'gunbudo';
+            $attack->operation = 'gunbudoAsaltanteAttack';
+            $attack->params = $gunbudo->id;
+            $attack->due_date = $fecha->format('Y-m-d H:i:s');*/
+            $ataques[] = "('gunbudo', 'gunbudoAsaltanteAttack', '".$gunbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
+
+            /*if (!$attack->save())
+                throw new CHttpException(400, 'Error al programar ataque del Gunbudo ('.$gunbudo->class.'). ['.print_r($attack->getErrors(),true).']');*/
+        }
+        Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
+
+        return true;
+    }
+
+    private function gunbudoGuardian($skill, $weapon)
+    {
+        //Creo un Gunbudo
+        $gunbudo = new Gunbudo;
+
+        $fecha = new DateTime();
+        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+
+        $gunbudo->class = Yii::app()->params->gunbudoClassGuardian;
+        $gunbudo->owner_id = Yii::app()->currentUser->id;
+        $gunbudo->event_id = Yii::app()->event->id;
+        $gunbudo->side = Yii::app()->currentUser->side;
+        $gunbudo->actions = Yii::app()->config->getParam('defaultGunbudoGuardianActions');
+        $gunbudo->weapon = $weapon;
+        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+
+        //A ver si es acorazado o no
+        $tirada = mt_rand(1,100);
+        $limit = intval($skill->extra_param);
+        if ($tirada <= $limit) {
+            //Es Acorazado !!!!
+            $gunbudo->trait = Yii::app()->params->traitAcorazado;
+            $gunbudo->trait_value = 2;
+        }
+
+        if (!$gunbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+
+        return true;
+    }
+
+    private function gunbudoCriador($skill)
+    {
+        //Creo un Gunbudo
+        $gunbudo = new Gunbudo;
+
+        $fecha = new DateTime();
+        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+
+        $gunbudo->class = Yii::app()->params->gunbudoClassCriador;
+        $gunbudo->owner_id = Yii::app()->currentUser->id;
+        $gunbudo->event_id = Yii::app()->event->id;
+        $gunbudo->side = Yii::app()->currentUser->side;
+        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+
+        if (!$gunbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+
+        return true;
+    }
+
+
+
+	/*************************************************/
 	/************** FUNCIONES AUXILIARES *************/
-    /** Pago el coste de ejecutar la habilidad
+    /** Pago el coste de ejecutar la habilidad. Además marca como activo al jugador.
      * @param $skill Obj de la skill
      * @param $executionResult Texto con el resultado de la ejecución, si fue critic, normal...
      */
@@ -687,6 +883,24 @@ class SkillSingleton extends CApplicationComponent
         if ($skill->cost_relanzamiento !== null)
             $user->ptos_relanzamiento = $user->ptos_relanzamiento - round($skill->cost_relanzamiento * $criticModificator['relanzamiento']);
 
+        //Pago los gungubos
+        if ($skill->cost_gungubos !== null) {
+            //Remuevo los gungubos que indique empezando por los que menos vida tienen
+            Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND location=:lugar AND health>0 ORDER BY health DESC LIMIT '.$skill->cost_gungubos, 'params'=>array(':evento'=>Yii::app()->event->id, ':owner'=>$user->id, ':lugar'=>'corral')));
+        }
+			
+		//Pongo al jugador activo
+		if ($user->status == Yii::app()->params->statusInactivo) {
+			//Miro si había metido el desayuno para saber qué estado ponerle
+			$has_enrollment = Enrollment::model()->exists(array('condition'=>'user_id=:user AND event_id=:event', 'params'=>array(':user'=>$user->id, ':event'=>Yii::app()->event->id)));
+			
+			if ($has_enrollment)
+				$user->status = Yii::app()->params->statusAlistado;
+			else
+				$user->status = Yii::app()->params->statusCazador;
+		}
+		$user->last_activity = date('Y-m-d H:i:s'); //Actualizo la última vez que ha hecho algo
+
         //Salvo todo
 	    if (!$user->save())
             throw new CHttpException(400, 'Error al actualizar el usuario ('.$user->id.') tras ejecutar una habilidad ('.$skill->id.'). ['.print_r($user->getErrors(),true).']');
@@ -696,6 +910,8 @@ class SkillSingleton extends CApplicationComponent
 
     /** Calcula el coste de tueste de una skill teniendo en cuenta todo: sobrecarga, etc.
      * @param $skill Objeto de la skill a calcular su coste
+     * @param &$desglose Variable en la que se dejará el coste desglosado
+     * @return Devuelte el coste final de la habilidad
      */
     public function calculateCostTueste($skill, &$desglose=null)
     {
@@ -715,13 +931,10 @@ class SkillSingleton extends CApplicationComponent
 
         //SOBRECARGA
             $porcentajeExtraSobrecarga = Yii::app()->config->getParam('sobrecargaPorcentajeTuesteExtra');
-            //$tamanoHistorico = Yii::app()->config->getParam('sobrecargaTamañoHistorico');
-			$tamanoHistorico = max( ceil($user->rank/2) , 1); //Mínimo de 1
-			$tamanoHistorico = min($tamanoHistorico, 4); //Máximo de 4
 			$extraSobrecarga = 0;
 
             //Miro el histórico de ejecuciones del jugador
-            $historico = HistorySkillExecution::model()->findAll(array('condition'=>'caster_id=:caster', 'params'=>array(':caster'=>$user->id), 'order'=>'timestamp DESC', 'limit'=>$tamanoHistorico));
+            $historico = Yii::app()->historySkill->model;
             if ($historico!==null) {
                 $repeticiones = 0;
                 foreach ($historico as $historic) {
@@ -819,6 +1032,6 @@ class SkillSingleton extends CApplicationComponent
 	public function getResult() { return $this->_result; }
 	public function getResultMessage() { return $this->_resultMessage; }
 	public function getError() { return $this->_error; }
-
+	public function getGeneratesNotification() { return $this->_generates_notification; }
 	
 }
