@@ -58,7 +58,8 @@ return array(
 		'event'=>array('class'=>'EventSingleton'),
 		'usertools'=>array('class'=>'UserToolsSingleton'),
 		'modifier'=>array('class'=>'ModifierSingleton'),
-		'gungubos'=>array('class'=>'GungubosSingleton'),
+        'gungubos'=>array('class'=>'GungubosSingleton'),
+        'gunbudos'=>array('class'=>'GunbudosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),		
 		'config'=>array('class'=>'ConfigurationSingleton'),
         'skill'=>array('class'=>'SkillSingleton'),
@@ -69,21 +70,21 @@ return array(
         'adminEmail'=>'omelettus@gmail.com',//#mailEmail
         'mailServerUsername'=>'',//#mailUsername
         'mailServerPassword'=>'',//#mailPassword
-		
-		//Estados de Usuario
-		'statusCriador'=>0,
-		'statusCazador'=>1,
-		'statusAlistado'=>2,
-		'statusBaja'=>3,
-		'statusIluminado'=>4,
-		'statusLibertador'=>5,
-		
-		//Estados de Eventos
-		'statusCerrado'=>0,
-		'statusIniciado'=>1,
-		'statusBatalla'=>2,
-		'statusFinalizado'=>3,
-		'statusCalma'=>4,
+
+        //Estados de Usuario
+        'statusInactivo'=>0,
+        'statusCazador'=>1,
+        'statusAlistado'=>2,
+        'statusBaja'=>3,
+        'statusIluminado'=>4,
+        'statusLibertador'=>5,
+
+        //Estados de Eventos
+        'statusCerrado'=>0,
+        'statusIniciado'=>1,
+        'statusBatalla'=>2,
+        'statusFinalizado'=>3,
+        'statusCalma'=>4,
         'statusPreparativos'=>5,
 
         //Modificadores. Están aquí y en BBDD
@@ -110,9 +111,39 @@ return array(
         'skillProtegerGungubos'=>'protegerGungubos',
         'skillOtear'=>'otear',
 
-		//Otros
-		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Iluminado'),
-        'userStatusNames'=>array(0=>'Criador', 1=>'Cazador', 2=>'Alistado', 3=>'Baja', 4=>'Iluminado', 5=>'Libertador'),
-        'eventStatusNames'=>array(0=>'Cerrado', 1=>'Iniciado', 2=>'Batalla', 3=>'Finalizado', 4=>'En calma', 5=>'Preparativos'),
+        'skillOtearKafhe'=>'otearKafhe',
+        'skillOtearAchikhoria'=>'otearAchikhoria',
+
+        'skillGunbudoAsaltante'=>'gunbudoAsaltante',
+        'skillGunbudoGuardian'=>'gunbudoGuardian',
+        'skillGunbudoCriador'=>'gunbudoCriador',
+
+        //Gunbudos
+        'gunbudoClassAsaltante'=>'asaltante',
+        'gunbudoClassGuardian'=>'guardian',
+        'gunbudoClassCriador'=>'criador',
+        'gunbudoWeapon1'=>'garras',
+        'gunbudoWeapon2'=>'colmillos',
+        'gunbudoWeapon3'=>'puas',
+
+        'traitAcorazado'=>'acorazado',
+        'traitSanguinario'=>'sanguinario',
+        'traitConsumeCadaveres'=>'consumeCadaveres',
+        'traitCanibal'=>'canibal',
+        'traitIncendiar'=>'incendiar',
+        'traitColera'=>'colera',
+        'traitZombificar'=>'zombificar',
+
+
+        //Otros
+        'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Iluminado'),
+        'userStatusNames'=>array(0=>'Inactivo', 1=>'Alborotador', 2=>'Combatiente', 3=>'Baja', 4=>'Espectador', 5=>'Libertador'),
+        'eventStatusNames'=>array(0=>'Cerrada', 1=>'Gungubos', 2=>'Batalla', 3=>'Finalizada', 4=>'En calma', 5=>'Preparativos'),
+
+        'gunbudoClassNames'=>array('asaltante'=>'Asaltante', 'guardian'=>'Guardián', 'criador'=>'Criador'),
+        'gunbudoClassNamesPlural'=>array('asaltante'=>'Asaltantes', 'guardian'=>'Guardianes', 'criador'=>'Criadores'),
+        'gunbudoWeaponNames'=>array('garras'=>'Garras', 'colmillos'=>'Colmillos', 'puas'=>'Púas'),
+
+        'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar'),
 	),
 );

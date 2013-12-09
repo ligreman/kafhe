@@ -1,21 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "cronpile".
+ * This is the model class for table "notification_corral".
  *
- * The followings are the available columns in table 'cronpile':
+ * The followings are the available columns in table 'notification_corral':
  * @property integer $id
- * @property string $type
- * @property string $operation
- * @property string $params
- * @property string $due_date
+ * @property integer $event_id
+ * @property integer $user_id
+ * @property string $message
+ * @property string $timestamp
  */
-class Cronpile extends CActiveRecord
+class NotificationCorral extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Cronpile the static model class
+	 * @return NotificationCorral the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -27,7 +27,7 @@ class Cronpile extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'cronpile';
+		return 'notification_corral';
 	}
 
 	/**
@@ -38,14 +38,12 @@ class Cronpile extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('operation', 'required'),
-			array('type', 'length', 'max'=>20),
-			array('operation', 'length', 'max'=>50),
-			array('params', 'length', 'max'=>100),
-			array('due_date', 'safe'),
+			array('message', 'required'),
+			array('event_id, user_id', 'numerical', 'integerOnly'=>true),
+			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, type, operation, params, due_date', 'safe', 'on'=>'search'),
+			array('id, event_id, user_id, message, timestamp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,10 +65,10 @@ class Cronpile extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'type' => 'Type',
-			'operation' => 'Operation',
-			'params' => 'Params',
-			'due_date' => 'Due Date',
+			'event_id' => 'Event',
+			'user_id' => 'User',
+			'message' => 'Message',
+			'timestamp' => 'Timestamp',
 		);
 	}
 
@@ -86,10 +84,10 @@ class Cronpile extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('type',$this->type,true);
-		$criteria->compare('operation',$this->operation,true);
-		$criteria->compare('params',$this->params,true);
-		$criteria->compare('due_date',$this->due_date,true);
+		$criteria->compare('event_id',$this->event_id);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('message',$this->message,true);
+		$criteria->compare('timestamp',$this->timestamp,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

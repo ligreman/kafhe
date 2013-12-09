@@ -12,19 +12,21 @@ class SkillValidator
      * @param $skill Objeto de la habilidad ejecutándose.
      * @param null $target ID objetivo seleccionado.
      * @param null $side_target Bando objetivo seleccionado.
+     * @param null $extra_param Parámetros extra
      * @param bool $is_executing Indica si estoy intentando ejecutar o no la habilidad. Si es true se comprueba el objetivo.
      * @return int
      *      0 - Fallo. No hay un objetivo válido seleccionado.
      *      1 - Correcto. Puedes ejecutar la habilidad.
-     *      2 - Fallo. No tienes suficiente tueste, retueste, tostólares o ptos de relanzamiento para pagar el coste de la habilidad.
+     *      2 - Fallo. No tienes suficiente tueste, retueste, tostólares, gungubos, o lágrimas para pagar el coste de la habilidad.
      *      3 - Fallo. No tienes el estado adecuado para ejecutar la habilidad.
      *      4 - Fallo. No estás en el bando correcto para ejecutar la habilidad.
      *      5 - Fallo. No tienes el rango exigido para ejecutar la habilidad.
      *      6 - Fallo. El evento no se encuentra en el estado requerido o no eres el llamador.
      *      7 - Fallo. No tienes el talento requerido para ejecutar esta habilidad.
      *      8 - Fallo. Hay modificadores que te impiden ejecutar la habilidad.
+     *      9 - Fallo. Faltan parámetros extra.
      */
-    public function canExecute($skill, $target=null, $side_target=null, $is_executing=false)
+    public function canExecute($skill, $target=null, $side_target=null, $extra_param=null, $is_executing=false)
 	{
 	    $this->_lastError = '';
 		$user = Yii::app()->currentUser->model;
@@ -75,6 +77,10 @@ class SkillValidator
         if ($skill->cost_tostolares!==null && !$this->checkTostolares($skill, $user))
             return 2;
 
+        //¿Tengo gungubos suficientes?
+		if ($skill->cost_gungubos!==null && !$this->checkGungubos($skill, $user))
+			return 2;
+
         //¿Tengo algún modificador que me impida ejecutar esta habilidad?
         if (!$this->checkModifiers($user))
             return 8;
@@ -90,6 +96,11 @@ class SkillValidator
 			//¿Requiere elegir bando objetivo? Si el require_target_user es null pero no el require_target_side
 			if (!$skill->require_target_user && $skill->require_target_side!==null && !$this->checkSideTarget($skill, $user, $side_target))
 				return 0;
+
+			//Es una habilidad especial que requiere parámetros extra
+			    if ($skill->keyword==Yii::app()->params->skillGunbudoAsaltante && !$this->checkGunbudoAsaltanteWeapons($skill, $extra_param))
+			        return 9;
+
 		}
 		
 		//Si todo ha ido bien
@@ -141,6 +152,15 @@ class SkillValidator
 		else if ($skill->cost_tostolares <= $user->tostolares) return true;
 		else {
 			$this->_lastError = 'No tienes suficientes Tostólares.';
+			return false;
+		}
+	}
+	
+	private function checkGungubos($skill, $user) {
+		if ($skill->cost_gungubos == null) return true;		
+		else if ($skill->cost_gungubos <= Yii::app()->currentUser->gungubosCorral) return true;
+		else {
+			$this->_lastError = 'No tienes suficientes Gungubos en tu corral.';
 			return false;
 		}
 	}
@@ -258,6 +278,19 @@ class SkillValidator
 			
 			return true;
 		}
+	}
+
+	private function checkGunbudoAsaltanteWeapons($skill, $extra_param) {
+        if ($skill->keyword!=Yii::app()->params->skillGunbudoAsaltante)
+            return true;
+        else {
+        Yii::log("Arma: ".$extra_param);
+            if ($extra_param!=Yii::app()->params->gunbudoWeapon1 && $extra_param!=Yii::app()->params->gunbudoWeapon2 && $extra_param!=Yii::app()->params->gunbudoWeapon3) {
+                $this->_lastError = 'No has seleccionado un arma válida para el Gunbudo Asaltante.';
+                return false;
+            } else
+                return true;
+        }
 	}
 	
 	//Compruebo si el bando seleccionado es correcto, si se requería un bando concreto

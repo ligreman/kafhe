@@ -90,9 +90,11 @@ return array(
 		'modifier'=>array('class'=>'ModifierSingleton'),
         'currentUser'=>array('class'=>'UserSingleton'),
 		'gungubos'=>array('class'=>'GungubosSingleton'),
+        'gunbudos'=>array('class'=>'GunbudosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),
 		'skill'=>array('class'=>'SkillSingleton'),
 		'config'=>array('class'=>'ConfigurationSingleton'),
+		'historySkill'=>array('class'=>'HistorySkillSingleton'),
         'mail'=>array('class'=>'MailSingleton'),
 
 
@@ -186,7 +188,7 @@ return array(
 		'mailServerPassword'=>'',//#mailPassword
 		
 		//Estados de Usuario
-		'statusCriador'=>0,
+		'statusInactivo'=>0,
 		'statusCazador'=>1,
 		'statusAlistado'=>2,
 		'statusBaja'=>3,
@@ -225,9 +227,41 @@ return array(
         'skillProtegerGungubos'=>'protegerGungubos',
         'skillOtear'=>'otear',
 
+        'skillOtearKafhe'=>'otearKafhe',
+        'skillOtearAchikhoria'=>'otearAchikhoria',
+
+        'skillGunbudoAsaltante'=>'gunbudoAsaltante',
+        'skillGunbudoGuardian'=>'gunbudoGuardian',
+        'skillGunbudoCriador'=>'gunbudoCriador',
+
+        //Gunbudos
+        'gunbudoClassAsaltante'=>'asaltante',
+        'gunbudoClassGuardian'=>'guardian',
+        'gunbudoClassCriador'=>'criador',
+
+        //Armas
+        'gunbudoWeapon1'=>'garras',
+        'gunbudoWeapon2'=>'colmillos',
+        'gunbudoWeapon3'=>'puas',
+		
+		'traitAcorazado'=>'acorazado',
+		'traitSanguinario'=>'sanguinario',
+		'traitConsumeCadaveres'=>'consumeCadaveres',
+		'traitCanibal'=>'canibal',
+		'traitIncendiar'=>'incendiar',
+		'traitColera'=>'colera',
+		'traitZombificar'=>'zombificar',
+		
+
 		//Otros
 		'sideNames'=>array('kafhe'=>'Kafhe', 'achikhoria'=>'Achikhoria', 'libre'=>'Iluminado'),
-        'userStatusNames'=>array(0=>'Criador', 1=>'Cazador', 2=>'Alistado', 3=>'Baja', 4=>'Iluminado', 5=>'Libertador'),
+        'userStatusNames'=>array(0=>'Inactivo', 1=>'Alborotador', 2=>'Combatiente', 3=>'Baja', 4=>'Espectador', 5=>'Libertador'),
         'eventStatusNames'=>array(0=>'Cerrada', 1=>'Gungubos', 2=>'Batalla', 3=>'Finalizada', 4=>'En calma', 5=>'Preparativos'),
+
+        'gunbudoClassNames'=>array('asaltante'=>'Asaltante', 'guardian'=>'Guardián', 'criador'=>'Criador'),
+        'gunbudoClassNamesPlural'=>array('asaltante'=>'Asaltantes', 'guardian'=>'Guardianes', 'criador'=>'Criadores'),
+		'gunbudoWeaponNames'=>array('garras'=>'Garras', 'colmillos'=>'Colmillos', 'puas'=>'Púas'),
+
+		'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar'),
 	),
 );

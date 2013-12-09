@@ -31,15 +31,14 @@ class UserToolsSingleton extends CApplicationComponent
 		return $aliases;
     }
 
-	//Esta función la coge automáticamente. Coge usuarios del grupo actual
+	//Esta función la coge automáticamente. Coge usuarios del grupo actual si existe, o todos en caso contrario
     public function getUsers()
     {
         if (!$this->_users)
         {
             $criteria = New CDbCriteria;
 
-            //Si es admin tendrá grupo null y cogeré todos los usuarios
-            if (Yii::app()->currentUser->groupId !== null) {
+            if (isset(Yii::app()->currentUser)) {
                 $criteria->condition = 'group_id=:groupId';
                 $criteria->params = array(':groupId'=>Yii::app()->currentUser->groupId);
             }
@@ -55,10 +54,11 @@ class UserToolsSingleton extends CApplicationComponent
 
     /** Calcula y coge un usuario aleatorio dentro de un grupo
      * @param null $groupId grupo dentro del que buscar, si es null se coge el activo
+	 * @param null $side bando en el que buscar. Si es null, busca en cualquier bando.
      * @param null $exclude array de id de usuario a excluir
      * @return CActiveRecord Usuario encontrado o null si no hay resultados.
      */
-    public function randomUser($groupId=null, $exclude=null)
+    public function randomUser($groupId=null, $side=null, $exclude=null)
     {
         $criteria = New CDbCriteria;
 
@@ -68,14 +68,17 @@ class UserToolsSingleton extends CApplicationComponent
 
         if ($exclude !== null)
             $criteria->condition .= ' AND id NOT IN ('.implode(',', $exclude).') ';
+			
+		if ($side !== null)
+			$criteria->condition .= ' AND side="'.$side.'" ';
 
         $criteria->params = array(':groupId'=>$groupId);
-        $criteria->order = 'BY RAND()';
+        $criteria->order = 'RAND()';
         $criteria->limit = '1';
 
         $user = User::model()->find($criteria);
         return $user;
-    }
+    }	
 
     public function checkLvlUpUser(&$user, $save=true)
     {

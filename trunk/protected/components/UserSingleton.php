@@ -5,6 +5,7 @@
 class UserSingleton extends CApplicationComponent
 {
 	private $_model = null;
+	private $_gungubos = null;
 	
 	/*public function setModel($id)
     {
@@ -18,6 +19,7 @@ class UserSingleton extends CApplicationComponent
         if (!$this->_model)
         {
             $this->_model = User::model()->findByPk(Yii::app()->user->id); //La cojo el UserIdentify
+			$this->_gungubos = intval(Gungubo::model()->count(array('condition'=>'owner_id=:owner AND location=:lugar', 'params'=>array(':owner'=>$this->_model->id, ':lugar'=>'corral'))));
         }
         return $this->_model;
     }
@@ -45,5 +47,7 @@ class UserSingleton extends CApplicationComponent
     public function getCalls() { return $this->model->calls; }
     public function getLastRegenTimestamp() { return $this->model->last_regen_timestamp; }
     public function getLastNotificationRead() { return $this->model->last_notification_read; }
+	
+	public function getGungubosCorral() { return $this->_gungubos; }
 	
 }
