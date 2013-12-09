@@ -10,7 +10,7 @@ class ModifierSingleton extends CApplicationComponent
 	//Carga los modificadores en variable sólo una vez por carga de página
 	public function getModifiers() 
 	{	
-		if (!$this->_modifiers) {
+		if ($this->_modifiers === null) {
 			if (!isset(Yii::app()->currentUser->id))
 				return null;
 
@@ -38,7 +38,7 @@ class ModifierSingleton extends CApplicationComponent
     {
         if($side==null) return null;
 
-        if (!$this->_sideModifiers) {
+        if ($this->_sideModifiers === null) {
             if (!isset(Yii::app()->currentUser->id))
                 return null;
 

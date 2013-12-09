@@ -21,6 +21,7 @@
  * @property integer $ptos_talentos
  * @property integer $tostolares
  * @property integer $experience
+ * @property integer $fame
  * @property integer $sugarcubes
  * @property integer $dominio_tueste
  * @property integer $dominio_habilidades
@@ -29,6 +30,7 @@
  * @property integer $calls
  * @property string $last_regen_timestamp
  * @property string $last_notification_read
+ * @property string $last_activity
  */
 class User extends CActiveRecord
 {
@@ -59,14 +61,14 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password, alias, email', 'required'),
-			array('group_id, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
+			array('group_id, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, fame, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
 			array('username, password, alias, email', 'length', 'max'=>128),
 			array('role', 'length', 'max'=>5),
 			array('side', 'length', 'max'=>10),
-			array('birthdate, last_regen_timestamp, last_notification_read', 'safe'),
+			array('birthdate, last_regen_timestamp, last_notification_read, last_activity', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, password, alias, email, birthdate, role, group_id, side, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls, last_regen_timestamp, last_notification_read', 'safe', 'on'=>'search'),
+			array('id, username, password, alias, email, birthdate, role, group_id, side, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, fame, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls, last_regen_timestamp, last_notification_read, last_activity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -104,6 +106,7 @@ class User extends CActiveRecord
 			'ptos_talentos' => 'Ptos Talentos',
 			'tostolares' => 'Tostolares',
 			'experience' => 'Experience',
+			'fame' => 'Fame',
 			'sugarcubes' => 'Sugarcubes',
 			'dominio_tueste' => 'Dominio Tueste',
 			'dominio_habilidades' => 'Dominio Habilidades',
@@ -112,6 +115,7 @@ class User extends CActiveRecord
 			'calls' => 'Calls',
 			'last_regen_timestamp' => 'Last Regen Timestamp',
 			'last_notification_read' => 'Last Notification Read',
+			'last_activity' => 'Last Activity',
 		);
 	}
 
@@ -143,6 +147,7 @@ class User extends CActiveRecord
 		$criteria->compare('ptos_talentos',$this->ptos_talentos);
 		$criteria->compare('tostolares',$this->tostolares);
 		$criteria->compare('experience',$this->experience);
+		$criteria->compare('fame',$this->fame);
 		$criteria->compare('sugarcubes',$this->sugarcubes);
 		$criteria->compare('dominio_tueste',$this->dominio_tueste);
 		$criteria->compare('dominio_habilidades',$this->dominio_habilidades);
@@ -151,6 +156,7 @@ class User extends CActiveRecord
 		$criteria->compare('calls',$this->calls);
 		$criteria->compare('last_regen_timestamp',$this->last_regen_timestamp,true);
 		$criteria->compare('last_notification_read',$this->last_notification_read,true);
+		$criteria->compare('last_activity',$this->last_activity,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

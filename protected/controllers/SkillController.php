@@ -26,7 +26,7 @@ class SkillController extends Controller
 		);
 	}
   
-	public function actionExecute($skill_id, $target_id=null, $side=null) //Automáticamente asocia $skill_id = $_GET['skill_id'] y si no existe lanza excepción 404 controlada
+	public function actionExecute($skill_id, $target_id=null, $side=null, $extra_param=null) //Automáticamente asocia $skill_id = $_GET['skill_id'] y si no existe lanza excepción 404 controlada
 	{	
 		//Obtengo la skill y mi usuario
 		$skill = Skill::model()->findByPk($skill_id);
@@ -41,11 +41,11 @@ class SkillController extends Controller
 		
 		//Creo una instancia del validador de habilidades
 		$validator = new SkillValidator;
-		
-		if ($validator->canExecute($skill, $target, $side, true) == 1) {
+$extra_param='garras';
+		if ($validator->canExecute($skill, $target, $side, $extra_param, true) == 1) {
 			//Ejecuto la habilidad
-			if (!Yii::app()->skill->executeSkill($skill, $target, $side)) {
-                Yii::app()->user->setFlash('error', "No se ha podido ejecutar la habilidad. ".Yii::app()->skill->error);
+			if (!Yii::app()->skill->executeSkill($skill, $target, $side, $extra_param)) {
+                Yii::app()->user->setFlash('error', "Se profujo un fallo al ejecutar la habilidad. ".Yii::app()->skill->error);
 			} else {
                 //Doy experiencia por ejecutar la habilidad si no es pifia
                 if (Yii::app()->skill->result != 'fail') {
@@ -89,6 +89,10 @@ class SkillController extends Controller
 	
 	private function skillNotification($skill) 
 	{
+	    //Si la skill no ha de crear notificación
+	    if ($skill->generatesNotification==false)
+	        return true;
+
 		//Si la habilidad ejecutándose no pifió y es Disimular o Impersonar o Trampa, no la muestro
 		if ($skill->result!='fail' && ($skill->keyword==Yii::app()->params->skillDisimular || $skill->keyword==Yii::app()->params->skillImpersonar || $skill->keyword==Yii::app()->params->skillTrampa))
 		    return true;
@@ -114,7 +118,7 @@ class SkillController extends Controller
             if (!Yii::app()->modifier->reduceModifierUses($modifier))
                 throw new CHttpException(400, 'Error al reducir los usos de un modificador ('.$modifier->keyword.').');
 
-            $alt_sender = Yii::app()->usertools->randomUser(null, array($skill->caster, $skill->finalTarget));
+            $alt_sender = Yii::app()->usertools->randomUser(null, null, array($skill->caster, $skill->finalTarget));
             if ($alt_sender===null) $nota->sender = $skill->caster;
             $nota->sender = $alt_sender->id;
         } else

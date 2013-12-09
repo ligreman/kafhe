@@ -43,11 +43,11 @@ class TuesteSingleton extends CApplicationComponent
             if($mods!=null  &&  Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDesecado, $mods)) $estaDesecado = true;
 		}
 
-		//Si el usuario no es cazador o alistado o libertador no le afectará la hidratación
-		if($estaHidratado && ($user->status==Yii::app()->params->statusCazador || $user->status==Yii::app()->params->statusAlistado || $user->status==Yii::app()->params->statusLibertador)) {
+		//Si el usuario no es inactivo le afecta la hidratación
+		if($estaHidratado && $user->status!=Yii::app()->params->statusInactivo) {
 		    $skillH = Skill::model()->findByAttributes(array('keyword'=>Yii::app()->params->skillHidratar));
             $porcentajePorModificadores = $skillH->extra_param; //Este extra param indica el % de regeneración extra
-        } //más rápido por estar hidratado
+        }
 
         if($estaDesecado) $signoRegeneracion = -1; //Regeneración negativa
 
@@ -75,7 +75,7 @@ class TuesteSingleton extends CApplicationComponent
      * @param $onlyActive Si repartir sólo entre los jugadores activos (Cazadores y Alistados).
      * @return Devuelve un array con el tueste que ha sobrado, array('kafhe'=>tueste, 'achikhoria'=>tueste)
      */
-    public function repartirTueste($event, $onlyActive=true) {
+    /*public function repartirTueste($event, $onlyActive=true) {
         $sobra = array('kafhe'=>0, 'achikhoria'=>0);
 
         if ($onlyActive)
@@ -130,7 +130,7 @@ class TuesteSingleton extends CApplicationComponent
         }
 
         return $sobra;
-    }
+    }*/
 
 
     /** Obtiene el tueste máximo que puede tener el usuario

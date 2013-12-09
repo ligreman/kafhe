@@ -197,12 +197,14 @@ class EventController extends Controller
 		Yii::app()->modifier->reduceEventModifiers($event->id);
 
 		//Elimino los modificadores que no son de evento
-        $sql = 'DELETE FROM modifier WHERE event_id='.$event->id.' AND duration_type!="evento";';
-        Yii::app()->db->createCommand($sql)->execute();
+        Modifier::model()->deleteAll(array('condition'=>'event_id=:evento AND duration_type!=:tipo', 'params'=>array(':evento'=>$event->id, ':tipo'=>'evento')));
 
         //Elimino el historial de ejecución de habilidades del evento
-        $sql = 'DELETE FROM history_skill_execution WHERE event_id='.$event->id.';';
-        Yii::app()->db->createCommand($sql)->execute();
+        HistorySkillExecution::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+
+        //Elimino Gungubos y Gunbudos
+        Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+        Gunbudo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
 
         //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
 		$usuarios = Yii::app()->usertools->users;
@@ -232,7 +234,7 @@ class EventController extends Controller
 				//A los alistados les pongo como criadores
 				$usuario->rank++;
 				$usuario->times++;
-				$usuario->status = Yii::app()->params->statusCriador;
+				$usuario->status = Yii::app()->params->statusInactivo;
 
                 $usuario->experience += ( Yii::app()->config->getParam('expParticipar') + Yii::app()->config->getParam('expNoLlamar') + ( ($usuario->rank-2) * Yii::app()->config->getParam('expPorRango') ) ); //Experiencia por participar + NoLLamar + Rango (de rango 1 a 2 no ganas exp)
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
@@ -241,21 +243,21 @@ class EventController extends Controller
 			} elseif ($usuario->status==Yii::app()->params->statusIluminado) {
 				//Si era "libre" pero no fue al desayuno
                 $usuario->rank++; //Aunque no fue al desayuno le subo de nivel igualmente para que todos los de bando sean nivel 2
-				$usuario->status = Yii::app()->params->statusCriador;
+				$usuario->status = Yii::app()->params->statusInactivo;
 				$anterior_llamador = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusLibertador) {
 				//Al anterior libre, que si fue al desayuno, le pongo como criadores también
 				$usuario->rank++;
 				$usuario->times++;
-				$usuario->status = Yii::app()->params->statusCriador;
+				$usuario->status = Yii::app()->params->statusInactivo;
 
                 $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
         
 				$anterior_llamador = $usuario;
-			} elseif ($usuario->status==Yii::app()->params->statusCriador  ||  $usuario->status==Yii::app()->params->statusCazador  ||  $usuario->status==Yii::app()->params->statusBaja) {
+			} elseif ($usuario->status==Yii::app()->params->statusInactivo  ||  $usuario->status==Yii::app()->params->statusCazador  ||  $usuario->status==Yii::app()->params->statusBaja) {
 				//Al resto sólo les pongo de criadores
-				$usuario->status = Yii::app()->params->statusCriador;
+				$usuario->status = Yii::app()->params->statusInactivo;
                 $new_usuarios[$usuario->id] = $usuario;
 			}
 		}
