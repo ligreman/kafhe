@@ -60,41 +60,6 @@
                                 echo CHtml::link($img,array('/profile'), array('id'=>'profileMainLink', 'title'=>'Mi cuenta'));
                             ?>
                             </li>
-                        
-                            <li>
-                            <?php
-                                $img = CHtml::image(Yii::app()->request->baseUrl.'/images/notificationsIcon.png','Notificaciones');
-                                echo CHtml::link($img,array('/'),array('id' => 'notificationsMainLink', 'title'=>'Destacados'));
-                            ?>
-                                <?php
-                                    $notifications = Yii::app()->usertools->getNotificationsForUser();
-                                    if(count($notifications)>0):?>
-                                        <?php $aliases = Yii::app()->usertools->getAlias();?>
-                                        <span id="numberUnreadNotifications" class="<?php echo Yii::app()->currentUser->side;?>"><?php echo count($notifications);?></span>
-                                        <ul id="unreadSelfNotificationsList">
-                                            <?php foreach($notifications as $n):?>
-                                                <?php
-                                                if($n->type == OMELETTUS) $nombre = 'Omelettus';
-                                                elseif($n->type == SYSTEM) $nombre = 'System';
-                                                else $nombre = $aliases[$n->sender];
-                                                ?>
-                                                <li><strong><?php echo $nombre;?></strong>: <?php echo preg_replace('/(\:.*\:)([A-Z]*)/i', '$4', $n->message);?></li>
-                                            <?php endforeach;?>
-                                        </ul>
-                                <?php endif;?>
-
-                            </li>
-                            <li>
-                            <?php
-                                if($userPanelHidden=="1"){
-                                    $img = CHtml::image(Yii::app()->request->baseUrl.'/images/showUserBlock.png','Quiero ver el panel de usuario');
-                                    echo CHtml::link($img,Yii::app()->request->baseUrl, array('title' => 'Quiero ver el panel de usuario','id' => 'userpanelMainLink'));
-                                }else{
-                                    $img = CHtml::image(Yii::app()->request->baseUrl.'/images/hideUserBlock.png','No quiero ver el panel de usuario');
-                                    echo CHtml::link($img,Yii::app()->request->baseUrl, array('title' => 'No quiero ver el panel de usuario','id' => 'userpanelMainLink'));
-                                }
-                            ?>
-                            </li>
                         <?php endif; ?>
                         <li>
                         <?php
@@ -140,7 +105,7 @@
                 }
             ?>
         </header><!-- header -->
-        <section id="userPanel" <?php if($userPanelHidden=="1") echo 'style="display:none;"'; ?>>
+        <section id="userPanel">
             <?php if (!Yii::app()->user->isGuest){
                 $this->widget('application.components.UserPanel');
             }?>
@@ -199,6 +164,12 @@
             }*/
             ?>
             <?php echo $content; ?>
+        </section>
+
+        <section id="skillsUserBlock">
+            <?php if (!Yii::app()->user->isGuest){
+                $this->widget('application.components.SkillPanel');
+            }?>
         </section>
 
         <div class="clear"></div>
