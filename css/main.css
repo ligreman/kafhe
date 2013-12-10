@@ -68,13 +68,13 @@ p{
 /*Header with vertical align*/
 header {
     text-align: justify;
-    height: 5em;
-    padding: .3em 3em;
-    background-color:#00924a;
+    height: 3em;
+    padding: .3em 0;
+    background-color: #333333;
     color: #fff;
-    box-shadow: 0 3px 2px rgba(0,0,0,.15);
-    position:relative;
+    position: fixed;
     z-index: 9999;
+    width: 100%;
 }
 
 header::after {
@@ -103,6 +103,7 @@ header > div::before {
 
 header > div h1 {
     font-style: italic;
+    margin-left: 3em;
 }
 
 header nav a {
@@ -136,6 +137,7 @@ body
 {
 	margin: 0;
 	padding: 0;
+    background: #c0c0c0;
 }
 
 #page
@@ -148,11 +150,11 @@ body
 }
 
 nav ul{
-    margin: 0;
+    margin: 0 3em 0 0;
 }
 
 #secondary_nav a,#secondary_nav a:hover{
-    color: #e0e0e0;
+    color: #333333;
 }
 
 #secondary_nav li.active a {
@@ -163,15 +165,13 @@ a, a:hover{
     color: #00924a;
 }
 
-footer
-{
-	background-color:#202020;
-    color:#e0e0e0;
-    padding:5em 0;
+footer{
+	background-color: #202020;
+    color: #e0e0e0;
+    padding: 5em 0 9em;
     text-align: center;
-    z-index: 99999;
+    z-index: 500;
     position: relative;
-
 }
 
 footer li{
@@ -184,11 +184,11 @@ footer a{
     text-decoration: none;
 }
 
-#main
-{
-    width:80%;
-    float:left;
-    padding: 0;
+#main{
+    background: white;
+    width: 60%;
+    padding-top: 6.5em;
+    margin-left: 20%;
 }
 
 #main h1{
@@ -197,9 +197,8 @@ footer a{
 }
 
 #guest{
-    background-color: #e1e1e1;
     width:100%;
-    padding: 0;
+    padding: 4.5em 0 0;
 }
 
 #guest h1{
@@ -208,16 +207,17 @@ footer a{
 }
 
 #secondary_nav{
-    padding:0;
-    background:#333333;
-    float:left;
-    width:20%;
-    height:100%;
-    position: relative;
+    background: #c0c0c0;
+    width: 20%;
+    position: fixed;
+    left: 0;
+    top: 6em;
+    padding: 1em 0 0 0;
+    z-index: 200;
 }
 
 #secondary_nav a{
-    color:#e0e0e0;
+    color:#333333;
     line-height:3em;
     margin:0 0 0 3em;
     text-decoration: none;
@@ -246,7 +246,7 @@ article.achikhoria{
 }
 
 article.first{
-    margin-top:-3.4em;
+    margin-top:-5em;
 }
 
 article.system, article.omelettus, article.libre{
@@ -257,30 +257,34 @@ article.system, article.omelettus, article.libre{
 
 article.notification h1{
     padding:.5em 2%;
-    background-color:#363636;
-    color:#ffffff;
+    border-color:#363636;
+    border-width: 0 0 3px 0;
+    border-style: solid;
+    color:#363636;
+    padding-left: 0;
+    font-weight: bold;
 }
 
 article.kafhe h1{
-    background-color:#f0cc33;
-    color:#363636;
+    border-color:#f0cc33;
 }
 
 article.achikhoria h1{
-    background-color:#673c7d;
+    border-color:#673c7d;
 }
 
 article.libre h1{
-    background-color: #8f6255;
+    border-color: #8f6255;
 }
 
 article.omelettus h1{
-    background-color:#00924a;
-    color:#ffffff;
+    border-color:#00924a;
 }
 
 article.notification .notification_message{
-    color: #363636;
+    margin: 0;
+    font-size: 1em;
+    background-color: #e1e1e1;
     padding: 0 0 0 1em;
 }
 
@@ -301,32 +305,31 @@ article.notification .notification_message{
 }
 
 article.notification .timestamp{
-    color:#363636;
+    color: #363636;
     font-size: .6em;
-    position:absolute;
-    top: 2.8em;
-    right: 2%;
+    position: absolute;
+    top: 0.4em;
+    right: -1em;
 }
 
 .categoriaNotif{
     clear: both;
-    margin: 2em auto 4em;
+    margin: 2em auto 6em;
     text-align: center;
-    background: #e0e0e0;
+    background: #ffffff;
     color: #363636;
 }
 
 .categoriaNotif span{
-    background: #ffffff;
+    background: #e1e1e1;
     padding: 0.5em;
     width: 15em;
     display: inline-block;
 }
 
 #muro{
-    background: #e0e0e0 url(../images/timeline.png) repeat-y center top;
-    padding:1em 0 5em;
-    /*height: 100%;*/
+    background: #ffffff url(../images/timeline.png) repeat-y center top;
+    padding: 1em 0 5em;
 }
 
 #meals, #drinks{
@@ -372,26 +375,18 @@ article.notification .timestamp{
 
 .itoSelect{
     text-align: center;
-    margin: 0 0 1em 0;
+    margin: 0 0 3em 0;
 }
 
 .itoSelect label.selected{
-    background-color: #00924a;
-    border-color: transparent transparent #005415;
-    color:#ffffff;
+    background: url(../images/check_checked.png) no-repeat left center;
 }
 
 .itoSelect label{
-    display: inline-block;
-    border-style: solid;
-    border-radius: 3px;
-    border-width: 3px 0 3px 0;
-    padding: .7em 1em;
-    background-color: #363636;
-    border-color: #0b0b0b transparent transparent;
+    padding: 0 1.5em;
+    background: url(../images/check_unchecked.png) no-repeat left center;
     cursor: pointer;
-    color:#e0e0e0;
-    margin:0.5em;
+    font-weight: bold;
 }
 
 label.title{
@@ -554,8 +549,12 @@ label.title{
 }
 
 #userPanel{
-    background-color: #60b97f;
-    position: relative;
+    background-color: #e1e1e1;
+    position: fixed;
+    top: 3.5em;
+    width: 100%;
+    height: 3em;
+    z-index: 1000;
 }
 
 #userPanel #upContent{
@@ -563,15 +562,13 @@ label.title{
 }
 
 #mainUserBlock{
-    display: block;
-    height: 5em;
     padding: 0 3em;
 }
 
 #user{
     width: 10%;
     float:left;
-    padding: .8em 0 0;
+    padding: .6em 4% 0 0;
     overflow: visible;
 }
 
@@ -579,25 +576,34 @@ label.title{
     color: #363636;
     font-size: 1.5em;
     font-weight: bold;
-    display: block;
 }
 
-#modificadores, #sideStatus{
+#modificadores{
     color: #363636;
     font-size: .8em;
-    float:left;
-    padding:.6em 0;
+    padding: .9em 0 0 0;
+    float: right;
+    width: 20%;
+    margin-right: -3em;
+    text-align: center;
+}
+
+
+#sideStatus{
+    color: #363636;
+    font-size: .8em;
+    padding: 0 0 0 1em;
 }
 
 .modifier{
     margin-right:5px;
+    margin-bottom: -2px;
 }
 
 #energia{
-    float: left;
-    width: 45%;
-    padding: 2em 0 0 0;
-    margin-right: 2%;
+    width: 100%;
+    padding: 0;
+    margin: 0 0 0 -3em;
 }
 
 #tuesteRetueste{
@@ -665,7 +671,14 @@ label.title{
     display: block;
     height: 5px;
     width: 100%;
-    background: #363636;
+    background: #f0cc33;
+    background: -moz-linear-gradient(left,  #f0cc33 0%, #673c7d 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#f0cc33), color-stop(100%,#673c7d));
+    background: -webkit-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
+    background: -o-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
+    background: -ms-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
+    background: linear-gradient(to right,  #f0cc33 0%,#673c7d 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0cc33', endColorstr='#673c7d',GradientType=1 );
     position: absolute;
     bottom: 0;
     z-index: 9900;
@@ -674,7 +687,6 @@ label.title{
 #xp{
     box-shadow: 0 3px 2px rgba(0,0,0,.15);
     height: 100%;
-    background: #00924a;
     float: left;
 }
 
@@ -690,7 +702,7 @@ label.title{
     height: 10px;
     width: 10px;
     display: block;
-    background: #00924a;
+    background: #333333;
     border-radius: 30px;
     border: 3px solid white;
     margin-top: -6px;
@@ -733,22 +745,21 @@ label.title{
 
 .dato{
     display: inline-block;
-    width: 7%;
-    margin: 1.2em 0 0 2%;
+    width: 16%;
+    margin: .7em 0 0 0;
     float: left;
-    overflow: hidden;
     padding: 0;
 }
 
 .dato .numero, .dato .concepto{
-    color:#363636;
+    color: #363636;
     text-align: center;
-    display: block;
-    width: 100%;
+    padding: 0 .5em;
 }
 
 .dato .concepto{
     padding: 0 0 .2em 0;
+    font-size: 1.1em;
 }
 
 .dato .numero{
@@ -777,8 +788,12 @@ img.grayScale{
 
 #skillsUserBlock{
     height: 5em;
-    /*padding: 0 3em;*/
-    background: #9acfad;
+    padding: 0 3em;
+    background: #e1e1e1;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1500;
 }
 
 #skillsUserBlock ul{
@@ -988,16 +1003,21 @@ img.grayScale{
     display: block;
     height: 5px;
     width: 100%;
-    background: #673c7d;
+    background: #f0cc33;
+    background: -moz-linear-gradient(left,  #f0cc33 0%, #673c7d 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#f0cc33), color-stop(100%,#673c7d));
+    background: -webkit-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
+    background: -o-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
+    background: -ms-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
+    background: linear-gradient(to right,  #f0cc33 0%,#673c7d 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0cc33', endColorstr='#673c7d',GradientType=1 );
     position: absolute;
     bottom: 0;
     z-index: 9999;
-    margin-left: -3em;
 }
 
 #batteStatusKafhe{
     height: 100%;
-    background: #f0cc33;
     float: left;
     position: absolute;
 }
@@ -1015,7 +1035,7 @@ img.grayScale{
     width: 10px;
     display: block;
     border-radius: 30px;
-    background: #f0cc33;
+    background: #333333;
     border: 3px solid white;
     margin-top: -6px;
     float: right;
@@ -1027,7 +1047,7 @@ img.grayScale{
     width: 10px;
     display: block;
     border-radius: 30px;
-    background: #673c7d;
+    background: #333333;
     border: 3px solid white;
     margin-top: -6px;
     float: right;
@@ -1039,7 +1059,7 @@ img.grayScale{
     width: 10px;
     display: block;
     border-radius: 30px;
-    background: #8f6255;
+    background: #333333;
     border: 3px solid white;
     margin-top: -6px;
     float: right;
@@ -1069,6 +1089,8 @@ img.grayScale{
 
 #tueste .pin:hover .title{
     top:-2.2em;
+    background: #333333;
+    color:#ffffff;
 }
 
 #battleStatus .w0 .pin:hover .title, #battleStatus .w1 .pin:hover .title, #battleStatus .w2 .pin:hover .title{
