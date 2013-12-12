@@ -9,7 +9,7 @@ class GungubosSingleton extends CApplicationComponent
      * @param bool $checkTime si es true hace comprobación de la última vez que se cazaron gungubos, si es false devuelve los gungubos que se crian por tick
      * @return array Array con dos claves, 'kafhe' y 'achikhoria', cada una de ellas con el número de gungubos generados.
      */
-    public function getGungubosCazados($event, $checkTime=true)
+    /*public function getGungubosCazados($event, $checkTime=true)
     {		
         if ($checkTime) {
             //Compruebo si ha pasado el tiempo suficiente para criar en el evento
@@ -37,10 +37,10 @@ class GungubosSingleton extends CApplicationComponent
 		
 		//Devuelvo los gungubos criados        
 		return $gungubos;
-    }
+    }*/
 
 
-    public function getGungubosOteados($event) {
+    /*public function getGungubosOteados($event) {
         $libres = $event->gungubos_population;
 
         if ($libres == 0)
@@ -53,7 +53,7 @@ class GungubosSingleton extends CApplicationComponent
             $aproximacion = 'Ves gran cantidad de gungubos en libertad.';
 
         return array('numero'=>$libres, 'texto'=>$aproximacion);
-    }
+    }*/
 	
 }
 
