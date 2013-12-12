@@ -233,11 +233,19 @@ return array(
         'skillGunbudoAsaltante'=>'gunbudoAsaltante',
         'skillGunbudoGuardian'=>'gunbudoGuardian',
         'skillGunbudoCriador'=>'gunbudoCriador',
+        'skillGunbudoNigromante'=>'gunbudoNigromante',
+		'skillGunbudoArtificiero'=>'gunbudoArtificiero',
 
         //Gunbudos
         'gunbudoClassAsaltante'=>'asaltante',
         'gunbudoClassGuardian'=>'guardian',
         'gunbudoClassCriador'=>'criador',
+		'gunbudoClassNigromante'=>'nigromante',
+		'gunbudoClassArtificiero'=>'artificiero',
+		
+		//Gungubo
+		'gunguboClassZombie'=>'zombie',
+		'gunguboClassBomba'=>'bomba',
 
         //Armas
         'gunbudoWeapon1'=>'garras',
@@ -251,6 +259,8 @@ return array(
 		'traitIncendiar'=>'incendiar',
 		'traitColera'=>'colera',
 		'traitZombificar'=>'zombificar',
+		
+		'conditionQuemadura'=>'quemadura',
 		
 
 		//Otros

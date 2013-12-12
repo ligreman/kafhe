@@ -143,6 +143,68 @@ class UserToolsSingleton extends CApplicationComponent
 		if (empty($finales)) return null;
 		return $finales;
 	}
+	
+	public function calculateFameDifferentials()
+	{
+		$users = $this->getUsers();
+		
+		//La fama en bruto
+		$fames = array();		
+		foreach($users as $user) {
+			$fames[$user->id] = $user->fame;
+		}
+		
+		//Calculo la media de la fama
+		$fameMedia = array_sum($fames) / count($fames);
+		
+		//Los diferenciales
+		$differentials = array();
+		foreach($users as $user) {
+			$differentials[$user->id] = $fames[$user->id] - $fameMedia;
+		}
+		
+		if (empty($differentials)) return null;
+		return $differentials;
+	}
+	
+	public function calculateUsersFame()
+	{
+		//Preparo un array con las probabilidades de cada uno de los usuarios
+		$probabilidadesRango = Yii::app()->usertools->calculateProbabilities(true);
+		if ($probabilidadesRango === null) return null;
+		
+		//Los diferenciales
+		$diffs = $this->calculateFameDifferentials();		
+		if ($diffs === null) return null;
+		
+		//Ahora calculo el bruto de la probabilidad según la fama
+		$brutes = array();
+		foreach($diffs as $userId->$differential) {
+			$brutes[$userId] = $probabilidadesRango[$userId] - ( $probabilidadesRango[$userId]*$differential / 100 );
+		}
+		
+		$sumaBrutes = array_sum($brutes);
+		//La probabilidad final (neta)
+		$nets = array();
+		foreach($brutes as $userId->$brute) {
+			$nets[$userId] = round( $brute/$sumaBrutes * 100 );
+		}
+		
+		if (empty($nets)) return null;
+		return $nets;
+	}
+	
+	public function calculateSideFames()
+	{
+		$users = $this->getUsers();
+				
+		$sideF = array('kafhe'=>0, 'achikhoria'=>0);
+		foreach($users as $user) {
+			$sideF[$user->side] += $user->fame;
+		}
+		
+		return $sideF;
+	}
 
     /** Calcula las probabilidades de cada bando
      * @param $kafhe Gungubos del bando Kafhe

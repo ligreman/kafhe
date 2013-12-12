@@ -228,7 +228,7 @@ class CronCommand extends CConsoleCommand {
                     $this->logCron('     + Para el jugador '.$jugador->id.' corresponden '.$a_repoblar.' gungubos.', 'info');
 
                     for($i=1; $i<=$a_repoblar; $i++) {
-                        $gungubosNuevosSQL[] = "(".$event->id.", ".$jugador->id.", ".Yii::app()->config->getParam('defaultGunguboHealth').", 'corral', 'normal', '".date('Y-m-d H:i:s')."')"; //event_id, owner_id, health, location, condition
+                        $gungubosNuevosSQL[] = "(".$event->id.", ".$jugador->id.", ".Yii::app()->config->getParam('gunguboHealth').", 'corral', 'normal', '".date('Y-m-d H:i:s')."')"; //event_id, owner_id, health, location, condition
                     }
 
                     //Notificación de corral para el jugador
@@ -299,10 +299,10 @@ class CronCommand extends CConsoleCommand {
                 $this->logCron('  Comprobando el evento '.$event->id.'.', 'info');
 
                 //Activo a los Gunbudos Guardianes normales para que defiendan.
-                Gunbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('defaultGunbudoGuardianActions')),'event_id=:evento', array(':evento'=>$event->id));
+                Gunbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gunbudoGuardianActions')),'event_id=:evento', array(':evento'=>$event->id));
 
                 //Para los gunbudos guardianes con trait Acorazado es una defensa más de la de por defecto
-                Gunbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('defaultGunbudoGuardianActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitAcorazado));
+                Gunbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gunbudoGuardianActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitAcorazado));
 
                 $this->logCron('    Activados los Gunbudos guardianes en el evento '.$event->id.'.', 'info');
             }
@@ -343,6 +343,45 @@ class CronCommand extends CConsoleCommand {
 
         return 0;
     }
+	
+	/* 15 minutos */
+	public function actionCheckQuemados()
+	{
+		$this->logCron('Quemadura en los corrales.', 'info');
+		
+		//Cojo todos los eventos iniciados
+		$events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+
+		foreach($events as $event) {		
+			//Resto un contador a los Gungubos con quemadura de todos los corrales del evento
+			//Gungubo::model()->updateCounters(array('health'=>-1),'event_id=:evento AND location=:lugar AND condition:=condicion',array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>':condicion'=>Yii::app()->params->conditionQuemadura,));
+			
+			//Miro los que mueren
+			//$mueren = Gungubo
+			$mueren = $this->reduceHealthGungubos($event->id, null, Yii::app()->params->conditionQuemadura);
+			
+			//Por cada muerto por quemadura miro a ver si quema a otros
+			$probabilidadPropagar = Yii::app()->config->getParam('quemaduraProbabilidadPropagacion');			
+			$minQuemados = Yii::app()->config->getParam('quemaduraMinQuemados');
+			$maxQuemados = Yii::app()->config->getParam('quemaduraMaxQuemados');
+			
+			$nuevos_quemados = 0;
+			for ($i=1; $i<=$mueren['condicion']; $i++) {
+				$tirada = mt_rand(1,100);
+				if ($tirada <= $probabilidadPropagar) {
+					//Les quemo!!!
+					$cuantos = mt_rand($minQuemados, $maxQuemados);
+					$nuevos_quemados += $cuantos;
+				}
+			}
+			
+			//Pongo quemadura a los nuevos Gungubos quemados
+			
+			//Notifico de las muertes y nuevos quemados
+		}
+		
+		return 0;
+	}
 
 	
 	/** Pone en estado Calma todos los eventos Iniciados de tipo desayuno los Viernes
@@ -456,21 +495,32 @@ class CronCommand extends CConsoleCommand {
     /********************************************************************************************************/
 
 
-    private function reduceHealthGungubos($event_id, $owner_id=null)
+    private function reduceHealthGungubos($event_id, $owner_id=null, $solo_condicion=null)
     {
+		$mueren = array();
+		
         $owner = '';
         if ($owner_id!==null) {
             $owner = ' AND owner_id='.$owner_id.' ';
         }
+		
+		$condition = '';
+		if ($solo_condicion!==null) {
+			$condition = ' AND condition="'.$solo_condicion.'" ';
+		}
 
         //Quito un contador de todos los gungubos de los corrales.
-        Gungubo::model()->updateCounters(array('health'=>-1),'event_id=:evento AND location=:lugar'.$owner,array(':evento'=>$event_id, ':lugar'=>'corral'));
+        Gungubo::model()->updateCounters(array('health'=>-1),'event_id=:evento AND location=:lugar'.$owner.$condition, array(':evento'=>$event_id, ':lugar'=>'corral'));
 
-        //Los que hayan muerto fuera
-        Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND health<=0 AND location=:lugar AND condition_status=:condicion'.$owner, 'params'=>array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>'normal')));
+        //Los que hayan muerto por causas naturales
+		if ($solo_condicion!==null) {
+			$mueren['natural'] = Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND health<=0 AND location=:lugar AND condition_status=:condicion'.$owner, 'params'=>array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>'normal')));
+		}
 
         //Actualizo los que mueran por causas no naturales pal cementerio
-        Gungubo::model()->updateAll(array('location'=>'cementerio'),'event_id=:evento AND health<=0 AND location=:lugar AND condition_status!=:condicion'.$owner,array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>'normal'));
+        $mueren['condicion'] = Gungubo::model()->updateAll(array('location'=>'cementerio'),'event_id=:evento AND health<=0 AND location=:lugar AND condition_status!=:condicion'.$owner, array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>'normal'));
+		
+		return $mueren;
     }
 
 
