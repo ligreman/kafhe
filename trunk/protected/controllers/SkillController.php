@@ -55,23 +55,26 @@ $extra_param='garras';
 
                     //Salvo
                     if (!$caster->save())
-                        throw new CHttpException(400, 'Error al guardar el usuario '.$user->id.' tras obtener experiencia por habilidad ('.$skill->id.').');
+                        throw new CHttpException(400, 'Error al guardar el usuario '.$caster->id.' tras obtener experiencia por habilidad ('.$skill->id.').');
                 }
 
 			    //Creo la notificación si no es la skill Disimular o tengo ésta activa
                 if (!$this->skillNotification(Yii::app()->skill))
                     throw new CHttpException(400, 'Error al guardar una notificación por habilidad ('.$skill_id.').');
 
-                //Creo una entrada en el historial con la ejecución
-                $hist = new HistorySkillExecution();
-                $hist->skill_id = $skill->id;
-                $hist->caster_id = Yii::app()->skill->caster;
-                $hist->target_final = Yii::app()->skill->finalTarget;
-                $hist->result = Yii::app()->skill->result;
-                $hist->event_id = Yii::app()->event->id;
+                //Skill con sobrecarga ¿?
+                if ($skill->overload) {
+                    //Creo una entrada en el historial con la ejecución
+                    $hist = new HistorySkillExecution();
+                    $hist->skill_id = $skill->id;
+                    $hist->caster_id = Yii::app()->skill->caster;
+                    $hist->target_final = Yii::app()->skill->finalTarget;
+                    $hist->result = Yii::app()->skill->result;
+                    $hist->event_id = Yii::app()->event->id;
 
-                if (!$hist->save())
-                    throw new CHttpException(400, 'Error al guardar el historial de la ejecución de la habilidad ('.$skill->keyword.'). ['.print_r($hist->getErrors(),true).']');
+                    if (!$hist->save())
+                        throw new CHttpException(400, 'Error al guardar el historial de la ejecución de la habilidad ('.$skill->keyword.'). ['.print_r($hist->getErrors(),true).']');
+                }
             }
 		}
 		else {			

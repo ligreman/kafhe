@@ -105,6 +105,8 @@ class SkillSingleton extends CApplicationComponent
                 case Yii::app()->params->skillGunbudoAsaltante: $this->gunbudoAsaltante($skill, $extra_param); break;
                 case Yii::app()->params->skillGunbudoGuardian: $this->gunbudoGuardian($skill, $extra_param); break;
                 case Yii::app()->params->skillGunbudoCriador: $this->gunbudoCriador($skill); break;
+				case Yii::app()->params->skillGunbudoNigromante: $this->gunbudoNigromante($skill); break;
+				case Yii::app()->params->skillGunbudoArtificiero: $this->gunbudoArtificiero($skill); break;
 			}
 			
 		}
@@ -760,7 +762,7 @@ class SkillSingleton extends CApplicationComponent
         $gunbudo->owner_id = Yii::app()->currentUser->id;
         $gunbudo->event_id = Yii::app()->event->id;
         $gunbudo->side = Yii::app()->currentUser->side;
-        $gunbudo->actions = Yii::app()->config->getParam('defaultGunbudoAsaltanteActions');
+        $gunbudo->actions = Yii::app()->config->getParam('gunbudoAsaltanteActions');
         $gunbudo->weapon = $weapon;
         $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
@@ -771,26 +773,22 @@ class SkillSingleton extends CApplicationComponent
             //Es Sanguinario !!!!
             $gunbudo->trait = Yii::app()->params->traitSanguinario;
             $gunbudo->trait_value = 2;
+			$this->_privateMessage = '¡El Gunbudo evolucionado es Sanguinario!';			
         }
 
         if (!$gunbudo->save())
             throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
 
         //Con los datos de su actividad o action calculo los ataques
-        $fecha = new DateTime();
+        //$fecha = new DateTime();
         $ataques = array();
         $num_ataques = intval($skill->gunbudo_action_duration / $skill->gunbudo_action_rate);
-        for($i=1; $i<=$num_ataques; $i++) {
-            $fecha->add(DateInterval::createFromDateString('2 hours')); //Añado dos horas
-            /*$attack = new Cronpile;
-            $attack->type = 'gunbudo';
-            $attack->operation = 'gunbudoAsaltanteAttack';
-            $attack->params = $gunbudo->id;
-            $attack->due_date = $fecha->format('Y-m-d H:i:s');*/
-            $ataques[] = "('gunbudo', 'gunbudoAsaltanteAttack', '".$gunbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
-
-            /*if (!$attack->save())
-                throw new CHttpException(400, 'Error al programar ataque del Gunbudo ('.$gunbudo->class.'). ['.print_r($attack->getErrors(),true).']');*/
+		$hours = $this->generateAttackHours($num_ataques, $skill->gunbudo_action_rate);
+		foreach($hours as $hour) {
+        //for($i=1; $i<=$num_ataques; $i++) {
+            //$fecha->add(DateInterval::createFromDateString('2 hours')); //Añado dos horas            
+            //$ataques[] = "('gunbudo', 'gunbudoAsaltanteAttack', '".$gunbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
+			$ataques[] = "('gunbudo', 'gunbudoAsaltanteAttack', '".$gunbudo->id."', '".$hour."')";
         }
         Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
 
@@ -809,7 +807,7 @@ class SkillSingleton extends CApplicationComponent
         $gunbudo->owner_id = Yii::app()->currentUser->id;
         $gunbudo->event_id = Yii::app()->event->id;
         $gunbudo->side = Yii::app()->currentUser->side;
-        $gunbudo->actions = Yii::app()->config->getParam('defaultGunbudoGuardianActions');
+        $gunbudo->actions = Yii::app()->config->getParam('gunbudoGuardianActions');
         $gunbudo->weapon = $weapon;
         $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
@@ -820,6 +818,7 @@ class SkillSingleton extends CApplicationComponent
             //Es Acorazado !!!!
             $gunbudo->trait = Yii::app()->params->traitAcorazado;
             $gunbudo->trait_value = 2;
+			$this->_privateMessage = '¡El Gunbudo evolucionado es Acorazado!';
         }
 
         if (!$gunbudo->save())
@@ -847,7 +846,69 @@ class SkillSingleton extends CApplicationComponent
 
         return true;
     }
+	
+	private function gunbudoNigromante($skill)
+    {
+        //Creo un Gunbudo
+        $gunbudo = new Gunbudo;
 
+        $fecha = new DateTime();
+        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+
+        $gunbudo->class = Yii::app()->params->gunbudoClassNigromante;
+        $gunbudo->owner_id = Yii::app()->currentUser->id;
+        $gunbudo->event_id = Yii::app()->event->id;		
+        $gunbudo->side = Yii::app()->currentUser->side;
+        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+
+        if (!$gunbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+			
+		//Con los datos de su actividad o action calculo los ataques
+        //$fecha = new DateTime();
+        $ataques = array();
+        $num_ataques = intval($skill->gunbudo_action_duration / $skill->gunbudo_action_rate);
+		$hours = $this->generateAttackHours($num_ataques, $skill->gunbudo_action_rate);
+		foreach($hours as $hour) {
+        //for($i=1; $i<=$num_ataques; $i++) {
+            //$fecha->add(DateInterval::createFromDateString('2 hours')); //Añado dos horas            
+            //$ataques[] = "('gunbudo', 'gunbudoNigromanteAttack', '".$gunbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
+			$ataques[] = "('gunbudo', 'gunbudoNigromanteAttack', '".$gunbudo->id."', '".$hour."')";
+        }
+        Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
+
+        return true;
+    }
+
+	private function gunbudoArtificiero($skill)
+	{
+		//Creo un Gunbudo
+        $gunbudo = new Gunbudo;
+
+        $fecha = new DateTime();
+        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+
+        $gunbudo->class = Yii::app()->params->gunbudoClassArtificiero;
+        $gunbudo->owner_id = Yii::app()->currentUser->id;
+        $gunbudo->event_id = Yii::app()->event->id;		
+        $gunbudo->side = Yii::app()->currentUser->side;
+        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+
+        if (!$gunbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+			
+		//Con los datos de su actividad o action calculo los ataques
+        //$fecha = new DateTime();
+        $ataques = array();
+        $num_ataques = intval($skill->gunbudo_action_duration / $skill->gunbudo_action_rate);
+		$hours = $this->generateAttackHours($num_ataques, $skill->gunbudo_action_rate);
+		foreach($hours as $hour) {
+        	$ataques[] = "('gunbudo', 'gunbudoArtificieroAttack', '".$gunbudo->id."', '".$hour."')";
+        }
+        Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
+
+        return true;
+	}
 
 
 	/*************************************************/
@@ -1021,6 +1082,30 @@ class SkillSingleton extends CApplicationComponent
 
 	        return true;
 	    } else return false;
+	}
+	
+	
+	//Calcula y devuelve un array con los ataques
+	private function generateAttackHours($number_attacks, $attack_hour_rate, $max_aproximation=10)
+	{
+		$attack_hours = array();
+        
+        for($i=1; $i<=$number_attacks; $i++) {
+            $fecha = new DateTime();
+			
+			if ($i != $number_attacks) { //Si no es el último ataque, le meto una variable de tiempo			
+				$signo = mt_rand(1,2);
+				if ($signo===1) $signo = '+'; else $signo = '-';			
+				$aproximation = mt_rand(1, $max_aproximation);
+
+                $fecha->add(DateInterval::createFromDateString(($i*$attack_hour_rate).' hours '.$signo.' '.$aproximation.' minutes')); //Añado X horas y unos minutos
+			} else
+                $fecha->add(DateInterval::createFromDateString(($i*$attack_hour_rate).' hours -5 minutes')); //Añado X horas
+			
+			$attack_hours[] = $fecha->format('Y-m-d H:i:s');
+		}
+		
+		return $attack_hours;
 	}
 	
 	

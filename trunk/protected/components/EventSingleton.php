@@ -13,8 +13,41 @@ class EventSingleton extends CApplicationComponent
 	{
 		if (!isset(Yii::app()->currentUser->groupId))
             return null;
+			
+		//Miro a ver qué bando es el perdedor de la guerra de famas (no vale para mucho pero...)
+		$famaSides = Yii::app()->usertools->calculateSideFames();
+		if ($famaSides['kafhe'] > $famaSides['achikhoria'])
+			$bandoPerdedor = 'achikhoria';
+		elseif ($famaSides['kafhe'] < $famaSides['achikhoria'])
+			$bandoPerdedor = 'kafhe';
+		else
+			$bandoPerdedor = 'none';
+		
+		//Obtengo un array con las probabilidades
+		$probabilidades = Yii::app()->usertools->calculateUsersFame();
+		if ($probabilidades === null) return null;
+		
+		Yii::log('Inicio la selección del llamador', 'info');
+		
+		//Lanzamiento y elección del llamador
+		$tirada = mt_rand(1, 100);
+		$anterior = 0;	
+		$caller = null;
+		
+		foreach($probabilidades as $user=>$valor) {			
+			if ($valor == 0) continue;
+
+			if ( (($anterior+1) <= $tirada) && ($tirada <= ($anterior+$valor)) ) {
+				$caller = $user;
+				break;
+			}
+
+			$anterior += $valor;
+		}
+			
+		/******* OLD *******/
 				
-		$this->getModel(); //Por si acaso
+		/*$this->getModel(); //Por si acaso
 
 		//Saco los bandos de cada usuario
 		$usuarios = Yii::app()->usertools->users;
@@ -62,7 +95,7 @@ class EventSingleton extends CApplicationComponent
                 $anterior += $valor;
             }
             //Yii::log('  Compruebo bando de '.$caller.' que es '.$bandosUsers[$caller]);
-        } while ($bandosUsers[$caller] != $bandoPerdedor);
+        } while ($bandosUsers[$caller] != $bandoPerdedor);*/
 
         //Yii::log('  Salgo del do while y el caller definitivo será '.$caller);
 		if ($caller === null) return null;
