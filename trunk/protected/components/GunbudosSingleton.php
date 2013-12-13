@@ -66,7 +66,7 @@ class GunbudosSingleton extends CApplicationComponent
 				$mata = $mata * $asaltante->trait_value; //Mata mucho más
 				
 			//Mato a los pobresitos gungubitos mandándolos al cementerio
-			$cuantos = Gungubo::model()->updateAll(array('location'=>'cementerio', 'health'=>0), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$mata.';', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
+			$cuantos = Gungubo::model()->updateAll(array('location'=>'cementerio', 'health'=>0, 'attacker_id'=>$asaltante->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$mata.';', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
 			
 			//Textos de notificaciones
 			$txtA = ':'.Yii::app()->params->gunbudoClassAsaltante.': Tu Gunbudo Asaltante ha matado '.$cuantos.' gungubos en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).'.';
@@ -302,8 +302,8 @@ Yii::log('Al final penetran '.$bombas_atacan.' bombas en el corral', 'info');
 		$maxIncendiar = Yii::app()->config->getParam('incendiarMaxQuemados');
 		
 		while ($bombas_atacan_aux > 0) {
-			$tirada = mt_rand(1,100);			
-			
+			$tirada = mt_rand(1,100);
+Yii::log(' DATOS: '.$tirada.' // '.$probabilidadEstallar, 'info');
 			if ($tirada <= $probabilidadEstallar) {
 				//Estalla la bomba !!
 Yii::log('  + ¡Bomba estalla!', 'info');
@@ -321,11 +321,11 @@ Yii::log('  + ¡FUEGO y quemadura!', 'info');
 			$bombas_atacan_aux--; //El que ataca muere			
 		}
 		
-		//Mato a los muertos extra. Los remueve del juego directamente, no van al cementerio.
-		$cuantos_muertos = Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_muertos, 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral')));
+		//Mato a los muertos extra. Van al cementerio.
+		$cuantos_muertos = Gungubo::model()->updateAll(array('location'=>'cementerio', 'health'=>0, 'attacker_id'=>$artificiero->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_muertos, array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
 		
 		//Pongo quemados a los que he quemado, obvio
-		$cuantos_quemados = Gungubo::model()->updateAll(array('condition'=>Yii::app()->params->conditionQuemadura), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_quemados.';', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
+		$cuantos_quemados = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionQuemadura, 'attacker_id'=>$artificiero->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_quemados.';', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
 				
 		if ($cuantos_quemados>0) $txt_quemados = ' y quemado a otros '.$cuantos_quemados;
 		else $txt_quemados = '';
@@ -334,7 +334,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
 		$notiA->user_id = $artificiero->owner_id;
-		$notiA->message = ':'.Yii::app()->params->gunbudoClassArtificiero.': Tu Gunbudo Artificiero creó '.count($bombas).' Gungubos Bomba con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos'.txt_quemados.' en el corral de '.ucfirst($objetivo->username).'.';
+		$notiA->message = ':'.Yii::app()->params->gunbudoClassArtificiero.': Tu Gunbudo Artificiero creó '.count($bombas).' Gungubos Bomba con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos'.$txt_quemados.' en el corral de '.ucfirst($objetivo->username).'.';
 		if (!$notiA->save())
 			throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Bomba en evento '.$event_id.'.');
 		
@@ -342,7 +342,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
 		$notiD = new NotificationCorral;
 		$notiD->event_id = $event_id;
 		$notiD->user_id = $objetivo->id;
-		$notiD->message = ':'.Yii::app()->params->gunguboClassBomba.': Un grupo de Gungubos Bomba ha penetrado en tu corral matando a '.$cuantos_muertos.' Gungubos'.txt_quemados.'.';
+		$notiD->message = ':'.Yii::app()->params->gunguboClassBomba.': Un grupo de Gungubos Bomba ha penetrado en tu corral y ha matado a '.$cuantos_muertos.' Gungubos'.$txt_quemados.'.';
 		if (!$notiD->save())
 			throw new CHttpException(400, 'Error al guardar la notificación D de corral de Ataque Bomba en evento '.$event_id.'.');
 		
