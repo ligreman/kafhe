@@ -353,11 +353,7 @@ class CronCommand extends CConsoleCommand {
 		$events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
 
 		foreach($events as $event) {		
-			//Resto un contador a los Gungubos con quemadura de todos los corrales del evento
-			//Gungubo::model()->updateCounters(array('health'=>-1),'event_id=:evento AND location=:lugar AND condition:=condicion',array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>':condicion'=>Yii::app()->params->conditionQuemadura,));
-			
-			//Miro los que mueren
-			//$mueren = Gungubo
+			//Resto un contador a los Gungubos con quemadura de todos los corrales del evento y miro los que mueren
 			$mueren = $this->reduceHealthGungubos($event->id, null, Yii::app()->params->conditionQuemadura);
 			
 			//Por cada muerto por quemadura miro a ver si quema a otros
@@ -469,22 +465,22 @@ class CronCommand extends CConsoleCommand {
                 case 'generateRanking':
                         $result = Yii::app()->event->generateRanking();
                     break;
-				/*case 'repopulateGungubos':
-						$result = Yii::app()->event->repopulateGungubos($cronjob->params); //En params está el id del evento a repoblar
-					break;*/
                 case 'gunbudoAsaltanteAttack':
                         $result = Yii::app()->gunbudos->gunbudoAsaltanteAttack($cronjob->params); //En params va el id del gunbudo que ataca
                     break;
 				case 'gunbudoNigromanteAttack':
 						$result = Yii::app()->gunbudos->gunbudoNigromanteAttack($cronjob->params); //En params va el id del gunbudo que ataca
 					break;
+                case 'gunbudoArtificieroAttack':
+                    $result = Yii::app()->gunbudos->gunbudoArtificieroAttack($cronjob->params); //En params va el id del gunbudo que ataca
+                    break;
             }
 			
 			if ($result !== true)
                 $this->logCron('**  Error en la tarea cron: '.$result.'.', 'info');
 
             $this->logCron('  Elimino la tarea '.$cronjob->operation.' ['.$cronjob->params.'] de la pila.', 'info');
-            $cronjob->delete();
+            //$cronjob->delete();
         }
 
         return 0;
@@ -506,7 +502,7 @@ class CronCommand extends CConsoleCommand {
 		
 		$condition = '';
 		if ($solo_condicion!==null) {
-			$condition = ' AND condition="'.$solo_condicion.'" ';
+			$condition = ' AND condition_status="'.$solo_condicion.'" ';
 		}
 
         //Quito un contador de todos los gungubos de los corrales.
