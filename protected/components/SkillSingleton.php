@@ -39,6 +39,7 @@ class SkillSingleton extends CApplicationComponent
         $this->_publicMessage = '';
 		$this->_privateMessage = '';
 		$this->_generates_notification = $skill->generates_notification;
+		$texto_trampas_publico = $texto_trampas_privado = '';
 
         //Saco los nombres de los que intervienen
 		$this->_caster = Yii::app()->currentUser->id;
@@ -52,13 +53,16 @@ class SkillSingleton extends CApplicationComponent
         $finalTarget = $this->calculateFinalTarget($skill, $target, $side);
 
         //Compruebo si caigo en una Trampa
-        if($this->caigoTrampa($skill)) {
+        $trampa = $this->userCaeTrampa($skill);
+
+        //Trampa de pifia ¿?
+        if($trampa!==false && $trampa->keyword==Yii::app()->params->modifierTrampaPifia) {
             //Hago que pifie
             $tirada = $fail = 0;
 
             //Mensajes
-            $this->_publicMessage = 'Ha caído en una trampa y eso ha provocado su pifia.';
-            $this->_privateMessage = 'Has caído en una trampa y eso ha provocado que pifies.';
+            $texto_trampas_publico = 'Ha caído en una trampa de pifia y eso ha provocado su pifia.';
+            $texto_trampas_privado = 'Has caído en una trampa de pifia y eso ha provocado que pifies.';
         } else {
             //Compruebo si es crítico o pifia. Son porcentajes. PIFIA: de 1 a (1+(fail-1)) || CRÍTICO: de (100-(critic-1)) a 100
             $critic = 100 - ($this->criticValue($skill)-1);
@@ -66,25 +70,28 @@ class SkillSingleton extends CApplicationComponent
             $tirada = mt_rand(1,100);
         }
 
+        //Trampa de tueste?
+        if($trampa!==false && $trampa->keyword==Yii::app()->params->modifierTrampaTueste) {
+            $extraT = $trampa->value;
+
+            $texto_trampas_publico = 'Ha caído en una trampa de tueste y ha perdido tueste al ejecutar la habilidad.';
+            $texto_trampas_privado = 'Has caído en una trampa de tueste y has perdido '.$extraT.' de tueste extra.';
+        } else $extraT = null;
+
+        //Pago el coste. Lo pongo aquí y duplicado para pagar antes de ejecutar la habilidad.
+        if ($this->paySkillCosts($skill, $this->_result, $extraT) === false)
+            return false;
 
 		//Resultado de la ejecución
 		if ($tirada <= $fail) {
 			$this->_result = 'fail'; //Pifia
-
-            //Pago el coste igualmente
-            if ($this->paySkillCosts($skill, $this->_result) === false)
-                return false;
         } else {
 			//Normal o Crítico
 			$this->_result = 'normal';
 			
 			if ($tirada >= $critic)
 				$this->_result = 'critic'; //Crítico
-			
-			//Pago el coste. Lo pongo aquí y duplicado para pagar antes de ejecutar la habilidad.
-			if ($this->paySkillCosts($skill, $this->_result) === false)
-			    return false;
-			
+
 			//Ejecuto la skill
 			switch ($skill->keyword) {
 				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $finalTarget); break;
@@ -93,7 +100,8 @@ class SkillSingleton extends CApplicationComponent
 				//case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
 				//case Yii::app()->params->skillRescatarGungubos: $this->rescatarGungubos($skill); break; //agente libre
-                case Yii::app()->params->skillTrampa: $this->trampa($skill); break;
+                case Yii::app()->params->skillTrampaTueste: $this->trampa($skill); break;
+                case Yii::app()->params->skillTrampaPifia: $this->trampa($skill); break;
                 //case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
                 //case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
                 //case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill, $finalTarget); break;
@@ -121,14 +129,14 @@ class SkillSingleton extends CApplicationComponent
         else $finalName = ' sobre '.Yii::app()->usertools->getAlias($this->_finalTarget);
 
         if ($this->_result == 'fail') {
-            $this->_resultMessage = ':'.$skill->keyword.': Ha pifiado al intentar ejecutar la habilidad '.$skill->name.$finalName.'. '.$this->_publicMessage;
-            Yii::app()->user->setFlash(Yii::app()->skill->result, 'Has pifiado al ejecutar '.$skill->name.$finalName.'. '.$this->_privateMessage);
+            $this->_resultMessage = ':'.$skill->keyword.': Ha pifiado al intentar ejecutar la habilidad '.$skill->name.$finalName.'. '.$this->_publicMessage.' '.$texto_trampas_publico;
+            Yii::app()->user->setFlash(Yii::app()->skill->result, 'Has pifiado al ejecutar '.$skill->name.$finalName.'. '.$this->_privateMessage.' '.$texto_trampas_privado);
         } else if ($this->_result == 'normal') {
-            $this->_resultMessage = ':'.$skill->keyword.': Ha ejecutado la habilidad '.$skill->name.$finalName.'. '.$this->_publicMessage;
-            Yii::app()->user->setFlash(Yii::app()->skill->result, 'Has ejecutado '.$skill->name.$finalName.' correctamente. '.$this->_privateMessage);
+            $this->_resultMessage = ':'.$skill->keyword.': Ha ejecutado la habilidad '.$skill->name.$finalName.'. '.$this->_publicMessage.' '.$texto_trampas_publico;
+            Yii::app()->user->setFlash(Yii::app()->skill->result, 'Has ejecutado '.$skill->name.$finalName.' correctamente. '.$this->_privateMessage.' '.$texto_trampas_privado);
         } else if ($this->_result == 'critic') {
-            $this->_resultMessage = ':'.$skill->keyword.': Ha hecho un crítico ejecutando la habilidad '.$skill->name.$finalName.'. '.$this->_publicMessage;
-            Yii::app()->user->setFlash(Yii::app()->skill->result, '¡Has hecho un crítico al ejecutar '.$skill->name.$finalName.'! '.$this->_privateMessage);
+            $this->_resultMessage = ':'.$skill->keyword.': Ha hecho un crítico ejecutando la habilidad '.$skill->name.$finalName.'. '.$this->_publicMessage.' '.$texto_trampas_publico;
+            Yii::app()->user->setFlash(Yii::app()->skill->result, '¡Has hecho un crítico al ejecutar '.$skill->name.$finalName.'! '.$this->_privateMessage.' '.$texto_trampas_privado);
         }
 
 		return true;
@@ -607,7 +615,7 @@ class SkillSingleton extends CApplicationComponent
 	}*/
 
 
-    /** Crea un modificador de "trampa"
+    /** Crea un modificador de "trampa", sea del tipo que sea
      * @param $skill Obj de la skill
      * @return bool
      */
@@ -629,6 +637,7 @@ class SkillSingleton extends CApplicationComponent
         $modificador->skill_id = $skill->id;
         $modificador->keyword = $skill->modifier_keyword;
         $modificador->hidden = $skill->modifier_hidden;
+        $modificador->value = $skill->extra_param;
         $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
         if (!$modificador->save())
@@ -916,11 +925,20 @@ class SkillSingleton extends CApplicationComponent
     /** Pago el coste de ejecutar la habilidad. Además marca como activo al jugador.
      * @param $skill Obj de la skill
      * @param $executionResult Texto con el resultado de la ejecución, si fue critic, normal...
+     * @param $extra sobrecoste o rebaja de los costes por TRAMPAS, o null. Admite valores absolutos o porcentajes (0, 10%, -15%...)
      */
-    private function paySkillCosts($skill, $executionResult)
+    private function paySkillCosts($skill, $executionResult, $extra=null)
 	{
 		$user = Yii::app()->currentUser->model;
 	    //No compruebo nada porque se ha comprobado ya antes de llegar a executeSkill
+
+	    //Los extras
+	    $extra_absoluto = 0;
+	    $extra_porcentaje = 1;
+	    if ($extra!==null) {
+            if (strpos($extra, '%')) $extra_porcentaje = intval(str_replace('%', '', $extra)) / 100;
+            else $extra_absoluto = $extra;
+	    }
 
         //Si ha sido crítico, cuesta menos
         $criticModificator = array('tueste'=>1, 'retueste'=>1, 'tostolares'=>1, 'relanzamiento'=>1);
@@ -929,8 +947,10 @@ class SkillSingleton extends CApplicationComponent
         }
 
         //Pago el tueste
-        if ($skill->cost_tueste !== null)
-            $user->ptos_tueste = $user->ptos_tueste - round($this->calculateCostTueste($skill) * $criticModificator['tueste']);
+        if ($skill->cost_tueste !== null) {
+            $costT = $this->calculateCostTueste($skill);
+            $user->ptos_tueste = $user->ptos_tueste - round($costT * $criticModificator['tueste']) + $extra_absoluto + round($costT * $extra_porcentaje);
+        }
 
 	    //Pago el restueste
         if ($skill->cost_retueste !== null)
@@ -1068,20 +1088,25 @@ class SkillSingleton extends CApplicationComponent
 	}
 
     /** Comprueba si el usuario activo tiene un modificador Trampa afectándole, y reduce el modificador en caso afirmativo
-     * @return bool si está o no afectado por una trampa
+     * @return mix False si no caes en una trampa, o el objeto del modificador de la trampa en que has caído
      */
-    private function caigoTrampa($skill) {
-	    //Si existe el modificador "trampa" entre los que me afectan
-	    $modificadorTrampa = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierTrampa);
+    private function userCaeTrampa($skill) {
+        //Las habilidades de relanzamiento no pifian, ni las de evolucion de gunbudos
+        if ($skill->category=='relanzamiento' || $skill->category=='gunbudos') return false;
 
-	    //Caigo si existe trampa y no estoy ejecutando una habilidad de relanzamiento o Disimular
-	    if ($modificadorTrampa!==false && $skill->category!='relanzamiento' && $skill->keyword!='disimular') {
+	    //Saco modificadores de trampas que me afectan
+	    $trampaPifia = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierTrampaPifia);
+
+	    //Caigo si existe trampa
+	    if ($trampaPifia!==false) {
 	        //Reduzco los usos del modificador trampa
-            if (!Yii::app()->modifier->reduceModifierUses($modificadorTrampa))
-                throw new CHttpException(400, 'Error al eliminar el modificador Trampa.');
+            if (!Yii::app()->modifier->reduceModifierUses($trampaPifia))
+                throw new CHttpException(400, 'Error al eliminar el modificador Trampa Pifia.');
 
-	        return true;
-	    } else return false;
+	        return $trampaPifia;
+	    }
+
+	    return false;
 	}
 	
 	

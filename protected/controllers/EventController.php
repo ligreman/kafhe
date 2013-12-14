@@ -214,6 +214,7 @@ class EventController extends Controller
 		foreach($usuarios as $usuario) {			
 			$usuario->ptos_relanzamiento = 0;
 			$usuario->ptos_tueste = Yii::app()->config->getParam('maxTuesteUsuario'); //Tueste al máximo
+			$usuario->fame = Yii::app()->config->getParam('initialFame');
 
 			//Al llamador le pongo rango 1 y estado iluminado, y side libre
 			if ($usuario->id == $event->caller_id) {

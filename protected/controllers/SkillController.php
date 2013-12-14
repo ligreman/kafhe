@@ -97,7 +97,7 @@ $extra_param='garras';
 	        return true;
 
 		//Si la habilidad ejecutándose no pifió y es Disimular o Impersonar o Trampa, no la muestro
-		if ($skill->result!='fail' && ($skill->keyword==Yii::app()->params->skillDisimular || $skill->keyword==Yii::app()->params->skillImpersonar || $skill->keyword==Yii::app()->params->skillTrampa))
+		if ($skill->result!='fail' && ($skill->keyword==Yii::app()->params->skillDisimular || $skill->keyword==Yii::app()->params->skillImpersonar || $skill->keyword==Yii::app()->params->skillTrampaTueste || $skill->keyword==Yii::app()->params->skillTrampaPifia))
 		    return true;
 		
 		//Si el usuario tiene el modificador "disimulando" activo, resto usos y no muestro la notificación

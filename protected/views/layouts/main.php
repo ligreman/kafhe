@@ -27,8 +27,8 @@
         <?php
             Yii::app()->clientScript->registerCoreScript('jquery'); //JQuery viene con Yii, simplemente lo cojo del Core para no duplicarlo
             Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.cookie.js');
-        Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/sly.min.js');
-        Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/favico.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/sly.min.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/favico.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/main.js');
         ?>
 
@@ -120,9 +120,17 @@
                     //Menú principal
                     array('label'=>'Notificaciones', 'url'=>Yii::app()->homeUrl, 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='site'?true:false),
                     array('label'=>'Corral', 'url'=>array('/corral'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='corral'?true:false),
+                    array('label' => ''),
                     array('label'=>'Desayuno', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusCalma || Yii::app()->event->status==Yii::app()->params->statusBatalla)), 'active'=>$this->id=='enrollment'?true:false),
                     array('label'=>'Batalla', 'url'=>array('/event'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->status!=Yii::app()->params->statusCerrado), 'active'=>($this->id=='event' && $this->action->id=='index')?true:false),
                     array('label'=>'Histórico de batallas', 'url'=>array('/history'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='history'?true:false),
+
+                    array('label' => ''),
+
+                    array('label'=>'Grimorio', 'url'=>array('/site/page?view=skillList'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && $this->action->view=='pages/skillList')?true:false),
+                    array('label'=>'Bestiario', 'url'=>array('/site/page?view=bestiary'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && $this->action->view=='pages/bestiary')?true:false),
+
+                    array('label' => ''),
 
                     //Enlaces de batalla
                     array('label'=>'Iniciar batalla', 'url'=>array('/event/start'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && Yii::app()->user->checkAccess('lanzar_evento') && isset(Yii::app()->event->model) && Yii::app()->event->status==Yii::app()->params->statusCalma && Yii::app()->event->hasEnrollments()), 'itemOptions' => array('id' => 'btnBattle')),
@@ -180,7 +188,6 @@
                 <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a></li>
 
                 <?php if (!Yii::app()->user->isGuest): ?>
-                    <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=skillList';?>">Lista de Habilidades</a></li>
                     <li><a href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a></li>
                 <?php endif;?>
 
