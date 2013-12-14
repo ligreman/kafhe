@@ -2,7 +2,7 @@
     <?php
     /* @var $this SiteController */
 
-    $this->pageTitle=Yii::app()->name . ' - Grimorio';
+    $this->pageTitle=Yii::app()->name . ' - Bestiario';
 
     $habilidades = Skill::model()->findAll(array('order'=>'category, type, name'));
 
@@ -38,7 +38,7 @@
     $gridDataProvider = new CArrayDataProvider($array);
 
     ?>
-    <h1>Grimorio</h1>
+    <h1>Bestiario</h1>
 
     <?php
     $this->widget('zii.widgets.grid.CGridView', array(

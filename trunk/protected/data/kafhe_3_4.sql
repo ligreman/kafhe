@@ -64,6 +64,8 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('expPorcentajeHabilidadPorTueste', '10', 'Experiencia', 'Experiencia recibida por ejecutar una habilidad. Porcentaje del coste de tueste.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('expPorcentajeHabilidadPorRetueste', '20', 'Experiencia', 'Experiencia recibida por ejecutar una habilidad. Porcentaje del coste de retueste.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('initialFame', '50', 'Fama', 'Puntos de fama con que un jugador empieza un un evento.');
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 

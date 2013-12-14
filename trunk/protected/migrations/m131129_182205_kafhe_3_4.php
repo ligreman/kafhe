@@ -27,6 +27,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE skill ADD overload tinyint(1) NULL DEFAULT 1 AFTER require_talent_id;');
         $this->execute('ALTER TABLE skill ADD generates_notification tinyint(1) NULL DEFAULT 1 AFTER overload;');
         $this->execute('ALTER TABLE skill ADD cost_gungubos smallint(5) NULL DEFAULT NULL AFTER cost_tostolares;');
+        $this->execute("ALTER TABLE skill CHANGE `category` `category` ENUM('gungubos','gunbudos','batalla','relanzamiento','ancestral');");
+        $this->execute('ALTER TABLE modifier CHANGE `value` `value` VARCHAR(15);');
 
         $this->execute('TRUNCATE TABLE skill;');
         $this->execute("TRUNCATE TABLE configuration;");
@@ -104,7 +106,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         // HIDRATAR
         $this->insert('skill', array(
             'name'  =>  'Hidratar',
-            'description'  =>  'Aumenta tu ritmo de regeneración de tueste durante 24 horas. No se acumula.',
+            'description'  =>  'Aumenta tu ritmo de regeneración de tueste un 50% durante 24 horas.<br />No se acumula.',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'mejora',         // ofensiva, mejora, utilidad
             'keyword'  =>  'hidratar',
@@ -112,7 +114,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration'  =>  24,
             'duration_type'  =>  'horas',  // horas, evento, usos
             'critic'  =>  10,
-            'fail'  =>  10,
+            'fail'  =>  5,
+            'extra_param' => 50,        // Porcentaje que aumenta la regeneración
             'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
@@ -133,13 +136,74 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'generates_notification' => 1           // Bool. Genera notificación en el muro.
         ));
 
+        // TRAMPA de Tueste
+        $this->insert('skill', array(
+            'name'  =>  'Trampa de Tueste',
+            'description'  =>  'El próximo jugador que ejecute una habilidad tendrá un 50% de perder 100 puntos de tueste después de ejecutar la habilidad.<br />Esta trampa permanece activa hasta que un jugador caiga en ella.<br />Se acumulan los usos. No crea notificación.',
+            'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
+            'keyword'  =>  'trampaTueste',
+            'modifier_keyword'  =>  'trampaTueste',
+            'modifier_hidden' => 1,
+            'duration'  =>  1,
+            'duration_type'  =>  'usos',  // horas, evento, usos
+            'critic'  =>  5,
+            'fail'  =>  10,
+            'cost_tueste'  =>  100,
+            'cost_retueste'  =>  NULL,
+            'cost_relanzamiento'  =>  NULL,
+            'cost_tostolares'  =>  NULL,
+            'is_cooperative'  =>  0,         // 0,1
+            'cost_tueste_cooperate'  =>  NULL,
+            'cost_tostolares_cooperate'  =>  NULL,
+            'cooperate_benefit'  =>  NULL,      // valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,         // 0,1
+            'require_target_side'  =>  NULL,  // valores (kafhe o achikhoria o libre) separados por comas. Uno u otro, no 'y'.
+            'require_caller'  =>  0,         // 0,1
+            'require_user_side'  =>  'libre',    // valores (kafhe, achikhoria, libre) separados por comas
+            'require_user_min_rank'  =>  NULL,  // Rango mínimo para ejecutarla
+            'require_user_status'  =>  NULL,  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
+            'require_talent_id'  =>  NULL
+        ));
+
+        // TRAMPA de Pifia
+        $this->insert('skill', array(
+            'name'  =>  'Trampa de Pifia',
+            'description'  =>  'El próximo jugador que ejecute una habilidad tendrá un 50% de pifiar por caer en la trampa.<br />Esta trampa permanece activa hasta que un jugador caiga en ella.<br />Se acumulan los usos. No crea notificación.',
+            'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
+            'keyword'  =>  'trampaPifia',
+            'modifier_keyword'  =>  'trampaPifia',
+            'modifier_hidden' => 1,
+            'duration'  =>  1,
+            'duration_type'  =>  'usos',  // horas, evento, usos
+            'critic'  =>  5,
+            'fail'  =>  10,
+            'cost_tueste'  =>  100,
+            'cost_retueste'  =>  NULL,
+            'cost_relanzamiento'  =>  NULL,
+            'cost_tostolares'  =>  NULL,
+            'is_cooperative'  =>  0,         // 0,1
+            'cost_tueste_cooperate'  =>  NULL,
+            'cost_tostolares_cooperate'  =>  NULL,
+            'cooperate_benefit'  =>  NULL,      // valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,         // 0,1
+            'require_target_side'  =>  NULL,  // valores (kafhe o achikhoria o libre) separados por comas. Uno u otro, no 'y'.
+            'require_caller'  =>  0,         // 0,1
+            'require_user_side'  =>  'libre',    // valores (kafhe, achikhoria, libre) separados por comas
+            'require_user_min_rank'  =>  NULL,  // Rango mínimo para ejecutarla
+            'require_user_status'  =>  NULL,  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
+            'require_talent_id'  =>  NULL
+        ));
 
 
         // GUNBUDO ASALTANTE
         $this->insert('skill', array(
             'name'  =>  'Gunbudo Asaltante',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gunbudo Asaltante.',                  // Descripción de la habilidad
-            'category'  =>  'gungubos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gunbudoAsaltante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -177,7 +241,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gunbudo Guardián',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gunbudo Guardián.',                  // Descripción de la habilidad
-            'category'  =>  'gungubos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gunbudoGuardian',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -215,7 +279,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gunbudo Criador',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gunbudo Criador.',                  // Descripción de la habilidad
-            'category'  =>  'gungubos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gunbudoCriador',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -253,7 +317,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gunbudo Nigromante',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gunbudo Nigromante.',                  // Descripción de la habilidad
-            'category'  =>  'gungubos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gunbudoNigromante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -291,7 +355,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gunbudo Artificiero',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gunbudo Artificiero.',                  // Descripción de la habilidad
-            'category'  =>  'gungubos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gunbudoArtificiero',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -341,6 +405,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE skill DROP COLUMN overload;');
         $this->execute('ALTER TABLE skill DROP COLUMN cost_gungubos;');
         $this->execute('ALTER TABLE cronpile DROP COLUMN type;');
+        $this->execute("ALTER TABLE `skill` CHANGE `category` `category` ENUM('gungubos','batalla','relanzamiento','ancestral');");
+        $this->execute('ALTER TABLE modifier CHANGE `value` `value` INT(10);');
 
         $this->delete('skill', "keyword='gunbudoAsaltante'");
         $this->delete('skill', "keyword='gunbudoGuardian'");
