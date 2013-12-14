@@ -24,7 +24,7 @@ class UserPanel extends CWidget {
 
         //Si eres agente libre se muestra el número de trampas que has puesto
         if(Yii::app()->user->side == 'libre') {
-            $modTrampa = Modifier::model()->findByAttributes(array('keyword'=>Yii::app()->params->modifierTrampa));
+            $modTrampa = Modifier::model()->findByAttributes(array('keyword'=>Yii::app()->params->modifierTrampaPifia));
             if ($modTrampa!==null) {
                 $listaFinal[] = $modTrampa; //Siempre me devuelve 1 Objeto, no un array (el findByAttr)
             }
