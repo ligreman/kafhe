@@ -157,8 +157,19 @@ nav ul{
     color: #333333;
 }
 
+#secondary_nav ul {
+    margin: 0;
+}
+
 #secondary_nav li.active a {
     font-weight: bold;
+}
+
+#secondary_nav li span {
+    margin: 0 3em;
+    height: 1px;
+    background: rgb(175, 175, 175);
+    display: block;
 }
 
 a, a:hover{
