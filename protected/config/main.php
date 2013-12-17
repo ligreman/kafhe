@@ -212,6 +212,7 @@ return array(
         'modifierTrampaTueste'=>'trampaTueste',
         'modifierProtegiendo'=>'protegiendo',
         'modifierOteando'=>'oteando',
+        'modifierSenuelo'=>'senuelo',
 		
 		//Habilidades. Están aquí y en BBDD
 		'skillHidratar'=>'hidratar',
@@ -228,6 +229,7 @@ return array(
         'skillAtraerGungubos'=>'atraerGungubos',
         'skillProtegerGungubos'=>'protegerGungubos',
         'skillOtear'=>'otear',
+        'skillSenuelo'=>'senuelo',
 
         'skillOtearKafhe'=>'otearKafhe',
         'skillOtearAchikhoria'=>'otearAchikhoria',

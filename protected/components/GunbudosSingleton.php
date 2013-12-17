@@ -22,19 +22,25 @@ class GunbudosSingleton extends CApplicationComponent
 		else
 			$bando_opuesto = null;
 			
-		//Ahora a ver a quién ataco
-		$objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
+		//Ahora a ver a quién ataco. Miro a ver si alguien tiene señuelo lo primero
+        $senuelo = Modifier::model()->find(array('condition'=>'keyword=:keyword', 'params'=>array(':keyword'=>Yii::app()->params->modifierSenuelo)));
+        if ($senuelo!==null)
+            $objetivo = User::findByPk($senuelo->target_final);
+        else
+		    $objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
 
 		//Saco las defensas del objetivo (gunbudos guardianes, mejoras del corral..)
 		$guardianes = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gunbudoClassGuardian)));
 		
 		$ataque_exitoso = true;
+        $result = '';
         foreach($guardianes as $guardian) {
             $result = $this->resolveCombat($asaltante, $guardian);
 
             //Si gana el defensor o hay empate se termina todo. Devuelve 0 en empate, 1 en gana atacante y 2 en gana defensor
             if ($result===0) { //Empate
                 $ataque_exitoso = false;
+                $objetivo->fame += 1; //Uno de fama por detener un ataque con empate, para  el defensor
             } elseif ($result===2) { //Defensor wins
                 $ataque_exitoso = false;
 
@@ -43,9 +49,14 @@ class GunbudosSingleton extends CApplicationComponent
                 if (!$asaltante->save())
                     throw new CHttpException(400, 'Error al guardar el cambio de arma del Asaltante '.$asaltante->id.'.');
 
-            } else { //Asaltante wins
+                //Fama para el Guardián
+                $objetivo->fame += 2;
+            } elseif ($result===1) { //Asaltante wins
                 //le cambio de arma al defensor
                 $guardian->weapon = $asaltante->weapon;
+
+                //Famas Guardián por derrota
+                $objetivo->fame = max(0, $objetivo->fame-2);
             }
 
             //Quito una acción al defensor
@@ -54,7 +65,8 @@ class GunbudosSingleton extends CApplicationComponent
             if (!$guardian->save())
                 throw new CHttpException(400, 'Error al guardar el cambio de arma del gunbudo Guardián '.$guardian->id.'.');
 
-            //Continuo mirando el combate con el siguiente guardián si lo hubiere
+            //Continuo mirando el combate con el siguiente guardián si lo hubiere, siempre que el ataque no haya fallado ya
+            if ($ataque_exitoso===false) break;
         }
 
 		//Si el atacante ha conseguido entrar y matar
@@ -71,11 +83,25 @@ class GunbudosSingleton extends CApplicationComponent
 			//Textos de notificaciones
 			$txtA = ':'.Yii::app()->params->gunbudoClassAsaltante.': Tu Gunbudo Asaltante ha matado '.$cuantos.' gungubos en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).'.';
 			$txtD = ':'.Yii::app()->params->gunbudoClassGuardian.': Un Gunbudo Asaltante enemigo ha superado a tus Guardianes matando a '.$cuantos.' gungubos en tu corral.';
+
+			//Fama Asaltante exitoso
+            $owner->fame += 3; // 3 de fama por atacar con éxito
 		} else {
 			//Textos de notificaciones
 			$txtA = ':'.Yii::app()->params->gunbudoClassAsaltante.': Los Gunbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gunbudo Asaltante.';
 			$txtD = ':'.Yii::app()->params->gunbudoClassGuardian.': Tus Gunbudos Guardianes han detenido un ataque de un Asaltante en tu corral.';
+
+            //Fama según resultado, para el Asaltante si pierde el combate con derrota
+            if ($result===2)
+                $owner->fame = max(0, $owner->fame-1);
 		}
+
+        //Guardo la fama de ambos usuarios
+        if (!$owner->save())
+            throw new CHttpException(400, 'Error al guardar la fama del usuario atacante por Ataque Asaltante en evento '.$event_id.'.');
+
+        if (!$objetivo->save())
+            throw new CHttpException(400, 'Error al guardar la fama del usuario defensor por Ataque Asaltante en evento '.$event_id.'.');
 		
 		//Notificaciones para el atacante
 		$notiA = new NotificationCorral;
@@ -140,10 +166,18 @@ Yii::log('Y es colerico!!!!', 'info');
 				break; //si llego al máximo de zombies que puede convertir, termino de convertir
 		}
 Yii::log('Convierto estos zombies: '.count($zombies), 'info');
-		if (count($zombies)==0) return true;	
-			
-		//Ahora a ver a quién ataco
-		$objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
+		if (count($zombies)==0) return true;
+
+		//Sumo la fama por zombies creados
+		$owner->fame += count($zombies);
+
+        //Ahora a ver a quién ataco. Miro a ver si alguien tiene señuelo lo primero
+        $senuelo = Modifier::model()->find(array('condition'=>'keyword=:keyword', 'params'=>array(':keyword'=>Yii::app()->params->modifierSenuelo)));
+        if ($senuelo!==null)
+            $objetivo = User::findByPk($senuelo->target_final);
+        else
+            $objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
+
 Yii::log('Ataco a '.$objetivo->username.' con '.count($zombies).' zombies', 'info');
 		//Saco las defensas del objetivo (gunbudos guardianes, mejoras del corral..)
 		$guardianes = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gunbudoClassGuardian)));
@@ -196,6 +230,13 @@ Yii::log('  - Zombie mueto', 'info');
 		
 		//Mato a los muertos extra. Los remueve del juego directamente, no van al cementerio.
 		$cuantos_muertos = Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_muertos, 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral')));
+
+		//Doy fama por los convertidos en el corral atacado
+		$owner->fame += 2 * $otros_muertos;
+
+		//Guardo al usuario que atacó
+        if (!$owner->save())
+            throw new CHttpException(400, 'Error al guardar la fama del usuario por Ataque Zombie en evento '.$event_id.'.');
 						
 		if ($colericos>0) $txt_colericos = ' ('.$colericos.' de ellos Coléricos)';
 		else $txt_colericos = '';
@@ -255,10 +296,14 @@ Yii::log('Bomba!!!!', 'info');
 				break; //si llego al máximo de bombas que puede convertir, termino de convertir
 		}
 Yii::log('Convierto estas bombas: '.count($bombas), 'info');
-		if (count($bombas)==0) return true;	
-		
-		//Ahora a ver a quién ataco
-		$objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
+		if (count($bombas)==0) return true;
+
+        //Ahora a ver a quién ataco. Miro a ver si alguien tiene señuelo lo primero
+        $senuelo = Modifier::model()->find(array('condition'=>'keyword=:keyword', 'params'=>array(':keyword'=>Yii::app()->params->modifierSenuelo)));
+        if ($senuelo!==null)
+            $objetivo = User::findByPk($senuelo->target_final);
+        else
+            $objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
 Yii::log('Ataco a '.$objetivo->username.' con '.count($bombas).' bombas', 'info');
 		//Saco las defensas del objetivo (gunbudos guardianes, mejoras del corral..)
 		$guardianes = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gunbudoClassGuardian)));
@@ -320,12 +365,19 @@ Yii::log('  + ¡FUEGO y quemadura!', 'info');
 			
 			$bombas_atacan_aux--; //El que ataca muere			
 		}
+
+		//Fama por cada muerto directo
+		$owner->fame += $otros_muertos;
 		
 		//Mato a los muertos extra. Van al cementerio.
 		$cuantos_muertos = Gungubo::model()->updateAll(array('location'=>'cementerio', 'health'=>0, 'attacker_id'=>$artificiero->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_muertos, array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
 		
 		//Pongo quemados a los que he quemado, obvio
 		$cuantos_quemados = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionQuemadura, 'attacker_id'=>$artificiero->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_quemados.';', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
+
+        //Guardo al usuario que atacó
+        if (!$owner->save())
+            throw new CHttpException(400, 'Error al guardar la fama del usuario por Ataque de Artificiero en evento '.$event_id.'.');
 				
 		if ($cuantos_quemados>0) $txt_quemados = ' y quemado a otros '.$cuantos_quemados;
 		else $txt_quemados = '';
