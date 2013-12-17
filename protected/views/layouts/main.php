@@ -127,8 +127,8 @@
 
                     array('label' => ''),
 
-                    array('label'=>'Grimorio', 'url'=>array('/site/page?view=skillList'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && $this->action->view=='pages/skillList')?true:false),
-                    array('label'=>'Bestiario', 'url'=>array('/site/page?view=bestiary'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && $this->action->view=='pages/bestiary')?true:false),
+                    array('label'=>'Grimorio', 'url'=>array('/site/page?view=skillList'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && isset($this->action->view) && $this->action->view=='pages/skillList')?true:false),
+                    array('label'=>'Bestiario', 'url'=>array('/site/page?view=bestiary'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && isset($this->action->view) && $this->action->view=='pages/bestiary')?true:false),
 
                     array('label' => ''),
 
