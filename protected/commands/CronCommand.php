@@ -129,11 +129,16 @@ class CronCommand extends CConsoleCommand {
                     $this->logCron('        - Todavia no puede regenerar tueste.', 'info');
 
 
-                //Compruebo si está inactivo el usuario
-                $user_inactive_time = strtotime($usuario->last_activity) + 25*60*60; //Le sumo 25 horas para ver si ha pasado
-                if (time() > $user_inactive_time) {
-                    $usuario->status = Yii::app()->params->statusInactivo;
-                    $this->logCron('        - Estado inactivo.', 'info');
+                //Si el usuario estaba inactivo, le resto fama
+                if ($usuario->status == Yii::app()->params->statusInactivo)
+                    $usuario->fame -= intval(Yii::app()->config->getParam('lostFameByInactivity'));
+                else {
+                    //Compruebo si está inactivo el usuario
+                    $user_inactive_time = strtotime($usuario->last_activity) + 25*60*60; //Le sumo 25 horas para ver si ha pasado
+                    if (time() > $user_inactive_time) {
+                        $usuario->status = Yii::app()->params->statusInactivo;
+                        $this->logCron('        - Estado inactivo.', 'info');
+                    }
                 }
 
                 if (!$usuario->save())
@@ -278,6 +283,11 @@ class CronCommand extends CConsoleCommand {
                         //Quito contador a los Gungubos de este jugador que no tiene Criador
                         $this->reduceHealthGungubos($event->id, $jugador->id);
                         $this->logCron('      - No tiene Criador.', 'info');
+                    } else {
+                        //Si tiene criadores le doy fama
+                        $jugador->fame += 1;
+                        if (!$jugador->save())
+                            $this->logCron('** ERROR al actualizar la fama del jugador ('.$jugador->id.') por tener Criadores.', 'info');
                     }
                 }
             }

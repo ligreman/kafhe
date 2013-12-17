@@ -100,6 +100,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'require_user_status'  =>  NULL,        // String. Posibles valores: 0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre. Se pueden poner varios separados por comas (sin espacios). Ej: 0,3,4,5
             'require_event_status'  =>  '1',       // ID del estado del evento que se requiere para poder ejecutar la habilidiad: 0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado. Sólo admite un valor.
             'require_talent_id'  =>  NULL,          // ID del talento requerido para ejecutar la habilidad
+            'overload'  =>  1,                      // Bool. Tiene sobrecarga la habilidad, sí o no
             'generates_notification' => 1           // Bool. Genera notificación en el muro.
         ));
 
@@ -133,6 +134,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'require_user_status'  =>  NULL,  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  '1',   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
             'require_talent_id'  =>  NULL,
+            'overload'  =>  1,                      // Bool. Tiene sobrecarga la habilidad, sí o no
             'generates_notification' => 1           // Bool. Genera notificación en el muro.
         ));
 
@@ -164,7 +166,9 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'require_user_min_rank'  =>  NULL,  // Rango mínimo para ejecutarla
             'require_user_status'  =>  NULL,  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
-            'require_talent_id'  =>  NULL
+            'require_talent_id'  =>  NULL,
+            'overload'  =>  1,                      // Bool. Tiene sobrecarga la habilidad, sí o no
+            'generates_notification' => 0           // Bool. Genera notificación en el muro.
         ));
 
         // TRAMPA de Pifia
@@ -195,7 +199,47 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'require_user_min_rank'  =>  NULL,  // Rango mínimo para ejecutarla
             'require_user_status'  =>  NULL,  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
             'require_event_status'  =>  NULL,   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
-            'require_talent_id'  =>  NULL
+            'require_talent_id'  =>  NULL,
+            'overload'  =>  1,                      // Bool. Tiene sobrecarga la habilidad, sí o no
+            'generates_notification' => 0           // Bool. Genera notificación en el muro.
+        ));
+
+        //SEÑUELO
+        $this->insert('skill', array(
+            'name'  =>  'Señuelo',                         // Nombre de la habilidad
+            'description'  =>  'Coloca un bote de tueste en el corral de un jugador aleatorio, provocando que durante 1 hora todos los ataques se dirijan contra dicho corral.<br />No se acumula, si se lanza de nuevo se cambia de objetivo.',                  // Descripción de la habilidad
+            'category'  =>  'batalla',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'ofensiva',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
+            'keyword'  =>  'senuelo',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'modifier_keyword'  =>  'senuelo',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
+            'modifier_hidden' => 1,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
+            'duration'  =>  1,                   // Int con la cantidad para la duración
+            'duration_type'  =>  'horas',              // Tipo de duración. Puede ser: horas, evento, usos
+            'gunbudo_action_duration' => NULL,      // Duración de actividad de un Gunbudo
+            'gunbudo_action_rate' => NULL,          // Cada cuanto actúa el Gunbudo
+            'critic'  =>  5,                         // Int con el % crítico
+            'fail'  =>  10,                           // Int con el % de pifia
+            'extra_param' => NULL,                  // String con parámetro extra que se necesite para algo. Por ejemplo, CazarGungubos, para la cantidad de gugubos a cazar.
+            'cost_tueste'  =>  150,                // Int con el coste en puntos de tueste
+            'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
+            'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
+            'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
+            'cost_gungubos' => NULL,                 // Int con el coste en gungubos
+            'is_cooperative'  =>  0,                // 0: no es cooperativa. 1: es cooperativa
+            'cost_tueste_cooperate'  =>  NULL,      // Int con el coste en tueste de unirse a cooperar en una habilidad
+            'cost_tostolares_cooperate'  =>  NULL,  // Int con el coste en tostólares de unirse a cooperar
+            'cooperate_benefit'  =>  NULL,          // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,           // 0: no requiere; 1: requiere elegir a un usuario como objetivo
+            'require_target_side'  =>  NULL,        // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios) Ej: kafhe,achikhoria
+            'require_caller'  =>  0,                // 0: no requiere ser el llamador; 1: requiere ser el llamador para ejecutar la habilidad
+            'require_user_side'  =>  'libre',          // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios). Ej: kafhe,libre
+            'require_user_min_rank'  =>  NULL,      // Int Rango mínimo para ejecutar la habilidad (con este rango ya se puede ejecutar)
+	        'require_user_max_rank'  =>  NULL,      // Int Rango máximo para ejecutar la habilidad (a partir de este rango ya no se puede ejecutar)
+            'require_user_status'  =>  NULL,        // String. Posibles valores: 0 Inactivo, 1 Alborotador, 2 Combatiente, 4 Espectador, 5 Libertador. Se pueden poner varios separados por comas (sin espacios). Ej: 0,3,4,5
+            'require_event_status'  =>  NULL,       // ID del estado del evento que se requiere para poder ejecutar la habilidiad: 0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado. Sólo admite un valor.
+            'require_talent_id'  =>  NULL,           // ID del talento requerido para ejecutar la habilidad
+            'overload'  =>  1,                      // Bool. Tiene sobrecarga la habilidad, sí o no
+            'generates_notification' => 1           // Bool. Genera notificación en el muro.
         ));
 
 
@@ -417,6 +461,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->dropTable('gungubo');
         $this->dropTable('gunbudo');
         $this->dropTable('notification_corral');
+        $this->dropTable('comment');
 
         $this->execute("TRUNCATE TABLE cronpile;");
 		//echo "m131129_182205_kafhe_3_4 does not support migration down.\n";

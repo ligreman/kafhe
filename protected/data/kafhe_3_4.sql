@@ -38,6 +38,15 @@ CREATE TABLE IF NOT EXISTS `notification_corral` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `comment` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `notification_id` int(11) NULL DEFAULT NULL,
+  `user_id` int(11) NULL DEFAULT NULL,
+  `message` text NOT NULL,
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 
 
@@ -66,6 +75,8 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('expPorcentajeHabilidadPorRetueste', '20', 'Experiencia', 'Experiencia recibida por ejecutar una habilidad. Porcentaje del coste de retueste.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('initialFame', '50', 'Fama', 'Puntos de fama con que un jugador empieza un un evento.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('lostFameByInactivity', '10', 'Fama', 'Puntos de fama con que un jugador inactivo pierde cada hora.');
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 

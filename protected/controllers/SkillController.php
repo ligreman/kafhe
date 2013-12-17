@@ -92,13 +92,13 @@ $extra_param='garras';
 	
 	private function skillNotification($skill) 
 	{
-	    //Si la skill no ha de crear notificación
-	    if ($skill->generatesNotification==false)
+	    //Si la skill no pifió y no ha de crear notificación, no la creo
+	    if ($skill->result!='fail' && $skill->generatesNotification==false)
 	        return true;
 
 		//Si la habilidad ejecutándose no pifió y es Disimular o Impersonar o Trampa, no la muestro
-		if ($skill->result!='fail' && ($skill->keyword==Yii::app()->params->skillDisimular || $skill->keyword==Yii::app()->params->skillImpersonar || $skill->keyword==Yii::app()->params->skillTrampaTueste || $skill->keyword==Yii::app()->params->skillTrampaPifia))
-		    return true;
+		/*if ($skill->result!='fail' && ($skill->keyword==Yii::app()->params->skillDisimular || $skill->keyword==Yii::app()->params->skillImpersonar || $skill->keyword==Yii::app()->params->skillTrampaTueste || $skill->keyword==Yii::app()->params->skillTrampaPifia))
+		    return true;*/
 		
 		//Si el usuario tiene el modificador "disimulando" activo, resto usos y no muestro la notificación
 		$modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDisimulando);

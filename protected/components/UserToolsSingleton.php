@@ -56,9 +56,10 @@ class UserToolsSingleton extends CApplicationComponent
      * @param null $groupId grupo dentro del que buscar, si es null se coge el activo
 	 * @param null $side bando en el que buscar. Si es null, busca en cualquier bando.
      * @param null $exclude array de id de usuario a excluir
+     * @param bool $soloActivos Indica si he de buscar sólo los usuarios activo o me da igual
      * @return CActiveRecord Usuario encontrado o null si no hay resultados.
      */
-    public function randomUser($groupId=null, $side=null, $exclude=null)
+    public function randomUser($groupId=null, $side=null, $exclude=null, $soloActivos=false)
     {
         $criteria = New CDbCriteria;
 
@@ -72,7 +73,10 @@ class UserToolsSingleton extends CApplicationComponent
 		if ($side !== null)
 			$criteria->condition .= ' AND side="'.$side.'" ';
 
-        $criteria->params = array(':groupId'=>$groupId);
+		if ($soloActivos === true)
+		    $criteria->condition .= ' AND status!=:inactivo ';
+
+        $criteria->params = array(':groupId'=>$groupId, ':inactivo'=>Yii::app()->params->statusInactivo);
         $criteria->order = 'RAND()';
         $criteria->limit = '1';
 
