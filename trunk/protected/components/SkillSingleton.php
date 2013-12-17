@@ -106,6 +106,7 @@ class SkillSingleton extends CApplicationComponent
                 //case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
                 //case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill, $finalTarget); break;
                 //case Yii::app()->params->skillOtear: $this->otear($skill, $finalTarget); break;
+                case Yii::app()->params->skillSenuelo: $this->senuelo($skill); break;
 
                 case Yii::app()->params->skillOtearKafhe: $this->otearKafhe($skill); break;
                 case Yii::app()->params->skillOtearAchikhoria: $this->otearAchikhoria($skill); break;
@@ -638,6 +639,35 @@ class SkillSingleton extends CApplicationComponent
         $modificador->keyword = $skill->modifier_keyword;
         $modificador->hidden = $skill->modifier_hidden;
         $modificador->value = $skill->extra_param;
+        $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
+
+        if (!$modificador->save())
+            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
+
+        return true;
+    }
+
+    private function senuelo($skill)
+    {
+        $user = Yii::app()->currentUser->model;
+        //Si ya he tirado un señuelo cambio de objetivo
+        $modificador = Modifier::model()->find(array('condition'=>'keyword=:keyword', 'params'=>array(':keyword'=>$skill->modifier_keyword)));
+
+        if ($modificador == null)
+            $modificador = new Modifier;
+
+        //Calculo el objetivo final, que será un jugador aleatorio
+        $objetivo = Yii::app()->usertools->randomUser($user->group_id, null, array($user->id), true); //Aleatorio menos yo y activos
+        if ($objetivo===null)
+            return false; //Si no hay posible objetivo
+
+        $modificador->event_id = Yii::app()->event->id;
+        $modificador->caster_id = Yii::app()->currentUser->id;
+        $modificador->target_final = $objetivo->id;
+        $modificador->skill_id = $skill->id;
+        $modificador->keyword = $skill->modifier_keyword;
+        $modificador->duration = $skill->duration;
+        $modificador->duration_type = $skill->duration_type;
         $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
 
         if (!$modificador->save())
