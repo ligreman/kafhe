@@ -6,7 +6,6 @@ var favicon = new Favico({
 
 $(document).ready(function() {
     resizeNavBar();
-    prepareUserPanel();
     bindCloseLinks();
     prepareHabilities();
     $(window).resize(function(){
@@ -123,23 +122,6 @@ function prepareEnrollmentForm(){
 function bindCloseLinks(){
     $('#submenuBlock').on('click','.closeSubmenuLink',function(event){
         $('#submenuBlock').hide();
-        return false;
-    });
-}
-
-function prepareUserPanel(){
-    $('#userpanelMainLink').click(function(){
-        $('#userPanel').slideToggle();
-        src = $(this).children('img').attr('src');
-        if(src.indexOf('show') != -1){
-            $(this).children('img').attr('src',src.replace('show','hide'));
-            $(this).children('img').attr('title', 'No quiero ver mi panel de usuario');
-            $.cookie('userPanelHidden','0', {'path':'/'});
-        }else{
-            $(this).children('img').attr('src',src.replace('hide','show'));
-            $(this).children('img').attr('title','Quiero ver mi panel de usuario');
-            $.cookie('userPanelHidden','1', {'path':'/'});
-        }
         return false;
     });
 }
