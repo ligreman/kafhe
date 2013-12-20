@@ -807,7 +807,7 @@ class SkillSingleton extends CApplicationComponent
 
         //A ver si es sanguinario o no
         $tirada = mt_rand(1,100);
-        $limit = intval($skill->extra_param);
+        $limit = intval(Yii::app()->config->getParam('gunbudoAsaltanteProbabilidadSanguinario'));
         if ($tirada <= $limit) {
             //Es Sanguinario !!!!
             $gunbudo->trait = Yii::app()->params->traitSanguinario;
@@ -852,7 +852,7 @@ class SkillSingleton extends CApplicationComponent
 
         //A ver si es acorazado o no
         $tirada = mt_rand(1,100);
-        $limit = intval($skill->extra_param);
+        $limit = intval(Yii::app()->config->getParam('gunbudoGuardianProbabilidadAcorazado'));
         if ($tirada <= $limit) {
             //Es Acorazado !!!!
             $gunbudo->trait = Yii::app()->params->traitAcorazado;

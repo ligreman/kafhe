@@ -258,7 +258,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'gunbudo_action_rate' => 2,             // Cada cuanto actúa el Gunbudo
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
-            'extra_param' => 20,                  // Probabilidad de que salga Asaltante Sanguinario
+            'extra_param' => NULL,                  // Probabilidad de
             'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
@@ -296,7 +296,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'gunbudo_action_rate' => NULL,             // Cada cuanto actúa el Gunbudo
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
-            'extra_param' => 20,                  // Probabilidad de que salga Guardián Acorazado
+            'extra_param' => NULL,                  // Probabilidad
             'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento

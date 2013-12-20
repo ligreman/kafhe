@@ -1,62 +1,43 @@
 <div class="paddedContent page">
     <?php
-    /* @var $this SiteController */
-
     $this->pageTitle=Yii::app()->name . ' - Bestiario';
 
-    $habilidades = Skill::model()->findAll(array('order'=>'category, type, name'));
+    $gunbudos = array(
+        array('Gunbudo Asaltante', 'gunbudoAsaltante', 'Es un Gunbudo que realiza '.Yii::app()->config->getParam('gunbudoAsaltanteActions').' ataque/s a un corral enemigo aleatorio, cada 2 horas durante 12 horas.##Al crearse el jugador selecciona un arma (garras, colmillos, púas).##Si el Gunbudo Asaltante se enfrenta a un Gunbudo Guardián y empata o pierde, desistirá en su ataque hasta el siguiente ataque y cambiará de arma por la que le derrotó. Si gana, penetrará en el corral y acabará con un número de Gungubos de ['.Yii::app()->config->getParam('gunbudoAsaltanteMinMuertes').'-'.Yii::app()->config->getParam('gunbudoAsaltanteMaxMuertes').'].##Con una probabilidad de '.Yii::app()->config->getParam('gunbudoAsaltanteProbabilidadSanguinario').'% el Gunbudo Asaltante puede crearse con la característica <em><=Sanguinario=> (2)</em>.'),
+        array()
+    );
 
-    $array = array();
-
-    foreach($habilidades as $habilidad) {
-        $coste = '';
-
-        if ($habilidad->cost_tueste!==null) {
-            $coste .= $habilidad->cost_tueste.'T';
-        }
-        if ($habilidad->cost_retueste!==null) {
-            $coste .= ' '.$habilidad->cost_retueste.'RT';
-        }
-        if ($habilidad->cost_relanzamiento!==null) {
-            $coste .= ' '.$habilidad->cost_relanzamiento.'§';
-        }
-        if ($habilidad->cost_tostolares!==null) {
-            $coste .= ' '.$habilidad->cost_tostolares.'t';
-        }
-
-        $array[] = array(
-            'id'=>1,
-            'category'=>ucfirst($habilidad->category),
-            'name'=>$habilidad->name,
-            'description'=>$habilidad->description,
-            'coste'=>$coste,
-            'criticfail'=>$habilidad->critic.' / '.$habilidad->fail,
-            'rank'=>$habilidad->require_user_min_rank.' / '.$habilidad->require_user_max_rank
-        );
-    }
-
-    $gridDataProvider = new CArrayDataProvider($array);
-
-    ?>
-    <h1>Bestiario</h1>
-
-    <?php
-    $this->widget('zii.widgets.grid.CGridView', array(
-        'dataProvider'=>$gridDataProvider,
-        'template'=>"{summary}{items}{pager}",
-        'summaryText' => 'Mostrando {start} - {end} de {count} habilidades',
-        'columns'=>array(
-            array('name'=>'category', 'header'=>'Categoría'),
-            array('name'=>'name', 'header'=>'Nombre'),
-            array('name'=>'description', 'header'=>'Descripción'),
-            array('name'=>'coste', 'header'=>'Coste ejecución'),
-            array('name'=>'criticfail', 'header'=>'Crítico/Pifia'),
-            array('name'=>'rank', 'header'=>'Rango min/max requerido')
-        ),
-    ));
+    $caracteristicas = array(
+        'Sanguinario' => 'Sanguinario (n): el Gunbudo mata n veces más Gungubos con sus ataques (multiplica por n las muertes que provoca).',
+    );
     ?>
 
-    <p class="right">Leyenda: T (Tueste), RT (ReTueste), § (lágrimas), t (tostólares)</p>
+
+    <div>
+        <ul>
+            <?php
+            foreach ($gunbudos as $gunbudo) {
+                $nombre = array_shift($gunbudo);
+                $imagen = array_shift($gunbudo);
+                $descripcion = array_shift($gunbudo);
+
+                echo '<li>';
+
+                echo CHtml::image(Yii::app()->baseUrl."/images/bestiary/".$imagen.".png",$nombre);
+
+                echo '<p class="titulo">'.$nombre.'</p>';
+                echo '<p>';
+                $texto = str_replace('##', '</p><p>', $descripcion);
+                $texto = str_replace('<=', '<span class="tooltip">', $texto);
+                $texto = str_replace('=>', '</span>', $texto);
+                echo $texto;
+
+                echo '</p></li>';
+            }
+
+            ?>
+        </ul>
+    </div>
 
 
 </div>
