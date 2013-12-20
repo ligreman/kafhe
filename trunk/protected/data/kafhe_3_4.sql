@@ -96,7 +96,7 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gunguboHealth', '5', 'Gungubos', 'Contadores de vida por defecto de los Gungubos de corral.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunguboBombaProbabilidadEstallar', '15', 'Gungubos', 'Probabilidad de un Gungubo Bomba de explotar en el corral atacado.');
+	('gunguboBombaProbabilidadEstallar', '20', 'Gungubos', 'Probabilidad de un Gungubo Bomba de explotar en el corral atacado.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gunguboBombaMinMuertes', '1', 'Gungubos', 'Mínimo número de Gungubos que mata al estallar.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
@@ -109,12 +109,16 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gunbudoGuardianActions', '1', 'Gunbudos', 'Contadores de acción que indica el número de veces que los Gunbudos Guardianes pueden defender cada hora.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('gunbudoGuardianProbabilidadAcorazado', '20', 'Gunbudos', 'Probabilidad de que el Gunbudo tenga la característica de Acorazado.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gunbudoAsaltanteActions', '1', 'Gunbudos', 'Contadores de acción que indica el número de veces que los Gunbudos Asaltantes pueden atacar cada hora.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gunbudoAsaltanteMinMuertes', '1', 'Gunbudos', 'Mínimo número de Gungubos que mata en un ataque con éxito.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gunbudoAsaltanteMaxMuertes', '5', 'Gunbudos', 'Máximo número de Gungubos que mata en un ataque con éxito.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('gunbudoAsaltanteProbabilidadSanguinario', '20', 'Gunbudos', 'Probabilidad de que el Gunbudo tenga la característica de Sanguinario.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gunbudoNigromanteProbabilidadZombie', '25', 'Gunbudos', 'Probabilidad en cada ataque de convertir en Gungubos Zombie los cadáveres del cementerio.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
