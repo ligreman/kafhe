@@ -1066,6 +1066,7 @@ img.grayScale{
     border: 3px solid white;
     margin-top: -6px;
     float: right;
+    margin-right: -8px;
 }
 
 #batteStatusKafhe .achikhoriapin, #batteStatusAchikhoria .achikhoriapin{
@@ -1213,7 +1214,7 @@ img.grayScale{
 }
 
 #battleStatus .w100 .title .flecha-down{
-    left:113px
+    left:113px;
 }
 
 .score{
