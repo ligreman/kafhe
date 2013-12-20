@@ -7,7 +7,6 @@ var favicon = new Favico({
 $(document).ready(function() {
     resizeNavBar();
     bindCloseLinks();
-    prepareHabilities();
     $(window).resize(function(){
         resizeNavBar();
     });
@@ -21,27 +20,28 @@ $(document).ready(function() {
 
 
     //DESCOMENTAR SI NO SE USA SLY
-    //$('#skillsUserBlock ul').width($('#skillsUserBlock ul li').outerWidth()*$('#skillsUserBlock ul li').size());
+    //$('#skillsPanel ul').width($('#skillsPanel ul li').outerWidth()*$('#skillsPanel ul li').size());
     //DESCOMENTAR SI SE USA SLY
-    //var $frame = $('#skillsUserBlock');
-    /*var sly = new Sly($frame, {
+    var $frame = $('#skillsPanel');
+    var sly = new Sly($frame, {
         horizontal: 1,
-        itemNav: 'centered',
-        activateMiddle: 1,
+        itemNav: 'basic',
+        activateMiddle: 0,
         smart: 1,
-        activateOn: 'click',
+        activateOn: null,
         mouseDragging: 1,
         touchDragging: 1,
         releaseSwing: 1,
-        startAt: 10,
-        activatePageOn: 'click',
+        startAt: 0,
+        activatePageOn: null,
         speed: 400,
         moveBy: 800,
         elasticBounds: 1,
         dragHandle: 1,
         dynamicHandle: 1,
-        clickBar: 1
-    }).init();*/
+        clickBar: 0
+    }).init();
+    prepareHabilities();
 });
 
 function resizeNavBar(){
@@ -141,7 +141,8 @@ function prepareHabilities(){
 
     //Div de detalle de habilidades
     $('.skillLink').click(function(){
-        $(this).siblings('.skillDescription').show();
+        $('.skillDescription').html($(this).siblings('.skillDescriptionIndividual').html());
+        $('.skillDescription').show();
     });
 
     $('.cancelButton').click(function(){
@@ -151,7 +152,7 @@ function prepareHabilities(){
             text = button.attr('href').split('&target_id');
             button.attr('href', text[0]);
         }
-        $(this).parents('.skillDescription').hide();
+        $('.skillDescription').hide();
     });
 
     $('.sdcontent ul li').click(function(){
