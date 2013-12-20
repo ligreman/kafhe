@@ -118,7 +118,7 @@
             $this->widget('zii.widgets.CMenu',array(
                 'items'=>array(
                     //Menú principal
-                    array('label'=>'Notificaciones', 'url'=>Yii::app()->homeUrl, 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='site'?true:false),
+                    array('label'=>'Notificaciones', 'url'=>Yii::app()->homeUrl, 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && !isset($this->action->view))?true:false),
                     array('label'=>'Corral', 'url'=>array('/corral'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='corral'?true:false),
                     array('label' => ''),
                     array('label'=>'Desayuno', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusCalma || Yii::app()->event->status==Yii::app()->params->statusBatalla)), 'active'=>$this->id=='enrollment'?true:false),
@@ -127,8 +127,8 @@
 
                     array('label' => ''),
 
-                    //array('label'=>'Grimorio', 'url'=>array('/site/page?view=skillList'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && $this->action->view=='pages/skillList')?true:false),
-                    //array('label'=>'Bestiario', 'url'=>array('/site/page?view=bestiary'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && $this->action->view=='pages/bestiary')?true:false),
+                    array('label'=>'Grimorio', 'url'=>array('/site/page?view=skillList'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && isset($this->action->view) && $this->action->view=='pages/skillList')?true:false),
+                    array('label'=>'Bestiario', 'url'=>array('/site/page?view=bestiary'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && isset($this->action->view) && $this->action->view=='pages/bestiary')?true:false),
 
                     array('label' => ''),
 
@@ -152,14 +152,16 @@
             
           ?>
             <p>
-                <a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a> 
-                <a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a> 
+                <a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a>
 
                 <?php if (!Yii::app()->user->isGuest): ?>
                     <a href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a> 
                 <?php endif;?>
+                <a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a>
 
-                <a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a> 
+                <a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a>
+
+
             </p>
         </nav><!-- mainmenu -->
         <?php if(isset($this->breadcrumbs)):?>
@@ -170,7 +172,15 @@
 
         <section id="submenuBlock">
         </section>
-        <section id="main">
+
+        <?php
+            //Aquí controlo si la página va a tener panel lateral derecho o no, con el ancho del main
+            if ( ($this->id=='site' && !isset($this->action->view)) || $this->id=='corral') {
+                $class = '';
+            } else $class = 'full';
+        ?>
+
+        <section id="main" class="<?php echo $class; ?>">
             <?php
             /*$flashMessages = Yii::app()->user->getFlashes();
             if ($flashMessages) {

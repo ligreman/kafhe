@@ -57,10 +57,6 @@ html, body, #page{
     height:100%;
 }
 
-#main{
-    min-height:75%;
-}
-
 p{
     padding:1em;
 }
@@ -196,10 +192,15 @@ footer a{
 }
 
 #main{
+    min-height:75%;
     background: white;
     width: 60%;
     padding-top: 6.5em;
     margin-left: 20%;
+}
+
+#main.full{
+    width: 80%;
 }
 
 #main h1{
@@ -589,13 +590,13 @@ label.title{
 }
 
 #mainUserBlock{
-    padding: 0 3em;
+    /*padding: 0 3em;*/
 }
 
 #user{
-    width: 10%;
+    width: 20%;
     float:left;
-    padding: .6em 4% 0 0;
+    padding: .6em 1em .6em 0;
     overflow: visible;
 }
 
@@ -603,6 +604,7 @@ label.title{
     color: #363636;
     font-size: 1.5em;
     font-weight: bold;
+    padding-left: 2em;
 }
 
 #modificadores{
