@@ -630,7 +630,7 @@ label.title{
 #energia{
     width: 100%;
     padding: 0;
-    margin: 0 0 0 -3em;
+    margin: 0;
 }
 
 #tuesteRetueste{
@@ -815,7 +815,7 @@ img.grayScale{
 
 #skillsUserBlock{
     height: 5em;
-    padding: 0 3em;
+    padding: 0;
     background: #e1e1e1;
     position: fixed;
     width: 100%;
@@ -824,9 +824,9 @@ img.grayScale{
 }
 
 #skillsUserBlock ul{
-    /*margin: 0 auto;*/
+    margin: 0 auto;
     text-align: center;
-    padding:0 1.5em;
+    padding:0;
 }
 
 #skillsUserBlock li{
@@ -845,6 +845,10 @@ img.grayScale{
     height: 100%;
     background: rgba(0,0,0,.4);
     z-index: 99999;
+}
+
+.skillDescriptionIndividual{
+    display: none;
 }
 
 .sdcontent{
