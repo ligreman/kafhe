@@ -171,13 +171,17 @@ function prepareHabilities(){
         }
     });
 
+    $('.acceptButton').click(function(e){
+        e.stopImmediatePropagation();
+    });
+
     $('.sdcontent').click(function(e){
         e.stopImmediatePropagation();
     });
 
     $('.skillDescription').click(function(){
         $('.skillDescription').hide();
-        return false;
+        //return false;
     });
 }
 
