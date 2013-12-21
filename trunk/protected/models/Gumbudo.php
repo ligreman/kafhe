@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "gunbudo".
+ * This is the model class for table "gumbudo".
  *
- * The followings are the available columns in table 'gunbudo':
+ * The followings are the available columns in table 'gumbudo':
  * @property integer $id
  * @property integer $event_id
  * @property integer $owner_id
@@ -15,12 +15,12 @@
  * @property string $weapon
  * @property string $ripdate
  */
-class Gunbudo extends CActiveRecord
+class Gumbudo extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Gunbudo the static model class
+	 * @return Gumbudo the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -32,7 +32,7 @@ class Gunbudo extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'gunbudo';
+		return 'gumbudo';
 	}
 
 	/**

@@ -111,11 +111,11 @@ class SkillSingleton extends CApplicationComponent
                 case Yii::app()->params->skillOtearKafhe: $this->otearKafhe($skill); break;
                 case Yii::app()->params->skillOtearAchikhoria: $this->otearAchikhoria($skill); break;
 
-                case Yii::app()->params->skillGunbudoAsaltante: $this->gunbudoAsaltante($skill, $extra_param); break;
-                case Yii::app()->params->skillGunbudoGuardian: $this->gunbudoGuardian($skill, $extra_param); break;
-                case Yii::app()->params->skillGunbudoCriador: $this->gunbudoCriador($skill); break;
-				case Yii::app()->params->skillGunbudoNigromante: $this->gunbudoNigromante($skill); break;
-				case Yii::app()->params->skillGunbudoArtificiero: $this->gunbudoArtificiero($skill); break;
+                case Yii::app()->params->skillGumbudoAsaltante: $this->gumbudoAsaltante($skill, $extra_param); break;
+                case Yii::app()->params->skillGumbudoGuardian: $this->gumbudoGuardian($skill, $extra_param); break;
+                case Yii::app()->params->skillGumbudoCriador: $this->gumbudoCriador($skill); break;
+				case Yii::app()->params->skillGumbudoNigromante: $this->gumbudoNigromante($skill); break;
+				case Yii::app()->params->skillGumbudoArtificiero: $this->gumbudoArtificiero($skill); break;
 			}
 			
 		}
@@ -714,36 +714,36 @@ class SkillSingleton extends CApplicationComponent
 
     private function otearKafhe($skill)
     {
-        //Saco los Gunbudos Asaltantes de Achikhorias en este evento
+        //Saco los Gumbudos Asaltantes de Achikhorias en este evento
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
 
-        $gunbudos = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND class=:clase AND side=:bando', 'params'=>array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gunbudoClassAsaltante, ':bando'=>'achikhoria')));
-        $armas = array(Yii::app()->params->gunbudoWeapon1=>0, Yii::app()->params->gunbudoWeapon2=>0, Yii::app()->params->gunbudoWeapon3=>0);
+        $gumbudos = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND class=:clase AND side=:bando', 'params'=>array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassAsaltante, ':bando'=>'achikhoria')));
+        $armas = array(Yii::app()->params->gumbudoWeapon1=>0, Yii::app()->params->gumbudoWeapon2=>0, Yii::app()->params->gumbudoWeapon3=>0);
 
-        foreach ($gunbudos as $gunbudo) {
-            $armas[$gunbudo->weapon]++;
+        foreach ($gumbudos as $gumbudo) {
+            $armas[$gumbudo->weapon]++;
         }
 
-        if ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon2] && $armas[Yii::app()->params->gunbudoWeapon2]==$armas[Yii::app()->params->gunbudoWeapon3]) {
+        if ($armas[Yii::app()->params->gumbudoWeapon1]==$armas[Yii::app()->params->gumbudoWeapon2] && $armas[Yii::app()->params->gumbudoWeapon2]==$armas[Yii::app()->params->gumbudoWeapon3]) {
             //Los tres iguales
-            if ($armas[Yii::app()->params->gunbudoWeapon1]==0)
-                $this->_privateMessage = 'No ves ningún Gunbudo '.Yii::app()->params->gunbudoClassNames['asaltante'].' Renunciante.';
+            if ($armas[Yii::app()->params->gumbudoWeapon1]==0)
+                $this->_privateMessage = 'No ves ningún Gumbudo '.Yii::app()->params->gumbudoClassNames['asaltante'].' Renunciante.';
             else
-                $this->_privateMessage = 'No predomina ningún arma concreta entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
-        } elseif ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon2] && $armas[Yii::app()->params->gunbudoWeapon2]>$armas[Yii::app()->params->gunbudoWeapon3]) {
+                $this->_privateMessage = 'No predomina ningún arma concreta entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['asaltante'].' Renunciantes.';
+        } elseif ($armas[Yii::app()->params->gumbudoWeapon1]==$armas[Yii::app()->params->gumbudoWeapon2] && $armas[Yii::app()->params->gumbudoWeapon2]>$armas[Yii::app()->params->gumbudoWeapon3]) {
             //Ganan 1=2 sobre 3
-            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon1].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon2].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
-        } elseif ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon3] && $armas[Yii::app()->params->gunbudoWeapon3]>$armas[Yii::app()->params->gunbudoWeapon2]) {
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon1].' y '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon2].' por igual entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['asaltante'].' Renunciantes.';
+        } elseif ($armas[Yii::app()->params->gumbudoWeapon1]==$armas[Yii::app()->params->gumbudoWeapon3] && $armas[Yii::app()->params->gumbudoWeapon3]>$armas[Yii::app()->params->gumbudoWeapon2]) {
             //Ganan 1=3 sobre 2
-            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon1].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon3].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
-        } elseif ($armas[Yii::app()->params->gunbudoWeapon2]==$armas[Yii::app()->params->gunbudoWeapon3] && $armas[Yii::app()->params->gunbudoWeapon2]>$armas[Yii::app()->params->gunbudoWeapon1]) {
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon1].' y '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon3].' por igual entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['asaltante'].' Renunciantes.';
+        } elseif ($armas[Yii::app()->params->gumbudoWeapon2]==$armas[Yii::app()->params->gumbudoWeapon3] && $armas[Yii::app()->params->gumbudoWeapon2]>$armas[Yii::app()->params->gumbudoWeapon1]) {
             //Ganan 2=3 sobre 1
-            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon2].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon3].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon2].' y '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon3].' por igual entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['asaltante'].' Renunciantes.';
         } else {
             //Los 3 diferentes o el que va solo mayor, por lo que gana 1 solo
             arsort($armas);
             $armas = array_flip($armas);
-            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[array_shift($armas)].' entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['asaltante'].' Renunciantes.';
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gumbudoWeaponNames[array_shift($armas)].' entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['asaltante'].' Renunciantes.';
         }
 
         return true;
@@ -751,36 +751,36 @@ class SkillSingleton extends CApplicationComponent
 
     private function otearAchikhoria($skill)
     {
-        //Saco los Gunbudos Asaltantes de Achikhorias en este evento
+        //Saco los Gumbudos Asaltantes de Achikhorias en este evento
         $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
 
-        $gunbudos = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND class=:clase AND side=:bando', 'params'=>array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gunbudoClassGuardian, ':bando'=>'kafhe')));
-        $armas = array(Yii::app()->params->gunbudoWeapon1=>0, Yii::app()->params->gunbudoWeapon2=>0, Yii::app()->params->gunbudoWeapon3=>0);
+        $gumbudos = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND class=:clase AND side=:bando', 'params'=>array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian, ':bando'=>'kafhe')));
+        $armas = array(Yii::app()->params->gumbudoWeapon1=>0, Yii::app()->params->gumbudoWeapon2=>0, Yii::app()->params->gumbudoWeapon3=>0);
 
-        foreach ($gunbudos as $gunbudo) {
-            $armas[$gunbudo->weapon]++;
+        foreach ($gumbudos as $gumbudo) {
+            $armas[$gumbudo->weapon]++;
         }
 
-        if ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon2] && $armas[Yii::app()->params->gunbudoWeapon2]==$armas[Yii::app()->params->gunbudoWeapon3]) {
+        if ($armas[Yii::app()->params->gumbudoWeapon1]==$armas[Yii::app()->params->gumbudoWeapon2] && $armas[Yii::app()->params->gumbudoWeapon2]==$armas[Yii::app()->params->gumbudoWeapon3]) {
             //Los tres iguales
-            if ($armas[Yii::app()->params->gunbudoWeapon1]==0)
-                $this->_privateMessage = 'No ves ningún Gunbudo '.Yii::app()->params->gunbudoClassNames['guardian'].' Kafheíta.';
+            if ($armas[Yii::app()->params->gumbudoWeapon1]==0)
+                $this->_privateMessage = 'No ves ningún Gumbudo '.Yii::app()->params->gumbudoClassNames['guardian'].' Kafheíta.';
             else
-                $this->_privateMessage = 'No predomina ningún arma concreta entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
-        } elseif ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon2] && $armas[Yii::app()->params->gunbudoWeapon2]>$armas[Yii::app()->params->gunbudoWeapon3]) {
+                $this->_privateMessage = 'No predomina ningún arma concreta entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['guardian'].' Kafheítas.';
+        } elseif ($armas[Yii::app()->params->gumbudoWeapon1]==$armas[Yii::app()->params->gumbudoWeapon2] && $armas[Yii::app()->params->gumbudoWeapon2]>$armas[Yii::app()->params->gumbudoWeapon3]) {
             //Ganan 1=2 sobre 3
-            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon1].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon2].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
-        } elseif ($armas[Yii::app()->params->gunbudoWeapon1]==$armas[Yii::app()->params->gunbudoWeapon3] && $armas[Yii::app()->params->gunbudoWeapon3]>$armas[Yii::app()->params->gunbudoWeapon2]) {
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon1].' y '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon2].' por igual entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['guardian'].' Kafheítas.';
+        } elseif ($armas[Yii::app()->params->gumbudoWeapon1]==$armas[Yii::app()->params->gumbudoWeapon3] && $armas[Yii::app()->params->gumbudoWeapon3]>$armas[Yii::app()->params->gumbudoWeapon2]) {
             //Ganan 1=3 sobre 2
-            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon1].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon3].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
-        } elseif ($armas[Yii::app()->params->gunbudoWeapon2]==$armas[Yii::app()->params->gunbudoWeapon3] && $armas[Yii::app()->params->gunbudoWeapon2]>$armas[Yii::app()->params->gunbudoWeapon1]) {
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon1].' y '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon3].' por igual entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['guardian'].' Kafheítas.';
+        } elseif ($armas[Yii::app()->params->gumbudoWeapon2]==$armas[Yii::app()->params->gumbudoWeapon3] && $armas[Yii::app()->params->gumbudoWeapon2]>$armas[Yii::app()->params->gumbudoWeapon1]) {
             //Ganan 2=3 sobre 1
-            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon2].' y '.Yii::app()->params->gunbudoWeaponNames[Yii::app()->params->gunbudoWeapon3].' por igual entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon2].' y '.Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon3].' por igual entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['guardian'].' Kafheítas.';
         } else {
             //Los 3 diferentes o el que va solo mayor, por lo que gana 1 solo
             arsort($armas);
             $armas = array_flip($armas);
-            $this->_privateMessage = 'Predominan '.Yii::app()->params->gunbudoWeaponNames[array_shift($armas)].' entre los Gunbudos '.Yii::app()->params->gunbudoClassNamesPlural['guardian'].' Kafheítas.';
+            $this->_privateMessage = 'Predominan '.Yii::app()->params->gumbudoWeaponNames[array_shift($armas)].' entre los Gumbudos '.Yii::app()->params->gumbudoClassNamesPlural['guardian'].' Kafheítas.';
         }
 
         return true;
@@ -789,160 +789,160 @@ class SkillSingleton extends CApplicationComponent
 
     /*************************************************/
 	/************ GUNBUDOS ***************************/
-	private function gunbudoAsaltante($skill, $weapon)
+	private function gumbudoAsaltante($skill, $weapon)
     {
-        //Creo un Gunbudo
-        $gunbudo = new Gunbudo;
+        //Creo un Gumbudo
+        $gumbudo = new Gumbudo;
 
         $fecha = new DateTime();
-        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+        $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
-        $gunbudo->class = Yii::app()->params->gunbudoClassAsaltante;
-        $gunbudo->owner_id = Yii::app()->currentUser->id;
-        $gunbudo->event_id = Yii::app()->event->id;
-        $gunbudo->side = Yii::app()->currentUser->side;
-        $gunbudo->actions = Yii::app()->config->getParam('gunbudoAsaltanteActions');
-        $gunbudo->weapon = $weapon;
-        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+        $gumbudo->class = Yii::app()->params->gumbudoClassAsaltante;
+        $gumbudo->owner_id = Yii::app()->currentUser->id;
+        $gumbudo->event_id = Yii::app()->event->id;
+        $gumbudo->side = Yii::app()->currentUser->side;
+        $gumbudo->actions = Yii::app()->config->getParam('gumbudoAsaltanteActions');
+        $gumbudo->weapon = $weapon;
+        $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
         //A ver si es sanguinario o no
         $tirada = mt_rand(1,100);
-        $limit = intval(Yii::app()->config->getParam('gunbudoAsaltanteProbabilidadSanguinario'));
+        $limit = intval(Yii::app()->config->getParam('gumbudoAsaltanteProbabilidadSanguinario'));
         if ($tirada <= $limit) {
             //Es Sanguinario !!!!
-            $gunbudo->trait = Yii::app()->params->traitSanguinario;
-            $gunbudo->trait_value = 2;
-			$this->_privateMessage = '¡El Gunbudo evolucionado es Sanguinario!';			
+            $gumbudo->trait = Yii::app()->params->traitSanguinario;
+            $gumbudo->trait_value = 2;
+			$this->_privateMessage = '¡El Gumbudo evolucionado es Sanguinario!';
         }
 
-        if (!$gunbudo->save())
-            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+        if (!$gumbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
 
         //Con los datos de su actividad o action calculo los ataques
         //$fecha = new DateTime();
         $ataques = array();
-        $num_ataques = intval($skill->gunbudo_action_duration / $skill->gunbudo_action_rate);
-		$hours = $this->generateAttackHours($num_ataques, $skill->gunbudo_action_rate);
+        $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
+		$hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
 		foreach($hours as $hour) {
         //for($i=1; $i<=$num_ataques; $i++) {
             //$fecha->add(DateInterval::createFromDateString('2 hours')); //Añado dos horas            
-            //$ataques[] = "('gunbudo', 'gunbudoAsaltanteAttack', '".$gunbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
-			$ataques[] = "('gunbudo', 'gunbudoAsaltanteAttack', '".$gunbudo->id."', '".$hour."')";
+            //$ataques[] = "('gumbudo', 'gumbudoAsaltanteAttack', '".$gumbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
+			$ataques[] = "('gumbudo', 'gumbudoAsaltanteAttack', '".$gumbudo->id."', '".$hour."')";
         }
         Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
 
         return true;
     }
 
-    private function gunbudoGuardian($skill, $weapon)
+    private function gumbudoGuardian($skill, $weapon)
     {
-        //Creo un Gunbudo
-        $gunbudo = new Gunbudo;
+        //Creo un Gumbudo
+        $gumbudo = new Gumbudo;
 
         $fecha = new DateTime();
-        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+        $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
-        $gunbudo->class = Yii::app()->params->gunbudoClassGuardian;
-        $gunbudo->owner_id = Yii::app()->currentUser->id;
-        $gunbudo->event_id = Yii::app()->event->id;
-        $gunbudo->side = Yii::app()->currentUser->side;
-        $gunbudo->actions = Yii::app()->config->getParam('gunbudoGuardianActions');
-        $gunbudo->weapon = $weapon;
-        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+        $gumbudo->class = Yii::app()->params->gumbudoClassGuardian;
+        $gumbudo->owner_id = Yii::app()->currentUser->id;
+        $gumbudo->event_id = Yii::app()->event->id;
+        $gumbudo->side = Yii::app()->currentUser->side;
+        $gumbudo->actions = Yii::app()->config->getParam('gumbudoGuardianActions');
+        $gumbudo->weapon = $weapon;
+        $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
         //A ver si es acorazado o no
         $tirada = mt_rand(1,100);
-        $limit = intval(Yii::app()->config->getParam('gunbudoGuardianProbabilidadAcorazado'));
+        $limit = intval(Yii::app()->config->getParam('gumbudoGuardianProbabilidadAcorazado'));
         if ($tirada <= $limit) {
             //Es Acorazado !!!!
-            $gunbudo->trait = Yii::app()->params->traitAcorazado;
-            $gunbudo->trait_value = 2;
-			$this->_privateMessage = '¡El Gunbudo evolucionado es Acorazado!';
+            $gumbudo->trait = Yii::app()->params->traitAcorazado;
+            $gumbudo->trait_value = 2;
+			$this->_privateMessage = '¡El Gumbudo evolucionado es Acorazado!';
         }
 
-        if (!$gunbudo->save())
-            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+        if (!$gumbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
 
         return true;
     }
 
-    private function gunbudoCriador($skill)
+    private function gumbudoCriador($skill)
     {
-        //Creo un Gunbudo
-        $gunbudo = new Gunbudo;
+        //Creo un Gumbudo
+        $gumbudo = new Gumbudo;
 
         $fecha = new DateTime();
-        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+        $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
-        $gunbudo->class = Yii::app()->params->gunbudoClassCriador;
-        $gunbudo->owner_id = Yii::app()->currentUser->id;
-        $gunbudo->event_id = Yii::app()->event->id;
-        $gunbudo->side = Yii::app()->currentUser->side;
-        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+        $gumbudo->class = Yii::app()->params->gumbudoClassCriador;
+        $gumbudo->owner_id = Yii::app()->currentUser->id;
+        $gumbudo->event_id = Yii::app()->event->id;
+        $gumbudo->side = Yii::app()->currentUser->side;
+        $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
-        if (!$gunbudo->save())
-            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+        if (!$gumbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
 
         return true;
     }
 	
-	private function gunbudoNigromante($skill)
+	private function gumbudoNigromante($skill)
     {
-        //Creo un Gunbudo
-        $gunbudo = new Gunbudo;
+        //Creo un Gumbudo
+        $gumbudo = new Gumbudo;
 
         $fecha = new DateTime();
-        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+        $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
-        $gunbudo->class = Yii::app()->params->gunbudoClassNigromante;
-        $gunbudo->owner_id = Yii::app()->currentUser->id;
-        $gunbudo->event_id = Yii::app()->event->id;		
-        $gunbudo->side = Yii::app()->currentUser->side;
-        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+        $gumbudo->class = Yii::app()->params->gumbudoClassNigromante;
+        $gumbudo->owner_id = Yii::app()->currentUser->id;
+        $gumbudo->event_id = Yii::app()->event->id;
+        $gumbudo->side = Yii::app()->currentUser->side;
+        $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
-        if (!$gunbudo->save())
-            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+        if (!$gumbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
 			
 		//Con los datos de su actividad o action calculo los ataques
         //$fecha = new DateTime();
         $ataques = array();
-        $num_ataques = intval($skill->gunbudo_action_duration / $skill->gunbudo_action_rate);
-		$hours = $this->generateAttackHours($num_ataques, $skill->gunbudo_action_rate);
+        $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
+		$hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
 		foreach($hours as $hour) {
         //for($i=1; $i<=$num_ataques; $i++) {
             //$fecha->add(DateInterval::createFromDateString('2 hours')); //Añado dos horas            
-            //$ataques[] = "('gunbudo', 'gunbudoNigromanteAttack', '".$gunbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
-			$ataques[] = "('gunbudo', 'gunbudoNigromanteAttack', '".$gunbudo->id."', '".$hour."')";
+            //$ataques[] = "('gumbudo', 'gumbudoNigromanteAttack', '".$gumbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
+			$ataques[] = "('gumbudo', 'gumbudoNigromanteAttack', '".$gumbudo->id."', '".$hour."')";
         }
         Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
 
         return true;
     }
 
-	private function gunbudoArtificiero($skill)
+	private function gumbudoArtificiero($skill)
 	{
-		//Creo un Gunbudo
-        $gunbudo = new Gunbudo;
+		//Creo un Gumbudo
+        $gumbudo = new Gumbudo;
 
         $fecha = new DateTime();
-        $fecha->add(DateInterval::createFromDateString($skill->gunbudo_action_duration.' hours')); //Cuando muere
+        $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
-        $gunbudo->class = Yii::app()->params->gunbudoClassArtificiero;
-        $gunbudo->owner_id = Yii::app()->currentUser->id;
-        $gunbudo->event_id = Yii::app()->event->id;		
-        $gunbudo->side = Yii::app()->currentUser->side;
-        $gunbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+        $gumbudo->class = Yii::app()->params->gumbudoClassArtificiero;
+        $gumbudo->owner_id = Yii::app()->currentUser->id;
+        $gumbudo->event_id = Yii::app()->event->id;
+        $gumbudo->side = Yii::app()->currentUser->side;
+        $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
-        if (!$gunbudo->save())
-            throw new CHttpException(400, 'Error al guardar el Gunbudo ('.$gunbudo->class.'). ['.print_r($gunbudo->getErrors(),true).']');
+        if (!$gumbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
 			
 		//Con los datos de su actividad o action calculo los ataques
         //$fecha = new DateTime();
         $ataques = array();
-        $num_ataques = intval($skill->gunbudo_action_duration / $skill->gunbudo_action_rate);
-		$hours = $this->generateAttackHours($num_ataques, $skill->gunbudo_action_rate);
+        $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
+		$hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
 		foreach($hours as $hour) {
-        	$ataques[] = "('gunbudo', 'gunbudoArtificieroAttack', '".$gunbudo->id."', '".$hour."')";
+        	$ataques[] = "('gumbudo', 'gumbudoArtificieroAttack', '".$gumbudo->id."', '".$hour."')";
         }
         Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
 
@@ -1121,8 +1121,8 @@ class SkillSingleton extends CApplicationComponent
      * @return mix False si no caes en una trampa, o el objeto del modificador de la trampa en que has caído
      */
     private function userCaeTrampa($skill) {
-        //Las habilidades de relanzamiento no pifian, ni las de evolucion de gunbudos
-        if ($skill->category=='relanzamiento' || $skill->category=='gunbudos') return false;
+        //Las habilidades de relanzamiento no pifian, ni las de evolucion de gumbudos
+        if ($skill->category=='relanzamiento' || $skill->category=='gumbudos') return false;
 
 	    //Saco modificadores de trampas que me afectan
 	    $trampaPifia = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierTrampaPifia);

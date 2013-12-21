@@ -202,9 +202,9 @@ class EventController extends Controller
         //Elimino el historial de ejecución de habilidades del evento
         HistorySkillExecution::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
 
-        //Elimino Gungubos y Gunbudos
+        //Elimino Gungubos y Gumbudos
         Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
-        Gunbudo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+        Gumbudo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
 
         //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
 		$usuarios = Yii::app()->usertools->users;
