@@ -1,14 +1,14 @@
 <?php
 
-/** GunbudosSingleton para operaciones relacionadas con los gungubos de un evento
+/** GumbudosSingleton para operaciones relacionadas con los gungubos de un evento
  */
-class GunbudosSingleton extends CApplicationComponent
+class GumbudosSingleton extends CApplicationComponent
 {
-    public function gunbudoAsaltanteAttack($gunbudo_id) 
+    public function gumbudoAsaltanteAttack($gumbudo_id)
 	{
-		//Cojo el gunbudo
-		$asaltante = Gunbudo::model()->findByPk($gunbudo_id);
-		if ($asaltante===null) return true; //Si ya no existe el gunbudo, no hago nada
+		//Cojo el gumbudo
+		$asaltante = Gumbudo::model()->findByPk($gumbudo_id);
+		if ($asaltante===null) return true; //Si ya no existe el gumbudo, no hago nada
 
 		$event_id = $asaltante->event_id;
 		
@@ -29,8 +29,8 @@ class GunbudosSingleton extends CApplicationComponent
         else
 		    $objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
 
-		//Saco las defensas del objetivo (gunbudos guardianes, mejoras del corral..)
-		$guardianes = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gunbudoClassGuardian)));
+		//Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
+		$guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
 		
 		$ataque_exitoso = true;
         $result = '';
@@ -44,7 +44,7 @@ class GunbudosSingleton extends CApplicationComponent
             } elseif ($result===2) { //Defensor wins
                 $ataque_exitoso = false;
 
-                //Cambio de armas del gunbudo asaltante y salvo.
+                //Cambio de armas del gumbudo asaltante y salvo.
                 $asaltante->weapon = $guardian->weapon;
                 if (!$asaltante->save())
                     throw new CHttpException(400, 'Error al guardar el cambio de arma del Asaltante '.$asaltante->id.'.');
@@ -63,7 +63,7 @@ class GunbudosSingleton extends CApplicationComponent
             $guardian->actions -= 1;
 
             if (!$guardian->save())
-                throw new CHttpException(400, 'Error al guardar el cambio de arma del gunbudo Guardián '.$guardian->id.'.');
+                throw new CHttpException(400, 'Error al guardar el cambio de arma del gumbudo Guardián '.$guardian->id.'.');
 
             //Continuo mirando el combate con el siguiente guardián si lo hubiere, siempre que el ataque no haya fallado ya
             if ($ataque_exitoso===false) break;
@@ -71,9 +71,9 @@ class GunbudosSingleton extends CApplicationComponent
 
 		//Si el atacante ha conseguido entrar y matar
 		if ($ataque_exitoso) {
-			$mata = mt_rand( intval(Yii::app()->config->getParam('gunbudoAsaltanteMinMuertes')), intval(Yii::app()->config->getParam('gunbudoAsaltanteMaxMuertes')) );
+			$mata = mt_rand( intval(Yii::app()->config->getParam('gumbudoAsaltanteMinMuertes')), intval(Yii::app()->config->getParam('gumbudoAsaltanteMaxMuertes')) );
 			
-			//Si el gunbudo era sanguinario mata el doble
+			//Si el gumbudo era sanguinario mata el doble
 			if ($asaltante->trait == Yii::app()->params->traitSanguinario)
 				$mata = $mata * $asaltante->trait_value; //Mata mucho más
 				
@@ -81,15 +81,15 @@ class GunbudosSingleton extends CApplicationComponent
 			$cuantos = Gungubo::model()->updateAll(array('location'=>'cementerio', 'health'=>0, 'attacker_id'=>$asaltante->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$mata.';', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
 			
 			//Textos de notificaciones
-			$txtA = ':'.Yii::app()->params->gunbudoClassAsaltante.': Tu Gunbudo Asaltante ha matado '.$cuantos.' gungubos en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).'.';
-			$txtD = ':'.Yii::app()->params->gunbudoClassGuardian.': Un Gunbudo Asaltante enemigo ha superado a tus Guardianes matando a '.$cuantos.' gungubos en tu corral.';
+			$txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Tu Gumbudo Asaltante ha matado '.$cuantos.' gungubos en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).'.';
+			$txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Asaltante enemigo ha superado a tus Guardianes matando a '.$cuantos.' gungubos en tu corral.';
 
 			//Fama Asaltante exitoso
             $owner->fame += 3; // 3 de fama por atacar con éxito
 		} else {
 			//Textos de notificaciones
-			$txtA = ':'.Yii::app()->params->gunbudoClassAsaltante.': Los Gunbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gunbudo Asaltante.';
-			$txtD = ':'.Yii::app()->params->gunbudoClassGuardian.': Tus Gunbudos Guardianes han detenido un ataque de un Asaltante en tu corral.';
+			$txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Los Gumbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gumbudo Asaltante.';
+			$txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Tus Gumbudos Guardianes han detenido un ataque de un Asaltante en tu corral.';
 
             //Fama según resultado, para el Asaltante si pierde el combate con derrota
             if ($result===2)
@@ -122,11 +122,11 @@ class GunbudosSingleton extends CApplicationComponent
 		return true;
     }
 	
-	public function gunbudoNigromanteAttack($gunbudo_id) 
+	public function gumbudoNigromanteAttack($gumbudo_id)
 	{
-        //Cojo el gunbudo
-        $nigromante = Gunbudo::model()->findByPk($gunbudo_id);
-        if ($nigromante===null) return true; //Si ya no existe el gunbudo, no hago nada
+        //Cojo el gumbudo
+        $nigromante = Gumbudo::model()->findByPk($gumbudo_id);
+        if ($nigromante===null) return true; //Si ya no existe el gumbudo, no hago nada
 
 		$event_id = $nigromante->event_id;
 		
@@ -141,8 +141,8 @@ Yii::log('Bando opuesto: '.$bando_opuesto, 'info');
 		$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'cementerio')));
 Yii::log('Hay '.count($cadaveres).' cadaveres', 'info');
 		//Cada cadáver tiene un % de convertirse en zombie
-		$probabilidadZombie = Yii::app()->config->getParam('gunbudoNigromanteProbabilidadZombie');		
-		$probabilidadColera = Yii::app()->config->getParam('gunbudoNigromanteProbabilidadColera');
+		$probabilidadZombie = Yii::app()->config->getParam('gumbudoNigromanteProbabilidadZombie');
+		$probabilidadColera = Yii::app()->config->getParam('gumbudoNigromanteProbabilidadColera');
 		$zombies = array();
 		$colericos = 0;
 		
@@ -162,7 +162,7 @@ Yii::log('Y es colerico!!!!', 'info');
 				$zombies[] = $cadaver;
 			}
 			
-			if (count($zombies) == Yii::app()->config->getParam('gunbudoNigromanteMaxZombies'))
+			if (count($zombies) == Yii::app()->config->getParam('gumbudoNigromanteMaxZombies'))
 				break; //si llego al máximo de zombies que puede convertir, termino de convertir
 		}
 Yii::log('Convierto estos zombies: '.count($zombies), 'info');
@@ -179,8 +179,8 @@ Yii::log('Convierto estos zombies: '.count($zombies), 'info');
             $objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
 
 Yii::log('Ataco a '.$objetivo->username.' con '.count($zombies).' zombies', 'info');
-		//Saco las defensas del objetivo (gunbudos guardianes, mejoras del corral..)
-		$guardianes = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gunbudoClassGuardian)));
+		//Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
+		$guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
 Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
 		//por cada zombie, calculo si se pega con un guardián o no
 		$zombies_atacan = 0;
@@ -190,13 +190,13 @@ Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
 				//Se pega contra un guardián
 				$guardian = array_shift($guardianes);
 				if ($guardian===null) 
-					throw new CHttpException(400, 'Error al resolver un choque de un Guardián con un zombie, en el ataque del Gunbudo Nigromante '.$nigromante->id.'.');
+					throw new CHttpException(400, 'Error al resolver un choque de un Guardián con un zombie, en el ataque del Gumbudo Nigromante '.$nigromante->id.'.');
 				
 				//El guardián tiene una acción menos pues.
 				$guardian->actions -= 1;
 
 				if (!$guardian->save())
-					throw new CHttpException(400, 'Error al guardar el cambio de arma del gunbudo Guardián '.$guardian->id.' tras ataque zombie.');
+					throw new CHttpException(400, 'Error al guardar el cambio de arma del gumbudo Guardián '.$guardian->id.' tras ataque zombie.');
 			} else {
 				//El zombie pasa y ataca con éxito
 				$zombies_atacan++;
@@ -245,7 +245,7 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' gungubos del corra
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
 		$notiA->user_id = $nigromante->owner_id;
-		$notiA->message = ':'.Yii::app()->params->gunbudoClassNigromante.': Tu Gunbudo Nigromante creó '.count($zombies).' Gungubos Zombie'.$txt_colericos.' con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos en el corral de '.ucfirst($objetivo->username).'.';
+		$notiA->message = ':'.Yii::app()->params->gumbudoClassNigromante.': Tu Gumbudo Nigromante creó '.count($zombies).' Gungubos Zombie'.$txt_colericos.' con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos en el corral de '.ucfirst($objetivo->username).'.';
 		if (!$notiA->save())
 			throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Zombie en evento '.$event_id.'.');
 		
@@ -261,11 +261,11 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' gungubos del corra
 	}
 	
 	
-	public function gunbudoArtificieroAttack($gunbudo_id) 
+	public function gumbudoArtificieroAttack($gumbudo_id)
 	{
-		//Cojo el gunbudo
-        $artificiero = Gunbudo::model()->findByPk($gunbudo_id);
-        if ($artificiero===null) return true; //Si ya no existe el gunbudo, no hago nada
+		//Cojo el gumbudo
+        $artificiero = Gumbudo::model()->findByPk($gumbudo_id);
+        if ($artificiero===null) return true; //Si ya no existe el gumbudo, no hago nada
 
 		$event_id = $artificiero->event_id;
 		
@@ -280,7 +280,7 @@ Yii::log('Bando opuesto: '.$bando_opuesto, 'info');
 		$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'cementerio')));
 Yii::log('Hay '.count($cadaveres).' cadaveres', 'info');
 		//Cada cadáver tiene un % de convertirse en bomba
-		$probabilidadBomba = Yii::app()->config->getParam('gunbudoArtificieroProbabilidadBomba');				
+		$probabilidadBomba = Yii::app()->config->getParam('gumbudoArtificieroProbabilidadBomba');
 		$bombas = array();		
 		
 		foreach($cadaveres as $cadaver) {
@@ -292,7 +292,7 @@ Yii::log('Bomba!!!!', 'info');
 				$bombas[] = $cadaver;
 			}
 			
-			if (count($bombas) == Yii::app()->config->getParam('gunbudoArtificieroMaxBombas'))
+			if (count($bombas) == Yii::app()->config->getParam('gumbudoArtificieroMaxBombas'))
 				break; //si llego al máximo de bombas que puede convertir, termino de convertir
 		}
 Yii::log('Convierto estas bombas: '.count($bombas), 'info');
@@ -305,8 +305,8 @@ Yii::log('Convierto estas bombas: '.count($bombas), 'info');
         else
             $objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);
 Yii::log('Ataco a '.$objetivo->username.' con '.count($bombas).' bombas', 'info');
-		//Saco las defensas del objetivo (gunbudos guardianes, mejoras del corral..)
-		$guardianes = Gunbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gunbudoClassGuardian)));
+		//Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
+		$guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
 Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
 		//por cada bomba, calculo si se pega con un guardián o no
 		$bombas_atacan = 0;
@@ -316,13 +316,13 @@ Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
 				//Se pega contra un guardián
 				$guardian = array_shift($guardianes);
 				if ($guardian===null) 
-					throw new CHttpException(400, 'Error al resolver un choque de un Guardián con un bomba, en el ataque del Gunbudo Artificiero '.$artificiero->id.'.');
+					throw new CHttpException(400, 'Error al resolver un choque de un Guardián con un bomba, en el ataque del Gumbudo Artificiero '.$artificiero->id.'.');
 				
 				//El guardián tiene una acción menos pues.
 				$guardian->actions -= 1;
 
 				if (!$guardian->save())
-					throw new CHttpException(400, 'Error al guardar el cambio de arma del gunbudo Guardián '.$guardian->id.' tras ataque bomba.');
+					throw new CHttpException(400, 'Error al guardar el cambio de arma del gumbudo Guardián '.$guardian->id.' tras ataque bomba.');
 			} else {
 				//El bomba pasa y ataca con éxito
 				$bombas_atacan++;
@@ -386,7 +386,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
 		$notiA->user_id = $artificiero->owner_id;
-		$notiA->message = ':'.Yii::app()->params->gunbudoClassArtificiero.': Tu Gunbudo Artificiero creó '.count($bombas).' Gungubos Bomba con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos'.$txt_quemados.' en el corral de '.ucfirst($objetivo->username).'.';
+		$notiA->message = ':'.Yii::app()->params->gumbudoClassArtificiero.': Tu Gumbudo Artificiero creó '.count($bombas).' Gungubos Bomba con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos'.$txt_quemados.' en el corral de '.ucfirst($objetivo->username).'.';
 		if (!$notiA->save())
 			throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Bomba en evento '.$event_id.'.');
 		
@@ -408,14 +408,14 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
 	//Devuelve 0 en empate, 1 en gana atacante y 2 en gana defensor
 	private function resolveCombat($atacante, $defensor) 
 	{
-		if ( ($atacante->weapon==Yii::app()->params->gunbudoWeapon1 && $defensor->weapon==Yii::app()->params->gunbudoWeapon2) ||
-			($atacante->weapon==Yii::app()->params->gunbudoWeapon2 && $defensor->weapon==Yii::app()->params->gunbudoWeapon3) ||
-			($atacante->weapon==Yii::app()->params->gunbudoWeapon3 && $defensor->weapon==Yii::app()->params->gunbudoWeapon1) )
+		if ( ($atacante->weapon==Yii::app()->params->gumbudoWeapon1 && $defensor->weapon==Yii::app()->params->gumbudoWeapon2) ||
+			($atacante->weapon==Yii::app()->params->gumbudoWeapon2 && $defensor->weapon==Yii::app()->params->gumbudoWeapon3) ||
+			($atacante->weapon==Yii::app()->params->gumbudoWeapon3 && $defensor->weapon==Yii::app()->params->gumbudoWeapon1) )
 			return 1;
 			
-		if ( ($defensor->weapon==Yii::app()->params->gunbudoWeapon1 && $atacante->weapon==Yii::app()->params->gunbudoWeapon2) ||
-			($defensor->weapon==Yii::app()->params->gunbudoWeapon2 && $atacante->weapon==Yii::app()->params->gunbudoWeapon3) ||
-			($defensor->weapon==Yii::app()->params->gunbudoWeapon3 && $atacante->weapon==Yii::app()->params->gunbudoWeapon1) )
+		if ( ($defensor->weapon==Yii::app()->params->gumbudoWeapon1 && $atacante->weapon==Yii::app()->params->gumbudoWeapon2) ||
+			($defensor->weapon==Yii::app()->params->gumbudoWeapon2 && $atacante->weapon==Yii::app()->params->gumbudoWeapon3) ||
+			($defensor->weapon==Yii::app()->params->gumbudoWeapon3 && $atacante->weapon==Yii::app()->params->gumbudoWeapon1) )
 			return 2;
 				
 		return 0;

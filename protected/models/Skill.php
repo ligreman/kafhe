@@ -14,8 +14,8 @@
  * @property integer $modifier_hidden
  * @property integer $duration
  * @property string $duration_type
- * @property integer $gunbudo_action_duration
- * @property integer $gunbudo_action_rate
+ * @property integer $gumbudo_action_duration
+ * @property integer $gumbudo_action_rate
  * @property integer $critic
  * @property integer $fail
  * @property string $extra_param
@@ -68,8 +68,8 @@ class Skill extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, category, type, keyword, modifier_keyword', 'required'),
-			array('modifier_hidden, duration, gunbudo_action_duration, gunbudo_action_rate, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, cost_gungubos, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_user_max_rank, require_talent_id, overload, generates_notification', 'numerical', 'integerOnly'=>true),
+			array('name, description, type, keyword, modifier_keyword', 'required'),
+			array('modifier_hidden, duration, gumbudo_action_duration, gumbudo_action_rate, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, cost_gungubos, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_user_max_rank, require_talent_id, overload, generates_notification', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>128),
 			array('description', 'length', 'max'=>255),
 			array('category', 'length', 'max'=>13),
@@ -79,7 +79,7 @@ class Skill extends CActiveRecord
 			array('require_target_side, require_user_side', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description, category, type, keyword, modifier_keyword, modifier_hidden, duration, duration_type, gunbudo_action_duration, gunbudo_action_rate, critic, fail, extra_param, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, cost_gungubos, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_max_rank, require_user_status, require_event_status, require_talent_id, overload, generates_notification', 'safe', 'on'=>'search'),
+			array('id, name, description, category, type, keyword, modifier_keyword, modifier_hidden, duration, duration_type, gumbudo_action_duration, gumbudo_action_rate, critic, fail, extra_param, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, cost_gungubos, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_target_side, require_caller, require_user_side, require_user_min_rank, require_user_max_rank, require_user_status, require_event_status, require_talent_id, overload, generates_notification', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -110,8 +110,8 @@ class Skill extends CActiveRecord
 			'modifier_hidden' => 'Modifier Hidden',
 			'duration' => 'Duration',
 			'duration_type' => 'Duration Type',
-			'gunbudo_action_duration' => 'Gunbudo Action Duration',
-			'gunbudo_action_rate' => 'Gunbudo Action Rate',
+			'gumbudo_action_duration' => 'Gumbudo Action Duration',
+			'gumbudo_action_rate' => 'Gumbudo Action Rate',
 			'critic' => 'Critic',
 			'fail' => 'Fail',
 			'extra_param' => 'Extra Param',
@@ -159,8 +159,8 @@ class Skill extends CActiveRecord
 		$criteria->compare('modifier_hidden',$this->modifier_hidden);
 		$criteria->compare('duration',$this->duration);
 		$criteria->compare('duration_type',$this->duration_type,true);
-		$criteria->compare('gunbudo_action_duration',$this->gunbudo_action_duration);
-		$criteria->compare('gunbudo_action_rate',$this->gunbudo_action_rate);
+		$criteria->compare('gumbudo_action_duration',$this->gumbudo_action_duration);
+		$criteria->compare('gumbudo_action_rate',$this->gumbudo_action_rate);
 		$criteria->compare('critic',$this->critic);
 		$criteria->compare('fail',$this->fail);
 		$criteria->compare('extra_param',$this->extra_param,true);

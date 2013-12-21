@@ -59,7 +59,7 @@ return array(
 		'usertools'=>array('class'=>'UserToolsSingleton'),
 		'modifier'=>array('class'=>'ModifierSingleton'),
         'gungubos'=>array('class'=>'GungubosSingleton'),
-        'gunbudos'=>array('class'=>'GunbudosSingleton'),
+        'gumbudos'=>array('class'=>'GumbudosSingleton'),
 		'tueste'=>array('class'=>'TuesteSingleton'),		
 		'config'=>array('class'=>'ConfigurationSingleton'),
         'skill'=>array('class'=>'SkillSingleton'),
@@ -118,27 +118,27 @@ return array(
         'skillOtearKafhe'=>'otearKafhe',
         'skillOtearAchikhoria'=>'otearAchikhoria',
 
-        'skillGunbudoAsaltante'=>'gunbudoAsaltante',
-        'skillGunbudoGuardian'=>'gunbudoGuardian',
-        'skillGunbudoCriador'=>'gunbudoCriador',
-        'skillGunbudoNigromante'=>'gunbudoNigromante',
-        'skillGunbudoArtificiero'=>'gunbudoArtificiero',
+        'skillGumbudoAsaltante'=>'gumbudoAsaltante',
+        'skillGumbudoGuardian'=>'gumbudoGuardian',
+        'skillGumbudoCriador'=>'gumbudoCriador',
+        'skillGumbudoNigromante'=>'gumbudoNigromante',
+        'skillGumbudoArtificiero'=>'gumbudoArtificiero',
 
-        //Gunbudos
-        'gunbudoClassAsaltante'=>'asaltante',
-        'gunbudoClassGuardian'=>'guardian',
-        'gunbudoClassCriador'=>'criador',
-        'gunbudoClassNigromante'=>'nigromante',
-        'gunbudoClassArtificiero'=>'artificiero',
+        //Gumbudos
+        'gumbudoClassAsaltante'=>'asaltante',
+        'gumbudoClassGuardian'=>'guardian',
+        'gumbudoClassCriador'=>'criador',
+        'gumbudoClassNigromante'=>'nigromante',
+        'gumbudoClassArtificiero'=>'artificiero',
 
         //Gungubo
         'gunguboClassZombie'=>'zombie',
         'gunguboClassBomba'=>'bomba',
 
         //Armas
-        'gunbudoWeapon1'=>'garras',
-        'gunbudoWeapon2'=>'colmillos',
-        'gunbudoWeapon3'=>'puas',
+        'gumbudoWeapon1'=>'garras',
+        'gumbudoWeapon2'=>'colmillos',
+        'gumbudoWeapon3'=>'puas',
 
         'traitAcorazado'=>'acorazado',
         'traitSanguinario'=>'sanguinario',
@@ -156,9 +156,9 @@ return array(
         'userStatusNames'=>array(0=>'Inactivo', 1=>'Alborotador', 2=>'Combatiente', 3=>'Baja', 4=>'Espectador', 5=>'Libertador'),
         'eventStatusNames'=>array(0=>'Cerrada', 1=>'Gungubos', 2=>'Batalla', 3=>'Finalizada', 4=>'En calma', 5=>'Preparativos'),
 
-        'gunbudoClassNames'=>array('asaltante'=>'Asaltante', 'guardian'=>'Guardián', 'criador'=>'Criador'),
-        'gunbudoClassNamesPlural'=>array('asaltante'=>'Asaltantes', 'guardian'=>'Guardianes', 'criador'=>'Criadores'),
-        'gunbudoWeaponNames'=>array('garras'=>'Garras', 'colmillos'=>'Colmillos', 'puas'=>'Púas'),
+        'gumbudoClassNames'=>array('asaltante'=>'Asaltante', 'guardian'=>'Guardián', 'criador'=>'Criador'),
+        'gumbudoClassNamesPlural'=>array('asaltante'=>'Asaltantes', 'guardian'=>'Guardianes', 'criador'=>'Criadores'),
+        'gumbudoWeaponNames'=>array('garras'=>'Garras', 'colmillos'=>'Colmillos', 'puas'=>'Púas'),
 
         'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar'),
         'conditionNames'=>array('quemadura'=>'Quemadura'),

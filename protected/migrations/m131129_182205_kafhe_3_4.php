@@ -22,12 +22,12 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE cronpile ADD type varchar(20) NULL DEFAULT NULL AFTER id;');
 
         //Skill
-        $this->execute('ALTER TABLE skill ADD gunbudo_action_duration tinyint(1) NULL DEFAULT NULL AFTER duration_type;');
-        $this->execute('ALTER TABLE skill ADD gunbudo_action_rate tinyint(1) NULL DEFAULT NULL AFTER gunbudo_action_duration;');
+        $this->execute('ALTER TABLE skill ADD gumbudo_action_duration tinyint(1) NULL DEFAULT NULL AFTER duration_type;');
+        $this->execute('ALTER TABLE skill ADD gumbudo_action_rate tinyint(1) NULL DEFAULT NULL AFTER gumbudo_action_duration;');
         $this->execute('ALTER TABLE skill ADD overload tinyint(1) NULL DEFAULT 1 AFTER require_talent_id;');
         $this->execute('ALTER TABLE skill ADD generates_notification tinyint(1) NULL DEFAULT 1 AFTER overload;');
         $this->execute('ALTER TABLE skill ADD cost_gungubos smallint(5) NULL DEFAULT NULL AFTER cost_tostolares;');
-        $this->execute("ALTER TABLE skill CHANGE `category` `category` ENUM('gungubos','gunbudos','batalla','relanzamiento','ancestral');");
+        $this->execute("ALTER TABLE skill CHANGE `category` `category` ENUM('gungubos','gumbudos','batalla','relanzamiento','ancestral');");
         $this->execute('ALTER TABLE modifier CHANGE `value` `value` VARCHAR(15);');
 
         $this->execute('TRUNCATE TABLE skill;');
@@ -36,7 +36,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         // OTEAR
         $this->insert('skill', array(
             'name'  =>  'Otear',                         // Nombre de la habilidad
-            'description'  =>  'Otea los corrales Renunciantes para saber qué arma predomina entre sus Gunbudos Asaltantes.',                  // Descripción de la habilidad
+            'description'  =>  'Otea los corrales Renunciantes para saber qué arma predomina entre sus Gumbudos Asaltantes.',                  // Descripción de la habilidad
             'category'  =>  'gungubos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'otearKafhe',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -44,8 +44,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  NULL,                   // Int con la cantidad para la duración
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
-            'gunbudo_action_duration' => NULL,        // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => NULL,             // Cada cuanto actúa el Gunbudo
+            'gumbudo_action_duration' => NULL,        // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,             // Cada cuanto actúa el Gumbudo
             'critic'  =>  10,                        // Int con el % crítico
             'fail'  =>  10,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad
@@ -70,7 +70,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         ));
         $this->insert('skill', array(
             'name'  =>  'Otear',                         // Nombre de la habilidad
-            'description'  =>  'Otea los corrales Kafheítas para saber qué arma predomina entre sus Gunbudos Guardianes.',                  // Descripción de la habilidad
+            'description'  =>  'Otea los corrales Kafheítas para saber qué arma predomina entre sus Gumbudos Guardianes.',                  // Descripción de la habilidad
             'category'  =>  'gungubos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'otearAchikhoria',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -78,8 +78,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  NULL,                   // Int con la cantidad para la duración
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
-            'gunbudo_action_duration' => NULL,        // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => NULL,             // Cada cuanto actúa el Gunbudo
+            'gumbudo_action_duration' => NULL,        // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,             // Cada cuanto actúa el Gumbudo
             'critic'  =>  10,                        // Int con el % crítico
             'fail'  =>  10,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad
@@ -215,8 +215,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'modifier_hidden' => 1,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  1,                   // Int con la cantidad para la duración
             'duration_type'  =>  'horas',              // Tipo de duración. Puede ser: horas, evento, usos
-            'gunbudo_action_duration' => NULL,      // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => NULL,          // Cada cuanto actúa el Gunbudo
+            'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
             'critic'  =>  5,                         // Int con el % crítico
             'fail'  =>  10,                           // Int con el % de pifia
             'extra_param' => NULL,                  // String con parámetro extra que se necesite para algo. Por ejemplo, CazarGungubos, para la cantidad de gugubos a cazar.
@@ -245,17 +245,17 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 
         // GUNBUDO ASALTANTE
         $this->insert('skill', array(
-            'name'  =>  'Gunbudo Asaltante',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gunbudo Asaltante.',                  // Descripción de la habilidad
-            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'name'  =>  'Gumbudo Asaltante',                         // Nombre de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Asaltante.',                  // Descripción de la habilidad
+            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
-            'keyword'  =>  'gunbudoAsaltante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'keyword'  =>  'gumbudoAsaltante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
             'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  NULL,                   // Int con la cantidad para la duración
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
-            'gunbudo_action_duration' => 12,        // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => 2,             // Cada cuanto actúa el Gunbudo
+            'gumbudo_action_duration' => 12,        // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => 2,             // Cada cuanto actúa el Gumbudo
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de
@@ -283,17 +283,17 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 
         // GUNBUDO GUARDIAN
         $this->insert('skill', array(
-            'name'  =>  'Gunbudo Guardián',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gunbudo Guardián.',                  // Descripción de la habilidad
-            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'name'  =>  'Gumbudo Guardián',                         // Nombre de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Guardián.',                  // Descripción de la habilidad
+            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
-            'keyword'  =>  'gunbudoGuardian',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'keyword'  =>  'gumbudoGuardian',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
             'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  NULL,                   // Int con la cantidad para la duración
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
-            'gunbudo_action_duration' => 12,        // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => NULL,             // Cada cuanto actúa el Gunbudo
+            'gumbudo_action_duration' => 12,        // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,             // Cada cuanto actúa el Gumbudo
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad
@@ -321,17 +321,17 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 
         // GUNBUDO CRIADOR
         $this->insert('skill', array(
-            'name'  =>  'Gunbudo Criador',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gunbudo Criador.',                  // Descripción de la habilidad
-            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'name'  =>  'Gumbudo Criador',                         // Nombre de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Criador.',                  // Descripción de la habilidad
+            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
-            'keyword'  =>  'gunbudoCriador',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'keyword'  =>  'gumbudoCriador',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
             'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  NULL,                   // Int con la cantidad para la duración
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
-            'gunbudo_action_duration' => 24,        // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => NULL,             // Cada cuanto actúa el Gunbudo
+            'gumbudo_action_duration' => 24,        // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,             // Cada cuanto actúa el Gumbudo
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de que salga Guardián
@@ -359,17 +359,17 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 		
 		// GUNBUDO NIGROMANTE
         $this->insert('skill', array(
-            'name'  =>  'Gunbudo Nigromante',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gunbudo Nigromante.',                  // Descripción de la habilidad
-            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'name'  =>  'Gumbudo Nigromante',                         // Nombre de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Nigromante.',                  // Descripción de la habilidad
+            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
-            'keyword'  =>  'gunbudoNigromante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'keyword'  =>  'gumbudoNigromante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
             'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  NULL,                   // Int con la cantidad para la duración
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
-            'gunbudo_action_duration' => 12,        // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => 2,             // Cada cuanto actúa el Gunbudo
+            'gumbudo_action_duration' => 12,        // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => 2,             // Cada cuanto actúa el Gumbudo
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de 
@@ -397,17 +397,17 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 		
 		// GUNBUDO ARTIFICIERO
         $this->insert('skill', array(
-            'name'  =>  'Gunbudo Artificiero',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gunbudo Artificiero.',                  // Descripción de la habilidad
-            'category'  =>  'gunbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'name'  =>  'Gumbudo Artificiero',                         // Nombre de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Artificiero.',                  // Descripción de la habilidad
+            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
-            'keyword'  =>  'gunbudoArtificiero',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'keyword'  =>  'gumbudoArtificiero',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
             'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  NULL,                   // Int con la cantidad para la duración
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
-            'gunbudo_action_duration' => 12,        // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => 2,             // Cada cuanto actúa el Gunbudo
+            'gumbudo_action_duration' => 12,        // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => 2,             // Cada cuanto actúa el Gumbudo
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de 
@@ -443,8 +443,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE event DROP COLUMN last_gungubos_repopulate_timestamp;');
         $this->execute('ALTER TABLE user DROP COLUMN fame;');
 		$this->execute('ALTER TABLE user DROP COLUMN last_activity;');
-        $this->execute('ALTER TABLE skill DROP COLUMN gunbudo_action_duration;');
-        $this->execute('ALTER TABLE skill DROP COLUMN gunbudo_action_rate;');
+        $this->execute('ALTER TABLE skill DROP COLUMN gumbudo_action_duration;');
+        $this->execute('ALTER TABLE skill DROP COLUMN gumbudo_action_rate;');
         $this->execute('ALTER TABLE skill DROP COLUMN generates_notification;');
         $this->execute('ALTER TABLE skill DROP COLUMN overload;');
         $this->execute('ALTER TABLE skill DROP COLUMN cost_gungubos;');
@@ -452,14 +452,14 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute("ALTER TABLE `skill` CHANGE `category` `category` ENUM('gungubos','batalla','relanzamiento','ancestral');");
         $this->execute('ALTER TABLE modifier CHANGE `value` `value` INT(10);');
 
-        $this->delete('skill', "keyword='gunbudoAsaltante'");
-        $this->delete('skill', "keyword='gunbudoGuardian'");
+        $this->delete('skill', "keyword='gumbudoAsaltante'");
+        $this->delete('skill', "keyword='gumbudoGuardian'");
         $this->delete('configuration', "param='maxGungubosCorral'");
         $this->delete('configuration', "param='defaultGunguboHelath'");
 
 
         $this->dropTable('gungubo');
-        $this->dropTable('gunbudo');
+        $this->dropTable('gumbudo');
         $this->dropTable('notification_corral');
         $this->dropTable('comment');
 
@@ -481,8 +481,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 	        'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
             'duration'  =>  NULL,                   // Int con la cantidad para la duración
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
-	        'gunbudo_action_duration' => NULL,      // Duración de actividad de un Gunbudo
-            'gunbudo_action_rate' => NULL,          // Cada cuanto actúa el Gunbudo
+	        'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
             'critic'  =>  ,                         // Int con el % crítico
             'fail'  =>  ,                           // Int con el % de pifia
             'extra_param' => NULL,                  // String con parámetro extra que se necesite para algo. Por ejemplo, CazarGungubos, para la cantidad de gugubos a cazar.
