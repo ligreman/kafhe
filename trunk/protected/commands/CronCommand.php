@@ -119,9 +119,10 @@ class CronCommand extends CConsoleCommand {
                 if ($regenerado !== false) {
                     //Si ya estoy al máximo de tueste cambio mi estado a Criador, si soy Cazador, y miro el desborde
                     $usuario->ptos_tueste += $regenerado;
+                    $maxTueste = Yii::app()->tueste->maxTuesteUser($usuario);
 
-                    if ($usuario->ptos_tueste > intval(Yii::app()->config->getParam('maxTuesteUsuario')) )
-                        $usuario->ptos_tueste = intval(Yii::app()->config->getParam('maxTuesteUsuario'));
+                    if ($usuario->ptos_tueste > $maxTueste)
+                        $usuario->ptos_tueste = $maxTueste;
 
                     $usuario->last_regen_timestamp = date('Y-m-d H:i:s');
                     $this->logCron('        - Tueste regenerado: '.$regenerado.'.', 'info');
@@ -380,7 +381,8 @@ class CronCommand extends CConsoleCommand {
 					$nuevos_quemados += $cuantos;
 				}
 			}
-			
+
+			///TODO
 			//Pongo quemadura a los nuevos Gungubos quemados
 			
 			//Notifico de las muertes y nuevos quemados
