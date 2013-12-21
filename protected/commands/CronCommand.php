@@ -276,10 +276,10 @@ class CronCommand extends CConsoleCommand {
                 foreach($jugadores as $jugador) {
                     $this->logCron('     Corral del jugador '.$jugador->username.'.', 'info');
 
-                    //Saco sus Gunbudos Criadores
-                    $gunbudos = Gunbudo::model()->count(array('condition'=>'owner_id=:owner AND event_id=:evento AND class=:clase', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':clase'=>Yii::app()->params->gunbudoClassCriador)));
+                    //Saco sus Gumbudos Criadores
+                    $gumbudos = Gumbudo::model()->count(array('condition'=>'owner_id=:owner AND event_id=:evento AND class=:clase', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassCriador)));
 
-                    if (intval($gunbudos)==0) {
+                    if (intval($gumbudos)==0) {
                         //Quito contador a los Gungubos de este jugador que no tiene Criador
                         $this->reduceHealthGungubos($event->id, $jugador->id);
                         $this->logCron('      - No tiene Criador.', 'info');
@@ -296,10 +296,10 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }
 
-    /** 1 hora Cada hora ciclo de vida de gunbudos: activo guardianes,
+    /** 1 hora Cada hora ciclo de vida de gumbudos: activo guardianes,
      */
-    public function actionGunbudosLifecycle() {
-        $this->logCron('Ciclo de vida de los Gunbudos.', 'info');
+    public function actionGumbudosLifecycle() {
+        $this->logCron('Ciclo de vida de los Gumbudos.', 'info');
 
         //Para todos los eventos de estado "iniciado" (1)
         $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
@@ -308,13 +308,13 @@ class CronCommand extends CConsoleCommand {
             foreach($events as $event) {
                 $this->logCron('  Comprobando el evento '.$event->id.'.', 'info');
 
-                //Activo a los Gunbudos Guardianes normales para que defiendan.
-                Gunbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gunbudoGuardianActions')),'event_id=:evento', array(':evento'=>$event->id));
+                //Activo a los Gumbudos Guardianes normales para que defiendan.
+                Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoGuardianActions')),'event_id=:evento', array(':evento'=>$event->id));
 
-                //Para los gunbudos guardianes con trait Acorazado es una defensa más de la de por defecto
-                Gunbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gunbudoGuardianActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitAcorazado));
+                //Para los gumbudos guardianes con trait Acorazado es una defensa más de la de por defecto
+                Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoGuardianActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitAcorazado));
 
-                $this->logCron('    Activados los Gunbudos guardianes en el evento '.$event->id.'.', 'info');
+                $this->logCron('    Activados los Gumbudos guardianes en el evento '.$event->id.'.', 'info');
             }
         }
 
@@ -323,30 +323,30 @@ class CronCommand extends CConsoleCommand {
 
     /** 5 minutos
      */
-    public function actionMuerteGunbudos() {
-        $this->logCron('Muerte de Gunbudos.', 'info');
+    public function actionMuerteGumbudos() {
+        $this->logCron('Muerte de Gumbudos.', 'info');
 
         //Para todos los eventos de estado "iniciado" (1)
         $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
 
         if ($events != null) {
             foreach($events as $event) {
-                //Cojo Gunbudos que hayan caducado
-                $gunbudos = Gunbudo::model()->findAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+                //Cojo Gumbudos que hayan caducado
+                $gumbudos = Gumbudo::model()->findAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
 
-                //Mato a los gunbudos que se les haya pasado el arroz
-                Gunbudo::model()->deleteAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
-                $this->logCron('    Eliminados los Gunbudos caducados en el evento '.$event->id.'.', 'info');
+                //Mato a los gumbudos que se les haya pasado el arroz
+                Gumbudo::model()->deleteAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+                $this->logCron('    Eliminados los Gumbudos caducados en el evento '.$event->id.'.', 'info');
 
-                //Quito los pilacron de los gunbudos muertos
+                //Quito los pilacron de los gumbudos muertos
                 $ids = array();
-                foreach ($gunbudos as $gunbudo) {
-                    $ids[] = 'params='.$gunbudo->id;
+                foreach ($gumbudos as $gumbudo) {
+                    $ids[] = 'params='.$gumbudo->id;
                 }
 
                 if (!empty($ids)) {
-                    Cronpile::model()->deleteAll(array('condition'=>'type=:tipo AND ('.implode(' OR ', $ids).')', 'params'=>array(':tipo'=>'gunbudo')));
-                    $this->logCron('    Eliminadas las entradas en Cronpile de los Gunbudos caducados en el evento '.$event->id.'.', 'info');
+                    Cronpile::model()->deleteAll(array('condition'=>'type=:tipo AND ('.implode(' OR ', $ids).')', 'params'=>array(':tipo'=>'gumbudo')));
+                    $this->logCron('    Eliminadas las entradas en Cronpile de los Gumbudos caducados en el evento '.$event->id.'.', 'info');
                 }
             }
         }
@@ -475,14 +475,14 @@ class CronCommand extends CConsoleCommand {
                 case 'generateRanking':
                         $result = Yii::app()->event->generateRanking();
                     break;
-                case 'gunbudoAsaltanteAttack':
-                        $result = Yii::app()->gunbudos->gunbudoAsaltanteAttack($cronjob->params); //En params va el id del gunbudo que ataca
+                case 'gumbudoAsaltanteAttack':
+                        $result = Yii::app()->gumbudos->gumbudoAsaltanteAttack($cronjob->params); //En params va el id del gumbudo que ataca
                     break;
-				case 'gunbudoNigromanteAttack':
-						$result = Yii::app()->gunbudos->gunbudoNigromanteAttack($cronjob->params); //En params va el id del gunbudo que ataca
+				case 'gumbudoNigromanteAttack':
+						$result = Yii::app()->gumbudos->gumbudoNigromanteAttack($cronjob->params); //En params va el id del gumbudo que ataca
 					break;
-                case 'gunbudoArtificieroAttack':
-                    $result = Yii::app()->gunbudos->gunbudoArtificieroAttack($cronjob->params); //En params va el id del gunbudo que ataca
+                case 'gumbudoArtificieroAttack':
+                    $result = Yii::app()->gumbudos->gumbudoArtificieroAttack($cronjob->params); //En params va el id del gumbudo que ataca
                     break;
             }
 			

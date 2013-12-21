@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `gungubo` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `gunbudo` (
+CREATE TABLE IF NOT EXISTS `gumbudo` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `event_id` int(11) NOT NULL,
   `owner_id` int(11) NOT NULL,
@@ -108,35 +108,35 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoGuardianActions', '1', 'Gunbudos', 'Contadores de acción que indica el número de veces que los Gunbudos Guardianes pueden defender cada hora.');
+	('gumbudoGuardianActions', '1', 'Gumbudos', 'Contadores de acción que indica el número de veces que los Gumbudos Guardianes pueden defender cada hora.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
-  ('gunbudoGuardianProbabilidadAcorazado', '20', 'Gunbudos', 'Probabilidad de que el Gunbudo tenga la característica de Acorazado.');
+  ('gumbudoGuardianProbabilidadAcorazado', '20', 'Gumbudos', 'Probabilidad de que el Gumbudo tenga la característica de Acorazado.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoAsaltanteActions', '1', 'Gunbudos', 'Contadores de acción que indica el número de veces que los Gunbudos Asaltantes pueden atacar cada hora.');
+	('gumbudoAsaltanteActions', '1', 'Gumbudos', 'Contadores de acción que indica el número de veces que los Gumbudos Asaltantes pueden atacar cada hora.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoAsaltanteMinMuertes', '1', 'Gunbudos', 'Mínimo número de Gungubos que mata en un ataque con éxito.');
+	('gumbudoAsaltanteMinMuertes', '1', 'Gumbudos', 'Mínimo número de Gungubos que mata en un ataque con éxito.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoAsaltanteMaxMuertes', '5', 'Gunbudos', 'Máximo número de Gungubos que mata en un ataque con éxito.');
+	('gumbudoAsaltanteMaxMuertes', '5', 'Gumbudos', 'Máximo número de Gungubos que mata en un ataque con éxito.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
-  ('gunbudoAsaltanteProbabilidadSanguinario', '20', 'Gunbudos', 'Probabilidad de que el Gunbudo tenga la característica de Sanguinario.');
+  ('gumbudoAsaltanteProbabilidadSanguinario', '20', 'Gumbudos', 'Probabilidad de que el Gumbudo tenga la característica de Sanguinario.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoNigromanteProbabilidadZombie', '25', 'Gunbudos', 'Probabilidad en cada ataque de convertir en Gungubos Zombie los cadáveres del cementerio.');
+	('gumbudoNigromanteProbabilidadZombie', '25', 'Gumbudos', 'Probabilidad en cada ataque de convertir en Gungubos Zombie los cadáveres del cementerio.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoNigromanteMaxZombies', '10', 'Gunbudos', 'Máximo número de Gungubos Zombie que puede crear por ataque.');
+	('gumbudoNigromanteMaxZombies', '10', 'Gumbudos', 'Máximo número de Gungubos Zombie que puede crear por ataque.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoNigromanteProbabilidadColera', '10', 'Gunbudos', 'Probabilidad de que cada Gungubo Zombie que convierta tenga la característica Cólera.');
+	('gumbudoNigromanteProbabilidadColera', '10', 'Gumbudos', 'Probabilidad de que cada Gungubo Zombie que convierta tenga la característica Cólera.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoArtificieroProbabilidadBomba', '25', 'Gunbudos', 'Probabilidad en cada ataque de crear Gungubos Bomba con los cadáveres del cementerio.');
+	('gumbudoArtificieroProbabilidadBomba', '25', 'Gumbudos', 'Probabilidad en cada ataque de crear Gungubos Bomba con los cadáveres del cementerio.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoArtificieroMaxBombas', '10', 'Gunbudos', 'Máximo número de Gungubos Bomba que puede crear por ataque.');
+	('gumbudoArtificieroMaxBombas', '10', 'Gumbudos', 'Máximo número de Gungubos Bomba que puede crear por ataque.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoAsedioGungubosSacrificados', '2', 'Gunbudos', 'Cantidad de Gungubos que se catapultan en cada ataque, y por tanto son sacrificados.');
+	('gumbudoAsedioGungubosSacrificados', '2', 'Gumbudos', 'Cantidad de Gungubos que se catapultan en cada ataque, y por tanto son sacrificados.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoAsedioMinMuertes', '1', 'Gunbudos', 'Mínimo número de Gungubos matados por ataque.');
+	('gumbudoAsedioMinMuertes', '1', 'Gumbudos', 'Mínimo número de Gungubos matados por ataque.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoAsedioMaxMuertes', '3', 'Gunbudos', 'Máximo número de Gungubos matados por ataque.');
+	('gumbudoAsedioMaxMuertes', '3', 'Gumbudos', 'Máximo número de Gungubos matados por ataque.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('gunbudoGunbudensteinProbabilidadCanibal', '10', 'Gunbudos', 'Probabilidad de que un Gungubo nacido bajo la influencia de un Gunbudenstein tenga la característica Caníbal.');
+	('gumbudoGunbudensteinProbabilidadCanibal', '10', 'Gumbudos', 'Probabilidad de que un Gungubo nacido bajo la influencia de un Gunbudenstein tenga la característica Caníbal.');
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
