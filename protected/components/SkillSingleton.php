@@ -95,18 +95,12 @@ class SkillSingleton extends CApplicationComponent
 			//Ejecuto la skill
 			switch ($skill->keyword) {
 				case Yii::app()->params->skillHidratar: $this->hidratar($skill, $finalTarget); break;
-                //case Yii::app()->params->skillDesecar: $this->desecar($skill, $finalTarget); break;
 				case Yii::app()->params->skillDisimular: $this->disimular($skill); break;
-				//case Yii::app()->params->skillCazarGungubos: $this->cazarGungubos($skill); break;
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
-				//case Yii::app()->params->skillRescatarGungubos: $this->rescatarGungubos($skill); break; //agente libre
                 case Yii::app()->params->skillTrampaTueste: $this->trampa($skill); break;
                 case Yii::app()->params->skillTrampaPifia: $this->trampa($skill); break;
-                //case Yii::app()->params->skillLiberarGungubos: $this->liberarGungubos($skill); break;
-                //case Yii::app()->params->skillAtraerGungubos: $this->atraerGungubos($skill); break;
-                //case Yii::app()->params->skillProtegerGungubos: $this->protegerGungubos($skill, $finalTarget); break;
-                //case Yii::app()->params->skillOtear: $this->otear($skill, $finalTarget); break;
                 case Yii::app()->params->skillSenuelo: $this->senuelo($skill); break;
+                case Yii::app()->params->skillSacrificar: $this->sacrificar($skill, $finalTarget); break;
 
                 case Yii::app()->params->skillOtearKafhe: $this->otearKafhe($skill); break;
                 case Yii::app()->params->skillOtearAchikhoria: $this->otearAchikhoria($skill); break;
@@ -676,6 +670,16 @@ class SkillSingleton extends CApplicationComponent
         return true;
     }
 
+    private function sacrificar($skill, $finalTarget)
+    {
+        //Doy 100 puntos de tueste al usuario
+        $finalTarget->ptos_tueste = min($finalTarget->ptos_tueste+intval($skill->extra_param), Yii::app()->currentUser->maxTueste);
+
+        if (!$finalTarget->save())
+            throw new CHttpException(400, 'Error al guardar el usuario ('.$finalTarget->username.') al darle el tueste correspondiente al Sacrificio. ['.print_r($finalTarget->getErrors(),true).']');
+
+        return true;
+    }
 
     /** Crea un modificador de "oteando"
      * @param $skill Obj de la skill
