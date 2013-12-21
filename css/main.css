@@ -664,6 +664,7 @@ label.title{
     border-radius: 30px;
     border: 3px solid white;
     margin-top: -6px;
+    margin-right: -8px;
 }
 
 #tueste .pin{
@@ -1125,6 +1126,8 @@ img.grayScale{
     top:-2.2em;
     background: #333333;
     color:#ffffff;
+    width: 16em;
+    left: -8em;
 }
 
 #battleStatus .w0 .pin:hover .title, #battleStatus .w1 .pin:hover .title, #battleStatus .w2 .pin:hover .title{
@@ -1221,6 +1224,78 @@ img.grayScale{
 
 #battleStatus .w100 .title .flecha-down{
     left:113px;
+}
+
+#tuesteRetueste .w0 .pin:hover .title, #tuesteRetueste .w1 .pin:hover .title, #tuesteRetueste .w2 .pin:hover .title{
+    left:1em;
+}
+
+#tuesteRetueste .w3 .pin:hover .title{
+    left:1em;
+}
+
+#tuesteRetueste .w4 .pin:hover .title{
+    left:-2.6em;
+}
+
+#tuesteRetueste .w5 .pin:hover .title{
+    left:-3.5em;
+}
+
+#tuesteRetueste .w6 .pin:hover .title{
+    left:-4.4em;
+}
+
+#tuesteRetueste .w7 .pin:hover .title{
+    left:-5.3em;
+}
+
+#tuesteRetueste .w8 .pin:hover .title{
+    left:-6.2em;
+}
+
+#tuesteRetueste .w9 .pin:hover .title{
+    left:-7.1em;
+}
+
+#tuesteRetueste .w91 .pin:hover .title{
+    left:-9.3em;
+}
+
+#tuesteRetueste .w92 .pin:hover .title{
+    left:-10.2em;
+}
+
+#tuesteRetueste .w93 .pin:hover .title{
+    left:-11em;
+}
+
+#tuesteRetueste .w94 .pin:hover .title{
+    left:-11.9em;
+}
+
+#tuesteRetueste .w95 .pin:hover .title{
+    left:-12.7em;
+}
+
+#tuesteRetueste .w96 .pin:hover .title{
+    left:-13.5em;
+}
+
+#tuesteRetueste .w97 .pin:hover .title{
+    left:-14.4em;
+}
+
+#tuesteRetueste .w98 .pin:hover .title{
+    left:-15.3em;
+}
+
+#tuesteRetueste .w99 .pin:hover .title{
+    left:-16.2em;
+}
+
+#tuesteRetueste .w100 .pin:hover .title{
+    left:-17em;
 }
 
 .score{

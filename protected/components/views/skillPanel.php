@@ -1,10 +1,15 @@
 
 <div id="energia">
+    <?php
+        $toastPerInterval = Yii::app()->tueste->getTuesteRegenerado($user);
+        $intervalSeconds = Yii::app()->config->getParam('tiempoRegeneracionTueste');
+        $toastPerHour = (3600 / $intervalSeconds) * $toastPerInterval;
+    ?>
     <div id="tuesteRetueste">
         <span id="tueste" class="w<?php echo floor(($user->ptos_tueste/$maxTueste)*100); ?>">
             <?php if($user->ptos_tueste > 0):?>
                 <span class="pin">
-                    <span class="title"><?php echo $user->ptos_tueste; ?> puntos de tueste</span>
+                    <span class="title"><?php echo $user->ptos_tueste; ?> puntos de tueste (<?php echo $toastPerHour;?> PT/h)</span>
                 </span>
             <?php endif; ?>
         </span>
