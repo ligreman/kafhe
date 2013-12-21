@@ -24,6 +24,10 @@ class UserSingleton extends CApplicationComponent
         return $this->_model;
     }
 
+    public function getMaxTueste() {
+        return Yii::app()->tueste->maxTuesteUser($this->_model);
+    }
+
     public function getId() { return $this->model->id; }
     public function getAlias() { return $this->model->alias; }
     public function getEmail() { return $this->model->email; }

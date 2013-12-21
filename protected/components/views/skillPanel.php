@@ -54,10 +54,12 @@
                                             echo ' <span title="Tueste extra por sobrecarga, etc." class="rojo">+ '.($costeFinal - $skill->cost_tueste).'</span> = '.$costeFinal;
 
                                         echo ' (tueste)';
-                                    }
-                                    if($skill->cost_retueste!==null && $skill->cost_retueste > 0) echo ' '.$skill->cost_retueste.' (retueste)';
-                                    if($skill->cost_relanzamiento!==null && $skill->cost_relanzamiento > 0) echo ' '.$skill->cost_relanzamiento.' (lágrimas)';
-                                    if($skill->cost_tostolares!==null && $skill->cost_tostolares > 0) echo ' '.$skill->cost_tostolares.' (tostólares)';
+                                    } elseif ($skill->cost_tueste==0) echo '0 (tueste)';
+                                    if($skill->cost_retueste!==null && $skill->cost_retueste > 0) echo ' + '.$skill->cost_retueste.' (retueste)';
+                                    if($skill->cost_relanzamiento!==null && $skill->cost_relanzamiento > 0) echo ' + '.$skill->cost_relanzamiento.' (lágrimas)';
+                                    if($skill->cost_tostolares!==null && $skill->cost_tostolares > 0) echo ' + '.$skill->cost_tostolares.' (tostólares)';
+                                    if($skill->cost_gungubos!==null && $skill->cost_gungubos > 0) echo ' + '.$skill->cost_gungubos.' (gungubos)';
+
                                     ?></dd>
                                 <dt>Probabilidad de Crítico:</dt>
                                 <dd><?php echo $skill->critic; ?></dd>

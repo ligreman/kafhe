@@ -42,7 +42,7 @@ class AjaxController extends Controller
 		//Tueste del usuario
 		$user = User::model()->findByPk(Yii::app()->currentUser->id);
 		$data['ptos_tueste'] = $user->ptos_tueste;
-		$data['ptos_tueste_percent'] = floor(($user->ptos_tueste/Yii::app()->config->getParam('maxTuesteUsuario'))*100);
+		$data['ptos_tueste_percent'] = floor(($user->ptos_tueste/Yii::app()->currentUser->maxTueste)*100);
 		
 		//Estado batalla
 		$event = Event::model()->findByPk(Yii::app()->event->id);
