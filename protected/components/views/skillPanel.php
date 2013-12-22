@@ -13,13 +13,13 @@
                 </span>
             <?php endif; ?>
         </span>
-        <span id="retueste" class="w<?php echo floor(($user->ptos_retueste/$maxTueste)*100); ?>">
-            <?php if($user->ptos_retueste > 0):?>
+        <?php if($user->ptos_retueste > 0):?>
+            <span id="retueste" class="w<?php echo floor(($user->ptos_retueste/$maxTueste)*100); ?>">
                 <span class="pin">
                     <span class="title"><?php echo $user->ptos_retueste; ?> puntos de retueste</span>
                 </span>
-            <?php endif; ?>
-        </span>
+            </span>
+        <?php endif; ?>
     </div>
 </div>
 <?php

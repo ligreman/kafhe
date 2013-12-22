@@ -658,7 +658,7 @@ label.title{
     float:right;
 }
 
-#tueste .pin, #retueste .pin{
+#tueste .pin{
     box-shadow: 0 3px 2px rgba(0,0,0,.15);
     height: 10px;
     width: 10px;
@@ -667,6 +667,17 @@ label.title{
     border: 3px solid white;
     margin-top: -6px;
     margin-right: -8px;
+}
+
+#retueste .pin{
+    box-shadow: 0 3px 2px rgba(0,0,0,.15);
+    height: 10px;
+    width: 10px;
+    display: block;
+    border-radius: 30px;
+    border: 3px solid white;
+    margin-top: -6px;
+    margin-left: -8px;
 }
 
 #tueste .pin{
@@ -860,7 +871,6 @@ img.grayScale{
     width: 25em;
     margin: 6% auto;
     background: white;
-    padding: .5em 2em;
 }
 
 .sdcontent h1{
@@ -1137,6 +1147,14 @@ img.grayScale{
     left: -8em;
 }
 
+#retueste .pin:hover .title{
+    top:-2.2em;
+    background: #333333;
+    color:#ffffff;
+    width: 12em;
+    left: -6em;
+}
+
 #battleStatus .w0 .pin:hover .title, #battleStatus .w1 .pin:hover .title, #battleStatus .w2 .pin:hover .title{
     left:-0.4em;
 }
@@ -1233,76 +1251,136 @@ img.grayScale{
     left:113px;
 }
 
-#tuesteRetueste .w0 .pin:hover .title, #tuesteRetueste .w1 .pin:hover .title, #tuesteRetueste .w2 .pin:hover .title{
+#tueste.w0 .pin:hover .title, #tueste.w1 .pin:hover .title, #tueste.w2 .pin:hover .title{
     left:1em;
 }
 
-#tuesteRetueste .w3 .pin:hover .title{
+#tueste.w3 .pin:hover .title{
     left:1em;
 }
 
-#tuesteRetueste .w4 .pin:hover .title{
+#tueste.w4 .pin:hover .title{
     left:-2.6em;
 }
 
-#tuesteRetueste .w5 .pin:hover .title{
+#tueste.w5 .pin:hover .title{
     left:-3.5em;
 }
 
-#tuesteRetueste .w6 .pin:hover .title{
+#tueste.w6 .pin:hover .title{
     left:-4.4em;
 }
 
-#tuesteRetueste .w7 .pin:hover .title{
+#tueste.w7 .pin:hover .title{
     left:-5.3em;
 }
 
-#tuesteRetueste .w8 .pin:hover .title{
+#tueste.w8 .pin:hover .title{
     left:-6.2em;
 }
 
-#tuesteRetueste .w9 .pin:hover .title{
+#tueste.w9 .pin:hover .title{
     left:-7.1em;
 }
 
-#tuesteRetueste .w91 .pin:hover .title{
+#tueste.w91 .pin:hover .title{
     left:-9.3em;
 }
 
-#tuesteRetueste .w92 .pin:hover .title{
+#tueste.w92 .pin:hover .title{
     left:-10.2em;
 }
 
-#tuesteRetueste .w93 .pin:hover .title{
+#tueste.w93 .pin:hover .title{
     left:-11em;
 }
 
-#tuesteRetueste .w94 .pin:hover .title{
+#tueste.w94 .pin:hover .title{
     left:-11.9em;
 }
 
-#tuesteRetueste .w95 .pin:hover .title{
+#tueste.w95 .pin:hover .title{
     left:-12.7em;
 }
 
-#tuesteRetueste .w96 .pin:hover .title{
+#tueste.w96 .pin:hover .title{
     left:-13.5em;
 }
 
-#tuesteRetueste .w97 .pin:hover .title{
+#tueste.w97 .pin:hover .title{
     left:-14.4em;
 }
 
-#tuesteRetueste .w98 .pin:hover .title{
+#tueste.w98 .pin:hover .title{
     left:-15.3em;
 }
 
-#tuesteRetueste .w99 .pin:hover .title{
+#tueste.w99 .pin:hover .title{
     left:-16.2em;
 }
 
-#tuesteRetueste .w100 .pin:hover .title{
+#tueste.w100 .pin:hover .title{
     left:-17em;
+}
+
+#retueste.w0 .pin:hover .title, #retueste.w1 .pin:hover .title, #retueste.w2 .pin:hover .title{
+    left:-13em;
+}
+
+#retueste.w3 .pin:hover .title{
+    left:-12.2em;
+}
+
+#retueste.w4 .pin:hover .title{
+    left:-11.3em;
+}
+
+#retueste.w5 .pin:hover .title{
+    left:-10.4em;
+}
+
+#retueste.w6 .pin:hover .title{
+    left:-9.5em;
+}
+
+#retueste.w7 .pin:hover .title{
+    left:-8.7em;
+}
+
+#retueste.w8 .pin:hover .title{
+    left:-6.2em;
+}
+
+#retueste.w93 .pin:hover .title{
+    left:-5.3em;
+}
+
+#retueste.w94 .pin:hover .title{
+    left:-4.4em;
+}
+
+#retueste.w95 .pin:hover .title{
+    left:-3.5em;
+}
+
+#retueste.w96 .pin:hover .title{
+    left:-2.6em;
+}
+
+#retueste.w97 .pin:hover .title{
+    left:1em;
+}
+
+#retueste.w98 .pin:hover .title{
+    left:1em;
+}
+
+#retueste.w99 .pin:hover .title{
+    left:1em;
+}
+
+#retueste.w100 .pin:hover .title{
+    left:1em;
 }
 
 .score{
