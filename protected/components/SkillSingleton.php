@@ -1022,7 +1022,6 @@ class SkillSingleton extends CApplicationComponent
      */
     private function paySkillCosts($skill, $executionResult, $extra=null)
 	{
-	return true; ///TODO quitar
 		$user = Yii::app()->currentUser->model;
 	    //No compruebo nada porque se ha comprobado ya antes de llegar a executeSkill
 
@@ -1044,6 +1043,9 @@ class SkillSingleton extends CApplicationComponent
         if ($skill->cost_tueste !== null) {
             $costT = $this->calculateCostTueste($skill);
             $user->ptos_tueste = $user->ptos_tueste - round($costT * $criticModificator['tueste']) + $extra_absoluto + round($costT * $extra_porcentaje);
+            //Ganancia de retueste
+            $retueste = round($costT*Yii::app()->config->getParam('retuestePerSkill')/100);
+            $user->ptos_retueste += $retueste;
         }
 
 	    //Pago el restueste
