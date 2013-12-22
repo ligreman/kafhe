@@ -245,6 +245,7 @@ footer a{
     margin:0 1.5em 0 0;
     text-decoration: none;
     font-size: .8em;
+    display: inline-block;
 }
 
 #secondary_nav p a:hover{
@@ -447,7 +448,7 @@ label.title{
     border-style: solid;
     border-radius: 3px;
     border-width: 3px 0 3px 0;
-    padding: .7em 1em;
+    padding: .5em 1em;
     background-color: #e0e0e0;
     border-color: transparent transparent #c5c5c5;
     cursor: pointer;
@@ -859,13 +860,15 @@ img.grayScale{
     width: 25em;
     margin: 6% auto;
     background: white;
-    padding: 1em 2em;
+    padding: .5em 2em;
 }
 
 .sdcontent h1{
     font-size: 1.2em;
     font-weight: bold;
     text-align: left;
+    padding: .5em 1.8em;
+    background: #e0e0e0;
 }
 
 .sdcontent h1 span{
@@ -878,17 +881,18 @@ img.grayScale{
 }
 
 .sdcontent .skillDesc{
-    padding: .7em 2em .7em 2em;
-    margin: .9em -2em;
-    background: #00924a;
+    padding: .7em 3em;
+    background: #303030;
     color: #ffffff;
     font-style: italic;
     text-align: left;
     line-height: 1.5em;
+    font-size: .8em;
 }
 
 .sdcontent dl{
     text-align: left;
+    padding: 1em 2em;
 }
 
 .sdcontent dt{
@@ -909,7 +913,8 @@ img.grayScale{
     text-align: center;
 }
 #skillsUserBlock .sdcontent dd ul{
-    margin: 1em 0 0 0em;
+    clear: both;
+    padding: 3em 0;
     text-align: center;
 }
 
