@@ -46,14 +46,18 @@ $(document).ready(function() {
 
 function resizeNavBar(){
     //alert($('#content').children().height()+' y la del contenido '+$('#content').children().innerHeight());
-    if($('#main').innerHeight() > $('#content').children().innerHeight()){
-        $('#secondary_nav').height($('#main').innerHeight());
-        $('#content').height($('#main').innerHeight());
-        $('#muro').height($('#main').innerHeight());
+    var main = $('#main'),
+        content = $('#content'),
+        secondary_nav = $('#secondary_nav');
+
+    if(main.innerHeight() > content.children().innerHeight()){
+        secondary_nav.height(main.innerHeight());
+        content.height(main.innerHeight());
+        $('#muro').height(main.innerHeight());
     }else{
-        $('#secondary_nav').height($('#content').children().innerHeight());
-        $('#secondary_nav').height($('#content').children().innerHeight());
-        $('#content').height($('#content').children().innerHeight());
+        secondary_nav.height(content.children().innerHeight());
+        secondary_nav.height(content.children().innerHeight());
+        content.height(content.children().innerHeight());
     }
     oldH = $('#vResponsiveContent').height();
 
@@ -85,10 +89,12 @@ function prepareEnrollmentForm(){
             $(this).removeClass('selected');
 			$('input[rel-ito="no"]').parents('li.radio_row').show();
         }else{
+            var checked = $('input[rel-ito="no"]:checked');
             $(this).addClass('selected');
 			$('input[rel-ito="no"]').parents('li.radio_row').hide();
-            $('input[rel-ito="no"]:checked').siblings('label').removeClass('selected');
-            $('input[rel-ito="no"]:checked').prop('checked' , false);
+
+            checked.siblings('label').removeClass('selected');
+            checked.prop('checked' , false);
         }
     });
 
@@ -141,8 +147,8 @@ function prepareHabilities(){
 
     //Div de detalle de habilidades
     $('.skillLink').click(function(){
-        $('.skillDescription').html($(this).siblings('.skillDescriptionIndividual').html());
-        $('.skillDescription').show();
+        $('.skillDescription').html($(this).siblings('.skillDescriptionIndividual').html()).show();
+        //$('.skillDescription').show();
     });
 
     $('.cancelButton').click(function(){
@@ -223,11 +229,11 @@ function loadMoreNotifications(){
             datatype: 'html'
         }).done(function(data){
 			if(data==""){
-				$('#moreNotifications').addClass('categoriaNotif');
-				$('#moreNotifications').html('<span>No hay más notificaciones</span>');
+				$('#moreNotifications').addClass('categoriaNotif').html('<span>No hay más notificaciones</span>');
+				//$('#moreNotifications').html('<span>No hay más notificaciones</span>');
 			}else{
-				$(".categoriaNotif.hidden").addClass("visible");
-				$(".categoriaNotif.hidden").removeClass("hidden");
+				$(".categoriaNotif.hidden").addClass("visible").removeClass("hidden");
+				//$(".categoriaNotif.hidden").removeClass("hidden");
 				$('#moreNotifications').detach();
 				$('#muro').html($('#muro').html()+data);
 				resizeNavBar();
