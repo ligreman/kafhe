@@ -25,7 +25,7 @@ class UserSingleton extends CApplicationComponent
     }
 
     public function getMaxTueste() {
-        return Yii::app()->tueste->maxTuesteUser($this->_model);
+        return Yii::app()->tueste->getMaxTuesteUser($this->_model);
     }
 
     public function getId() { return $this->model->id; }

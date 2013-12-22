@@ -37,7 +37,7 @@
                     $class = 'skillImage';
                     if($execCode != 1) $class .= " grayScale";
                     $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('class' => $class));
-                    echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.$skill->description));
+                    echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.str_replace('<br />', ' ', $skill->description)));
                     ?>
                     <section class="skillDescriptionIndividual">
                         <div class="sdcontent">

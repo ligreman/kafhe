@@ -596,7 +596,7 @@ label.title{
 #user{
     width: 20%;
     float:left;
-    padding: .6em 1em .6em 0;
+    padding: .6em 0 .6em 0;
     overflow: visible;
 }
 
@@ -611,7 +611,8 @@ label.title{
     color: #363636;
     font-size: .8em;
     padding: .9em 0 0 0;
-    float: right;
+    /*float: right;*/
+    float: left;
     width: 20%;
     margin-right: -3em;
     text-align: center;
@@ -775,7 +776,7 @@ label.title{
 
 .dato{
     display: inline-block;
-    width: 16%;
+    width: 15%;
     margin: .7em 0 0 0;
     float: left;
     padding: 0;
@@ -905,6 +906,7 @@ img.grayScale{
 .sdcontent .skillButtons{
     clear: both;
     padding-top: 2em;
+    text-align: center;
 }
 #skillsUserBlock .sdcontent dd ul{
     margin: 1em 0 0 0em;

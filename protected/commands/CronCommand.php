@@ -363,29 +363,44 @@ class CronCommand extends CConsoleCommand {
 		//Cojo todos los eventos iniciados
 		$events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
 
-		foreach($events as $event) {		
-			//Resto un contador a los Gungubos con quemadura de todos los corrales del evento y miro los que mueren
-			$mueren = $this->reduceHealthGungubos($event->id, null, Yii::app()->params->conditionQuemadura);
-			
-			//Por cada muerto por quemadura miro a ver si quema a otros
-			$probabilidadPropagar = Yii::app()->config->getParam('quemaduraProbabilidadPropagacion');			
-			$minQuemados = Yii::app()->config->getParam('quemaduraMinQuemados');
-			$maxQuemados = Yii::app()->config->getParam('quemaduraMaxQuemados');
-			
-			$nuevos_quemados = 0;
-			for ($i=1; $i<=$mueren['condicion']; $i++) {
-				$tirada = mt_rand(1,100);
-				if ($tirada <= $probabilidadPropagar) {
-					//Les quemo!!!
-					$cuantos = mt_rand($minQuemados, $maxQuemados);
-					$nuevos_quemados += $cuantos;
-				}
-			}
+		foreach($events as $event) {
+		    //Corrales/Jugadores de este evento
+            $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
+            foreach($jugadores as $jugador) {
+                $this->logCron('  Corral del jugador '.$jugador->username.'.', 'info');
 
-			///TODO
-			//Pongo quemadura a los nuevos Gungubos quemados
-			
-			//Notifico de las muertes y nuevos quemados
+                //Resto un contador a los Gungubos con quemadura del corral y miro los que mueren
+                $mueren = $this->reduceHealthGungubos($event->id, $jugador->id, Yii::app()->params->conditionQuemadura);
+
+                $this->logCron('    - Mueren por quemadura '.$mueren['condicion'].' Gungubos.', 'info');
+
+                //Por cada muerto por quemadura miro a ver si quema a otros
+                $probabilidadPropagar = Yii::app()->config->getParam('quemaduraProbabilidadPropagacion');
+                $minQuemados = Yii::app()->config->getParam('quemaduraMinQuemados');
+                $maxQuemados = Yii::app()->config->getParam('quemaduraMaxQuemados');
+
+                $nuevos_quemados = 0;
+                for ($i=1; $i<=$mueren['condicion']; $i++) {
+                    $tirada = mt_rand(1,100);
+                    if ($tirada <= $probabilidadPropagar) {
+                        //Les quemo!!!
+                        $nuevos_quemados += mt_rand($minQuemados, $maxQuemados);
+                    }
+                }
+
+                $this->logCron('    - Nuevos quemados '.$nuevos_quemados.' Gungubos.', 'info');
+
+                //Pongo quemadura a los nuevos Gungubos quemados
+                $cuantos_quemados = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionQuemadura), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$nuevos_quemados.';', array(':evento'=>$event->id, ':owner'=>$jugador->id, ':lugar'=>'corral'));
+
+                //Notifico de las muertes y nuevos quemados al dueño del corral
+                $notiD = new NotificationCorral;
+                $notiD->event_id = $event->id;
+                $notiD->user_id = $jugador->id;
+                $notiD->message = ':'.Yii::app()->params->gunguboClassDefault.': Han muerto '.$mueren['condicion'].' Gungubos en tu corral a causa de quemaduras, las cuáles se han propagado a otros '.$cuantos_quemados.' Gungubos más. Los muertos reposan ahora en el cementerio.';
+                if (!$notiD->save())
+                    throw new CHttpException(400, 'Error al guardar la notificación D de corral de Ataque Bomba en evento '.$event_id.'.');
+            }
 		}
 		
 		return 0;
@@ -521,7 +536,7 @@ class CronCommand extends CConsoleCommand {
         Gungubo::model()->updateCounters(array('health'=>-1),'event_id=:evento AND location=:lugar'.$owner.$condition, array(':evento'=>$event_id, ':lugar'=>'corral'));
 
         //Los que hayan muerto por causas naturales
-		if ($solo_condicion!==null) {
+		if ($solo_condicion===null) {
 			$mueren['natural'] = Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND health<=0 AND location=:lugar AND condition_status=:condicion'.$owner, 'params'=>array(':evento'=>$event_id, ':lugar'=>'corral', ':condicion'=>'normal')));
 		}
 
