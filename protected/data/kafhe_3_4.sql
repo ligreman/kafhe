@@ -59,6 +59,8 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('maxTuesteUsuario', '1000', 'Tueste', 'Máximo puntos de tueste que puede tener un usuario.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
   ('porcentajeTuesteExtraPorRango', '10', 'Tueste', 'Porcentaje de tueste extra que se regenera por rango.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('retuestePerSkill', '3', 'Retueste', 'Porcentaje de Retueste ganado por habilidad ejecutada.');
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
@@ -77,6 +79,7 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('initialFame', '50', 'Fama', 'Puntos de fama con que un jugador empieza un un evento.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('lostFameByInactivity', '10', 'Fama', 'Puntos de fama con que un jugador inactivo pierde cada hora.');
+
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
