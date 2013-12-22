@@ -202,36 +202,36 @@ return array(
 		'statusFinalizado'=>3,
 		'statusCalma'=>4,
         'statusPreparativos'=>5,
-		
-		//Modificadores. Están aquí y en BBDD
-		'modifierHidratado'=>'hidratado',
-		'modifierDisimulando'=>'disimulando',
+
+        //Modificadores. Están aquí y en BBDD
+        'modifierHidratado'=>'hidratado',
+        'modifierDisimulando'=>'disimulando',
         'modifierImpersonando'=>'impersonando',
-		'modifierDesecado'=>'desecado',
+        'modifierDesecado'=>'desecado',
         'modifierTrampaPifia'=>'trampaPifia',
         'modifierTrampaTueste'=>'trampaTueste',
-        'modifierProtegiendo'=>'protegiendo',
-        'modifierOteando'=>'oteando',
+        //'modifierProtegiendo'=>'protegiendo',
+        //'modifierOteando'=>'oteando',
         'modifierSenuelo'=>'senuelo',
-		
-		//Habilidades. Están aquí y en BBDD
-		'skillHidratar'=>'hidratar',
-        'skillDesecar'=>'desecar',
-        'skillDisimular'=>'disimular',
-        'skillImpersonar'=>'impersonar',
-		'skillCazarGungubos'=>'cazarGungubos',
-		'skillEscaquearse'=>'escaquearse',
-		'skillRescatarGungubos'=>'rescatarGungubos',
-		'skillVendetta'=>'vendetta',
+
+        //Habilidades. Están aquí y en BBDD
+        'skillHidratar'=>'hidratar',
+        //'skillDesecar'=>'desecar',
+        //'skillDisimular'=>'disimular',
+        //'skillImpersonar'=>'impersonar',
+        //'skillCazarGungubos'=>'cazarGungubos',
+        'skillEscaquearse'=>'escaquearse',
+        //'skillRescatarGungubos'=>'rescatarGungubos',
+        //'skillVendetta'=>'vendetta',
         'skillTrampaTueste'=>'trampaTueste',
         'skillTrampaPifia'=>'trampaPifia',
-        'skillLiberarGungubos'=>'liberarGungubos',
-        'skillAtraerGungubos'=>'atraerGungubos',
-        'skillProtegerGungubos'=>'protegerGungubos',
-        'skillOtear'=>'otear',
+        //'skillLiberarGungubos'=>'liberarGungubos',
+        //'skillAtraerGungubos'=>'atraerGungubos',
+        //'skillProtegerGungubos'=>'protegerGungubos',
+        //'skillOtear'=>'otear',
         'skillSenuelo'=>'senuelo',
         'skillSacrificar'=>'sacrificar',
-
+        'skillVampirismo'=>'vampirismo',
         'skillOtearKafhe'=>'otearKafhe',
         'skillOtearAchikhoria'=>'otearAchikhoria',
 
@@ -249,6 +249,7 @@ return array(
 		'gumbudoClassArtificiero'=>'artificiero',
 		
 		//Gungubo
+		'gunguboClassDefault'=>'gungubo',
 		'gunguboClassZombie'=>'zombie',
 		'gunguboClassBomba'=>'bomba',
 
