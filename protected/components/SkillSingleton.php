@@ -692,50 +692,50 @@ class SkillSingleton extends CApplicationComponent
         $usuarios_full = $usuarios_partial = $u_partial_tueste = array();
 
         foreach ($posiblesUsuarios as $usuario) {
-            if ($usuario->status!==Yii::app()->params->statusCazador || $usuario->status!==Yii::app()->params->statusAlistado)
-                continue; //Si está inactivo o es el iluminado paso de él
+            if ($usuario->id==Yii::app()->currentUser->id || $usuario->status==Yii::app()->params->statusInactivo || $usuario->status==Yii::app()->params->statusIluminado || $usuario->status==Yii::app()->params->statusLibertador)
+                continue; //Si está inactivo o es el iluminado o soy yo paso de él
 
-            if ($usuario->ptos_tueste >= intval($skill->extra_param))
+            if ($usuario->ptos_tueste >= intval($skill->extra_param)) {
                 $usuarios_full[] = $usuario; //Si tiene tueste suficiente, entra en el bombo de los guays
-            elseif ($usuario->ptos_tueste>0) {
+            }elseif ($usuario->ptos_tueste>0) {
                 $usuarios_partial[$usuario->username] = $usuario; //Si tiene tueste pero no el suficiente, al bombo de los bueeeenoooo
                 $u_partial_tueste [$usuario->username] = $usuario->ptos_tueste;
             }
         }
 
-        //Si ambos arrays de usuarios están vacíos es que no puedo churrupar a nadie tueste
-        if (empty($usuarios_full) && empty($usuarios_partial)){
-            $this->_privateMessage = 'No has podido extraer tueste a ninguna víctima.';
-            return true;
-        }
-
         if (!empty($usuarios_full)) {
             //Elijo uno al azar
             $victima = array_rand($usuarios_full);
-        } else {
+            $victima = $usuarios_full[$victima];
+        } elseif(!empty($usuarios_partial)) {
             arsort($u_partial_tueste); //Ordeno los parciales por su tueste restante
             $keys = array_keys($u_partial_tueste); //Cojo las keys, me interesa la primera
             $victima = $usuarios_partial[$keys[0]];
+        } else {
+            $victima = null;
+            $this->_privateMessage = 'No has podido extraer tueste a ninguna víctima.';
         }
 
-        //Le quito el tueste a la víctima
-        $tuesteExtraido = min($victima->ptos_tueste, intval($skill->extra_param)); //Cojo el tueste que le puedo quitar
-        $victima->ptos_tueste -= $tuesteExtraido;
+        if ($victima!==null) {
+            //Le quito el tueste a la víctima
+            $tuesteExtraido = min($victima->ptos_tueste, intval($skill->extra_param)); //Cojo el tueste que le puedo quitar
+            $victima->ptos_tueste -= $tuesteExtraido;
 
-        //Salvo a la victima
-        if (!$victima->save())
-            throw new CHttpException(400, 'Error al guardar el usuario ('.$victima->username.'), victima de un Vampirismo. ['.print_r($victima->getErrors(),true).']');
+            //Salvo a la victima
+            if (!$victima->save())
+                throw new CHttpException(400, 'Error al guardar el usuario ('.$victima->username.'), victima de un Vampirismo. ['.print_r($victima->getErrors(),true).']');
 
-        //Doy puntos de tueste al usuario
-        $finalTarget->ptos_tueste = min($finalTarget->ptos_tueste+$tuesteExtraido, Yii::app()->currentUser->maxTueste);
+            //Doy puntos de tueste al usuario
+            $finalTarget->ptos_tueste = min($finalTarget->ptos_tueste+$tuesteExtraido, Yii::app()->currentUser->maxTueste);
+
+            $this->_privateMessage = 'Has extraído '.$tuesteExtraido.' puntos de tueste a '.Yii::app()->usertools->getAlias($victima->id).'.';
+        }
 
         //Le quito fama por los sacrificios
         $finalTarget->fame = max(0, $finalTarget->fame-$skill->cost_gungubos);
 
         if (!$finalTarget->save())
             throw new CHttpException(400, 'Error al guardar el usuario ('.$finalTarget->username.') al darle el tueste correspondiente al Vampirismo. ['.print_r($finalTarget->getErrors(),true).']');
-
-        $this->_privateMessage = 'Has extraído '.$tuesteExtraido.' puntos de tueste a '.Yii::app()->usertools->getAlias($victima->id).'.';
 
         return true;
     }
@@ -1022,6 +1022,7 @@ class SkillSingleton extends CApplicationComponent
      */
     private function paySkillCosts($skill, $executionResult, $extra=null)
 	{
+	return true; ///TODO quitar
 		$user = Yii::app()->currentUser->model;
 	    //No compruebo nada porque se ha comprobado ya antes de llegar a executeSkill
 
