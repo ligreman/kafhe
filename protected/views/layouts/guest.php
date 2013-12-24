@@ -79,11 +79,14 @@
         </div>
     </section>
 
+    <p>** Esta web utiliza cookies propias para ofrecerte una mejor experiencia y servicio. Al navegar o utilizar nuestros servicios, aceptas el uso que hacemos de las cookies. Sin embargo, puedes cambiar la configuración de cookies en cualquier momento.</p>
+
 	<div class="clear"></div>
 
 	<footer>
 		<ul>
             <li><a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a></li>
+            <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=cookies';?>">Uso de cookies</a></li>
             <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a></li>
             <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a></li>
 		</ul>
