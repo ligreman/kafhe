@@ -141,7 +141,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         // TRAMPA de Tueste
         $this->insert('skill', array(
             'name'  =>  'Trampa de Tueste',
-            'description'  =>  'El próximo jugador que ejecute una habilidad tendrá un 50% de perder 100 puntos de tueste después de ejecutar la habilidad.<br />Esta trampa permanece activa hasta que un jugador caiga en ella.<br />Se acumulan los usos. No crea notificación.',
+            'description'  =>  'El próximo jugador que ejecute una habilidad tendrá un 50% de caer en la trampa y perder 100 puntos de tueste después de ejecutar la habilidad.<br />Esta trampa permanece activa hasta que un jugador caiga en ella.<br />Se acumulan los usos. No crea notificación.',
             'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
             'keyword'  =>  'trampaTueste',
@@ -179,6 +179,39 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
             'keyword'  =>  'trampaPifia',
             'modifier_keyword'  =>  'trampaPifia',
+            'modifier_hidden' => 1,
+            'duration'  =>  1,
+            'duration_type'  =>  'usos',  // horas, evento, usos
+            'critic'  =>  5,
+            'fail'  =>  10,
+            'cost_tueste'  =>  100,
+            'cost_retueste'  =>  NULL,
+            'cost_relanzamiento'  =>  NULL,
+            'cost_tostolares'  =>  NULL,
+            'is_cooperative'  =>  0,         // 0,1
+            'cost_tueste_cooperate'  =>  NULL,
+            'cost_tostolares_cooperate'  =>  NULL,
+            'cooperate_benefit'  =>  NULL,      // valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,         // 0,1
+            'require_target_side'  =>  NULL,  // valores (kafhe o achikhoria o libre) separados por comas. Uno u otro, no 'y'.
+            'require_caller'  =>  0,         // 0,1
+            'require_user_side'  =>  'libre',    // valores (kafhe, achikhoria, libre) separados por comas
+            'require_user_min_rank'  =>  NULL,  // Rango mínimo para ejecutarla
+            'require_user_status'  =>  NULL,  // valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_event_status'  =>  '1',   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
+            'require_talent_id'  =>  NULL,
+            'overload'  =>  1,                      // Bool. Tiene sobrecarga la habilidad, sí o no
+            'generates_notification' => 0           // Bool. Genera notificación en el muro.
+        ));
+
+        // TRAMPA de Confusión
+        $this->insert('skill', array(
+            'name'  =>  'Trampa de Confusión',
+            'description'  =>  'Los Gumbudos Asaltantes, Nigromantes y Artificieros tienen un 50% de probabilidades de caer en esta trampa, que les confunde y les hace atacar a su propio corral.<br />Esta trampa permanece activa hasta que un Gumbudo caiga en ella.<br />Se acumulan los usos. No crea notificación.',
+            'category'  =>  'batalla',     // gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'ofensiva',         // ofensiva, mejora, utilidad
+            'keyword'  =>  'trampaConfusion',
+            'modifier_keyword'  =>  'trampaConfusion',
             'modifier_hidden' => 1,
             'duration'  =>  1,
             'duration_type'  =>  'usos',  // horas, evento, usos
