@@ -99,6 +99,7 @@ class SkillSingleton extends CApplicationComponent
 				case Yii::app()->params->skillEscaquearse: $this->escaquearse(); break;
                 case Yii::app()->params->skillTrampaTueste: $this->trampa($skill); break;
                 case Yii::app()->params->skillTrampaPifia: $this->trampa($skill); break;
+                case Yii::app()->params->skillTrampaConfusion: $this->trampa($skill); break;
                 case Yii::app()->params->skillSenuelo: $this->senuelo($skill); break;
                 case Yii::app()->params->skillSacrificar: $this->sacrificar($skill, $finalTarget); break;
                 case Yii::app()->params->skillVampirismo: $this->vampirismo($skill, $finalTarget); break;
@@ -1191,16 +1192,25 @@ class SkillSingleton extends CApplicationComponent
         if ($skill->category=='relanzamiento' || $skill->category=='gumbudos') return false;
 
 	    //Saco modificadores de trampas que me afectan
-	    $trampaPifia = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierTrampaPifia);
+	    $trampas[] = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierTrampaPifia);
+        $trampas[] = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierTrampaTueste);
+        shuffle($trampas);
 
-	    //Caigo si existe trampa
-	    if ($trampaPifia!==false) {
-	        //Reduzco los usos del modificador trampa
-            if (!Yii::app()->modifier->reduceModifierUses($trampaPifia))
-                throw new CHttpException(400, 'Error al eliminar el modificador Trampa Pifia.');
+        foreach ($trampas as $trampa) {
+            if ($trampa === false) continue;
 
-	        return $trampaPifia;
-	    }
+            //Miro a ver si caigo en la trampa
+            $tirada = mt_rand(1,100);
+            $valor = Yii::app()->config->getParam($trampa->keyword.'Probabilidad');
+
+            if ($tirada<=$valor) {
+                //He caído cual primo. Reduzco los usos del modificador trampa
+                if (!Yii::app()->modifier->reduceModifierUses($trampa))
+                    throw new CHttpException(400, 'Error al eliminar el modificador '.$trampa->name);
+
+                return $trampa;
+            }
+        }
 
 	    return false;
 	}

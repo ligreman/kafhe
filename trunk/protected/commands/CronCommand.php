@@ -64,19 +64,41 @@
 */
 
 
-// #Cada 10 minutos regenero tueste
-// */10 * * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron regenerarTueste
+/*
+.---------------- minuto (0 - 59)
+|  .------------- hora (0 - 23)
+|  |  .---------- día del mes (1 - 31)
+|  |  |  .------- mes (1 - 12) O jan,feb,mar,apr ... (los meses en inglés)
+|  |  |  |  .---- día de la semana (0 - 6) (Domingo=0 ó 7) O sun,mon,tue,wed,thu,fri,sat (los días en inglés)
+|  |  |  |  |
+*  *  *  *  *  comando para ser ejecutado
 
-// #Cada hora activo a los criadores
-// * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron criadores
+//0,10,20,30,40,50 * * * * root /PathToCommand/Command
 
-// #Cada hora entre las 7-18 miro a ver si repueblo gungubos
-// #5 7-18 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron repopulateGungubos
+*/
 
-// #Cada hora compruebo si hay algo en cola del cronPile
-// * */1 * * * /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron processCronPile
+//Gumbudos Lifecycle, cada hora de lunes a viernes 10:01, 11:01...
+// 1 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gumbudosLifecycle
 
-// #Los jueves por la noche (el servidor tiene otra hora) pone los eventos en Calma
+//Gungubos Lifecycle, cada hora de lunes a viernes 10:00, 11:00...
+// 0 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gungubosLifecycle
+
+//Cron Pile cada 5 minutos a partir del minuto 4, 10:04, 10:09....
+// 4-59/5 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron processCronPile
+
+//Muerte de gumbudos cada 5 minutos a partir del minuto 3
+// 3-59/5 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron muerteGumbudos
+
+//regenerar tueste cada 10 minutos a partir del minuto 3
+// 3-59/10 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron regenerarTueste
+
+//Comprobar quemaduras cada 15 minutos a partir del minuto 2
+// 2-59/15 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron checkQuemados
+
+//Reducir vida a gungubos por otras cosas (no tener criador, enfermedad...) cada hora 10:30, 11:30...
+// 30 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gungubosReduceHealthExtra
+
+// #Los jueves por la noche a las 23 horas (el servidor tiene otra hora) pone los eventos en Calma
 // 0 22 * * 4 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron eventosEnCalma
 
 // #Los lunes a las 9 de la mañana pongo los eventos en Preparativos
@@ -195,7 +217,7 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }*/
 
-    /** 1 hora Repuebla los gungubos cada hora
+    /** Cada hora en punto Repuebla los gungubos cada hora
      */     
     public function actionGungubosLifecycle()
     {
@@ -261,8 +283,9 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }
 
-    /** 30 minutos. Reduce contadores de Gungubos sin criadores */
-    public function actionReduceHealthGungubosWithoutNurse()
+    /** Cada hora pero a y media en cada una (10:30, 11:30...). Reduce contadores de Gungubos sin criadores */
+    ///TODO añadir aquí la enfermedad también. No será sólo por no tener Nurse
+    public function actionGungubosReduceHealthExtra()
     {
         $this->logCron('Reduzco los contadores de los Gungubos que no tienen un Criador en el corral.', 'info');
 
@@ -272,7 +295,7 @@ class CronCommand extends CConsoleCommand {
             foreach($events as $event) {
                 $this->logCron('  Corrales del evento '.$event->id.'.', 'info');
 
-                //Repueblo gungubos en cada corral de los jugadores
+                //Cojo los corrales
                 $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
                 foreach($jugadores as $jugador) {
                     $this->logCron('     Corral del jugador '.$jugador->username.'.', 'info');
@@ -297,7 +320,7 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }
 
-    /** 1 hora Cada hora ciclo de vida de gumbudos: activo guardianes,
+    /** 1 hora (10:05,11:05,12:05)  Cada hora ciclo de vida de gumbudos: activo guardianes,
      */
     public function actionGumbudosLifecycle() {
         $this->logCron('Ciclo de vida de los Gumbudos.', 'info');
@@ -355,7 +378,7 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }
 	
-	/* 15 minutos */
+	/* 15 minutos 10:10, 10:25, 10:40, 10:55... */
 	public function actionCheckQuemados()
 	{
 		$this->logCron('Quemadura en los corrales.', 'info');

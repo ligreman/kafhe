@@ -109,6 +109,7 @@ return array(
         //'skillVendetta'=>'vendetta',
         'skillTrampaTueste'=>'trampaTueste',
         'skillTrampaPifia'=>'trampaPifia',
+        'skillTrampaConfusion'=>'trampaConfusion',
         //'skillLiberarGungubos'=>'liberarGungubos',
         //'skillAtraerGungubos'=>'atraerGungubos',
         //'skillProtegerGungubos'=>'protegerGungubos',
