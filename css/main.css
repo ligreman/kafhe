@@ -168,6 +168,26 @@ nav ul{
     display: block;
 }
 
+#secondary_nav ul#tools {
+    margin: 3em;
+}
+#secondary_nav ul#tools li {
+    font-size: 0.8em;
+    display: inline;
+    margin: 0 5px 0 0;
+}
+#secondary_nav ul#tools li:first-child {
+    display: block;
+    margin-bottom: 5px;
+}
+#secondary_nav ul#tools li a {
+    margin: 0;
+    line-height: 1.4em;
+}
+#secondary_nav ul#tools li a:hover {
+    text-decoration: underline;
+}
+
 a, a:hover{
     color: #00924a;
 }
