@@ -92,6 +92,12 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('sobrecargaTamañoHistorico', '3', 'Juego', 'Tamaño del histórico de ejecuciones de habilidades.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('sobrecargaPorcentajeTuesteExtra', '25', 'Juego', 'Porcentaje de tueste extra que cuesta una habilidad por cada vez que aparece en el histórico.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('trampaTuesteProbabilidad', '50', 'Probabilidad de caer en la trampa de Tueste.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('trampaPifiaProbabilidad', '50', 'Probabilidad de caer en la trampa de Pifia.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('trampaConfusionProbabilidad', '50', 'Probabilidad de caer en la trampa de Confusión.');
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
