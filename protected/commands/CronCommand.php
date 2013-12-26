@@ -141,21 +141,25 @@ class CronCommand extends CConsoleCommand {
                 if ($regenerado !== false) {
                     //Si ya estoy al máximo de tueste cambio mi estado a Criador, si soy Cazador, y miro el desborde
                     $usuario->ptos_tueste += $regenerado;
-                    $maxTueste = Yii::app()->tueste->maxTuesteUser($usuario);
+                    $maxTueste = Yii::app()->tueste->getMaxTuesteUser($usuario);
 
-                    if ($usuario->ptos_tueste > $maxTueste)
+                    if ($usuario->ptos_tueste > $maxTueste) {
                         $usuario->ptos_tueste = $maxTueste;
+                        $this->logCron('        - Tueste regenerado: '.$regenerado.', pero alcanza el máximo y queda en '.$maxTueste.'.', 'info');
+                    } else
+                        $this->logCron('        - Tueste regenerado: '.$regenerado.'.', 'info');
 
-                    $usuario->last_regen_timestamp = date('Y-m-d H:i:s');
-                    $this->logCron('        - Tueste regenerado: '.$regenerado.'.', 'info');
+                    //$usuario->last_regen_timestamp = date('Y-m-d H:i:s');
+
                 } else
                     $this->logCron('        - Todavia no puede regenerar tueste.', 'info');
 
 
                 //Si el usuario estaba inactivo, le resto fama
-                if ($usuario->status == Yii::app()->params->statusInactivo)
+                if ($usuario->status == Yii::app()->params->statusInactivo) {
                     $usuario->fame -= intval(Yii::app()->config->getParam('lostFameByInactivity'));
-                else {
+                    $this->logCron('        - Pierde fama por inactivo.', 'info');
+                } else {
                     //Compruebo si está inactivo el usuario
                     $user_inactive_time = strtotime($usuario->last_activity) + 25*60*60; //Le sumo 25 horas para ver si ha pasado
                     if (time() > $user_inactive_time) {
@@ -228,14 +232,14 @@ class CronCommand extends CConsoleCommand {
         if ($events != null) {
             foreach($events as $event) {
                 //Miro a ver si ha pasado una hora desde la última repoblación
-                if ($event->last_gungubos_repopulate_timestamp!="") {
+                /*if ($event->last_gungubos_repopulate_timestamp!="") {
                     $last_repopulate = strtotime($event->last_gungubos_repopulate_timestamp);
 
                     if (time() < ($last_repopulate + 3600)) {
                         $this->logCron('    Todavia no puedo repoblar gungubos en el evento '.$event->id.'.', 'info');
                         continue;
                     }
-                }
+                }*/
 
                 $this->logCron('  Repoblando en el evento '.$event->id.'.', 'info');
                 $gungubosNuevosSQL = array();
@@ -320,74 +324,16 @@ class CronCommand extends CConsoleCommand {
         return 0;
     }
 
-    /** 1 hora (10:05,11:05,12:05)  Cada hora ciclo de vida de gumbudos: activo guardianes,
-     */
-    public function actionGumbudosLifecycle() {
-        $this->logCron('Ciclo de vida de los Gumbudos.', 'info');
+    /* 15 minutos 10:10, 10:25, 10:40, 10:55... */
+    public function actionGungubosCheckQuemados()
+    {
+        $this->logCron('Quemadura en los corrales.', 'info');
 
-        //Para todos los eventos de estado "iniciado" (1)
+        //Cojo todos los eventos iniciados
         $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
 
-        if ($events != null) {
-            foreach($events as $event) {
-                $this->logCron('  Comprobando el evento '.$event->id.'.', 'info');
-
-                //Activo a los Gumbudos Guardianes normales para que defiendan.
-                Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoGuardianActions')),'event_id=:evento', array(':evento'=>$event->id));
-
-                //Para los gumbudos guardianes con trait Acorazado es una defensa más de la de por defecto
-                Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoGuardianActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitAcorazado));
-
-                $this->logCron('    Activados los Gumbudos guardianes en el evento '.$event->id.'.', 'info');
-            }
-        }
-
-        return 0;
-    }
-
-    /** 5 minutos
-     */
-    public function actionMuerteGumbudos() {
-        $this->logCron('Muerte de Gumbudos.', 'info');
-
-        //Para todos los eventos de estado "iniciado" (1)
-        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
-
-        if ($events != null) {
-            foreach($events as $event) {
-                //Cojo Gumbudos que hayan caducado
-                $gumbudos = Gumbudo::model()->findAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
-
-                //Mato a los gumbudos que se les haya pasado el arroz
-                Gumbudo::model()->deleteAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
-                $this->logCron('    Eliminados los Gumbudos caducados en el evento '.$event->id.'.', 'info');
-
-                //Quito los pilacron de los gumbudos muertos
-                $ids = array();
-                foreach ($gumbudos as $gumbudo) {
-                    $ids[] = 'params='.$gumbudo->id;
-                }
-
-                if (!empty($ids)) {
-                    Cronpile::model()->deleteAll(array('condition'=>'type=:tipo AND ('.implode(' OR ', $ids).')', 'params'=>array(':tipo'=>'gumbudo')));
-                    $this->logCron('    Eliminadas las entradas en Cronpile de los Gumbudos caducados en el evento '.$event->id.'.', 'info');
-                }
-            }
-        }
-
-        return 0;
-    }
-	
-	/* 15 minutos 10:10, 10:25, 10:40, 10:55... */
-	public function actionCheckQuemados()
-	{
-		$this->logCron('Quemadura en los corrales.', 'info');
-		
-		//Cojo todos los eventos iniciados
-		$events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
-
-		foreach($events as $event) {
-		    //Corrales/Jugadores de este evento
+        foreach($events as $event) {
+            //Corrales/Jugadores de este evento
             $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
             foreach($jugadores as $jugador) {
                 $this->logCron('  Corral del jugador '.$jugador->username.'.', 'info');
@@ -424,10 +370,77 @@ class CronCommand extends CConsoleCommand {
                 if (!$notiD->save())
                     throw new CHttpException(400, 'Error al guardar la notificación D de corral de Ataque Bomba en evento '.$event_id.'.');
             }
-		}
-		
-		return 0;
-	}
+        }
+
+        return 0;
+    }
+
+
+
+
+    /** 1 hora (10:05,11:05,12:05)  Cada hora ciclo de vida de gumbudos: activo guardianes, hippies
+     */
+    public function actionGumbudosLifecycle() {
+        $this->logCron('Ciclo de vida de los Gumbudos.', 'info');
+
+        //Para todos los eventos de estado "iniciado" (1)
+        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+
+        if ($events != null) {
+            foreach($events as $event) {
+                $this->logCron('  Comprobando el evento '.$event->id.'.', 'info');
+
+                //Activo a los Gumbudos Guardianes normales para que defiendan.
+                $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoGuardianActions')),'event_id=:evento', array(':evento'=>$event->id));
+                //Para los gumbudos guardianes con trait Acorazado es una defensa más de la de por defecto
+                $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoGuardianActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitAcorazado));
+                $this->logCron('    Activados los '.($n+$m).' Gumbudos Guardianes en el evento '.$event->id.'.', 'info');
+
+                //Activo a los Gumbudos Hippie
+                $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoHippieActions')),'event_id=:evento', array(':evento'=>$event->id));
+                //Para los gumbudos hippie con trait Hiperactivo es una defensa más de la de por defecto
+                $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoHippieActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitHiperactivo));
+                $this->logCron('    Activados los '.($n+$m).' Gumbudos Hippie en el evento '.$event->id.'.', 'info');
+            }
+        }
+
+        return 0;
+    }
+
+    /** 5 minutos
+     */
+    public function actionGumbudosCheckMuerte() {
+        $this->logCron('Muerte de Gumbudos.', 'info');
+
+        //Para todos los eventos de estado "iniciado" (1)
+        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+
+        if ($events != null) {
+            foreach($events as $event) {
+                //Cojo Gumbudos que hayan caducado
+                $gumbudos = Gumbudo::model()->findAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+
+                //Mato a los gumbudos que se les haya pasado el arroz
+                $n = Gumbudo::model()->deleteAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+                $this->logCron('    Eliminados '.$n.' Gumbudos caducados en el evento '.$event->id.'.', 'info');
+
+                //Quito los pilacron de los gumbudos muertos
+                $ids = array();
+                foreach ($gumbudos as $gumbudo) {
+                    $ids[] = 'params='.$gumbudo->id;
+                }
+
+                if (!empty($ids)) {
+                    Cronpile::model()->deleteAll(array('condition'=>'type=:tipo AND ('.implode(' OR ', $ids).')', 'params'=>array(':tipo'=>'gumbudo')));
+                    $this->logCron('    Eliminadas las entradas en Cronpile de los Gumbudos caducados en el evento '.$event->id.'.', 'info');
+                }
+            }
+        }
+
+        return 0;
+    }
+	
+
 
 	
 	/** Pone en estado Calma todos los eventos Iniciados de tipo desayuno los Viernes
@@ -493,10 +506,11 @@ class CronCommand extends CConsoleCommand {
      */
     public function actionProcessCronPile()
     {		
-        $pila = Cronpile::model()->findAll();
+        $pila = Cronpile::model()->findAll(array('order'=>'due_date ASC'));
 		//$now = time();
 		$dateNow = Yii::app()->event->getCurrentDate();
 		$now = strtotime($dateNow);
+		$init_time = time();
 
         foreach($pila as $cronjob) {
 			$result = true;
@@ -530,7 +544,12 @@ class CronCommand extends CConsoleCommand {
                 $this->logCron('**  Error en la tarea cron: '.$result.'.', 'info');
 
             $this->logCron('  Elimino la tarea '.$cronjob->operation.' ['.$cronjob->params.'] de la pila.', 'info');
+            ///TODO volver a activar
             //$cronjob->delete();
+
+            $actual_time = time();
+            if (($actual_time-$init_time) >= 15)
+                return 0; //No ejecuto más tareas si ya llevo 15 segundos
         }
 
         return 0;
@@ -578,6 +597,27 @@ class CronCommand extends CConsoleCommand {
     {
         echo "[".strtoupper($type)."] ".$message."\n";
         Yii::log($message, $type);
+    }
+
+
+
+    /***** DEBUG MODE ******/
+    public function actionDebugCrearCadaveres() {
+        $events = Event::model()->findAll(array('condition'=>'type=:tipo AND status=:estado', 'params'=>array( ':tipo'=>'desayuno', ':estado'=>Yii::app()->params->statusIniciado)));
+
+        if ($events != null) {
+            foreach($events as $event) {
+                $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
+                foreach($jugadores as $jugador) {
+                    $cadaveres = 5;
+                    $gungubosNuevosSQL = array();
+                    for($i=1; $i<=$cadaveres; $i++) {
+                        $gungubosNuevosSQL[] = "(".$event->id.", ".$jugador->id.", 0, 'cementerio', 'normal', '".date('Y-m-d H:i:s')."')"; //event_id, owner_id, health, location, condition
+                    }
+                    Yii::app()->db->createCommand('INSERT INTO gungubo (`event_id`, `owner_id`, `health`, `location`, `condition_status`, `birthdate`) VALUES '.implode(',', $gungubosNuevosSQL).';')->query();
+                }
+            }
+        }
     }
 
 }
