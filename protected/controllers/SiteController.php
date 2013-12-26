@@ -99,7 +99,10 @@ class SiteController extends Controller
             $data_notif = $this->loadNotifications();
 			if($data_notif!=null) $data_notif = $this->processNotifications($data_notif);
 
-            $this->render('index', array('notifications'=>$data_notif));
+            $corral_notif = $this->loadNotificationsCorral();
+            if($corral_notif!=null) $corral_notif = $this->processNotifications($corral_notif);
+
+            $this->render('index', array('notifications'=>$data_notif, 'notifications_corral'=>$corral_notif));
         } else{
             $this->layout = 'guest';
 		    $this->render('login', array('model'=>$model));
@@ -282,4 +285,10 @@ class SiteController extends Controller
 
 		return array('new'=>$nuevas, 'old'=>$viejas, 'hay_mas'=>$hay_mas);
 	}
+
+    public function loadNotificationsCorral() {
+        $notifications = NotificationCorral::model()->findAll(array('condition'=>'event_id=:evento AND user_id=:recipient', 'params'=>array(':recipient'=>Yii::app()->currentUser->id, ':evento'=>Yii::app()->event->id), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNewNotificacionesMuro')));
+
+        return $notifications;
+    }
 }
