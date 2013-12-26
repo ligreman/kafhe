@@ -125,6 +125,7 @@ return array(
         'skillGumbudoCriador'=>'gumbudoCriador',
         'skillGumbudoNigromante'=>'gumbudoNigromante',
         'skillGumbudoArtificiero'=>'gumbudoArtificiero',
+        'skillGumbudoHippie' => 'gumbudoHippie',
 
         //Gumbudos
         'gumbudoClassAsaltante'=>'asaltante',
@@ -132,6 +133,7 @@ return array(
         'gumbudoClassCriador'=>'criador',
         'gumbudoClassNigromante'=>'nigromante',
         'gumbudoClassArtificiero'=>'artificiero',
+        'gumbudoClassHippie'=>'hippie',
 
         //Gungubo
         'gunguboClassDefault'=>'gungubo',
@@ -150,6 +152,7 @@ return array(
         'traitIncendiar'=>'incendiar',
         'traitColera'=>'colera',
         'traitZombificar'=>'zombificar',
+        'traitHiperactivo'=>'hiperactivo',
 
         'conditionQuemadura'=>'quemadura',
 
@@ -159,11 +162,11 @@ return array(
         'userStatusNames'=>array(0=>'Inactivo', 1=>'Alborotador', 2=>'Combatiente', 3=>'Baja', 4=>'Espectador', 5=>'Libertador'),
         'eventStatusNames'=>array(0=>'Cerrada', 1=>'Gungubos', 2=>'Batalla', 3=>'Finalizada', 4=>'En calma', 5=>'Preparativos'),
 
-        'gumbudoClassNames'=>array('asaltante'=>'Asaltante', 'guardian'=>'Guardián', 'criador'=>'Criador', 'nigromante'=>'Nigromante', 'artificiero'=>'Artificiero'),
-        'gumbudoClassNamesPlural'=>array('asaltante'=>'Asaltantes', 'guardian'=>'Guardianes', 'criador'=>'Criadores', 'nigromante'=>'Nigromantes', 'artificiero'=>'Artificieros'),
+        'gumbudoClassNames'=>array('asaltante'=>'Asaltante', 'guardian'=>'Guardián', 'criador'=>'Criador', 'nigromante'=>'Nigromante', 'artificiero'=>'Artificiero', 'hippie'=>'Hippie'),
+        'gumbudoClassNamesPlural'=>array('asaltante'=>'Asaltantes', 'guardian'=>'Guardianes', 'criador'=>'Criadores', 'nigromante'=>'Nigromantes', 'artificiero'=>'Artificieros', 'hippie'=>'Hippies'),
         'gumbudoWeaponNames'=>array('garras'=>'Garras', 'colmillos'=>'Colmillos', 'puas'=>'Púas'),
 
-        'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar'),
-        'conditionNames'=>array('quemadura'=>'Quemadura'),
+        //'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar', 'hiperactivo'=>'Hiperactivo'),
+        //'conditionNames'=>array('quemadura'=>'Quemadura'),
 	),
 );

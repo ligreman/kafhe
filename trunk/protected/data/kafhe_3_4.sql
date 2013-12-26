@@ -116,10 +116,10 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('gunguboZombieProbabilidadZombificar', '30', 'Gungubos', 'Probabilidad de convertir a un Gungubo en zombie.');		
 
 
-INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('gumbudoGuardianActions', '1', 'Gumbudos', 'Contadores de acción que indica el número de veces que los Gumbudos Guardianes pueden defender cada hora.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
-  ('gumbudoGuardianProbabilidadAcorazado', '20', 'Gumbudos', 'Probabilidad de que el Gumbudo tenga la característica de Acorazado.');
+  ('gumbudoGuardianProbabilidadAcorazado', '20', 'Gumbudos', 'Probabilidad de que el Gumbudo tenga la característica Acorazado.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gumbudoAsaltanteActions', '1', 'Gumbudos', 'Contadores de acción que indica el número de veces que los Gumbudos Asaltantes pueden atacar cada hora.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
@@ -146,6 +146,12 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('gumbudoAsedioMaxMuertes', '3', 'Gumbudos', 'Máximo número de Gungubos matados por ataque.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gumbudoGunbudensteinProbabilidadCanibal', '10', 'Gumbudos', 'Probabilidad de que un Gungubo nacido bajo la influencia de un Gunbudenstein tenga la característica Caníbal.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+	('gumbudoHippieActions', '1', 'Gumbudos', 'Contadores de acción que indica el número de veces que los Gumbudos Hippies pueden actuar por hora.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('gumbudoHippieProbabilidadActuar', '50', 'Gumbudos', 'Probabilidad de que el Gumbudo Hippie afecte a un atacante y le pacifique.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('gumbudoHippieProbabilidadHiperactivo', '20', 'Gumbudos', 'Probabilidad de que el Gumbudo tenga la característica Hiperactivo.');
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 

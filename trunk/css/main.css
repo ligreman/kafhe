@@ -1858,3 +1858,101 @@ h2.error404{
     position: relative;
     z-index: 999999;
 }
+
+/*Bestiario*/
+#bestiary {
+    background: #C0C0C0;
+    width: 700px;
+    height: 450px;
+    padding: 10px;
+    margin: 2em auto;
+    position: relative;
+}
+#carousel {
+    width: 700px;
+    height: 450px;
+    overflow: hidden;
+}
+#carousel div {
+    position: relative;
+    width: 700px;
+    height: 450px;
+    background: #F5F5F5;
+}
+#carousel div.kafhe { background: #F0CC33; }
+#carousel div.achikhoria { background: #B793C9; }
+#carousel div.libre { background: #C6988B; }
+#carousel div p {
+    position: absolute;
+    left: 200px;
+    bottom: 0;
+    margin: 0;
+    padding: 15px;
+    z-index: 50;
+    color: #111;
+    font-size: 1.2em;
+    text-align: justify;
+}
+#carousel div img {
+    display: block;
+    position: absolute;
+    top: 10px;
+    top: 10px;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    opacity: .4;
+}
+#pager {
+    width: 200px;
+    height: 450px;
+    overflow: auto;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+#pager a {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #111;
+    text-decoration: none;
+    background: #C0C0C0;
+    display: block;
+    padding: 5px 10px;
+    margin: 1px 0;
+}
+#pager a:hover {
+    color: #FFF;
+}
+#pager a.selected {
+    background: none;
+    color: #111;
+}
+
+.tooltip {
+    border-bottom: 1px dotted;
+    font-style: italic;
+}
+.tooltip:hover {
+    cursor: help;
+}
+.tooltip .text{
+    position: absolute;
+    left:-9999px;
+    overflow: hidden;
+}
+
+.tooltip:hover .text{
+    top: 25%;
+    left: 25%;
+    background: white;
+    color: #363636;
+    font-size: .9em;
+    display: inline-block;
+    width: 15em;
+    text-align: justify;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}

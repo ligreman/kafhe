@@ -11,7 +11,7 @@ class TuesteSingleton extends CApplicationComponent
      */
     public function getTuesteRegenerado($user, $checkTime=true)
     {
-        if ($checkTime) {
+        /*if ($checkTime) {
             //Compruebo si ha pasado el tiempo suficiente para regenerar al usuario
             $last_regen = strtotime($user->last_regen_timestamp);
             //echo "last-> ".$last_regen."\n";
@@ -19,7 +19,7 @@ class TuesteSingleton extends CApplicationComponent
             //echo "now-> ".time()."\n";
             if (time() < ($last_regen + intval(Yii::app()->config->getParam('tiempoRegeneracionTueste')) ) )
                 return false; //no ha pasado el tiempo suficiente
-        }
+        }*/
 
 		//Calculo el tueste que regenera en función de su rango
 		//$porcentajePorRango = ($user->rank-1) * intval(Yii::app()->config->getParam('porcentajeTuesteExtraPorRango')); //tueste extra por cada rango a partir del 2

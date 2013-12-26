@@ -14,21 +14,12 @@ class GumbudosSingleton extends CApplicationComponent
 		
 		//Ahora he de sacar el jugador propietario para ver su bando
 		$owner = User::model()->findByPk($asaltante->owner_id);
-		
-		/*if ($owner->side=='kafhe')
-			$bando_opuesto = 'achikhoria';
-		elseif ($owner->side=='achikhoria')
-			$bando_opuesto = 'kafhe';
-		else
-			$bando_opuesto = null;
-			
-		//Ahora a ver a quién ataco. Miro a ver si alguien tiene señuelo lo primero
-        $senuelo = Modifier::model()->find(array('condition'=>'keyword=:keyword', 'params'=>array(':keyword'=>Yii::app()->params->modifierSenuelo)));
-        if ($senuelo!==null)
-            $objetivo = User::findByPk($senuelo->target_final);
-        else
-		    $objetivo = Yii::app()->usertools->randomUser($owner->group_id, $bando_opuesto);*/
 
+        //Antes de nada miro a ver si hay un Hippie que me impida actuar
+        $afectaHippie = $this->gumbudoAfectadoHippie($asaltante, $event_id, $owner);
+        if ($afectaHippie) return 0; //Si me ha afectado un Hippie salgo
+
+		//Saco el objetivo
 		$objetivo = $this->selectTarget($owner, $event_id, $asaltante);
 
 		//Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
@@ -136,6 +127,10 @@ class GumbudosSingleton extends CApplicationComponent
 
 		//Ahora he de sacar el jugador propietario para ver su bando
 		$owner = User::model()->findByPk($nigromante->owner_id);
+
+        //Antes de nada miro a ver si hay un Hippie que me impida actuar
+        $afectaHippie = $this->gumbudoAfectadoHippie($nigromante, $event_id, $owner);
+        if ($afectaHippie) return 0; //Si me ha afectado un Hippie salgo
 
 		//Calculo la cantidad de zombies que van a atacar, si no hay ninguno termino el ataque
 		$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'cementerio')));
@@ -278,6 +273,10 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' gungubos del corra
 
 		//Ahora he de sacar el jugador propietario para ver su bando
 		$owner = User::model()->findByPk($artificiero->owner_id);
+
+        //Antes de nada miro a ver si hay un Hippie que me impida actuar
+        $afectaHippie = $this->gumbudoAfectadoHippie($artificiero, $event_id, $owner);
+        if ($afectaHippie) return 0; //Si me ha afectado un Hippie salgo
 
 		//Calculo la cantidad de bombas que van a atacar, si no hay ninguno termino el ataque
 		$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'cementerio')));
@@ -435,14 +434,24 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
 	//Calcula un objetivo aleatorio
 	private function selectTarget($attacker, $event_id, $gumbudo)
     {
+        $objetivo = null;
+
+        //Primero miro a ver si hay un señuelo
+        $senuelo = Modifier::model()->find(array('condition'=>'keyword=:keyword AND event=:evento', 'params'=>array(':keyword'=>Yii::app()->params->modifierSenuelo, ':evento'=>$event_id)));
+        if ($senuelo!==null) {
+            $objetivo = User::findByPk($senuelo->target_final);
+
+            if (!Yii::app()->modifier->reduceModifierUses($senuelo))
+                throw new CHttpException(400, 'Error al eliminar el modificador '.$senuelo->keyword);
+            return $objetivo;
+        }
+
         //Calculo el bando opuesto al atacante
         if ($attacker->side=='kafhe') $bando_opuesto = 'achikhoria';
         elseif ($attacker->side=='achikhoria') $bando_opuesto = 'kafhe';
         else $bando_opuesto = null;
 
-        $objetivo = null;
-
-        //Miro a ver si caigo en una trampa
+        //Miro a ver si el gumbudo cae en alguna otra trampa
         $trampa = $this->gumbudoCaeTrampa($gumbudo, $event_id);
 
         //Si caigo...
@@ -451,16 +460,13 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
                 case Yii::app()->params->modifierTrampaConfusion:
                     $objetivo = $attacker; //Se vuelve contra el atacante
                     break;
-                case Yii::app()->params->modifierSenuelo:
-                    $objetivo = User::findByPk($senuelo->target_final); //Al señuelo
-                    break;
             }
 
             //Notificaciones de que caigo en trampa
             $noti = new NotificationCorral;
             $noti->event_id = $event_id;
             $noti->user_id = $attacker->id;
-            $noti->message = 'Tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' ha caído en una '.$trampa->name.'.';
+            $noti->message = 'Tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' ha caído en una '.$trampa->keyword.'.';
             if (!$noti->save())
                 throw new CHttpException(400, 'Error al guardar la notificación de que un Gumbudo ha caído en trampa.');
         }
@@ -471,9 +477,9 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
         return $objetivo;
     }
 
-    private function gumbudoCaeTrampa($event_id) {
+    private function gumbudoCaeTrampa($gumbudo, $event_id) {
         //Busco los modificadores de trampa que pueden afectar a gumbudos
-        $trampas = Modifier::model()->findAll(array('condition'=>'event_id=:evento AND (keyword=:key1 OR keyword=:key2) ORDER BY RAND()', 'params'=>array(':evento'=>$event_id, ':key1'=>Yii::app()->params->modifierTrampaConfusion, ':key2'=>Yii::app()->params->modifierSenuelo)));
+        $trampas = Modifier::model()->findAll(array('condition'=>'event_id=:evento AND (keyword=:key1) ORDER BY RAND()', 'params'=>array(':evento'=>$event_id, ':key1'=>Yii::app()->params->modifierTrampaConfusion)));
 
         foreach ($trampas as $trampa) {
             //Si es trampa de confusion y el gumbudo no es artificiero, nigromante o asaltante, no puedo caer
@@ -488,7 +494,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
             if ($tirada<=$valor) {
                 //He caído cual primo. Reduzco los usos del modificador trampa
                 if (!Yii::app()->modifier->reduceModifierUses($trampa))
-                    throw new CHttpException(400, 'Error al eliminar el modificador '.$trampa->name);
+                    throw new CHttpException(400, 'Error al eliminar el modificador '.$trampa->keyword);
 
                 return $trampa;
             }
@@ -496,7 +502,42 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
 
         return false;
     }
+
+    private function gumbudoAfectadoHippie($gumbudo, $event_id, $owner) {
+        //Por cada Hippie miro a ver si me afecta
+        $hippies = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':clase'=>Yii::app()->params->gumbudoClassHippie)));
+
+        foreach ($hippies as $hippie) {
+            $tirada = mt_rand(1,100);
+            $valor = Yii::app()->config->getParam('gumbudoHippieProbabilidadActuar');
+            if ($tirada <= $valor) {
+                //Le afecta. Resto accion al hippie
+                $hippie->actions-=1; //resto una acción
+                if (!$hippie->save())
+                    throw new CHttpException(400, 'Error al guardar el Gumbudo hippie al restarle una acción '.$hippie->id.'.');
+
+                //Notificación para dueño hippie
+                $notiA = new NotificationCorral;
+                $notiA->event_id = $event_id;
+                $notiA->user_id = $hippie->owner_id;
+                $notiA->message = ':'.Yii::app()->params->gumbudoClassHippie.': Tu Gumbudo Hippie ha pacificado a un Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].', de '.ucfirst($owner->username).',  impidiendo que actuara.';
+                if (!$notiA->save())
+                    throw new CHttpException(400, 'Error al guardar la notificación A de corral de actuación de Gumbudo Hippie en evento '.$event_id.'.');
+
+                //Notificaciones para el dueño del atacante
+                $notiD = new NotificationCorral;
+                $notiD->event_id = $event_id;
+                $notiD->user_id = $gumbudo->owner_id;
+                $notiD->message = ':'.$gumbudo->class.': Un Gumbudo '.Yii::app()->params->gumbudoClassNames[$hippie->class].' ha convencido a tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' de que no debe portarse mal, y por ello no ataca esta vez.';
+                if (!$notiD->save())
+                    throw new CHttpException(400, 'Error al guardar la notificación D de corral de actuación de Gumbudo Hippie en evento '.$event_id.'.');
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 	
 }
-
 

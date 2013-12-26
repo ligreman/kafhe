@@ -110,8 +110,12 @@ class SkillSingleton extends CApplicationComponent
                 case Yii::app()->params->skillGumbudoAsaltante: $this->gumbudoAsaltante($skill, $extra_param); break;
                 case Yii::app()->params->skillGumbudoGuardian: $this->gumbudoGuardian($skill, $extra_param); break;
                 case Yii::app()->params->skillGumbudoCriador: $this->gumbudoCriador($skill); break;
+
 				case Yii::app()->params->skillGumbudoNigromante: $this->gumbudoNigromante($skill); break;
+
 				case Yii::app()->params->skillGumbudoArtificiero: $this->gumbudoArtificiero($skill); break;
+
+                case Yii::app()->params->skillGumbudoHippie: $this->gumbudoHippie($skill); break;
 			}
 			
 		}
@@ -919,8 +923,9 @@ class SkillSingleton extends CApplicationComponent
         $limit = intval(Yii::app()->config->getParam('gumbudoGuardianProbabilidadAcorazado'));
         if ($tirada <= $limit) {
             //Es Acorazado !!!!
+            $gumbudo->actions += 1;
             $gumbudo->trait = Yii::app()->params->traitAcorazado;
-            $gumbudo->trait_value = 2;
+            $gumbudo->trait_value = 1;
 			$this->_privateMessage = '¡El Gumbudo evolucionado es Acorazado!';
         }
 
@@ -1012,6 +1017,39 @@ class SkillSingleton extends CApplicationComponent
 
         return true;
 	}
+
+    private function gumbudoHippie($skill)
+    {
+        //Creo un Gumbudo
+        $gumbudo = new Gumbudo;
+
+        $fecha = new DateTime();
+        $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
+
+        $gumbudo->class = Yii::app()->params->gumbudoClassGuardian;
+        $gumbudo->owner_id = Yii::app()->currentUser->id;
+        $gumbudo->event_id = Yii::app()->event->id;
+        $gumbudo->side = Yii::app()->currentUser->side;
+        $gumbudo->actions = Yii::app()->config->getParam('gumbudoHippieActions');
+        $gumbudo->weapon = $weapon;
+        $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+
+        //A ver si es activista o no
+        $tirada = mt_rand(1,100);
+        $limit = intval(Yii::app()->config->getParam('gumbudoHippieProbabilidadHiperactivo'));
+        if ($tirada <= $limit) {
+            //Es Hiperactivo !!!!
+            $gumbudo->actions += 1;
+            $gumbudo->trait = Yii::app()->params->traitHiperactivo;
+            $gumbudo->trait_value = 1;
+            $this->_privateMessage = '¡El Gumbudo evolucionado es Hiperactivo!';
+        }
+
+        if (!$gumbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
+
+        return true;
+    }
 
 
 	/*************************************************/
