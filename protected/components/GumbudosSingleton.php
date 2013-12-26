@@ -247,7 +247,7 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' gungubos del corra
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
 		$notiA->user_id = $nigromante->owner_id;
-		$notiA->message = ':'.Yii::app()->params->gumbudoClassNigromante.': Tu Gumbudo Nigromante creó '.count($zombies).' Gungubos Zombie'.$txt_colericos.' con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos en el corral de '.ucfirst($objetivo->username).'.';
+		$notiA->message = ':'.Yii::app()->params->gumbudoClassNigromante.': Tu Gumbudo Nigromante creó '.count($zombies).' Gungubos Zombie'.$txt_colericos.' con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos en el corral de '.ucfirst($objetivo->alias).'.';
 		if (!$notiA->save())
 			throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Zombie en evento '.$event_id.'.');
 
@@ -396,7 +396,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
 		$notiA->user_id = $artificiero->owner_id;
-		$notiA->message = ':'.Yii::app()->params->gumbudoClassArtificiero.': Tu Gumbudo Artificiero creó '.count($bombas).' Gungubos Bomba con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos'.$txt_quemados.' en el corral de '.ucfirst($objetivo->username).'.';
+		$notiA->message = ':'.Yii::app()->params->gumbudoClassArtificiero.': Tu Gumbudo Artificiero creó '.count($bombas).' Gungubos Bomba con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos'.$txt_quemados.' en el corral de '.ucfirst($objetivo->alias).'.';
 		if (!$notiA->save())
 			throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Bomba en evento '.$event_id.'.');
 
@@ -520,7 +520,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
                 $notiA = new NotificationCorral;
                 $notiA->event_id = $event_id;
                 $notiA->user_id = $hippie->owner_id;
-                $notiA->message = ':'.Yii::app()->params->gumbudoClassHippie.': Tu Gumbudo Hippie ha pacificado a un Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].', de '.ucfirst($owner->username).',  impidiendo que actuara.';
+                $notiA->message = ':'.Yii::app()->params->gumbudoClassHippie.': Tu Gumbudo Hippie ha pacificado a un Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].', de '.ucfirst($owner->alias).',  impidiendo que actuara.';
                 if (!$notiA->save())
                     throw new CHttpException(400, 'Error al guardar la notificación A de corral de actuación de Gumbudo Hippie en evento '.$event_id.'.');
 
