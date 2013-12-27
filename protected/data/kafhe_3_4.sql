@@ -134,6 +134,10 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('gumbudoNigromanteMaxZombies', '10', 'Gumbudos', 'Máximo número de Gungubos Zombie que puede crear por ataque.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gumbudoNigromanteProbabilidadColera', '10', 'Gumbudos', 'Probabilidad de que cada Gungubo Zombie que convierta tenga la característica Cólera.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('gumbudoPestilenteProbabilidadFetido', '20', 'Gumbudos', 'Probabilidad de que el Gumbudo tenga la característica de Fétido.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('gumbudoPestilenteIntensidadEnfermedad', '1', 'Gumbudos', 'Cuantos contadores quita a los Gungubos la enfermedad.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('gumbudoArtificieroProbabilidadBomba', '25', 'Gumbudos', 'Probabilidad en cada ataque de crear Gungubos Bomba con los cadáveres del cementerio.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 

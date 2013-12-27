@@ -304,6 +304,13 @@ class CronCommand extends CConsoleCommand {
                 foreach($jugadores as $jugador) {
                     $this->logCron('     Corral del jugador '.$jugador->username.'.', 'info');
 
+                    //Primero quito contadores por enfermedad
+                    $muertos = $this->reduceHealthGungubos($event->id, $jugador->id, Yii::app()->params->conditionEnfermedad);
+                    $this->logCron('      - Contadores por enfermedad quitados. Mueren '.$muertos['condicion'].' gungubos por la enfermedad.', 'info');
+
+                    //Quito la enfermedad a los gungubos, que ya sufrieron bastante
+                    Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionNormal, 'condition_value'=>NULL),'event_id=:evento AND condition_status=:condicion AND owner_id=:owner', array(':evento'=>$event_id, ':condicion'=>Yii::app()->params->conditionEnfermedad, ':owner'=>$jugador->id));
+
                     //Saco sus Gumbudos Criadores
                     $gumbudos = Gumbudo::model()->count(array('condition'=>'owner_id=:owner AND event_id=:evento AND class=:clase', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassCriador)));
 
@@ -538,6 +545,9 @@ class CronCommand extends CConsoleCommand {
                 case 'gumbudoArtificieroAttack':
                     $result = Yii::app()->gumbudos->gumbudoArtificieroAttack($cronjob->params); //En params va el id del gumbudo que ataca
                     break;
+                case 'gumbudoPestilenteAttack':
+                    $result = Yii::app()->gumbudos->gumbudoPestilenteAttack($cronjob->params); //En params va el id del gumbudo que ataca
+                    break;
             }
 			
 			if ($result !== true)
@@ -560,7 +570,14 @@ class CronCommand extends CConsoleCommand {
     /********************************************************************************************************/
 
 
-    private function reduceHealthGungubos($event_id, $owner_id=null, $solo_condicion=null)
+    /** Reduce los contadores de los gungubos de un corral
+     * @param $event_id ID del Evento al que pertenecen los gungubos
+     * @param null $owner_id (opcional) ID del propietario de los gungubos. Si no se indica, se aplican a todos los gungubos del evento
+     * @param null $solo_condicion (opcional) Condición que provoca la reducción de contadores
+     * @param int $cantidad Contadores a quitar
+     * @return array
+     */
+    private function reduceHealthGungubos($event_id, $owner_id=null, $solo_condicion=null, $cantidad=1)
     {
 		$mueren = array();
 		
@@ -572,10 +589,14 @@ class CronCommand extends CConsoleCommand {
 		$condition = '';
 		if ($solo_condicion!==null) {
 			$condition = ' AND condition_status="'.$solo_condicion.'" ';
+
+			if ($solo_condicion==Yii::app()->params->conditionEnfermedad)
+			    $cantidad = 'condition_value';
 		}
 
-        //Quito un contador de todos los gungubos de los corrales.
-        Gungubo::model()->updateCounters(array('health'=>-1),'event_id=:evento AND location=:lugar'.$owner.$condition, array(':evento'=>$event_id, ':lugar'=>'corral'));
+        //Quito contadores de todos los gungubos de los corrales.
+        //Gungubo::model()->updateCounters(array('health'=>-$cantidad),'event_id=:evento AND location=:lugar'.$owner.$condition, array(':evento'=>$event_id, ':lugar'=>'corral'));
+        Yii::app()->db->createCommand('UPDATE gungubo SET health=(health-'.$cantidad.') WHERE event_id='.$event_id.' AND location="corral"'.$owner.$condition.';')->query();
 
         //Los que hayan muerto por causas naturales
 		if ($solo_condicion===null) {
