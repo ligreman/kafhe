@@ -1,6 +1,6 @@
 <?php
 
-/** GumbudosSingleton para operaciones relacionadas con los gungubos de un evento
+/** GumbudosSingleton para operaciones relacionadas con los Gungubos de un evento
  */
 class GumbudosSingleton extends CApplicationComponent
 {
@@ -74,8 +74,8 @@ class GumbudosSingleton extends CApplicationComponent
 			$cuantos = Gungubo::model()->updateAll(array('location'=>'cementerio', 'health'=>0, 'attacker_id'=>$asaltante->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$mata.';', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
 			
 			//Textos de notificaciones
-			$txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Tu Gumbudo Asaltante ha matado '.$cuantos.' gungubos en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).'.';
-			$txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Asaltante enemigo ha superado a tus Guardianes matando a '.$cuantos.' gungubos en tu corral.';
+			$txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Tu Gumbudo Asaltante ha matado '.$cuantos.' Gungubos en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).'.';
+			$txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Asaltante enemigo ha superado a tus Guardianes matando a '.$cuantos.' Gungubos en tu corral.';
 
 			//Fama Asaltante exitoso
             $owner->fame += 2; // 2 de fama por atacar con éxito
@@ -242,7 +242,7 @@ Yii::log('  - Zombie mueto', 'info');
 
 		if ($colericos>0) $txt_colericos = ' ('.$colericos.' de ellos Coléricos)';
 		else $txt_colericos = '';
-Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' gungubos del corral', 'info');
+Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corral', 'info');
 		//Notificaciones para el atacante
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
@@ -391,7 +391,7 @@ Yii::log('  + ¡FUEGO y quemadura!', 'info');
 
 		if ($cuantos_quemados>0) $txt_quemados = ' y quemado a otros '.$cuantos_quemados;
 		else $txt_quemados = '';
-Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral y quemaron a '.$cuantos_quemados, 'info');
+Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral y quemaron a '.$cuantos_quemados, 'info');
 		//Notificaciones para el atacante
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
@@ -410,7 +410,118 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' gungubos del corral
 
 		return true;
 	}
-	
+
+
+    public function gumbudoPestilenteAttack($gumbudo_id)
+    {
+        //Cojo el gumbudo
+        $pestilente = Gumbudo::model()->findByPk($gumbudo_id);
+        if ($pestilente===null) return true; //Si ya no existe el gumbudo, no hago nada
+
+        $event_id = $pestilente->event_id;
+
+        //Ahora he de sacar el jugador propietario para ver su bando
+        $owner = User::model()->findByPk($pestilente->owner_id);
+
+        //Antes de nada miro a ver si hay un Hippie que me impida actuar
+        $afectaHippie = $this->gumbudoAfectadoHippie($pestilente, $event_id, $owner);
+        if ($afectaHippie) return 0; //Si me ha afectado un Hippie salgo
+
+        //Saco el objetivo
+        $objetivo = $this->selectTarget($owner, $event_id, $pestilente);
+
+        //Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
+        $guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
+
+        $ataque_exitoso = true;
+        $result = '';
+        foreach($guardianes as $guardian) {
+            $result = $this->resolveCombat($pestilente, $guardian);
+
+            //Si gana el defensor o hay empate se termina todo. Devuelve 0 en empate, 1 en gana atacante y 2 en gana defensor
+            if ($result===0) { //Empate
+                $ataque_exitoso = false;
+                $objetivo->fame += 1; //Uno de fama por detener un ataque con empate, para  el defensor
+            } elseif ($result===2) { //Defensor wins
+                $ataque_exitoso = false;
+                //Fama para el Guardián
+                $objetivo->fame += 2;
+            } elseif ($result===1) { //Asaltante wins
+                //Famas Guardián por derrota
+                $objetivo->fame = max(0, $objetivo->fame-2);
+            }
+
+            //Quito una acción al defensor
+            $guardian->actions -= 1;
+
+            if (!$guardian->save())
+                throw new CHttpException(400, 'Error al guardar el cambio de arma del gumbudo Guardián '.$guardian->id.'.');
+
+            //Continuo mirando el combate con el siguiente guardián si lo hubiere, siempre que el ataque no haya fallado ya
+            if ($ataque_exitoso===false) break;
+        }
+
+        //Si el pestilente ha conseguido entrar miro a ver si infecto el corral
+        if ($ataque_exitoso) {
+            if ($pestilente->trait != Yii::app()->params->traitFetido) {
+                $tirada = mt_rand(1,100);
+                $valor = intval($pestilente->extra_param);
+                if ($tirada<=$valor)
+                    $infecto = true;
+                else
+                    $infecto = false;
+            } else
+                $infecto = true;
+
+            if ($infecto) {
+                $cuantos_infecto = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionEnfermedad, 'condition_value'=>Yii::app()->config->getParam('gumbudoPestilenteIntensidadEnfermedad'), 'attacker_id'=>$pestilente->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
+
+                //Fama Pestilente para ataque exitoso
+                $owner->fame += 5; // 5 de fama por infectar con éxito
+            }
+
+            //Textos de notificaciones
+            $txtA = ':'.Yii::app()->params->gumbudoClassPestilente.': Tu Gumbudo Pestilente ha irrumpido en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).' propagando una enfermedad a sus '.$cuantos_infecto.' Gungubos.';
+            $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Pestilente enemigo ha superado a tus Guardianes y ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
+        } else {
+            //Textos de notificaciones
+            $txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Los Gumbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gumbudo Pestilente.';
+            $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Tus Gumbudos Guardianes han detenido un ataque de un Pestilente en tu corral.';
+        }
+
+        //Guardo la fama de ambos usuarios, si no son el mismo por una trampa de Confusion o lo que sea
+        if ($owner->id !== $objetivo->id) {
+            if (!$owner->save())
+                throw new CHttpException(400, 'Error al guardar la fama del usuario atacante por Ataque Pestilente en evento '.$event_id.'.');
+
+            if (!$objetivo->save())
+                throw new CHttpException(400, 'Error al guardar la fama del usuario defensor por Ataque Pestilente en evento '.$event_id.'.');
+        }
+
+        //Notificaciones para el atacante
+        $notiA = new NotificationCorral;
+        $notiA->event_id = $event_id;
+        $notiA->user_id = $pestilente->owner_id;
+        $notiA->message = $txtA;
+        if (!$notiA->save())
+            throw new CHttpException(400, 'Error al guardar la notificación A del Pestilente en evento '.$event_id.'.');
+
+        //Notificaciones para el defensor
+        $notiD = new NotificationCorral;
+        $notiD->event_id = $event_id;
+        $notiD->user_id = $objetivo->id;
+        $notiD->message = $txtD;
+        if (!$notiD->save())
+            throw new CHttpException(400, 'Error al guardar la notificación D del Pestilente en evento '.$event_id.'.');
+
+        return true;
+    }
+
+
+
+
+
+
 	
 	/***********************************************************************************************/
 	/************* FUNCIONES AUXILIARES *****************/

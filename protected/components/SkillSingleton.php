@@ -112,6 +112,7 @@ class SkillSingleton extends CApplicationComponent
                 case Yii::app()->params->skillGumbudoCriador: $this->gumbudoCriador($skill); break;
 
 				case Yii::app()->params->skillGumbudoNigromante: $this->gumbudoNigromante($skill); break;
+                case Yii::app()->params->skillGumbudoPestilente: $this->gumbudoPestilente($skill); break;
 
 				case Yii::app()->params->skillGumbudoArtificiero: $this->gumbudoArtificiero($skill); break;
 
@@ -887,14 +888,10 @@ class SkillSingleton extends CApplicationComponent
             throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
 
         //Con los datos de su actividad o action calculo los ataques
-        //$fecha = new DateTime();
         $ataques = array();
         $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
 		$hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
 		foreach($hours as $hour) {
-        //for($i=1; $i<=$num_ataques; $i++) {
-            //$fecha->add(DateInterval::createFromDateString('2 hours')); //Añado dos horas            
-            //$ataques[] = "('gumbudo', 'gumbudoAsaltanteAttack', '".$gumbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
 			$ataques[] = "('gumbudo', 'gumbudoAsaltanteAttack', '".$gumbudo->id."', '".$hour."')";
         }
         Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
@@ -973,15 +970,51 @@ class SkillSingleton extends CApplicationComponent
             throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
 			
 		//Con los datos de su actividad o action calculo los ataques
-        //$fecha = new DateTime();
         $ataques = array();
         $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
 		$hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
 		foreach($hours as $hour) {
-        //for($i=1; $i<=$num_ataques; $i++) {
-            //$fecha->add(DateInterval::createFromDateString('2 hours')); //Añado dos horas            
-            //$ataques[] = "('gumbudo', 'gumbudoNigromanteAttack', '".$gumbudo->id."', '".$fecha->format('Y-m-d H:i:s')."')";
 			$ataques[] = "('gumbudo', 'gumbudoNigromanteAttack', '".$gumbudo->id."', '".$hour."')";
+        }
+        Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
+
+        return true;
+    }
+
+    private function gumbudoPestilente($skill)
+    {
+        //Creo un Gumbudo
+        $gumbudo = new Gumbudo;
+
+        $fecha = new DateTime();
+        $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
+
+        $gumbudo->class = Yii::app()->params->gumbudoClassPestilente;
+        $gumbudo->owner_id = Yii::app()->currentUser->id;
+        $gumbudo->event_id = Yii::app()->event->id;
+        $gumbudo->side = Yii::app()->currentUser->side;
+        $gumbudo->weapon = $weapon;
+        $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+
+        //A ver si es fetido
+        $tirada = mt_rand(1,100);
+        $limit = intval(Yii::app()->config->getParam('gumbudoPestilenteProbabilidadFetido'));
+        if ($tirada <= $limit) {
+            //Es Fétido !!!!
+            $gumbudo->trait = Yii::app()->params->traitFetido;
+            //$gumbudo->trait_value = 2;
+            $this->_privateMessage = '¡El Gumbudo evolucionado es Fétido!';
+        }
+
+        if (!$gumbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
+
+        //Con los datos de su actividad o action calculo los ataques
+        $ataques = array();
+        $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
+        $hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
+        foreach($hours as $hour) {
+            $ataques[] = "('gumbudo', 'gumbudoPestilenteAttack', '".$gumbudo->id."', '".$hour."')";
         }
         Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
 
@@ -1006,7 +1039,6 @@ class SkillSingleton extends CApplicationComponent
             throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
 			
 		//Con los datos de su actividad o action calculo los ataques
-        //$fecha = new DateTime();
         $ataques = array();
         $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
 		$hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
@@ -1034,7 +1066,7 @@ class SkillSingleton extends CApplicationComponent
         $gumbudo->weapon = $weapon;
         $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
-        //A ver si es activista o no
+        //A ver si es hiperactivo o no
         $tirada = mt_rand(1,100);
         $limit = intval(Yii::app()->config->getParam('gumbudoHippieProbabilidadHiperactivo'));
         if ($tirada <= $limit) {

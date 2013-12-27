@@ -11,7 +11,7 @@
  * @property integer $skill_id
  * @property integer $item_id
  * @property string $keyword
- * @property integer $value
+ * @property string $value
  * @property integer $duration
  * @property string $duration_type
  * @property integer $hidden
@@ -46,8 +46,9 @@ class Modifier extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('event_id, caster_id, target_final, keyword', 'required'),
-			array('event_id, caster_id, skill_id, item_id, value, duration, hidden', 'numerical', 'integerOnly'=>true),
+			array('event_id, caster_id, skill_id, item_id, duration, hidden', 'numerical', 'integerOnly'=>true),
 			array('target_final, keyword', 'length', 'max'=>50),
+			array('value', 'length', 'max'=>15),
 			array('duration_type', 'length', 'max'=>6),
 			array('timestamp', 'safe'),
 			// The following rule is used by search().
@@ -106,7 +107,7 @@ class Modifier extends CActiveRecord
 		$criteria->compare('skill_id',$this->skill_id);
 		$criteria->compare('item_id',$this->item_id);
 		$criteria->compare('keyword',$this->keyword,true);
-		$criteria->compare('value',$this->value);
+		$criteria->compare('value',$this->value,true);
 		$criteria->compare('duration',$this->duration);
 		$criteria->compare('duration_type',$this->duration_type,true);
 		$criteria->compare('hidden',$this->hidden);
