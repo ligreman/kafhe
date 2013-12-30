@@ -103,9 +103,12 @@ class SkillSingleton extends CApplicationComponent
                 case Yii::app()->params->skillSenuelo: $this->senuelo($skill); break;
                 case Yii::app()->params->skillSacrificar: $this->sacrificar($skill, $finalTarget); break;
                 case Yii::app()->params->skillVampirismo: $this->vampirismo($skill, $finalTarget); break;
-
                 case Yii::app()->params->skillOtearKafhe: $this->otearKafhe($skill); break;
                 case Yii::app()->params->skillOtearAchikhoria: $this->otearAchikhoria($skill); break;
+				case Yii::app()->params->skillDifamar: $this->difamar($skill); break;
+				case Yii::app()->params->skillPoderPrimigenio: $this->poderPrimigenio($skill, $finalTarget); break;
+				case Yii::app()->params->skillConversionDivina: $this->conversionDivina($skill); break;
+				case Yii::app()->params->skillApocalipsisZombie: $this->apocalipsisZombie($skill); break;
 
                 case Yii::app()->params->skillGumbudoAsaltante: $this->gumbudoAsaltante($skill, $extra_param); break;
                 case Yii::app()->params->skillGumbudoGuardian: $this->gumbudoGuardian($skill, $extra_param); break;
@@ -517,6 +520,145 @@ class SkillSingleton extends CApplicationComponent
 
         return true;
     }*/
+	
+	private function difamar($skill)
+	{
+		$user = Yii::app()->currentUser->model;
+		$jugadores = Yii::app()->usertools->getUsers();
+		
+		$fama_quitada = 0;
+		foreach($jugadores as $jugador) {
+			if ($jugador->id == $user->id) continue; //paso de mí mismo
+			if ($jugador->status == Yii::app()->params->statusInactivo) continue; //paso si está inactivo
+			
+			$antes = $jugador->fame;
+			$jugador->fame = max(0, $jugador->fame - intval($skill->extra_param));
+			$fama_quitada += ($antes - $jugador->fame);
+			
+			if (!$jugador->save())
+				throw new CHttpException(400, 'Error al guardar el jugador tras quitarle fama por '.$skill->name.': ('.$jugador->username.'). ['.print_r($jugador->getErrors(),true).']');
+		}
+		
+		$user->fame += $fama_quitada;		
+		$this->_privateMessage = 'Has ganado '.$fama_quitada.' puntos de fama.';
+
+	    if (!$user->save())
+            throw new CHttpException(400, 'Error al guardar el usuario ('.$user->username.') al darle fama por '.$skill->name.'. ['.print_r($user->getErrors(),true).']');
+
+		return true;
+	}
+	
+	private function poderPrimigenio($skill, $finalTarget)
+	{
+	    //Me relleno la barra de tueste		
+		$finalTarget->ptos_tueste = Yii::app()->tueste->getMaxTuesteUser($finalTarget); //Le pongo al máximo		
+
+	    if (!$finalTarget->save())
+            throw new CHttpException(400, 'Error al rellenar la barra de tueste del usuario al ejecutar '.$skill->name.', el usuario '.$finalTarget->username.'. ['.print_r($finalTarget->getErrors(),true).']');
+
+		return true;
+	}
+	
+	private function conversionDivina($skill)
+	{
+		$user = Yii::app()->currentUser->model;
+		$event = Yii::app()->event->model;
+		
+	    //Pongo a los gumbudos asaltantes como owner_id a mí mismo
+		$cuantos = Gumbudo::model()->updateAll(array('owner_id'=>$user->id), 'event_id=:evento AND class=:clase', array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassAsaltante));
+		
+		$this->_privateMessage = 'Has ganado el control de '.$cuantos.' Gumbudos Asaltantes.';
+		$this->_publicMessage = 'Se ha hecho con el control de todos los Gumbudos Asaltantes.';
+
+		return true;
+	}
+	
+	private function apocalipsisZombie($skill)
+	{
+		$user = Yii::app()->currentUser->model;
+		$jugadores = Yii::app()->usertools->getUsers();
+		$event = Yii::app()->event->model;
+		$fama_won = 0;
+		$corrales_atacados = $total_zombies = $total_otros_muertos = 0;
+		
+		//Bando opuesto
+		if ($user->side=='kafhe'= $bando_opuesto = 'achikhoria';
+		elseif ($user->side=='achikhoria'= $bando_opuesto = 'kafhe';
+
+	    //Recorro los corrales de los jugadores
+		foreach($jugadores as $jugador) {
+			if ($jugador->side!=$bando_opuesto) continue; //Si no es del bando opuesto no hago nada
+			if ($jugador->status == Yii::app()->params->statusInactivo) continue; //paso si está inactivo
+			
+			//Voy mirando si se convierten o no zombies en cada corral
+			$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':lugar'=>'cementerio')));
+			
+			$probabilidadZombie = intval($skill->extra_param)
+			//$zombies = 
+			$zombies_muertos_ids = array();			
+
+			foreach($cadaveres as $cadaver) {
+				$tirada = mt_rand(1,100);
+				if ($tirada <= $probabilidadZombie) {
+					Yii::log('Zombie!!!!', 'info');
+					//$zombies[] = $cadaver;
+					$zombies_muertos_ids[] = $cadaver->id;
+				}
+			}
+
+			$zombies_atacan = count($zombies_muertos_ids);
+			//Me cargo de una sola consulta a los zombies convertidos
+			Gungubo::model()->deleteAll('id IN ('.implode(',', $zombies_muertos_ids).')');
+
+			//Resuelvo los ataques de los zombies
+			$otros_muertos = 0;
+			$zombies_atacan_aux = $zombies_atacan;
+			$probabilidad = Yii::app()->config->getParam('gunguboZombieProbabilidadZombificar');
+			while ($zombies_atacan_aux > 0) {
+				$tirada = mt_rand(1,100);
+	Yii::log(' DATOS: '.$tirada.' // '.$probabilidad, 'info');
+				if ($tirada <= $probabilidad) {
+					//Convierto uno !!
+	Yii::log('  + Zombie convertido!', 'info');
+					$otros_muertos++; //Muere uno más en el corral
+					$zombies_atacan_aux++; //El que convierte no muere y se añade un zombie más
+				} else {
+	Yii::log('  - Zombie mueto', 'info');
+					//No convierto :S
+					$zombies_atacan_aux--; //El que ataca muere
+				}
+			}
+
+			//Mato a los muertos extra. Los remueve del juego directamente, no van al cementerio.
+			$cuantos_muertos = Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_muertos, 'params'=>array(':evento'=>$event->id, ':owner'=>$jugador->id, ':lugar'=>'corral')));
+			
+			//Notifico al pobre víctimo/a
+			$notiA = new NotificationCorral;
+			$notiA->event_id = $event->id;
+			$notiA->user_id = $jugador->id;
+			$notiA->message = 'Tu corral se ha visto afectado por un Apocalipsis Zombie, que ha convertido a '.$zombies_atacan.' cadáveres de tu cementerio en Gungubos Zombie, que mataron a '.$cuantos_muertos.' Gungubos del corral.';
+			if (!$notiA->save())
+				throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Apocalipsis Zombie en evento '.$event->id.'.');
+			
+			if ($zombies_atacan > 0) {
+				$fama_won++;
+				$corrales_atacados++;
+				$total_zombies += $zombies_atacan;
+				$total_otros_muertos += $cuantos_muertos;
+			}
+		}
+		
+		//Doy la fama al jugador
+		$user->fame += $fama_won;
+		
+		if (!$user->save())
+            throw new CHttpException(400, 'Error al guardar el usuario ('.$user->username.') al darle fama por '.$skill->name.'. ['.print_r($user->getErrors(),true).']');
+		
+		$this->_privateMessage = 'Has sembrado el caos en '.$corrales_atacados.' corrales enemigos, convirtiendo '.$total_zombies.' cadáveres en Gungubos Zombie, y matando a otros '.$total_otros_muertos.' Gungubos en el corral.';
+		$this->_publicMessage = 'Ha provocado el caos en los corrales de los jugadores del bando de '.ucfirst($bando_opuesto).'.';
+
+		return true;
+	}
 	
     /** Relanza el evento
      * @return bool
