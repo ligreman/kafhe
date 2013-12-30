@@ -151,7 +151,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  'usos',  // horas, evento, usos
             'critic'  =>  5,
             'fail'  =>  10,
-            'cost_tueste'  =>  100,
+            'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -184,7 +184,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  'usos',  // horas, evento, usos
             'critic'  =>  5,
             'fail'  =>  10,
-            'cost_tueste'  =>  100,
+            'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -217,7 +217,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  'usos',  // horas, evento, usos
             'critic'  =>  5,
             'fail'  =>  10,
-            'cost_tueste'  =>  100,
+            'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -253,7 +253,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  5,                         // Int con el % crítico
             'fail'  =>  10,                           // Int con el % de pifia
             'extra_param' => NULL,                  // String con parámetro extra que se necesite para algo. Por ejemplo, CazarGungubos, para la cantidad de gugubos a cazar.
-            'cost_tueste'  =>  150,                // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  250,                // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -351,8 +351,160 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'generates_notification' => 1           // Bool. Genera notificación en el muro.
         ));
 
+        //DIFAMAR
+        $this->insert('skill', array(
+            'name'  =>  'Difamar',                         // Nombre de la habilidad
+            'description'  =>  'Reduce la fama del resto de usuarios en 5 puntos y te otorga a tí los puntos reducidos de esta manera.',                  // Descripción de la habilidad
+            'category'  =>  'ancestral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
+            'keyword'  =>  'difamar',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
+            'modifier_hidden' => 1,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
+            'duration'  =>  NULL,                   // Int con la cantidad para la duración
+            'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
+            'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
+            'critic'  =>  5,                         // Int con el % crítico
+            'fail'  =>  5,                           // Int con el % de pifia
+            'extra_param' => '5',                  // Fama que quitas
+            'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
+            'cost_retueste'  =>  400,              // Int con el coste en puntos de retueste
+            'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
+            'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
+            'cost_gungubos' => NULL,                 // Int con el coste en gungubos
+            'is_cooperative'  =>  0,                // 0: no es cooperativa. 1: es cooperativa
+            'cost_tueste_cooperate'  =>  NULL,      // Int con el coste en tueste de unirse a cooperar en una habilidad
+            'cost_tostolares_cooperate'  =>  NULL,  // Int con el coste en tostólares de unirse a cooperar
+            'cooperate_benefit'  =>  NULL,          // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,           // 0: no requiere; 1: requiere elegir a un usuario como objetivo
+            'require_target_side'  =>  NULL,        // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios) Ej: kafhe,achikhoria
+            'require_caller'  =>  0,                // 0: no requiere ser el llamador; 1: requiere ser el llamador para ejecutar la habilidad
+            'require_user_side'  =>  'kafhe,achikhoria',          // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios). Ej: kafhe,libre
+            'require_user_min_rank'  =>  NULL,      // Int Rango mínimo para ejecutar la habilidad (con este rango ya se puede ejecutar)
+            'require_user_max_rank'  =>  NULL,      // Int Rango máximo para ejecutar la habilidad (a partir de este rango ya no se puede ejecutar)
+            'require_user_status'  =>  NULL,        // String. Posibles valores: 0 Inactivo, 1 Alborotador, 2 Combatiente, 4 Espectador, 5 Libertador. Se pueden poner varios separados por comas (sin espacios). Ej: 0,3,4,5
+            'require_event_status'  =>  '1',       // ID del estado del evento que se requiere
+            'require_talent_id'  =>  NULL,           // ID del talento requerido para ejecutar la habilidad
+            'overload'  =>  0,                      // Bool. Tiene sobrecarga la habilidad, sí o no
+            'generates_notification' => 1           // Bool. Genera notificación en el muro.
+        ));
+		
+		//PODER PRIMIGENIO
+        $this->insert('skill', array(
+            'name'  =>  'Poder primigenio',                         // Nombre de la habilidad
+            'description'  =>  'Rellena tu barra de tueste.',                  // Descripción de la habilidad
+            'category'  =>  'ancestral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
+            'keyword'  =>  'poderPrimigenio',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
+            'modifier_hidden' => 1,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
+            'duration'  =>  NULL,                   // Int con la cantidad para la duración
+            'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
+            'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
+            'critic'  =>  5,                         // Int con el % crítico
+            'fail'  =>  5,                           // Int con el % de pifia
+            'extra_param' => NULL,                  // Tueste que obtienes con la habilidad
+            'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
+            'cost_retueste'  =>  75,              // Int con el coste en puntos de retueste
+            'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
+            'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
+            'cost_gungubos' => NULL,                 // Int con el coste en gungubos
+            'is_cooperative'  =>  0,                // 0: no es cooperativa. 1: es cooperativa
+            'cost_tueste_cooperate'  =>  NULL,      // Int con el coste en tueste de unirse a cooperar en una habilidad
+            'cost_tostolares_cooperate'  =>  NULL,  // Int con el coste en tostólares de unirse a cooperar
+            'cooperate_benefit'  =>  NULL,          // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,           // 0: no requiere; 1: requiere elegir a un usuario como objetivo
+            'require_target_side'  =>  NULL,        // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios) Ej: kafhe,achikhoria
+            'require_caller'  =>  0,                // 0: no requiere ser el llamador; 1: requiere ser el llamador para ejecutar la habilidad
+            'require_user_side'  =>  'kafhe,achikhoria',          // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios). Ej: kafhe,libre
+            'require_user_min_rank'  =>  NULL,      // Int Rango mínimo para ejecutar la habilidad (con este rango ya se puede ejecutar)
+            'require_user_max_rank'  =>  NULL,      // Int Rango máximo para ejecutar la habilidad (a partir de este rango ya no se puede ejecutar)
+            'require_user_status'  =>  NULL,        // String. Posibles valores: 0 Inactivo, 1 Alborotador, 2 Combatiente, 4 Espectador, 5 Libertador. Se pueden poner varios separados por comas (sin espacios). Ej: 0,3,4,5
+            'require_event_status'  =>  '1',       // ID del estado del evento que se requiere
+            'require_talent_id'  =>  NULL,           // ID del talento requerido para ejecutar la habilidad
+            'overload'  =>  0,                      // Bool. Tiene sobrecarga la habilidad, sí o no
+            'generates_notification' => 1           // Bool. Genera notificación en el muro.
+        ));
+		
+		//CONVERSIÓN DIVINA
+        $this->insert('skill', array(
+            'name'  =>  'Conversión divina',                         // Nombre de la habilidad
+            'description'  =>  'Convierte a todos los Gumbudos Asaltantes activos y pasas a controlarlos.',                  // Descripción de la habilidad
+            'category'  =>  'ancestral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
+            'keyword'  =>  'conversionDivina',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
+            'modifier_hidden' => 1,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
+            'duration'  =>  NULL,                   // Int con la cantidad para la duración
+            'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
+            'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
+            'critic'  =>  5,                         // Int con el % crítico
+            'fail'  =>  5,                           // Int con el % de pifia
+            'extra_param' => NULL,                  // Tueste que obtienes con la habilidad
+            'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
+            'cost_retueste'  =>  250,              // Int con el coste en puntos de retueste
+            'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
+            'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
+            'cost_gungubos' => NULL,                 // Int con el coste en gungubos
+            'is_cooperative'  =>  0,                // 0: no es cooperativa. 1: es cooperativa
+            'cost_tueste_cooperate'  =>  NULL,      // Int con el coste en tueste de unirse a cooperar en una habilidad
+            'cost_tostolares_cooperate'  =>  NULL,  // Int con el coste en tostólares de unirse a cooperar
+            'cooperate_benefit'  =>  NULL,          // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,           // 0: no requiere; 1: requiere elegir a un usuario como objetivo
+            'require_target_side'  =>  NULL,        // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios) Ej: kafhe,achikhoria
+            'require_caller'  =>  0,                // 0: no requiere ser el llamador; 1: requiere ser el llamador para ejecutar la habilidad
+            'require_user_side'  =>  'kafhe',          // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios). Ej: kafhe,libre
+            'require_user_min_rank'  =>  NULL,      // Int Rango mínimo para ejecutar la habilidad (con este rango ya se puede ejecutar)
+            'require_user_max_rank'  =>  NULL,      // Int Rango máximo para ejecutar la habilidad (a partir de este rango ya no se puede ejecutar)
+            'require_user_status'  =>  NULL,        // String. Posibles valores: 0 Inactivo, 1 Alborotador, 2 Combatiente, 4 Espectador, 5 Libertador. Se pueden poner varios separados por comas (sin espacios). Ej: 0,3,4,5
+            'require_event_status'  =>  '1',       // ID del estado del evento que se requiere
+            'require_talent_id'  =>  NULL,           // ID del talento requerido para ejecutar la habilidad
+            'overload'  =>  0,                      // Bool. Tiene sobrecarga la habilidad, sí o no
+            'generates_notification' => 1           // Bool. Genera notificación en el muro.
+        ));
 
-        // GUNBUDO ASALTANTE
+		//APOCALIPSIS ZOMBIE
+        $this->insert('skill', array(
+            'name'  =>  'Apocalipsis Zombie',                         // Nombre de la habilidad
+            'description'  =>  'Convierte en Gungubos Zombie cada cadáver de los cementerios del resto de jugadores enemigos, con un 25% de probabilidades cada uno. Los zombies convertidos atacarán por sorpresa a su propio corral saltándose cualquier defensa.',                  // Descripción de la habilidad
+            'category'  =>  'ancestral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
+            'keyword'  =>  'apocalipsisZombie',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
+            'modifier_hidden' => 1,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
+            'duration'  =>  NULL,                   // Int con la cantidad para la duración
+            'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
+            'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
+            'critic'  =>  5,                         // Int con el % crítico
+            'fail'  =>  5,                           // Int con el % de pifia
+            'extra_param' => '25',                  // Probabilidad de convertir en zombies
+            'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
+            'cost_retueste'  =>  250,              // Int con el coste en puntos de retueste
+            'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
+            'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
+            'cost_gungubos' => NULL,                 // Int con el coste en gungubos
+            'is_cooperative'  =>  0,                // 0: no es cooperativa. 1: es cooperativa
+            'cost_tueste_cooperate'  =>  NULL,      // Int con el coste en tueste de unirse a cooperar en una habilidad
+            'cost_tostolares_cooperate'  =>  NULL,  // Int con el coste en tostólares de unirse a cooperar
+            'cooperate_benefit'  =>  NULL,          // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,           // 0: no requiere; 1: requiere elegir a un usuario como objetivo
+            'require_target_side'  =>  NULL,        // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios) Ej: kafhe,achikhoria
+            'require_caller'  =>  0,                // 0: no requiere ser el llamador; 1: requiere ser el llamador para ejecutar la habilidad
+            'require_user_side'  =>  'achikhoria',          // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios). Ej: kafhe,libre
+            'require_user_min_rank'  =>  NULL,      // Int Rango mínimo para ejecutar la habilidad (con este rango ya se puede ejecutar)
+            'require_user_max_rank'  =>  NULL,      // Int Rango máximo para ejecutar la habilidad (a partir de este rango ya no se puede ejecutar)
+            'require_user_status'  =>  NULL,        // String. Posibles valores: 0 Inactivo, 1 Alborotador, 2 Combatiente, 4 Espectador, 5 Libertador. Se pueden poner varios separados por comas (sin espacios). Ej: 0,3,4,5
+            'require_event_status'  =>  '1',       // ID del estado del evento que se requiere
+            'require_talent_id'  =>  NULL,           // ID del talento requerido para ejecutar la habilidad
+            'overload'  =>  0,                      // Bool. Tiene sobrecarga la habilidad, sí o no
+            'generates_notification' => 1           // Bool. Genera notificación en el muro.
+        ));
+
+
+        // GUMBUDO ASALTANTE
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Asaltante',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Asaltante.',                  // Descripción de la habilidad

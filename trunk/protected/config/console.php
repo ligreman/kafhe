@@ -119,6 +119,10 @@ return array(
         'skillVampirismo'=>'vampirismo',
         'skillOtearKafhe'=>'otearKafhe',
         'skillOtearAchikhoria'=>'otearAchikhoria',
+		'skillDifamar'=>'difamar',
+		'skillPoderPrimigenio'=>'poderPrimigenio',
+		'skillConversionDivina'=>'conversionDivina',
+		'skillApocalipsisZombie'=>'apocalipsisZombie',
 
         'skillGumbudoAsaltante'=>'gumbudoAsaltante',
         'skillGumbudoGuardian'=>'gumbudoGuardian',

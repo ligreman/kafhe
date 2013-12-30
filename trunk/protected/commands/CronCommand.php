@@ -288,7 +288,6 @@ class CronCommand extends CConsoleCommand {
     }
 
     /** Cada hora pero a y media en cada una (10:30, 11:30...). Reduce contadores de Gungubos sin criadores */
-    ///TODO añadir aquí la enfermedad también. No será sólo por no tener Nurse
     public function actionGungubosReduceHealthExtra()
     {
         $this->logCron('Reduzco los contadores de los Gungubos que no tienen un Criador en el corral.', 'info');
