@@ -152,17 +152,19 @@
             
           ?>
 
-            <ul id="tools">
-                <li>&copy;2014 Omelettus</li>
-                <li><a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a></li>
-                <?php if (!Yii::app()->user->isGuest): ?>
-                    <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Changelog">Log de cambios</a></li>
-                    <li><a target="_blank" href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a></li>
-                <?php endif;?>
-                <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=cookies';?>">Uso de cookies</a></li>
-                <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a></li>
-                <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a></li>
-            </ul>
+            <footer>
+                <ul id="tools">
+                    <li>&copy;2014 Omelettus</li>
+                    <li><a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a></li>
+                    <?php if (!Yii::app()->user->isGuest): ?>
+                        <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Changelog">Log de cambios</a></li>
+                        <li><a target="_blank" href="https://code.google.com/p/kafhe/issues/entry">Informar de un bug</a></li>
+                    <?php endif;?>
+                    <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=cookies';?>">Uso de cookies</a></li>
+                    <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Normas_de_comportamiento">Normas de comportamiento</a></li>
+                    <li><a href="<?php echo Yii::app()->request->baseUrl.'/site/page?view=about';?>">Acerca de</a></li>
+                </ul>
+            </footer>   
         </nav><!-- mainmenu -->
         <?php if(isset($this->breadcrumbs)):?>
             <?php $this->widget('zii.widgets.CBreadcrumbs', array(

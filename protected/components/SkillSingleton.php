@@ -582,8 +582,8 @@ class SkillSingleton extends CApplicationComponent
 		$corrales_atacados = $total_zombies = $total_otros_muertos = 0;
 		
 		//Bando opuesto
-		if ($user->side=='kafhe'= $bando_opuesto = 'achikhoria';
-		elseif ($user->side=='achikhoria'= $bando_opuesto = 'kafhe';
+		if ($user->side=='kafhe') $bando_opuesto = 'achikhoria';
+		elseif ($user->side=='achikhoria') $bando_opuesto = 'kafhe';
 
 	    //Recorro los corrales de los jugadores
 		foreach($jugadores as $jugador) {
@@ -593,7 +593,7 @@ class SkillSingleton extends CApplicationComponent
 			//Voy mirando si se convierten o no zombies en cada corral
 			$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':lugar'=>'cementerio')));
 			
-			$probabilidadZombie = intval($skill->extra_param)
+			$probabilidadZombie = intval($skill->extra_param);
 			//$zombies = 
 			$zombies_muertos_ids = array();			
 
