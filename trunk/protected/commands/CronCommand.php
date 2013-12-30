@@ -98,8 +98,8 @@
 //Reducir vida a gungubos por otras cosas (no tener criador, enfermedad...) cada hora 10:30, 11:30...
 // 30 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gungubosReduceHealthExtra
 
-// #Los jueves por la noche a las 23 horas (el servidor tiene otra hora) pone los eventos en Calma
-// 0 22 * * 4 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron eventosEnCalma
+// #Los viernes a las 10am (el servidor tiene otra hora) pone los eventos en Calma
+// 0 9 * * 5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron eventosEnCalma
 
 // #Los lunes a las 9 de la mañana pongo los eventos en Preparativos
 // 0 8 * * 1 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron iniciarEventos
@@ -397,15 +397,15 @@ class CronCommand extends CConsoleCommand {
                 $this->logCron('  Comprobando el evento '.$event->id.'.', 'info');
 
                 //Activo a los Gumbudos Guardianes normales para que defiendan.
-                $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoGuardianActions')),'event_id=:evento', array(':evento'=>$event->id));
+                $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoGuardianActions')),'event_id=:evento AND class=:clase AND trait!=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitAcorazado, ':clase'=>Yii::app()->params->gumbudoClassGuardian));
                 //Para los gumbudos guardianes con trait Acorazado es una defensa más de la de por defecto
-                $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoGuardianActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitAcorazado));
+                $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoGuardianActions').'+trait_value)')),'event_id=:evento AND class=:clase AND trait=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitAcorazado, ':clase'=>Yii::app()->params->gumbudoClassGuardian));
                 $this->logCron('    Activados los '.($n+$m).' Gumbudos Guardianes en el evento '.$event->id.'.', 'info');
 
                 //Activo a los Gumbudos Hippie
-                $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoHippieActions')),'event_id=:evento', array(':evento'=>$event->id));
+                $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoHippieActions')),'event_id=:evento AND class=:clase AND trait!=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitHiperactivo, ':clase'=>Yii::app()->params->gumbudoClassHippie));
                 //Para los gumbudos hippie con trait Hiperactivo es una defensa más de la de por defecto
-                $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoHippieActions').'+trait_value)')),'event_id=:evento AND trait=:trait', array(':evento'=>$event->id, 'trait'=>Yii::app()->params->traitHiperactivo));
+                $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoHippieActions').'+trait_value)')),'event_id=:evento AND class=:clase AND trait=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitHiperactivo, ':clase'=>Yii::app()->params->gumbudoClassHippie));
                 $this->logCron('    Activados los '.($n+$m).' Gumbudos Hippie en el evento '.$event->id.'.', 'info');
             }
         }
@@ -541,12 +541,16 @@ class CronCommand extends CConsoleCommand {
 				case 'gumbudoNigromanteAttack':
 						$result = Yii::app()->gumbudos->gumbudoNigromanteAttack($cronjob->params); //En params va el id del gumbudo que ataca
 					break;
-                case 'gumbudoArtificieroAttack':
-                    $result = Yii::app()->gumbudos->gumbudoArtificieroAttack($cronjob->params); //En params va el id del gumbudo que ataca
-                    break;
                 case 'gumbudoPestilenteAttack':
                     $result = Yii::app()->gumbudos->gumbudoPestilenteAttack($cronjob->params); //En params va el id del gumbudo que ataca
                     break;
+                case 'gumbudoArtificieroAttack':
+                    $result = Yii::app()->gumbudos->gumbudoArtificieroAttack($cronjob->params); //En params va el id del gumbudo que ataca
+                    break;
+                case 'gumbudoAsedioAttack':
+                    $result = Yii::app()->gumbudos->gumbudoAsedioAttack($cronjob->params); //En params va el id del gumbudo que ataca
+                    break;
+
             }
 			
 			if ($result !== true)

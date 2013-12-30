@@ -1878,10 +1878,12 @@ h2.error404{
     width: 700px;
     height: 450px;
     background: #F5F5F5;
+    border-bottom: 1px solid #999;
 }
 #carousel div.kafhe { background: #F0CC33; }
 #carousel div.achikhoria { background: #B793C9; }
-#carousel div.libre { background: #C6988B; }
+#carousel div.libre { background: #D1A294; }
+#carousel div.gung { background: #00CE6C; }
 #carousel div p {
     position: absolute;
     left: 200px;
@@ -1901,7 +1903,7 @@ h2.error404{
     top: 10px;
     right: 10px;
     z-index: 10;
-    opacity: .4;
+    opacity: .5;
 }
 #pager {
     width: 200px;

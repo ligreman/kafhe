@@ -671,7 +671,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'gumbudo_action_rate' => 1,             // Cada cuanto actúa el Gumbudo
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
-            'extra_param' => 50,                  // Probabilidad de infectar el corral si consigue entrar
+            'extra_param' => NULL,                  // Probabilidad
             'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
@@ -710,6 +710,44 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de 
+            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
+            'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
+            'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
+            'cost_gungubos' => 1,
+            'is_cooperative'  =>  0,                // 0: no es cooperativa. 1: es cooperativa
+            'cost_tueste_cooperate'  =>  NULL,      // Int con el coste en tueste de unirse a cooperar en una habilidad
+            'cost_tostolares_cooperate'  =>  NULL,  // Int con el coste en tostólares de unirse a cooperar
+            'cooperate_benefit'  =>  NULL,          // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,           // 0: no requiere; 1: requiere elegir a un usuario como objetivo
+            'require_target_side'  =>  NULL,        // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios) Ej: kafhe,achikhoria
+            'require_caller'  =>  0,                // 0: no requiere ser el llamador; 1: requiere ser el llamador para ejecutar la habilidad
+            'require_user_side'  =>  'kafhe',          // String. Posibles valores: kafhe, achikhoria, libre. Se pueden poner varios separados por comas (sin espacios). Ej: kafhe,libre
+            'require_user_min_rank'  =>  NULL,      // Int Rango mínimo para ejecutar la habilidad (con este rango ya se puede ejecutar)
+            'require_user_max_rank'  =>  NULL,      // Int Rango máximo para ejecutar la habilidad (a partir de este rango ya no se puede ejecutar)
+            'require_user_status'  =>  NULL,        // String. Posibles valores: 0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre. Se pueden poner varios separados por comas (sin espacios). Ej: 0,3,4,5
+            'require_event_status'  =>  '1',       // ID del estado del evento que se requiere para poder ejecutar la habilidiad: 0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado. Sólo admite un valor.
+            'require_talent_id'  =>  NULL,          // ID del talento requerido para ejecutar la habilidad
+            'overload'  =>  0,
+            'generates_notification' => 0           // Bool. Genera notificación en el muro.
+        ));
+
+        // GUNBUDO de ASEDIO
+        $this->insert('skill', array(
+            'name'  =>  'Gumbudo de Asedio',                         // Nombre de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo de Asedio.',                  // Descripción de la habilidad
+            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
+            'keyword'  =>  'gumbudoAsedio',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
+            'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
+            'modifier_hidden' => 0,                 // 1: Que no se muestre en la lista de modificadores de los jugadores; 0: se muestra de forma normal
+            'duration'  =>  NULL,                   // Int con la cantidad para la duración
+            'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
+            'gumbudo_action_duration' => 8,        // Duración de actividad de un Gumbudo
+            'gumbudo_action_rate' => 2,             // Cada cuanto actúa el Gumbudo
+            'critic'  =>  0,                        // Int con el % crítico
+            'fail'  =>  0,                          // Int con el % de pifia
+            'extra_param' => NULL,                  // Probabilidad de
             'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento

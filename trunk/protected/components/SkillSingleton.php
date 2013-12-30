@@ -118,6 +118,7 @@ class SkillSingleton extends CApplicationComponent
                 case Yii::app()->params->skillGumbudoPestilente: $this->gumbudoPestilente($skill); break;
 
 				case Yii::app()->params->skillGumbudoArtificiero: $this->gumbudoArtificiero($skill); break;
+                case Yii::app()->params->skillGumbudoAsedio: $this->gumbudoAsedio($skill); break;
 
                 case Yii::app()->params->skillGumbudoHippie: $this->gumbudoHippie($skill); break;
 			}
@@ -1163,9 +1164,9 @@ class SkillSingleton extends CApplicationComponent
         return true;
     }
 
-	private function gumbudoArtificiero($skill)
-	{
-		//Creo un Gumbudo
+    private function gumbudoArtificiero($skill)
+    {
+        //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
         $fecha = new DateTime();
@@ -1179,18 +1180,47 @@ class SkillSingleton extends CApplicationComponent
 
         if (!$gumbudo->save())
             throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
-			
-		//Con los datos de su actividad o action calculo los ataques
+
+        //Con los datos de su actividad o action calculo los ataques
         $ataques = array();
         $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
-		$hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
-		foreach($hours as $hour) {
-        	$ataques[] = "('gumbudo', 'gumbudoArtificieroAttack', '".$gumbudo->id."', '".$hour."')";
+        $hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
+        foreach($hours as $hour) {
+            $ataques[] = "('gumbudo', 'gumbudoArtificieroAttack', '".$gumbudo->id."', '".$hour."')";
         }
         Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
 
         return true;
-	}
+    }
+
+    private function gumbudoAsedio($skill)
+    {
+        //Creo un Gumbudo
+        $gumbudo = new Gumbudo;
+
+        $fecha = new DateTime();
+        $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
+
+        $gumbudo->class = Yii::app()->params->gumbudoClassAsedio;
+        $gumbudo->owner_id = Yii::app()->currentUser->id;
+        $gumbudo->event_id = Yii::app()->event->id;
+        $gumbudo->side = Yii::app()->currentUser->side;
+        $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
+
+        if (!$gumbudo->save())
+            throw new CHttpException(400, 'Error al guardar el Gumbudo ('.$gumbudo->class.'). ['.print_r($gumbudo->getErrors(),true).']');
+
+        //Con los datos de su actividad o action calculo los ataques
+        $ataques = array();
+        $num_ataques = intval($skill->gumbudo_action_duration / $skill->gumbudo_action_rate);
+        $hours = $this->generateAttackHours($num_ataques, $skill->gumbudo_action_rate);
+        foreach($hours as $hour) {
+            $ataques[] = "('gumbudo', 'gumbudoAsedioAttack', '".$gumbudo->id."', '".$hour."')";
+        }
+        Yii::app()->db->createCommand('INSERT INTO cronpile (`type`, `operation`, `params`, `due_date`) VALUES '.implode(',', $ataques).';')->query();
+
+        return true;
+    }
 
     private function gumbudoHippie($skill)
     {
