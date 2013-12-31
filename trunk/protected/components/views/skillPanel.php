@@ -73,7 +73,7 @@
 
                                 <?php if($execCode == 1): ?>
 
-                                <?php if($skill->require_target_user): ?>
+                                <?php if($skill->require_target_user==true): ?>
                                 
                                     <dt>Objetivo</dt>
                                     <dd class="targetList">
@@ -90,7 +90,7 @@
                                         </ul>
                                     </dd>
                                     
-                                <?php elseif($skill->require_target_side !== null): 
+                                <?php elseif($skill->require_target_side!==null && $skill->require_target_side!==''):
                                     //El objetivo será un bando u el otro                                   
                                     ?>
                                 
@@ -99,6 +99,19 @@
                                         <ul>
                                             <li class="kafhe" target_id="kafhe">Kafheítas</li>
                                             <li class="achikhoria" target_id="achikhoria">Renunciantes</li>
+                                        </ul>
+                                    </dd>
+
+                                <?php elseif($skill->keyword==Yii::app()->params->skillGumbudoAsaltante || $skill->keyword==Yii::app()->params->skillGumbudoGuardian):
+                                    //Armnas de gungubos
+                                    ?>
+
+                                    <dt>Armas</dt>
+                                    <dd class="weaponList">
+                                        <ul>
+                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon1; ?>"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon1]; ?></li>
+                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon2; ?>"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon2]; ?></li>
+                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon3; ?>"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon3]; ?></li>
                                         </ul>
                                     </dd>
                                     
