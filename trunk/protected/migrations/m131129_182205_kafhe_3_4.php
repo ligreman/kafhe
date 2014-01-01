@@ -5,14 +5,16 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 	public function safeUp()
 	{
 	    //Event
+        $this->execute('ALTER TABLE event ADD fame_kafhe int(11) NULL DEFAULT NULL AFTER gungubos_kafhe;');
+        $this->execute('ALTER TABLE event ADD fame_achikhoria int(11) NULL DEFAULT NULL AFTER gungubos_achikhoria;');
+        $this->execute('ALTER TABLE event ADD last_tueste_regeneration_timestamp timestamp NULL DEFAULT NULL AFTER status;');
+        $this->execute('ALTER TABLE event ADD last_gungubos_repopulate_timestamp timestamp NULL DEFAULT NULL AFTER status;');
         //$this->execute('ALTER TABLE event DROP COLUMN gungubos_population;');
         //$this->execute('ALTER TABLE event DROP COLUMN gungubos_kafhe;');
         //$this->execute('ALTER TABLE event DROP COLUMN gungubos_achikhoria;');
         //$this->execute('ALTER TABLE event DROP COLUMN last_gungubos_criadores;');
         //$this->execute('ALTER TABLE event DROP COLUMN stored_tueste_kafhe;');
         //$this->execute('ALTER TABLE event DROP COLUMN stored_tueste_achikhoria;');
-        $this->execute('ALTER TABLE event ADD last_tueste_regeneration_timestamp timestamp NULL DEFAULT NULL AFTER status;');
-        $this->execute('ALTER TABLE event ADD last_gungubos_repopulate_timestamp timestamp NULL DEFAULT NULL AFTER status;');
 
 	    //User
         $this->execute('ALTER TABLE user ADD fame int(11) NOT NULL DEFAULT 0 AFTER experience;');
@@ -817,6 +819,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 	{
         $this->execute('ALTER TABLE event DROP COLUMN last_tueste_regeneration_timestamp;');
         $this->execute('ALTER TABLE event DROP COLUMN last_gungubos_repopulate_timestamp;');
+        $this->execute('ALTER TABLE event DROP COLUMN fame_kafhe;');
+        $this->execute('ALTER TABLE event DROP COLUMN fame_achikhoria;');
         $this->execute('ALTER TABLE user DROP COLUMN fame;');
 		$this->execute('ALTER TABLE user DROP COLUMN last_activity;');
         $this->execute('ALTER TABLE skill DROP COLUMN gumbudo_action_duration;');

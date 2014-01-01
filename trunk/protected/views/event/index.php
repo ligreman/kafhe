@@ -9,36 +9,10 @@
         echo '</ul>';
     }
     ?>
-    <h1 class="battle">Estado de la batalla: <?php echo Yii::app()->params->eventStatusNames[$battle->status]; ?> *</h1>
 
-    <div id="battleStatusChart"></div>
+    <h1 class="battle">Estado de la batalla: <?php echo Yii::app()->params->eventStatusNames[$battle->status]; ?></h1>
+    <div id="battleContent">
 
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Bando', 'Gungubos'],
-                ['Renunciantes', <?php echo $battle->gungubos_achikhoria; ?>],
-                ['Kafheitas', <?php echo $battle->gungubos_kafhe; ?>]
-
-            ]);
-
-            var options = {
-                chartArea:{width: '600',height: '400', top: 10, left: 10},
-                colors:['#673c7d','#f0cc33'],
-                fontName: 'Lato',
-                pieSliceText: 'number',
-                width: 600,
-                height:500
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('battleStatusChart'));
-            chart.draw(data, options);
-        }
-    </script>
-
-    <?php //$status = array('Criador', 'Cazador', 'Alistado', 'Baja'); ?>
     <?php
         $achikhoriaMembers = '<ul id="kafheMembers">';
         $kafheMembers = '<ul id="achikhoriaMembers">';
@@ -53,74 +27,154 @@
             }
         }
     ?>
-    <div id="bandoKafhe">
-        <h2>Kafheitas</h2>
-        <?php
-            echo $kafheMembers.'</ul>';
-        ?>
+    <div id="bandos">
+        <div id="bandoKafhe">
+            <h2>Kafheitas</h2>
+            <?php
+                echo $kafheMembers.'</ul>';
+            ?>
+        </div>
+        <div id="bandoAchikhoria">
+            <h2>Renunciantes</h2>
+            <?php
+            echo $achikhoriaMembers.'</ul>';
+            ?>
+        </div>
+        <div id="bandoLibre">
+            <h2><?php echo Yii::app()->params->sideNames['libre']; ?></h2>
+            <?php echo $libre.'</ul>';?>
+        </div>
     </div>
-    <div id="bandoAchikhoria">
-        <h2>Renunciantes</h2>
-        <?php
-        echo $achikhoriaMembers.'</ul>';
-        ?>
-    </div>
-    <div id="bandoLibre">
-        <h2><?php echo Yii::app()->params->sideNames['libre']; ?></h2>
-        <?php echo $libre.'</ul>';?>
-    </div>
+
+
 
     <?php
-        /*echo "Elijo a...";
-        $res = Yii::app()->event->selectCaller();
-        print_r($res);
-
-         echo "<br><br>";*/
-
-        $arr = Yii::app()->usertools->calculateProbabilities(true);
-        //print_r($arr);
+        //**************** Fama de bandos *********************
+        $fameSides = Yii::app()->usertools->calculateSideFames(true);
+        $prevEvent = Yii::app()->event->getPreviousEvent();
+        $individualFame = Yii::app()->usertools->calculateFameDifferentials(true);
     ?>
-	
-	<p class="clear noteProbs">* Nota: la probabilidad de un bando de salir elegido es inversamente proporcional a la cantidad de gungubos que tiene.</p>
 
-    <div id="generalProbs">
-        <h2>Probabilidad global por usuario</h2>
-        <div id="userProbabilities"></div>
-    </div>
+
+    <!--<div id="battleStatusChart"></div>-->
+    <div id="battleStatusChart_diff"></div>
+    <div id="battleIndividualFame"></div>
 
     <script type="text/javascript">
         google.load("visualization", "1", {packages:["corechart"]});
         google.setOnLoadCallback(drawChart);
         function drawChart() {
+            var newData = google.visualization.arrayToDataTable([
+                ['Bando', 'Fama'],
+                ['Renunciantes', <?php echo $fameSides['achikhoria']; ?>],
+                ['Kafheitas', <?php echo $fameSides['kafhe']; ?>]
+            ]);
+
+            var options = {
+                title: 'Distribución de fama por bandos',
+                titleTextStyle: { fontName: 'Lato', fontSize: 20 },
+                chartArea:{width: 600,height: 400},
+                colors:['#673c7d','#f0cc33'],
+                fontName: 'Lato',
+                pieSliceText: 'percentage',
+                height:500,
+                diff: { innerCircle: { borderFactor: 0.02 } }
+            };
+
+            <?php if ($prevEvent===null):?>
+                var chart = new google.visualization.PieChart(document.getElementById('battleStatusChart_diff'));
+                chart.draw(newData, options);
+            <?php else: ?>
+                var oldData = google.visualization.arrayToDataTable([
+                    ['Bando', 'Fama'],
+                    ['Renunciantes', <?php echo $prevEvent->fame_achikhoria; ?>],
+                    ['Kafheitas', <?php echo $prevEvent->fame_kafhe; ?>]
+
+                ]);
+
+                var chartDiff = new google.visualization.PieChart(document.getElementById('battleStatusChart_diff'));
+                var diffData = chartDiff.computeDiff(oldData, newData);
+                chartDiff.draw(diffData, options);
+            <?php endif; ?>
+
+        }
+
+        google.setOnLoadCallback(drawChart2);
+        function drawChart2() {
+            var data = google.visualization.arrayToDataTable([
+                ['Usuario', 'Fama'],
+                <?php
+                    foreach ($users as $user) {
+                        if(isset($individualFame[$user->id])){
+                            echo '["'.$user->alias.'",'.$individualFame[$user->id].'],';
+                        }
+                    }
+                ?>
+
+            ]);
+
+            var options = {
+                title: 'Desviación de la fama entre usuarios',
+                titleTextStyle: { fontName: 'Lato', fontSize: 20 },
+                legend: {position: 'none'},
+                colors:['#60b97f'],
+                fontName: 'Lato',
+                height:500
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('battleIndividualFame'));
+            chart.draw(data, options);
+        }
+
+
+    </script>
+
+
+
+    <?php
+        //************************ PROPABILIDADES USUARIOS ***************************
+        $arr = Yii::app()->usertools->calculateUsersProbabilities();
+        //print_r($arr);
+    ?>
+	
+	<!--<p class="clear noteProbs">* Nota: la probabilidad de un bando de salir elegido es inversamente proporcional a la cantidad de gungubos que tiene.</p>-->
+
+    <div id="generalProbs">
+        <div id="userProbabilities"></div>
+    </div>
+
+    <script type="text/javascript">
+        //google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart3);
+        function drawChart3() {
             var data = google.visualization.arrayToDataTable([
             ['Usuario', 'Probabilidad'],
             <?php
-                //$aArr = Yii::app()->usertools->calculateProbabilities(true, 'achikhoria');
-                //$kArr = Yii::app()->usertools->calculateProbabilities(true, 'kafhe');
-
-                $totalGungubos = $battle->gungubos_achikhoria + $battle->gungubos_kafhe;
-                if($totalGungubos > 0) $pAchikhoria = round(($battle->gungubos_kafhe / $totalGungubos), 3);
-                else $pAchikhoria = 0.5;
-                $pKafhe = 1 - $pAchikhoria;
-
+                $offset = 0;
+                $miOffset = null;
                 foreach ($users as $user) {
                     if(isset($arr[$user->id])){
-                        if($user->side == "kafhe")
-                            echo '["'.$user->alias.'",'.round($arr[$user->id]*$pKafhe, 1).'],';
-                        else
-                            echo '["'.$user->alias.'",'.round($arr[$user->id]*$pAchikhoria, 1).'],';
+                        echo '["'.$user->alias.'",'.$arr[$user->id].'],';
+
+                        //Me saco yo si estoy entre los que se pintan
+                        if ($user->id == Yii::app()->currentUser->id)
+                            $miOffset = $offset;
                     }
+
+                    $offset;
                 }
             ?>
         ]);
 
         var options = {
-            chartArea:{width: '600',height: '400', top: 10, left: 10},
+            title: 'Probabilidad de cada usuario',
+            titleTextStyle: { fontName: 'Lato', fontSize: 20 },
+            chartArea:{width: 600,height: 400},
             colors:['#bf3950','#ff8139','#f0cc33','#60b97f','#4f77c1','#673c7d','#ff2c61','#8f6255','#e2a30a','#00924a','#50cae6','#2a0e3d'],
             fontName: 'Lato',
-            pieSliceText: 'number',
-            width: 500,
-            height:500
+            pieSliceText: 'percentage',
+            height:500,
+            slices: {  <?php echo $miOffset; ?>: {offset: 0.1} }
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('userProbabilities'));
@@ -129,7 +183,7 @@
     </script>
 
 
-
+    <?php /*
     <div id="sideProbs">
         <h2>Probabilidad dentro del bando</h2>
         <div id="userProbabilitiesAchikhoriaSide"></div>
@@ -138,9 +192,9 @@
     </div>
 
     <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-        function drawChart() {
+        //google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart4);
+        function drawChart4() {
             var data = google.visualization.arrayToDataTable([
                 ['Usuario', 'Probabilidad'],
                 <?php
@@ -168,9 +222,9 @@
         }
     </script>
     <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-        function drawChart() {
+        //google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart5);
+        function drawChart5() {
             var data = google.visualization.arrayToDataTable([
                 ['Usuario', 'Probabilidad'],
                 <?php
@@ -202,7 +256,7 @@
 
     <div class="clear"></div>
 
-    <?php /*
+
      echo "<br><br>";
      $random = mt_rand(1, 10000);
      echo "random: ".$random;
@@ -298,4 +352,6 @@
 */
 
      ?>
+    </div>
+    <br class="clear" />
 </div>

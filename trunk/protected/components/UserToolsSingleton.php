@@ -113,99 +113,106 @@ class UserToolsSingleton extends CApplicationComponent
     }
 
 
-    /** Calculo las probabilidades para cada usuario según su rango (no tiene en cuenta el estado de la batalla)
-     * @param bool $soloAlistados True si sólo quiero tener en cuenta los alistados.
-     * @param null $side Texto con el bando si quiero limitar a usuarios de tal bando. Null si es para todos.
-     * @return array|null Devuelve un array user_id=>probabilidad (en %). NULL si no hay usuarios, por alguna razón extraña.
-     */
-    public function calculateProbabilities($soloAlistados=true, $side=null)
-	{
-		$users = $this->getUsers();
-		
-		$valores = array();
-		$suma = 0;
-		$xProporcion = 1;
-		$xRango = 10;		
-		
-		foreach($users as $user) {
-			if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
-			if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
-			
-			$proporcion = $user->times / ($user->calls + 1);			
-			$valor = ($xProporcion * $proporcion) + ( pow($user->rank, 2) * $xRango );
-			$suma += $valor;
-			$valores[$user->id] = $valor;
-		}
-		
-		$finales = array();
-		//Segunda pasada, calculando ya el valor final
-		foreach($users as $user) {
-			if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
-			if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
-			
-			$finales[$user->id] = round( ($valores[$user->id] / $suma) * 100, 2);
-		}
-		
-		if (empty($finales)) return null;
-		return $finales;
-	}
-	
-	public function calculateFameDifferentials()
-	{
-		$users = $this->getUsers();
-		
-		//La fama en bruto
-		$fames = array();		
-		foreach($users as $user) {
-			$fames[$user->id] = $user->fame;
-		}
-		
-		//Calculo la media de la fama
-		$fameMedia = array_sum($fames) / count($fames);
-		
-		//Los diferenciales
-		$differentials = array();
-		foreach($users as $user) {
-			$differentials[$user->id] = $fames[$user->id] - $fameMedia;
-		}
-		
-		if (empty($differentials)) return null;
-		return $differentials;
-	}
-	
-	public function calculateUsersFame()
+	public function calculateUsersProbabilities()
 	{
 		//Preparo un array con las probabilidades de cada uno de los usuarios
-		$probabilidadesRango = Yii::app()->usertools->calculateProbabilities(true);
+		$probabilidadesRango = Yii::app()->usertools->calculateProbabilitiesByRank();
 		if ($probabilidadesRango === null) return null;
-		
+//print_r($probabilidadesRango);
 		//Los diferenciales
 		$diffs = $this->calculateFameDifferentials();		
 		if ($diffs === null) return null;
-		
+//print_r($diffs);
 		//Ahora calculo el bruto de la probabilidad según la fama
 		$brutes = array();
 		foreach($diffs as $userId=>$differential) {
 			$brutes[$userId] = $probabilidadesRango[$userId] - ( $probabilidadesRango[$userId]*$differential / 100 );
 		}
-		
+//print_r($brutes);
 		$sumaBrutes = array_sum($brutes);
+//echo "SUMA:".$sumaBrutes;
 		//La probabilidad final (neta)
 		$nets = array();
 		foreach($brutes as $userId=>$brute) {
 			$nets[$userId] = round( $brute/$sumaBrutes * 100 );
 		}
-		
+//print_r($nets);
 		if (empty($nets)) return null;
 		return $nets;
 	}
-	
-	public function calculateSideFames()
+
+    /** Calculo las probabilidades para cada usuario según su rango (no tiene en cuenta el estado de la batalla)
+     * @param bool $soloAlistados True si sólo quiero tener en cuenta los alistados.
+     * @param null $side Texto con el bando si quiero limitar a usuarios de tal bando. Null si es para todos.
+     * @return array|null Devuelve un array user_id=>probabilidad (en %). NULL si no hay usuarios, por alguna razón extraña.
+     */
+    public function calculateProbabilitiesByRank($soloAlistados=true, $side=null)
+    {
+        $users = $this->getUsers();
+
+        $valores = array();
+        $suma = 0;
+        $xProporcion = 1;
+        $xRango = 10;
+
+        foreach($users as $user) {
+            if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
+            if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
+
+            $proporcion = $user->times / ($user->calls + 1);
+            $valor = ($xProporcion * $proporcion) + ( pow($user->rank, 2) * $xRango );
+            $suma += $valor;
+            $valores[$user->id] = $valor;
+        }
+
+        $finales = array();
+        //Segunda pasada, calculando ya el valor final
+        foreach($users as $user) {
+            if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
+            if ($side!==null  &&  $user->side!=$side) continue; //Si tengo en cuenta el bando y no es del bando, lo ignoro.
+
+            $finales[$user->id] = round( ($valores[$user->id] / $suma) * 100, 2);
+        }
+
+        if (empty($finales)) return null;
+        return $finales;
+    }
+
+    public function calculateFameDifferentials($soloAlistados=true)
+    {
+        $users = $this->getUsers();
+
+        //La fama en bruto
+        $fames = array();
+        foreach($users as $user) {
+            if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
+            $fames[$user->id] = $user->fame;
+        }
+
+        //Calculo la media de la fama
+        $fameMedia = array_sum($fames) / count($fames);
+
+        //Los diferenciales
+        $differentials = array();
+        foreach($users as $user) {
+            if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
+            $differentials[$user->id] = $fames[$user->id] - $fameMedia;
+        }
+
+        if (empty($differentials)) return null;
+        return $differentials;
+    }
+
+    /** Calcula la fama de ambos bandos (suma de famas de sus miembros)
+     * @return array Suma de fama de ambos bandos
+     */
+    public function calculateSideFames($soloAlistados=true)
 	{
 		$users = $this->getUsers();
 				
-		$sideF = array('kafhe'=>0, 'achikhoria'=>0);
+		$sideF = array('kafhe'=>0, 'achikhoria'=>0, 'libre'=>0);
 		foreach($users as $user) {
+            if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
 			$sideF[$user->side] += $user->fame;
 		}
 		
@@ -217,7 +224,7 @@ class UserToolsSingleton extends CApplicationComponent
      * @param $achikhoria Gungubos del bando Achikhoria
      * @return array Array con claves 'kafhe' y 'achikhoria' que contienen la probabilidad en % de cada uno
      */
-    public function calculateSideProbabilities($kafhe, $achikhoria)
+    /*public function calculateSideProbabilities($kafhe, $achikhoria)
 	{
 		//La probabilidad es inversa al número de gungubos que tengas, así que doy la vuelta a los valores
 		$totalGungubos = $kafhe + $achikhoria;
@@ -232,7 +239,7 @@ class UserToolsSingleton extends CApplicationComponent
 		    $bando['achikhoria'] = round( ($achikhoria / ($kafhe + $achikhoria)) * 100 , 2);
         }
 		return $bando;
-	}
+	}*/
 
 
     /** Bando del usuario actual en el evento anterior. Se usa cuando el usuario actual es el agente libre
