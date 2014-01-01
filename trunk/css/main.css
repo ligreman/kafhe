@@ -812,6 +812,7 @@ label.title{
     margin: .7em 0 0 0;
     float: left;
     padding: 0;
+    text-align: center;
 }
 
 .dato .numero, .dato .concepto{
