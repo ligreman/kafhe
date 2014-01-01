@@ -24,7 +24,7 @@ class EventSingleton extends CApplicationComponent
 			$bandoPerdedor = 'none';
 		
 		//Obtengo un array con las probabilidades
-		$probabilidades = Yii::app()->usertools->calculateUsersFame();
+		$probabilidades = Yii::app()->usertools->calculateUsersProbabilities();
 		if ($probabilidades === null) return null;
 		
 		Yii::log('Inicio la selección del llamador', 'info');
@@ -175,7 +175,7 @@ class EventSingleton extends CApplicationComponent
     /** Obtiene el pedido del evento de la semana pasada... el último evento cerrado
      * @return array Array con el pedido, tal y como lo devuelve la función getOrder.
      */
-    public function getPastOrder()
+    public function getPreviousOrder()
 	{
 		$group_id = Yii::app()->currentUser->groupId;
 		$event = Event::model()->findAll(array( 'condition'=>'status=:status AND group_id=:group', 'params'=>array(':status'=>Yii::app()->params->statusCerrado, ':group'=>$group_id), 'order'=>'date DESC', 'limit'=>1) );
@@ -187,6 +187,20 @@ class EventSingleton extends CApplicationComponent
 		
 		return $this->getOrder($eventId);
 	}
+
+    /** Obtiene el evento de la semana pasada
+     *
+     */
+    public function getPreviousEvent()
+    {
+        $group_id = Yii::app()->currentUser->groupId;
+        $event = Event::model()->findAll(array( 'condition'=>'status=:status AND group_id=:group', 'params'=>array(':status'=>Yii::app()->params->statusCerrado, ':group'=>$group_id), 'order'=>'date DESC', 'limit'=>1) );
+
+        if ($event == null)
+            return null;
+        else
+            return $event[0];
+    }
 
 
     /** Regenera el ranking de jugadores de todos los grupos.
@@ -588,6 +602,8 @@ class EventSingleton extends CApplicationComponent
             }
         }
     }
+
+
 
 	/** GETTERS Y SETTERS GENERALES **/
 

@@ -1423,17 +1423,28 @@ img.grayScale{
     font-weight: bold;
     font-size: 1.4em;
     text-align: center;
-    padding: 1em 0 0;
+    padding: 2em 0 0 0;
     color: #363636;
 }
 
-#battleStatusChart{
-    float:right;
+#battleContent {
+    width: 100%;
+}
+
+#bandos {
+    text-align: center;
+}
+
+#battleStatusChart_diff, #battleIndividualFame {
+    text-align: center;
+    margin-top: 2em;
+
 }
 
 #bandoAchikhoria,#bandoKafhe,#bandoLibre{
-    margin-left: 2em;
-    float:left;
+    text-align: left;
+    vertical-align: top;
+    display: inline-block;
 }
 
 #bandoKafhe{
@@ -1534,19 +1545,9 @@ img.grayScale{
 }
 
 #generalProbs{
-    clear:both;
-    margin-left: 2em;
-    float:left;
+    text-align: center;
 }
 
-
-#sideProbs{
-    float:right;
-}
-
-#sideProbs h2,#generalProbs h2{
-    font-weight: bold;
-}
 
 #userProbabilities{
     margin-top: 2em;

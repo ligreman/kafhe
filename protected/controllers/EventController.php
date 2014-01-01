@@ -189,10 +189,6 @@ class EventController extends Controller
         $event = Yii::app()->event->model;
         $event->status = Yii::app()->params->statusCerrado;
 
-        //Guardo el evento
-        if (!$event->save())
-            throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
-
         //Caducidad de modificadores de evento		
 		Yii::app()->modifier->reduceEventModifiers($event->id);
 
@@ -207,13 +203,14 @@ class EventController extends Controller
         Gumbudo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
 
         //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
-		$usuarios = Yii::app()->usertools->users;
-		$new_usuarios = array();
+		$usuarios = Yii::app()->usertools->getUsers();
+		$new_usuarios = $fame_old = array();
 		$anterior_llamador = null;
 		$llamador_id = null;
 		foreach($usuarios as $usuario) {			
 			$usuario->ptos_relanzamiento = 0;
 			$usuario->ptos_tueste = Yii::app()->tueste->maxTuesteUser($usuario); //Tueste al máximo
+            $fame_old[$usuario->side] += $usuario->fame;
 			$usuario->fame = Yii::app()->config->getParam('initialFame');
 
 			//Al llamador le pongo rango 1 y estado iluminado, y side libre
@@ -265,6 +262,12 @@ class EventController extends Controller
 
         //Creo los bandos aleatoriamente (antes de guardar el nuevo evento)
         $final_users = Yii::app()->event->createSides($new_usuarios, $anterior_llamador);  //le paso el array de objetos usuarios y el objeto usuario anterior-llamador que no está en la lista
+
+        //Guardo el evento
+        $event->fame_kafhe = $fame_old['kafhe'];
+        $event->fame_achikhoria = $fame_old['achikhoria'];
+        if (!$event->save())
+            throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
         //Abro un evento nuevo de desayuno
         $nuevoEvento = new Event;
