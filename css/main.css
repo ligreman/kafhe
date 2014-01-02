@@ -1075,14 +1075,23 @@ img.grayScale{
     display: block;
     height: 5px;
     width: 100%;
-    background: #f0cc33;
-    background: -moz-linear-gradient(left,  #f0cc33 0%, #673c7d 100%);
+
+    background: -webkit-gradient(linear,left top,right top,color-stop(0, #BF3950),color-stop(0.5, #F0CD33),color-stop(1, #60B97F));
+    background: -o-linear-gradient(right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
+    background: -moz-linear-gradient(right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
+    background: -webkit-linear-gradient(right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
+    background: -ms-linear-gradient(right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
+    background: linear-gradient(to right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#BF3950', endColorstr='#60B97F',GradientType=1 );
+
+    /*background: -moz-linear-gradient(left,  #f0cc33 0%, #673c7d 100%);
     background: -webkit-gradient(linear, left top, right top, color-stop(0%,#f0cc33), color-stop(100%,#673c7d));
     background: -webkit-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
     background: -o-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
     background: -ms-linear-gradient(left,  #f0cc33 0%,#673c7d 100%);
     background: linear-gradient(to right,  #f0cc33 0%,#673c7d 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0cc33', endColorstr='#673c7d',GradientType=1 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0cc33', endColorstr='#673c7d',GradientType=1 );*/
+
     position: absolute;
     bottom: 0;
     z-index: 9999;
@@ -1107,7 +1116,7 @@ img.grayScale{
     width: 10px;
     display: block;
     border-radius: 30px;
-    background: #333333;
+    background: #666666;
     border: 3px solid white;
     margin-top: -6px;
     float: right;
@@ -1120,7 +1129,7 @@ img.grayScale{
     width: 10px;
     display: block;
     border-radius: 30px;
-    background: #333333;
+    background: #666666;
     border: 3px solid white;
     margin-top: -6px;
     float: right;
@@ -1132,7 +1141,7 @@ img.grayScale{
     width: 10px;
     display: block;
     border-radius: 30px;
-    background: #333333;
+    background: #666666;
     border: 3px solid white;
     margin-top: -6px;
     float: right;
@@ -1413,6 +1422,9 @@ img.grayScale{
 
 .scoreSide{
     padding: 0 5px;
+}
+.scoreMedal {
+    padding: 0 3px;
 }
 
 .paddedContent{
