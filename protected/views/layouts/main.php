@@ -72,28 +72,38 @@
 
                 <?php
                 if(Yii::app()->user->checkAccess('Usuario')&&!Yii::app()->user->checkAccess('Administrador')){
-                    $battle = Yii::app()->event->model;
+                    $fames = Yii::app()->usertools->calculateFameDifferentials(true);
+                    $max = $miFama = 0; //el máximo
+                    foreach ($fames as $userId=>$fame) {
+                        if ($userId==Yii::app()->currentUser->id) $miFama = $fame;
+                        if (abs($fame) > $max) $max = abs($fame);
+                    }
+
+                    $miPos = round($miFama*50 / $max) + 50; //Calculo mi posición primero sobre una escala de -50 a 50, y luego pasándolo a 0-100 para poder representarlo
+
+                    /*$battle = Yii::app()->event->model;
                     $totalGungubos = $battle->gungubos_kafhe + $battle->gungubos_achikhoria;
                     if ($totalGungubos == 0) $pkafhe = 50;
                     else
-                        $pkafhe = floor(($battle->gungubos_kafhe/$totalGungubos)*100);
+                        $pkafhe = floor(($battle->gungubos_kafhe/$totalGungubos)*100);*/
 
-                    if($pkafhe > 0) $side = 'Kafhe';
+                    if($miPos > 0) $side = 'Kafhe';
                     else $side = 'Achikhoria';
 
                 ?>
             </nav>
             <div id="battleStatus">
-                    <span id="batteStatus<?php echo $side; ?>" class="w<?php echo $pkafhe;?>">
+                    <span id="batteStatus<?php echo $side; ?>" class="w<?php echo $miPos;?>">
                         <span class="<?php echo Yii::app()->currentUser->side;?>pin pin">
                                 <span class="title battleTitle"><?php
-                                    echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/kafhe.png",'Kafhe',array('height' => 16, 'class' => 'scoreSide'));
                                     ?><span class="score"><?php
-                                        echo $battle->gungubos_kafhe;
-                                        echo ' - ';
-                                        echo $battle->gungubos_achikhoria;
+                                        echo 'Fama: '.Yii::app()->currentUser->fame;
+                                        echo CHtml::image(Yii::app()->baseUrl."/images/".Yii::app()->currentUser->side."_medal.png",'Fama',array('height' => 16, 'class' => 'scoreMedal'));
+                                        //echo $battle->gungubos_kafhe;
+                                        //echo ' - ';
+                                        //echo $battle->gungubos_achikhoria;
                                     ?></span><?php
-                                    echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/achikhoria.png",'Achikhoria',array('height' => 16, 'class' => 'scoreSide'));
+                                    //echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/achikhoria.png",'Achikhoria',array('height' => 16, 'class' => 'scoreSide'));
                                     ?>
                                     <span class="flecha-down"></span>
                                 </span>

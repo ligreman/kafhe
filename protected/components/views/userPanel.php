@@ -9,11 +9,11 @@
                 if (Yii::app()->user->checkAccess('Usuario')) {
                     //Bando y estado
                     if(Yii::app()->user->side ===  "kafhe") {
-                        $side = "Kafheita";
+                        $side = "Kafheíta";
                     } elseif(Yii::app()->user->side ===  "achikhoria") {
                         $side = "Renunciante";
                     } else {
-                        $side = "Têh";
+                        $side = "Iluminado";
                     }
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",Yii::app()->params->sideNames[$user->side],array('class' => 'modifier','title' => $side));
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
