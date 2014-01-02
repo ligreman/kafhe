@@ -1961,3 +1961,119 @@ h2.error404{
     border-radius: 3px;
     box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
+
+
+.hb {
+    position: relative;
+    border: 4px solid #CCC;
+    width: 80%;
+    padding: 1%;
+    margin: 2em auto;
+    background: #E5E5E5;
+}
+.hb_header {
+    width: 100%;
+}
+
+.hbh_icon {
+    width: 10%;
+    float: left;
+    margin-top: 20px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+}
+.hbh_icon img {
+    width: 100px;
+}
+.hbh_title {
+    width: 65%;
+    display: inline-block;
+}
+.hbht_1 {
+    font-size: 1.5em;
+    padding: 2em 1em 0 20px;
+}
+.hbht_2 {
+    font-size: 0.8em;
+    padding-left: 20px;
+}
+.hbht_2.kafhe, .hbht_2.achikhoria, .hbht_2.teh {
+    padding-left: 30px;
+}
+.hbh_data {
+    width: 20%;
+    float: right;
+    text-align: right;
+}
+.hbhd_result {
+    margin: 5px 5px auto auto;
+    font-weight: bold;
+}
+.hbhd_result span {
+    border: 1px solid;
+    border-radius: 15px;
+    padding: 1px 3px;
+    margin: 0 5px;
+    min-width: 20px;
+    display: inline-block;
+    text-align: center;
+}
+.hbhd_result span.hbhd_critic {
+    border-color: transparent;
+    background-color: #2CE00C;
+    box-shadow: 0 0 2px #000;
+}
+.hbhd_result span.hbhd_fail {
+    border-color: transparent;
+    background-color: #E20A0A;
+    box-shadow: 0 0 2px #000;
+    color: #F5F5F5;
+}
+.hbhd_cost {
+    margin-top: 15px;
+}
+.hbh_data ul li {
+    list-style: none !important;
+}
+
+.hb_body {
+    margin: 20px 1em 0 1em;
+    text-align: justify;
+    font-size: 1.1em;
+}
+.hb_body p {
+    margin: 10px 0;
+    padding: 0.5em 1em;
+}
+
+.hb_footer {
+    margin-top: 15px;
+    width: 100%;
+    text-align: right;
+}
+.hb_footer p {
+    display: inline;
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 0 3px;
+    margin-left: 15px;
+}
+.hb_footer p.red {
+    border-color: #851010;
+    background-color: #F08686;
+}
+.hb_footer p.green {
+    border-color: #006400;
+    background-color: #8EDB91;
+}
+.hb_footer p.grey {
+    border-color: #5F5F5F;
+    background-color: #D4D4D4;
+}
+.hb_footer .bandos {
+    float: left;
+}
+.hb_footer .bandos span {
+    margin-left: 10px;
+}

@@ -29,7 +29,7 @@
     ?>
     <div id="bandos">
         <div id="bandoKafhe">
-            <h2>Kafheitas</h2>
+            <h2>Kafheítas</h2>
             <?php
                 echo $kafheMembers.'</ul>';
             ?>
@@ -41,7 +41,7 @@
             ?>
         </div>
         <div id="bandoLibre">
-            <h2><?php echo Yii::app()->params->sideNames['libre']; ?></h2>
+            <h2>Iluminado</h2>
             <?php echo $libre.'</ul>';?>
         </div>
     </div>
@@ -161,7 +161,7 @@
                             $miOffset = $offset;
                     }
 
-                    $offset;
+                    $offset++;
                 }
             ?>
         ]);
