@@ -94,6 +94,7 @@ return array(
 		'tueste'=>array('class'=>'TuesteSingleton'),
 		'skill'=>array('class'=>'SkillSingleton'),
 		'config'=>array('class'=>'ConfigurationSingleton'),
+		'reward'=>array('class'=>'RewardSingleton'),
 		'historySkill'=>array('class'=>'HistorySkillSingleton'),
         'mail'=>array('class'=>'MailSingleton'),
 
@@ -202,6 +203,12 @@ return array(
 		'statusFinalizado'=>3,
 		'statusCalma'=>4,
         'statusPreparativos'=>5,
+		
+		//Recompensas
+		'rwMoreCritic' => 'rwMoreCritic',
+		'rwLessFail' => 'rwLessFail',
+		'rwMinTueste' => 'rwMinTueste',
+		'rwMoreRegen' => 'rwMoreRegen',
 
         //Modificadores. Están aquí y en BBDD
         'modifierHidratado'=>'hidratado',
