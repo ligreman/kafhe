@@ -86,6 +86,12 @@ return array(
         'statusFinalizado'=>3,
         'statusCalma'=>4,
         'statusPreparativos'=>5,
+		
+		//Recompensas
+		'rwMoreCritic' => 'rwMoreCritic',
+		'rwLessFail' => 'rwLessFail',
+		'rwMinTueste' => 'rwMinTueste',
+		'rwMoreRegen' => 'rwMoreRegen',
 
         //Modificadores. Están aquí y en BBDD
         'modifierHidratado'=>'hidratado',

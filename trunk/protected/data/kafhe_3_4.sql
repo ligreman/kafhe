@@ -80,7 +80,14 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('lostFameByInactivity', '10', 'Fama', 'Puntos de fama con que un jugador inactivo pierde cada hora.');
 
-
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('rewardMoreCritic', '5', 'Recompensas', 'Aumento de la probabilidad de crítico por recompensa.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('rewardLessFail', '5', 'Recompensas', 'Disminución de la probabilidad de pifia por recompensa.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('rewardMinTueste', '5', 'Recompensas', 'Mínima cantidad de tueste que se puede tener, debido a recompensa.');
+INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
+  ('rewardMoreRegen', '5', 'Recompensas', 'Aumento de la regeneración de tueste por recompensa.');
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('maxNewNotificacionesMuro', '30', 'Notificaciones', 'Cantidad máxima de notificaciones nuevas a mostrar en el muro (suele ser mayor que el límite de notificaciones normal).');

@@ -31,22 +31,29 @@ class TuesteSingleton extends CApplicationComponent
 		//Tueste extra por modificadores y talentos. Miro los mods que me afectan a la regeneración
 		$porcentajePorModificadores = 0;
 		$signoRegeneracion = 1; //positivo o negativo
-		$estaHidratado = $estaDesecado = false;
+		$estaHidratado = $estaDesecado = $recompensaMoreRegen = false;
 
         //Si es el usuario activo me ahorro una consulta a BBDD
 		if (isset(Yii::app()->currentUser) && isset(Yii::app()->currentUser->id) && $user->id == Yii::app()->currentUser->id) {
 			if(Yii::app()->modifier->inModifiers(Yii::app()->params->modifierHidratado)) $estaHidratado = true;
             if(Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDesecado)) $estaDesecado = true;
+			$recompensaMoreRegen = Yii::app()->modifier->inModifiers(Yii::app()->params->rwMoreRegen);
 		} else {
 			$mods = Modifier::model()->findAll(array('condition'=>'target_final=:target', 'params'=>array(':target'=>$user->id)));
 			if($mods!=null  &&  Yii::app()->modifier->inModifiers(Yii::app()->params->modifierHidratado, $mods)) $estaHidratado = true;
             if($mods!=null  &&  Yii::app()->modifier->inModifiers(Yii::app()->params->modifierDesecado, $mods)) $estaDesecado = true;
+			if($mods!=null) $recompensaMoreRegen = Yii::app()->modifier->inModifiers(Yii::app()->params->rwMoreRegen, $mods);
 		}
 
 		//Si el usuario no es inactivo le afecta la hidratación
 		if($estaHidratado && $user->status!=Yii::app()->params->statusInactivo) {
 		    $skillH = Skill::model()->findByAttributes(array('keyword'=>Yii::app()->params->skillHidratar));
-            $porcentajePorModificadores = $skillH->extra_param; //Este extra param indica el % de regeneración extra
+            $porcentajePorModificadores += intval($skillH->extra_param); //Este extra param indica el % de regeneración extra
+        }
+		
+		//Si tiene una recompensa		
+		if($user->status!=Yii::app()->params->statusInactivo && $recompensaMoreRegen!==false) {		    
+            $porcentajePorModificadores += $recompensaMoreRegen->value;
         }
 
         if($estaDesecado) $signoRegeneracion = -1; //Regeneración negativa

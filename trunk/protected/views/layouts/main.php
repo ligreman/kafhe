@@ -79,7 +79,10 @@
                         if (abs($fame) > $max) $max = abs($fame);
                     }
 
-                    $miPos = round($miFama*50 / $max) + 50; //Calculo mi posición primero sobre una escala de -50 a 50, y luego pasándolo a 0-100 para poder representarlo
+                    if ($max==0)
+                        $miPos = 50;
+                    else
+                        $miPos = round($miFama*50 / $max) + 50; //Calculo mi posición primero sobre una escala de -50 a 50, y luego pasándolo a 0-100 para poder representarlo
 
                     /*$battle = Yii::app()->event->model;
                     $totalGungubos = $battle->gungubos_kafhe + $battle->gungubos_achikhoria;
