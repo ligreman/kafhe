@@ -1979,6 +1979,7 @@ h2.error404{
     position: relative;
     border: 4px solid #CCC;
     width: 80%;
+    max-width: 1000px;
     padding: 1%;
     margin: 2em auto;
     background: #E5E5E5;
@@ -1996,7 +1997,7 @@ h2.error404{
     display: inline-block;
 }
 .hbh_icon img {
-    width: 100px;
+    width: 90px;
 }
 .hbh_title {
     width: 65%;
@@ -2007,7 +2008,7 @@ h2.error404{
     padding: 2em 1em 0 20px;
 }
 .hbht_2 {
-    font-size: 0.8em;
+    font-size: 1em;
     padding-left: 20px;
 }
 .hbht_2.kafhe, .hbht_2.achikhoria, .hbht_2.teh {
@@ -2088,4 +2089,32 @@ h2.error404{
 }
 .hb_footer .bandos span {
     margin-left: 10px;
+}
+
+#tocSkills {
+    border-collapse: collapse;
+    text-align: left;
+    width: 80%;
+    margin: 3em auto 3em auto;
+}
+#tocSkills th {
+    border-bottom: 2px solid #333;
+    border-right: 30px solid #fff;
+    border-left: 30px solid #fff;
+    padding: 8px 2px;
+    background: transparent;
+    font-size: 1.2em;
+}
+#tocSkills td {
+    border-right: 30px solid #fff;
+    border-left: 30px solid #fff;
+    padding: 12px 2px 0;
+}
+#tocSkills td a {
+    color: #333;
+    font-size: 1.1em;
+    text-decoration: none;
+}
+#tocSkills td a:hover {
+    text-decoration: underline;
 }
