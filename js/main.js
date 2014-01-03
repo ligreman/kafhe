@@ -14,6 +14,7 @@ $(document).ready(function() {
     prepareUnreadNotifications();
     readOldNotifications();
     loadMoreNotifications();
+    loadMoreCorralNotifications()
     askForNews();
     $('#LoginForm_username').focus();
     //Uso de Favico
@@ -47,17 +48,16 @@ $(document).ready(function() {
 function resizeNavBar(){
     //alert($('#content').children().height()+' y la del contenido '+$('#content').children().innerHeight());
     var main = $('#main'),
-        content = $('#content'),
+        muro = $('#muro'),
+        corral = $('#corral_notifications'),
         secondary_nav = $('#secondary_nav');
 
-    if(main.innerHeight() > content.children().innerHeight()){
-        secondary_nav.height(main.innerHeight());
-        content.height(main.innerHeight());
-        $('#muro').height(main.innerHeight());
+    if(corral.innerHeight() > muro.children().innerHeight()){
+        secondary_nav.height(corral.innerHeight());
+        muro.height(corral.innerHeight());
     }else{
-        secondary_nav.height(content.children().innerHeight());
-        secondary_nav.height(content.children().innerHeight());
-        content.height(content.children().innerHeight());
+        secondary_nav.height(muro.children().innerHeight());
+        corral.height(muro.children().innerHeight());
     }
     oldH = $('#vResponsiveContent').height();
 
@@ -239,6 +239,30 @@ function loadMoreNotifications(){
 				resizeNavBar();
 			}
 		});
+        return false;
+    });
+}
+
+function loadMoreCorralNotifications(){
+    $('#corral_notifications').on('click','#moreCorralNotifications a',function(){
+        date = $('#corral_notifications article:last').attr('data-rel');
+        
+        var base_url = $('#baseUrl').text();
+        $.ajax({
+            url:base_url+'/ajax/loadMoreCorralNotifications?date='+date,
+            datatype: 'html'
+        }).done(function(data){
+            if(data==""){
+                $('#moreCorralNotifications').addClass('corralNotif').html('<span>No hay más notificaciones</span>');
+                //$('#moreNotifications').html('<span>No hay más notificaciones</span>');
+            }else{
+                $(".corralNotif.hidden").addClass("visible").removeClass("hidden");
+                //$(".categoriaNotif.hidden").removeClass("hidden");
+                $('#moreCorralNotifications').detach();
+                $('#corral_notifications').html($('#corral_notifications').html()+data);
+                resizeNavBar();
+            }
+        });
         return false;
     });
 }

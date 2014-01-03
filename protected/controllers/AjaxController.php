@@ -27,6 +27,20 @@ class AjaxController extends Controller
         }
     }
 
+    public function actionLoadMoreCorralNotifications($date) {
+        $d = date_parse($date);
+        if($d != false){
+            $notifications = NotificationCorral::model()->findAll(array('condition'=>'timestamp < :d', 'params'=>array(':d' => $date), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
+
+            if(count($notifications) < Yii::app()->config->getParam('maxNotificacionesMuro'))
+                $data['hay_mas'] = false;
+            else
+                $data['hay_mas'] = true;
+            $data['notifications'] = $notifications;
+            $this->renderPartial('moreCorral',$data);
+        }
+    }
+
     public function actionAskForUpdates($date) {
 		//Notificaciones nuevas
         $d = date_parse($date);
