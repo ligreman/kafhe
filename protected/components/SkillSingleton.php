@@ -1290,6 +1290,12 @@ class SkillSingleton extends CApplicationComponent
             $retueste = round($costT*Yii::app()->config->getParam('retuestePerSkill')/100);
             $user->ptos_retueste += $retueste;
         }
+		
+		//Recompensa de mínimo de tueste
+		$modRecompensa = Yii::app()->modifier->inModifiers(Yii::app()->params->rwMinTueste);
+		if($modRecompensa!==false) {
+			$user->ptos_tueste = max($user->ptos_tueste, $modRecompensa->value); //Como mínimo, estos puntos de tueste
+		}
 
 	    //Pago el restueste
         if ($skill->cost_retueste !== null)
@@ -1384,6 +1390,12 @@ class SkillSingleton extends CApplicationComponent
      */
     private function criticValue($skill) {
 		$critic = $skill->critic;
+		
+		//Modificadores
+		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->params->rewardMoreCritic);
+		if ($mod1 !== false)
+			$critic = min($critic+$mod1->value, 100);
+		
 		return $critic;
 	}
 
@@ -1393,6 +1405,12 @@ class SkillSingleton extends CApplicationComponent
      */
 	private function failValue($skill) {
 		$fail = $skill->fail;
+		
+		//Modificadores
+		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->params->rewardLessFail);
+		if ($mod1 !== false)
+			$fail = max(0, $fail-$mod1->value);
+			
 		return $fail;
 	}
 
