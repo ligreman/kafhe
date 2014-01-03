@@ -141,10 +141,6 @@ body
     padding:0;
 }
 
-#content{
-    height:100%;
-}
-
 nav ul{
     margin: 0 3em 0 0;
 }
@@ -168,23 +164,32 @@ nav ul{
     display: block;
 }
 
-#secondary_nav ul#tools {
+footer ul#tools, footer ul#toolsLogin {
     margin: 3em;
 }
-#secondary_nav ul#tools li {
-    font-size: 0.8em;
-    display: inline;
-    margin: 0 5px 0 0;
+
+footer ul#toolsLogin {
+    text-align: center;
 }
-#secondary_nav ul#tools li:first-child {
+
+footer ul#tools li, footer ul#toolsLogin li {
+    font-size: 0.8em;
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+footer ul#tools li:first-child {
     display: block;
     margin-bottom: 5px;
 }
-#secondary_nav ul#tools li a {
+
+footer ul#tools li a, footer ul#toolsLogin li a {
     margin: 0;
     line-height: 1.4em;
+    color: #333333;
+    text-decoration: none;
 }
-#secondary_nav ul#tools li a:hover {
+footer ul#tools li a:hover, footer ul#toolsLogin li a:hover {
     text-decoration: underline;
 }
 
@@ -192,31 +197,13 @@ a, a:hover{
     color: #00924a;
 }
 
-footer{
-	background-color: #202020;
-    color: #e0e0e0;
-    padding: 5em 0 9em;
-    text-align: center;
-    z-index: 500;
-    position: relative;
-}
-
-footer li{
-    display:inline-block;
-    width:18%;
-}
-
-footer a{
-    color:#e1e1e1;
-    text-decoration: none;
-}
-
 #main{
-    min-height:75%;
+    min-height: 75%;
     background: white;
-    width: 60%;
+    width: 80%;
     padding-top: 6.5em;
     margin-left: 20%;
+    height: 100%;
 }
 
 #main.full{
@@ -270,6 +257,24 @@ footer a{
 
 #secondary_nav p a:hover{
     text-decoration: underline;
+}
+
+#corral_notifications {
+    width: 25%;
+    float: right;
+    background: #c0c0c0;
+}
+
+#corral_notifications article {
+    background: #e1e1e1;
+    margin: 1em;
+    padding: 10px;
+}
+
+.corralNotif{
+    margin-top: 1em;
+    padding: .5em;
+    text-align: center;
 }
 
 article.notification{
@@ -379,6 +384,9 @@ article.notification .timestamp{
 #muro{
     background: #ffffff url(../images/timeline.png) repeat-y center top;
     padding: 1em 0 5em;
+    position: relative;
+    width: 75%;
+    float: left;
 }
 
 #meals, #drinks{
@@ -1651,6 +1659,11 @@ p.bebida{
 }
 
 #moreNotifications{
+    clear:both;
+    text-align: center;
+}
+
+#moreCorralNotifications{
     clear:both;
     text-align: center;
 }

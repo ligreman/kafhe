@@ -148,3 +148,27 @@ $aliases = Yii::app()->usertools->getAlias();
 		
     <div class="clear"></div>
 </div>
+<div id="corral_notifications">
+    <?php 
+    $nuevas = $notifications_corral['new'];
+    $viejas = $notifications_corral['old'];
+    $hay_mas = $notifications_corral['hay_mas'];
+    if (count($nuevas)>0): ?>
+        <p class="corralNotif"><span>Notificaciones no leídas</span></p>
+    <?php endif;?>
+    <?php foreach ($nuevas as $key => $notif): ?>
+        <article data-rel="<?php echo $notif->timestamp; ?>"><?php print_r($notif->message);?></article>
+    <?php endforeach;
+    if (count($viejas)>0): ?>
+    <p class="corralNotif"><span>Notificaciones leídas</span></p>
+    <?php endif;?>
+    <?php foreach ($viejas as $key => $notif): ?>
+        <article data-rel="<?php echo $notif->timestamp; ?>"><?php print_r($notif->message);?></article>
+    <?php endforeach;?>
+    <?php if($hay_mas): ?>
+        <p id="moreCorralNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
+    <?php else: ?>
+        <p class="corralNotif"><span>No hay más notificaciones</span></p>
+    <?php endif; ?>
+</div>
+<div class="clear"></div>
