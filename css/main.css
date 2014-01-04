@@ -203,7 +203,7 @@ a, a:hover{
     width: 80%;
     padding-top: 6.5em;
     margin-left: 20%;
-    height: 100%;
+    min-height: 100%;
 }
 
 #main.full{
