@@ -1392,7 +1392,7 @@ class SkillSingleton extends CApplicationComponent
 		$critic = $skill->critic;
 		
 		//Modificadores
-		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->params->rewardMoreCritic);
+		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->config->getParam('rewardMoreCritic'));
 		if ($mod1 !== false)
 			$critic = min($critic+$mod1->value, 100);
 		
@@ -1407,7 +1407,7 @@ class SkillSingleton extends CApplicationComponent
 		$fail = $skill->fail;
 		
 		//Modificadores
-		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->params->rewardLessFail);
+		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->config->getParam('rewardLessFail'));
 		if ($mod1 !== false)
 			$fail = max(0, $fail-$mod1->value);
 			

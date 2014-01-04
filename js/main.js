@@ -59,9 +59,10 @@ function resizeNavBar(){
         secondary_nav.height(muro.children().innerHeight());
         corral.height(muro.children().innerHeight());
     }
-    oldH = $('#vResponsiveContent').height();
 
+    var oldH = $('#vResponsiveContent').height(),
     newH = $(window).height()-($('header').innerHeight()+$('footer').innerHeight());
+
     if(newH > oldH) $('#guest').height(newH);
 }
 
@@ -148,46 +149,50 @@ function prepareHabilities(){
     //Div de detalle de habilidades
     $('.skillLink').click(function(){
         $('.skillDescription').html($(this).siblings('.skillDescriptionIndividual').html()).show();
-        //$('.skillDescription').show();
-    });
 
-    $('.cancelButton').click(function(){
-        $("#skillsUserBlock .targetList li").removeClass('selected');
-        if($(this).siblings(".acceptButton").length > 0){
-            var button = $(this).siblings(".acceptButton");
-            text = button.attr('href').split('&target_id');
-            button.attr('href', text[0]);
-        }
-        $('.skillDescription').hide();
-    });
+        $('.sdcontent').click(function(event){
+            event.stopPropagation();
+        });
 
-    $('.sdcontent ul li').click(function(){
-        $(this).siblings().removeClass('selected');
-        if($(this).hasClass('selected')){
-            //$(this).removeClass('selected');
-        }else{
-            $(this).addClass('selected');
-            destino = $(this).parent().parent().parent().siblings('.skillButtons').children('.acceptButton').attr('href');
-            if(destino.indexOf('target_id') != -1){
-                destino = destino.replace(new RegExp('target_id=\\d'),'target_id='+$(this).attr('target_id'));
-            }else{
-                destino+='&target_id='+$(this).attr('target_id');
+        $('.cancelButton').click(function(event){
+            $("#skillsUserBlock ul li a").removeClass('selected');
+
+            var boton = $('.skillDescription .sdcontent .acceptButton');
+            if(boton.length > 0){
+                var text = boton.attr('href').split('&target_id');
+                text = text[0].split('&arma');
+                boton.attr('href', text[0]);
             }
-            $(this).parent().parent().parent().siblings('.skillButtons').children('.acceptButton').attr('href', destino);
-        }
+            $('.skillDescription').hide();
+        });
+
+        $('.skillDescription .sdcontent ul li a').click(function(){
+            $('.skillDescription .sdcontent ul li a').removeClass('selected');
+            $(this).addClass('selected');
+
+            var objetivo = $(this).parent('li').attr('target_id'),
+            arma = $(this).parent('li').attr('weapon'),
+            boton = $('.skillDescription .sdcontent .acceptButton');
+            var destino = boton.attr('href'), trozos = '';
+
+            if (objetivo!=null && objetivo!='') {
+                trozos = destino.split('&target_id');
+                destino = trozos[0];
+                destino += '&target_id='+objetivo;
+            }
+
+            if (arma!=null && arma!='') {
+                trozos = destino.split('&extra_param');
+                destino = trozos[0];
+                destino += '&extra_param='+arma;
+            }
+
+            boton.attr('href', destino);
+        });
     });
 
-    $('.acceptButton').click(function(e){
-        e.stopImmediatePropagation();
-    });
-
-    $('.sdcontent').click(function(e){
-        e.stopImmediatePropagation();
-    });
-
-    $('.skillDescription').click(function(){
+    $('.skillDescription').on('click',function(event){
         $('.skillDescription').hide();
-        //return false;
     });
 }
 
@@ -200,10 +205,8 @@ function prepareOrder(){
 
 function readOldNotifications(){
     setTimeout(function (){
-        date = $('#muro article:first').attr('data-rel');
-        //var l = window.location;
-        //var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
-        var base_url = $('#baseUrl').text();
+        var date = $('#muro article:first').attr('data-rel'),
+        base_url = $('#baseUrl').text();
 
         if(date != null){
             $.ajax({
@@ -215,8 +218,9 @@ function readOldNotifications(){
 
 function loadMoreNotifications(){
     $('#muro').on('click','#moreNotifications a',function(){
-        date = $('#muro article:last').attr('data-rel');
+        var date = $('#muro article:last').attr('data-rel'),
         type = $('#muro article:last').attr('class');
+
         if($('.categoriaNotif').is(':visible')){
             type = type.replace('notification','').replace('first','').replace(' ','').replace('unread','');
         }else{
@@ -245,9 +249,9 @@ function loadMoreNotifications(){
 
 function loadMoreCorralNotifications(){
     $('#corral_notifications').on('click','#moreCorralNotifications a',function(){
-        date = $('#corral_notifications article:last').attr('data-rel');
-        
-        var base_url = $('#baseUrl').text();
+        var date = $('#corral_notifications article:last').attr('data-rel'),
+        base_url = $('#baseUrl').text();
+
         $.ajax({
             url:base_url+'/ajax/loadMoreCorralNotifications?date='+date,
             datatype: 'html'
@@ -268,7 +272,7 @@ function loadMoreCorralNotifications(){
 }
 
 function askForNewNotifications(){
-    date = $('#muro article:first').attr('data-rel');
+    var date = $('#muro article:first').attr('data-rel');
 
     if(date != null){
         var base_url = $('#baseUrl').text();
@@ -309,8 +313,8 @@ function askForNews(){
 
 function prepareUnreadNotifications(){
     $("#notificationsMainLink, #numberUnreadNotifications").click(function(){
-        $visible = false;
-        if($("#unreadSelfNotificationsList").is(":visible")) $visible = true;
+        var visible = false;
+        if($("#unreadSelfNotificationsList").is(":visible")) visible = true;
 
         $("#unreadSelfNotificationsList").toggle();
 
