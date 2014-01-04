@@ -41,7 +41,7 @@ class SkillController extends Controller
 		
 		//Creo una instancia del validador de habilidades
 		$validator = new SkillValidator;
-$extra_param='garras'; ///TODO eliminar cuando ya no haga falta
+
 		if ($validator->canExecute($skill, $target, $side, $extra_param, true) == 1) {
 			//Ejecuto la habilidad
 			if (!Yii::app()->skill->executeSkill($skill, $target, $side, $extra_param)) {
