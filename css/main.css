@@ -880,6 +880,12 @@ img.grayScale{
     display: inline-block;
     padding: 6px 1em 0;
 }
+#skillsUserBlock li.separator {
+    padding: 0;
+    background: #C5C5C5;
+    width: 2px;
+    height: 64px;
+}
 
 .skillDescription{
     display: none;
