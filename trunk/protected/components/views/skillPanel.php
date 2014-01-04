@@ -25,14 +25,18 @@
 <?php
     //Validador de habilidades
     $validator = new SkillValidator;
-    $executions = array();
+    $prevCategory = '';
 ?>
 <div id="skillsPanel">
     <ul>
-        <?php foreach($skills as $skill):?>
-            <?php
+        <?php foreach($skills as $skill):
+                if ($prevCategory=='') $prevCategory = $skill->category;
+                elseif ($prevCategory!=$skill->category) {
+                    echo '<li class="separator"></li>';
+                    $prevCategory = $skill->category;
+                }
+
                 $execCode = $validator->canExecute($skill);
-                $executions[$skill->id] = $execCode;
 
                 //Se muestra siempre que el bando, estado del jugador, estado del desayuno o talentos adquiridos no sean un requisito.
                 if ($execCode < 3 || $execCode == 8): ?>
