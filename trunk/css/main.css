@@ -953,19 +953,25 @@ img.grayScale{
 }
 #skillsUserBlock .sdcontent dd ul{
     clear: both;
-    padding: 3em 0;
+
     text-align: center;
 }
 
 #skillsUserBlock .sdcontent dd li{
     display: inline-block;
-    width:40%;
-    float:left;
+    width: 100%; /*40%;
+    float:left;*/
     text-align: left;
 }
-
-#skillsUserBlock .sdcontent dd li.selected{
+#skillsUserBlock .sdcontent dd li a {
+    text-decoration: none;
+    color: #333;
+}
+#skillsUserBlock .sdcontent dd li a.selected{
     font-weight: bold;
+}
+#skillsUserBlock .sdcontent dd li a.selected:before {
+    content: '> ';
 }
 
 #skillsUserBlock .targetList{
