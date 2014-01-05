@@ -71,7 +71,6 @@ class Skill extends CActiveRecord
 			array('name, description, type, keyword, modifier_keyword', 'required'),
 			array('modifier_hidden, duration, gumbudo_action_duration, gumbudo_action_rate, critic, fail, cost_tueste, cost_retueste, cost_relanzamiento, cost_tostolares, cost_gungubos, is_cooperative, cost_tueste_cooperate, cost_tostolares_cooperate, cooperate_benefit, require_target_user, require_caller, require_user_min_rank, require_user_max_rank, require_talent_id, overload, generates_notification', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>128),
-			array('description', 'length', 'max'=>255),
 			array('category', 'length', 'max'=>13),
 			array('type', 'length', 'max'=>8),
 			array('keyword, modifier_keyword, extra_param, require_user_status, require_event_status', 'length', 'max'=>50),
