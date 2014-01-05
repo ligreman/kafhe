@@ -36,7 +36,7 @@
             <span class="concepto">azucarillos</span>
         </p>
 
-        <p class="dato">
+        <p class="dato" title="Te faltan <?php echo (Yii::app()->config->getParam('maxExperienciaUsuario')-Yii::app()->currentUser->experience); ?> puntos">
             <?php $pExp = floor(100*(Yii::app()->currentUser->experience/Yii::app()->config->getParam('maxExperienciaUsuario'))); ?>
             <span class="numero"><?php echo $pExp; ?>%</span>
             <span class="concepto">experiencia</span>

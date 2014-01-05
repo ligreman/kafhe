@@ -29,7 +29,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE skill ADD overload tinyint(1) NULL DEFAULT 1 AFTER require_talent_id;');
         $this->execute('ALTER TABLE skill ADD generates_notification tinyint(1) NULL DEFAULT 1 AFTER overload;');
         $this->execute('ALTER TABLE skill ADD cost_gungubos smallint(5) NULL DEFAULT NULL AFTER cost_tostolares;');
-        $this->execute("ALTER TABLE skill CHANGE `category` `category` ENUM('gungubos','gumbudos','hechizo','relanzamiento','ancestral');");
+        $this->execute("ALTER TABLE skill CHANGE `category` `category` ENUM('corral','hechizo','ancestral','relanzamiento');");
         $this->execute('ALTER TABLE skill CHANGE `description` `description` TEXT NOT NULL;');
         $this->execute('ALTER TABLE modifier CHANGE `value` `value` VARCHAR(15);');
 
@@ -511,7 +511,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Asaltante',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Asaltante.',                  // Descripción de la habilidad
-            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoAsaltante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -549,7 +549,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Guardián',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Guardián.',                  // Descripción de la habilidad
-            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoGuardian',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -587,7 +587,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Criador',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Criador.',                  // Descripción de la habilidad
-            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoCriador',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -625,7 +625,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Nigromante',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Nigromante.',                  // Descripción de la habilidad
-            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoNigromante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -663,7 +663,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Pestilente',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Pestilente.',                  // Descripción de la habilidad
-            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoPestilente',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -701,7 +701,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Artificiero',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Artificiero.',                  // Descripción de la habilidad
-            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoArtificiero',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -739,7 +739,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gumbudo de Asedio',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo de Asedio.',                  // Descripción de la habilidad
-            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoAsedio',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
@@ -778,7 +778,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Hippie',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Hippie.',                  // Descripción de la habilidad
-            'category'  =>  'gumbudos',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
+            'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoHippie',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
             'modifier_keyword'  =>  '',             // Palabra clave para el modificador que crea la habilidad, si es que lo crea. Puede ser cualquier palabra (minúsculas), intentar que sea un adjetivo relaccionado con el nombre de la habilidad. Ej: de Desecar -> desecado
