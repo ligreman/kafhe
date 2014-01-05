@@ -54,7 +54,7 @@ function resizeNavBar(){
 
     if(corral.innerHeight() > muro.children().innerHeight()){
         secondary_nav.height(corral.innerHeight());
-        muro.height(corral.innerHeight());
+        //muro.height(corral.innerHeight());
     }else{
         secondary_nav.height(muro.children().innerHeight());
         corral.height(muro.children().innerHeight());

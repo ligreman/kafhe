@@ -38,7 +38,6 @@ blockquote, q {
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
-    content: none;
 }
 table {
     border-collapse: collapse;
@@ -198,12 +197,12 @@ a, a:hover{
 }
 
 #main{
-    min-height: 75%;
+    min-height: 100%;
     background: white;
     width: 80%;
     padding-top: 6.5em;
     margin-left: 20%;
-    min-height: 100%;
+    padding-bottom: 2em;
 }
 
 #main.full{
@@ -624,6 +623,7 @@ label.title{
 
 #user{
     width: 20%;
+    min-width: 250px;
     float:left;
     padding: .6em 0 .6em 0;
     overflow: visible;
@@ -791,7 +791,7 @@ label.title{
 
 #experiencia .w2 .pin:hover .title,#experiencia .w3 .pin:hover .title{
     top:-3.5em;
-    left:0em;
+    left:0;
 }
 
 #experiencia .w4 .pin:hover .title,#experiencia .w5 .pin:hover .title{
@@ -912,13 +912,14 @@ img.grayScale{
     font-size: 1.2em;
     font-weight: bold;
     text-align: left;
-    padding: .5em 1.8em;
+    padding: .5em 30px;
     background: #e0e0e0;
 }
 
 .sdcontent h1 span{
     line-height: 64px;
     display: inline-block;
+    max-width: 80%;
 }
 
 .sdcontent h1 img{
@@ -926,18 +927,18 @@ img.grayScale{
 }
 
 .sdcontent .skillDesc{
-    padding: .7em 3em;
+    padding: .7em 30px;
     background: #303030;
     color: #ffffff;
     font-style: italic;
     text-align: left;
     line-height: 1.5em;
-    font-size: .8em;
+    font-size: .9em;
 }
 
 .sdcontent dl{
     text-align: left;
-    padding: 1em 2em;
+    padding: 1em 30px;
 }
 
 .sdcontent dt{
@@ -955,11 +956,11 @@ img.grayScale{
 .sdcontent .skillButtons{
     clear: both;
     padding-top: 2em;
+    padding-bottom: 1.5em;
     text-align: center;
 }
 #skillsUserBlock .sdcontent dd ul{
     clear: both;
-
     text-align: center;
 }
 
@@ -1643,12 +1644,12 @@ p.bebida{
 }
 
 .battleTitle .flecha-down {
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 8px solid #ffffff;
-    font-size: 0px;
+    font-size: 0;
     line-height: 0px;
     position: absolute;
     top: 25px;
@@ -1742,13 +1743,12 @@ h2.error404{
 
 .mensajeDesactivado{
     text-align: left;
-    padding: 1em 2em;
+    padding: .7em 30px;
     background: #bf3950;
     margin: 0;
     color: #ffffff;
     font-style: italic;
-    padding: .7em 3em;
-    font-size: .8em;
+    font-size: .9em;
 }
 
 #newNotifications{
@@ -1791,7 +1791,7 @@ h2.error404{
     background: #e1e1e1;
 }
 
-.w0{width:0%;}
+.w0{width:0;}
 .w1{width:1%;}
 .w2{width:2%;}
 .w3{width:3%;}

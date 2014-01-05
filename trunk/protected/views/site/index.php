@@ -9,7 +9,9 @@ define('SYSTEM','system');
 $this->pageTitle=Yii::app()->name;
 $nombres_tiempo=array('día','hora','minuto','segundo');
 $aliases = Yii::app()->usertools->getAlias();
+$pattern = '/:+([a-z]+):+/i';
 ?>
+
 <div id="muro">
 <h1 class="oculto">Notificaciones</h1>
 <span id="baseUrl" class="oculto"><?php echo Yii::app()->getBaseUrl(true);?></span>
@@ -31,7 +33,6 @@ $aliases = Yii::app()->usertools->getAlias();
 			$nuevas = $notifications['new'];
 			$viejas = $notifications['old'];
             $hay_mas = $notifications['hay_mas'];
-            $pattern = '/:+([a-z]+):+/i';
 
 			//echo "<br>Nuevas: ".count($nuevas);
 			//echo "<br>Viejas: ".count($viejas);
@@ -51,7 +52,7 @@ $aliases = Yii::app()->usertools->getAlias();
                                                 else echo "other";?>">
 						<?php //Calculo el nombre a mostrar 
 							if($notification->type == OMELETTUS) $nombre = 'Omelettus';
-							elseif($notification->type == SYSTEM) $nombre = 'System';
+							elseif($notification->type == SYSTEM) $nombre = 'Nota del sistema';
 							else $nombre = $aliases[$notification->sender];
 						?>
 						<h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
@@ -100,7 +101,7 @@ $aliases = Yii::app()->usertools->getAlias();
                     else echo "other";?>">
 						<?php //Calculo el nombre a mostrar 
 							if($notification->type == OMELETTUS) $nombre = 'Omelettus';
-							elseif($notification->type == SYSTEM) $nombre = 'System';
+							elseif($notification->type == SYSTEM) $nombre = 'Nota del sistema';
 							else $nombre = $aliases[$notification->sender];
 						?>
 						<h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
@@ -158,13 +159,29 @@ $aliases = Yii::app()->usertools->getAlias();
             <p class="corralNotif"><span>Notificaciones no leídas</span></p>
         <?php endif;?>
         <?php foreach ($nuevas as $key => $notif): ?>
-            <article data-rel="<?php echo $notif->timestamp; ?>"><?php print_r($notif->message);?></article>
+            <article data-rel="<?php echo $notif->timestamp; ?>">
+                <?php
+                if(preg_match($pattern,$notif->message)){
+                    echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';
+                }else{
+                    echo '<span>'.$notif->message.'</span>';
+                }
+                //print_r($notif->message);?>
+            </article>
         <?php endforeach;
         if (count($viejas)>0): ?>
         <p class="corralNotif"><span>Notificaciones leídas</span></p>
         <?php endif;?>
         <?php foreach ($viejas as $key => $notif): ?>
-            <article data-rel="<?php echo $notif->timestamp; ?>"><?php print_r($notif->message);?></article>
+        <article data-rel="<?php echo $notif->timestamp; ?>">
+            <?php
+            if(preg_match($pattern,$notif->message)){
+                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';
+            }else{
+                echo '<span>'.$notif->message.'</span>';
+            }
+            //print_r($notif->message);?>
+        </article>
         <?php endforeach;?>
         <?php if($hay_mas): ?>
             <p id="moreCorralNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
