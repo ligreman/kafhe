@@ -52,12 +52,12 @@ function resizeNavBar(){
         corral = $('#corral_notifications'),
         secondary_nav = $('#secondary_nav');
 
-    if(corral.innerHeight() > muro.children().innerHeight()){
+    if(corral.innerHeight() > muro.innerHeight()){
         secondary_nav.height(corral.innerHeight());
         //muro.height(corral.innerHeight());
     }else{
-        secondary_nav.height(muro.children().innerHeight());
-        corral.height(muro.children().innerHeight());
+        secondary_nav.height(muro.innerHeight());
+        corral.height(muro.innerHeight());
     }
 
     var oldH = $('#vResponsiveContent').height(),
