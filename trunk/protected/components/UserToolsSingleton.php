@@ -189,15 +189,20 @@ class UserToolsSingleton extends CApplicationComponent
             $fames[$user->id] = $user->fame;
         }
 
-        //Calculo la media de la fama
-        $fameMedia = array_sum($fames) / count($fames);
-
         //Los diferenciales
         $differentials = array();
-        foreach($users as $user) {
-            if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
-            $differentials[$user->id] = $fames[$user->id] - $fameMedia;
+        
+        //Calculo la media de la fama
+        if (count($fames) > 0) {
+            $fameMedia = array_sum($fames) / count($fames);
+            foreach($users as $user) {
+                if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
+                $differentials[$user->id] = $fames[$user->id] - $fameMedia;
+            }
+        } else {
+            $fameMedia = 0;
         }
+        
 
         if (empty($differentials)) return null;
         return $differentials;

@@ -74,9 +74,13 @@
                 if(Yii::app()->user->checkAccess('Usuario')&&!Yii::app()->user->checkAccess('Administrador')){
                     $fames = Yii::app()->usertools->calculateFameDifferentials(true);
                     $max = $miFama = 0; //el máximo
-                    foreach ($fames as $userId=>$fame) {
-                        if ($userId==Yii::app()->currentUser->id) $miFama = $fame;
-                        if (abs($fame) > $max) $max = abs($fame);
+                    if ($fames != null) {
+                        foreach ($fames as $userId=>$fame) {
+                            if ($userId==Yii::app()->currentUser->id) $miFama = $fame;
+                            if (abs($fame) > $max) $max = abs($fame);
+                        }
+                    } else {
+                        $max = 0;
                     }
 
                     if ($max==0)
