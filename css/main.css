@@ -262,6 +262,7 @@ a, a:hover{
     width: 25%;
     float: right;
     background: #c0c0c0;
+    padding:1em 0 5em;
 }
 
 #corral_notifications article {
