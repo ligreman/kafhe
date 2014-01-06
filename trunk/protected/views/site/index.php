@@ -9,7 +9,7 @@ define('SYSTEM','system');
 $this->pageTitle=Yii::app()->name;
 $nombres_tiempo=array('día','hora','minuto','segundo');
 $aliases = Yii::app()->usertools->getAlias();
-$pattern = '/:+([a-z]+):+/i';
+$pattern = '/:+([a-zA-Z]+):+/i';
 ?>
 
 <div id="muro">
@@ -74,13 +74,15 @@ $pattern = '/:+([a-z]+):+/i';
 
 						?>
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
-                        <p class="notification_message"><?php
-                            if(preg_match($pattern,$notification->message)){
-                                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message).'</span>';
-                            }else{
-                                echo '<span>'.$notification->message.'</span>';
-                            }
-                            ?></p>
+                        <?php if(preg_match($pattern,$notification->message)):?>
+                            <p class="notification_message image_message">
+                            <?php echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message).'</span>';?>
+                            </p>
+                        <?php else:?>
+                            <p class="notification_message">
+                            <?php echo '<span>'.$notification->message.'</span>';?>
+                            </p>
+                        <?php endif;?>
 					</article>
 
 				<?php 
@@ -123,13 +125,16 @@ $pattern = '/:+([a-z]+):+/i';
 
 						?>
 						<p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
-						<p class="notification_message"><?php
-                            if(preg_match($pattern,$notification->message)){
-                                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message).'</span>';
-                            }else{
-                                echo '<span>'.$notification->message.'</span>';
-                            }
-                            ?></p>
+						<?php if(preg_match($pattern,$notification->message)):?>
+                            <p class="notification_message image_message">
+                            <?php echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notification->message).'</span>';?>
+                            </p>
+                        <?php else:?>
+                            <p class="notification_message">
+                            <?php echo '<span>'.$notification->message.'</span>';?>
+                            </p>
+                        <?php endif;?>
+
 					</article>
 
 
@@ -149,6 +154,7 @@ $pattern = '/:+([a-z]+):+/i';
 		
     <div class="clear"></div>
 </div>
+
 <div id="corral_notifications">
     <?php
     if ($notifications_corral!==null && !empty($notifications_corral)):
@@ -161,12 +167,33 @@ $pattern = '/:+([a-z]+):+/i';
         <?php foreach ($nuevas as $key => $notif): ?>
             <article data-rel="<?php echo $notif->timestamp; ?>">
                 <?php
-                if(preg_match($pattern,$notif->message)){
-                    echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';
-                }else{
-                    echo '<span>'.$notif->message.'</span>';
-                }
-                //print_r($notif->message);?>
+                    //Calculamos el tiempo que hace
+                    $fecha_noti = date_create($notif->timestamp);
+                    $intervalo = date_diff(date_create(), $fecha_noti);
+                    $tiempo = $intervalo->format("%d,%h,%i,%s");
+                    $t = explode(',',$tiempo);
+                    $i=0;
+
+                    while($i<(count($t)-1) && !$t[$i]){
+                        $i++;
+                    }
+                    $plural = '';
+                    if($t[$i]>1){
+                        $plural = 's';
+                    }
+
+                ?>
+                <p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
+
+                <?php if(preg_match($pattern,$notif->message)):?>
+                    <p class="corral_message image_message">
+                    <?php echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';?>
+                    </p>
+                <?php else:?>
+                    <p class="corral_message">
+                    <?php echo '<span>'.$notif->message.'</span>';?>
+                    </p>
+                <?php endif;?>
             </article>
         <?php endforeach;
         if (count($viejas)>0): ?>
@@ -175,12 +202,33 @@ $pattern = '/:+([a-z]+):+/i';
         <?php foreach ($viejas as $key => $notif): ?>
         <article data-rel="<?php echo $notif->timestamp; ?>">
             <?php
-            if(preg_match($pattern,$notif->message)){
-                echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';
-            }else{
-                echo '<span>'.$notif->message.'</span>';
-            }
-            //print_r($notif->message);?>
+                    //Calculamos el tiempo que hace
+                    $fecha_noti = date_create($notif->timestamp);
+                    $intervalo = date_diff(date_create(), $fecha_noti);
+                    $tiempo = $intervalo->format("%d,%h,%i,%s");
+                    $t = explode(',',$tiempo);
+                    $i=0;
+
+                    while($i<(count($t)-1) && !$t[$i]){
+                        $i++;
+                    }
+                    $plural = '';
+                    if($t[$i]>1){
+                        $plural = 's';
+                    }
+
+                ?>
+                <p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
+
+                <?php if(preg_match($pattern,$notif->message)):?>
+                    <p class="corral_message image_message">
+                    <?php echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';?>
+                    </p>
+                <?php else:?>
+                    <p class="corral_message">
+                    <?php echo '<span>'.$notif->message.'</span>';?>
+                    </p>
+                <?php endif;?>
         </article>
         <?php endforeach;?>
         <?php if($hay_mas): ?>

@@ -267,8 +267,15 @@ a, a:hover{
 
 #corral_notifications article {
     background: #e1e1e1;
-    margin: 1em;
-    padding: 10px;
+    margin: 1.5em 1em 1em;
+    position: relative;
+}
+
+#corral_notifications article .timestamp {
+    top: -2.5em;
+    position: absolute;
+    right: -1em;
+    font-size: .6em;
 }
 
 .corralNotif{
@@ -335,27 +342,39 @@ article.omelettus h1{
     border-color:#00924a;
 }
 
-article.notification .notification_message{
+article.notification .notification_message, article .corral_message{
     margin: 0;
     font-size: 1em;
     background-color: #e1e1e1;
     padding: 0 0 0 1em;
 }
 
-.notification_message img{
+.notification_message img, .corral_message img{
     margin: 0 1em 0 0;
 }
 
-.notification_message .image{
+.notification_message.image_message .image, .corral_message.image_message .image{
     width:auto;
-    padding: 0;
 }
 
-.notification_message span {
+.notification_message span{
     display: inline-block;
     vertical-align: middle;
-    width:80%;
-    padding: 1.3em 0;
+    padding: 1em 0;
+}
+
+.corral_message span {
+    display: inline-block;
+    vertical-align: middle;
+    padding: .5em 0;
+}
+
+.notification_message.image_message span{
+    width: 80%;
+}
+
+.corral_message.image_message span{
+    width: 70%;
 }
 
 article.notification .timestamp{
