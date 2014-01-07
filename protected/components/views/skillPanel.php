@@ -59,18 +59,23 @@ $prevCategory = '';
                             <dl>
                                 <dt>Coste: </dt>
                                 <dd><?php
+                                    $textoCoste = array();
                                     if($skill->cost_tueste!==null && $skill->cost_tueste > 0) {
                                         $costeFinal = Yii::app()->skill->calculateCostTueste($skill);
-                                        echo ' '.$skill->cost_tueste;
+                                        $txtt = ' '.$skill->cost_tueste;
                                         if ($costeFinal > $skill->cost_tueste)
-                                            echo ' <span title="Tueste extra por sobrecarga, etc." class="rojo">+ '.($costeFinal - $skill->cost_tueste).'</span> = '.$costeFinal;
+                                            $txtt .= ' <span title="Tueste extra por sobrecarga, etc." class="rojo">+ '.($costeFinal - $skill->cost_tueste).'</span> = '.$costeFinal;
 
-                                        echo ' (tueste)';
-                                    } elseif ($skill->cost_tueste==0) echo '0 (tueste)';
-                                    if($skill->cost_retueste!==null && $skill->cost_retueste > 0) echo ' + '.$skill->cost_retueste.' (retueste)';
-                                    if($skill->cost_relanzamiento!==null && $skill->cost_relanzamiento > 0) echo ' + '.$skill->cost_relanzamiento.' (lágrimas)';
-                                    if($skill->cost_tostolares!==null && $skill->cost_tostolares > 0) echo ' + '.$skill->cost_tostolares.' (tostólares)';
-                                    if($skill->cost_gungubos!==null && $skill->cost_gungubos > 0) echo ' + '.$skill->cost_gungubos.' (gungubos)';
+                                        $txtt .= ' (<span class="col_tueste">tueste</span>)';
+                                        $textoCoste[] = $txtt;
+                                    }
+                                    if($skill->cost_retueste!==null && $skill->cost_retueste > 0) $textoCoste[] = ' '.$skill->cost_retueste.' (<span class="col_retueste">retueste</span>)';
+                                    if($skill->cost_relanzamiento!==null && $skill->cost_relanzamiento > 0) $textoCoste[] = ' '.$skill->cost_relanzamiento.' (<span class="col_lagrima">lágrimas</span>)';
+                                    if($skill->cost_tostolares!==null && $skill->cost_tostolares > 0) $textoCoste[] = ' '.$skill->cost_tostolares.' (<span class="col_tostolar">tostólares</span>)';
+                                    if($skill->cost_gungubos!==null && $skill->cost_gungubos > 0) $textoCoste[] = ' '.$skill->cost_gungubos.' (<span class="col_gungubo">gungubos</span>)';
+
+                                    if (empty($textoCoste)) $textoCoste[] = '0';
+                                    echo implode(' +',$textoCoste);
 
                                     ?></dd>
                                 <dt>Probabilidad de Crítico:</dt>
