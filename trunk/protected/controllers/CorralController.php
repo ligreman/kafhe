@@ -31,7 +31,8 @@ class CorralController extends Controller
 
 	public function actionIndex()
 	{
-		$this->render('index');
+        $gungubos = Gungubo::model()->findAll('event_id=:evento AND owner_id=:owner', array(':evento'=>Yii::app()->event->id, ':owner'=>Yii::app()->currentUser->id));
+		$this->render('index', array('gungubos'=>$gungubos));
 	}
 
 }
