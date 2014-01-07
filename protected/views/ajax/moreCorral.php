@@ -1,5 +1,37 @@
-<?php foreach ($notifications as $key => $notification): ?>
-    <article data-rel="<?php echo $notification->timestamp; ?>"><?php print_r($notification->message);?></article>
+<?php
+    $nombres_tiempo=array('día','hora','minuto','segundo');
+    $pattern = '/:+([a-zA-Z]+):+/i';
+    foreach ($notifications as $key => $notif): ?>
+    <article data-rel="<?php echo $notif->timestamp; ?>">
+            <?php
+                    //Calculamos el tiempo que hace
+                    $fecha_noti = date_create($notif->timestamp);
+                    $intervalo = date_diff(date_create(), $fecha_noti);
+                    $tiempo = $intervalo->format("%d,%h,%i,%s");
+                    $t = explode(',',$tiempo);
+                    $i=0;
+
+                    while($i<(count($t)-1) && !$t[$i]){
+                        $i++;
+                    }
+                    $plural = '';
+                    if($t[$i]>1){
+                        $plural = 's';
+                    }
+
+                ?>
+                <p class="timestamp">Hace <?php echo $t[$i].' '.$nombres_tiempo[$i].$plural;?></p>
+
+                <?php if(preg_match($pattern,$notif->message)):?>
+                    <p class="corral_message image_message">
+                    <?php echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';?>
+                    </p>
+                <?php else:?>
+                    <p class="corral_message">
+                    <?php echo '<span>'.$notif->message.'</span>';?>
+                    </p>
+                <?php endif;?>
+        </article>
 <?php endforeach;?>
 
 <?php if($hay_mas): ?>
