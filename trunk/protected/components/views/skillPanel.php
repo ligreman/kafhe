@@ -23,23 +23,30 @@
     </div>
 </div>
 <?php
-    //Validador de habilidades
-    $validator = new SkillValidator;        
+//Validador de habilidades
+$validator = new SkillValidator;
+$prevCategory = '';
 ?>
 <div id="skillsPanel">
     <ul>
-        <?php foreach($skills as $skill):?>
-            <?php
-                $execCode = $validator->canExecute($skill);
-                //Se muestra siempre que el bando, estado del jugador, estado del desayuno o talentos adquiridos no sean un requisito.
-                if ($execCode < 3 || $execCode > 7): ?>
+        <?php foreach($skills as $skill):
+            if ($prevCategory=='') $prevCategory = $skill->category;
+            elseif ($prevCategory!=$skill->category) {
+                echo '<li class="separator"></li>';
+                $prevCategory = $skill->category;
+            }
+
+            $execCode = $validator->canExecute($skill);
+
+            //Se muestra siempre que el bando, estado del jugador, estado del desayuno o talentos adquiridos no sean un requisito.
+            if ($execCode < 3 || $execCode == 8): ?>
                 <li><?php
                     $class = 'skillImage';
                     if($execCode != 1) $class .= " grayScale";
                     $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('class' => $class));
-                    echo CHtml::link($img, null, array('class' => 'skillLink','title' => $skill->name.': '.str_replace('<br />', ' ', $skill->description)));
+                    echo CHtml::link($img, null, array('class' => 'skillLink', 'data-skill'=>$skill->id,'title' => $skill->name.': '.str_replace('<br />', ' ', $skill->description)));
                     ?>
-                    <section class="skillDescriptionIndividual">
+                    <section class="skillDescriptionIndividual" data-skill="<?php echo $skill->id; ?>">
                         <div class="sdcontent">
                             <h1><span><?php echo $skill->name; ?></span><?php echo CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('class' => $class)); ?></h1>
                             <p class="skillDesc"><?php echo $skill->description; ?></p>
@@ -74,7 +81,7 @@
                                 <?php if($execCode == 1): ?>
 
                                 <?php if($skill->require_target_user==true): ?>
-                                
+
                                     <dt>Objetivo</dt>
                                     <dd class="targetList">
                                         <ul>
@@ -83,17 +90,17 @@
                                             foreach($targets as $target){
                                                 if($skill->require_target_side===null || $target->side == $skill->require_target_side){ ?>
                                                     <li class="<?php echo $target->side;?>" target_id="<?php echo $target->id;?>"><?php echo $target->alias;?></li>
-                                                <?php 
+                                                <?php
                                                 }
                                             }
-                                            ?>                                                                                              
+                                            ?>
                                         </ul>
                                     </dd>
-                                    
+
                                 <?php elseif($skill->require_target_side!==null && $skill->require_target_side!==''):
-                                    //El objetivo será un bando u el otro                                   
+                                    //El objetivo será un bando u el otro
                                     ?>
-                                
+
                                     <dt>Objetivo</dt>
                                     <dd class="targetList">
                                         <ul>
@@ -109,24 +116,24 @@
                                     <dt>Armas</dt>
                                     <dd class="weaponList">
                                         <ul>
-                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon1; ?>"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon1]; ?></li>
-                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon2; ?>"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon2]; ?></li>
-                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon3; ?>"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon3]; ?></li>
+                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon1; ?>"><a href="#"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon1]; ?></a></li>
+                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon2; ?>"><a href="#"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon2]; ?></a></li>
+                                            <li class="" weapon="<?php echo Yii::app()->params->gumbudoWeapon3; ?>"><a href="#"><?php echo Yii::app()->params->gumbudoWeaponNames[Yii::app()->params->gumbudoWeapon3]; ?></a></li>
                                         </ul>
                                     </dd>
-                                    
+
                                 <?php endif; ?>
                             </dl>
                             <p class="skillButtons">
                                 <?php echo CHtml::link('Aceptar', Yii::app()->createUrl('skill/execute', array('skill_id'=>$skill->id)), array('class'=>'btn btncommon acceptButton'));?>
                                 <?php echo CHtml::link('Cancelar', null, array('class' => 'btn cancelButton'));?>
                             </p>
-                            <?php else: ?>
+                        <?php else: ?>
                             </dl>
                             <p class="skillButtons centerContainer">
                                 <?php echo CHtml::link('Cerrar', null, array('class' => 'btn cancelButton'));?>
                             </p>
-                            <?php endif; //Fin de if de execCode 1 para mostrar objetivo y botones?>
+                        <?php endif; //Fin de if de execCode 1 para mostrar objetivo y botones?>
                         </div>
                     </section>
                 </li>
