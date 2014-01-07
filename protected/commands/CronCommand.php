@@ -145,7 +145,7 @@ class CronCommand extends CConsoleCommand {
 
                     if ($usuario->ptos_tueste > $maxTueste) {
                         $usuario->ptos_tueste = $maxTueste;
-                        $this->logCron('        - Tueste regenerado: '.$regenerado.', pero alcanza el máximo y queda en '.$maxTueste.'.', 'info');
+                        $this->logCron('        - Tueste regenerado: '.$regenerado.', pero alcanza el maximo y queda en '.$maxTueste.'.', 'info');
                     } else
                         $this->logCron('        - Tueste regenerado: '.$regenerado.'.', 'info');
 
@@ -157,14 +157,14 @@ class CronCommand extends CConsoleCommand {
 
                 //Si el usuario estaba inactivo, le resto fama
                 if ($usuario->status == Yii::app()->params->statusInactivo) {
-                    $usuario->fame -= intval(Yii::app()->config->getParam('lostFameByInactivity'));
+                    $usuario->fame = max(0, $usuario->fame-intval(Yii::app()->config->getParam('lostFameByInactivity')));
                     $this->logCron('        - Pierde fama por inactivo.', 'info');
                 } else {
                     //Compruebo si está inactivo el usuario
                     $user_inactive_time = strtotime($usuario->last_activity) + 25*60*60; //Le sumo 25 horas para ver si ha pasado
                     if (time() > $user_inactive_time) {
                         $usuario->status = Yii::app()->params->statusInactivo;
-                        $this->logCron('        - Estado inactivo.', 'info');
+                        $this->logCron('        - Pasa a estar inactivo.', 'info');
                     }
                 }
 
@@ -308,7 +308,7 @@ class CronCommand extends CConsoleCommand {
                     $this->logCron('      - Contadores por enfermedad quitados. Mueren '.$muertos['condicion'].' gungubos por la enfermedad.', 'info');
 
                     //Quito la enfermedad a los gungubos, que ya sufrieron bastante
-                    Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionNormal, 'condition_value'=>NULL),'event_id=:evento AND condition_status=:condicion AND owner_id=:owner', array(':evento'=>$event_id, ':condicion'=>Yii::app()->params->conditionEnfermedad, ':owner'=>$jugador->id));
+                    Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionNormal, 'condition_value'=>NULL),'event_id=:evento AND condition_status=:condicion AND owner_id=:owner', array(':evento'=>$event->id, ':condicion'=>Yii::app()->params->conditionEnfermedad, ':owner'=>$jugador->id));
 
                     //Saco sus Gumbudos Criadores
                     $gumbudos = Gumbudo::model()->count(array('condition'=>'owner_id=:owner AND event_id=:evento AND class=:clase', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassCriador)));
@@ -348,6 +348,7 @@ class CronCommand extends CConsoleCommand {
                 $mueren = $this->reduceHealthGungubos($event->id, $jugador->id, Yii::app()->params->conditionQuemadura);
 
                 $this->logCron('    - Mueren por quemadura '.$mueren['condicion'].' Gungubos.', 'info');
+                if($mueren['condicion']==0) continue; //Si no muere ninguno, continuo con otro corral
 
                 //Por cada muerto por quemadura miro a ver si quema a otros
                 $probabilidadPropagar = Yii::app()->config->getParam('quemaduraProbabilidadPropagacion');
@@ -374,7 +375,7 @@ class CronCommand extends CConsoleCommand {
                 $notiD->user_id = $jugador->id;
                 $notiD->message = ':'.Yii::app()->params->gunguboClassDefault.': Han muerto '.$mueren['condicion'].' Gungubos en tu corral a causa de quemaduras, las cuáles se han propagado a otros '.$cuantos_quemados.' Gungubos más. Los muertos reposan ahora en el cementerio.';
                 if (!$notiD->save())
-                    throw new CHttpException(400, 'Error al guardar la notificación D de corral de Ataque Bomba en evento '.$event_id.'.');
+                    throw new CHttpException(400, 'Error al guardar la notificación de corral al comprobar quemados en evento '.$event_id.'.');
             }
         }
 
@@ -397,16 +398,17 @@ class CronCommand extends CConsoleCommand {
                 $this->logCron('  Comprobando el evento '.$event->id.'.', 'info');
 
                 //Activo a los Gumbudos Guardianes normales para que defiendan.
-                $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoGuardianActions')),'event_id=:evento AND class=:clase AND trait!=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitAcorazado, ':clase'=>Yii::app()->params->gumbudoClassGuardian));
+                $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoGuardianActions')),'event_id=:evento AND class=:clase AND (trait!=:trait OR trait IS NULL)', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitAcorazado, ':clase'=>Yii::app()->params->gumbudoClassGuardian));
                 //Para los gumbudos guardianes con trait Acorazado es una defensa más de la de por defecto
-                $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoGuardianActions').'+trait_value)')),'event_id=:evento AND class=:clase AND trait=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitAcorazado, ':clase'=>Yii::app()->params->gumbudoClassGuardian));
-                $this->logCron('    Activados los '.($n+$m).' Gumbudos Guardianes en el evento '.$event->id.'.', 'info');
+                //$m = Gumbudo::model()->updateAll(array('actions'=>'('.Yii::app()->config->getParam('gumbudoGuardianActions').'+trait_value)'),'event_id=:evento AND class=:clase AND trait=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitAcorazado, ':clase'=>Yii::app()->params->gumbudoClassGuardian));
+                Yii::app()->db->createCommand('UPDATE gumbudo SET actions=('.Yii::app()->config->getParam('gumbudoGuardianActions').'+trait_value) WHERE event_id='.$event->id.' AND class="'.Yii::app()->params->gumbudoClassGuardian.'" AND trait="'.Yii::app()->params->traitAcorazado.'";')->query();
+                $this->logCron('    Activados los Gumbudos Guardianes en el evento '.$event->id.'.', 'info');
 
                 //Activo a los Gumbudos Hippie
                 $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoHippieActions')),'event_id=:evento AND class=:clase AND trait!=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitHiperactivo, ':clase'=>Yii::app()->params->gumbudoClassHippie));
                 //Para los gumbudos hippie con trait Hiperactivo es una defensa más de la de por defecto
                 $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoHippieActions').'+trait_value)')),'event_id=:evento AND class=:clase AND trait=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitHiperactivo, ':clase'=>Yii::app()->params->gumbudoClassHippie));
-                $this->logCron('    Activados los '.($n+$m).' Gumbudos Hippie en el evento '.$event->id.'.', 'info');
+                $this->logCron('    Activados los '.$n.'+'.$m.' Gumbudos Hippie en el evento '.$event->id.'.', 'info');
             }
         }
 

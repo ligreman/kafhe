@@ -48,12 +48,14 @@
 
 
 
-    <?php
-        //**************** Fama de bandos *********************
-        $fameSides = Yii::app()->usertools->calculateSideFames(true);
-        $prevEvent = Yii::app()->event->getPreviousEvent();
-        $individualFame = Yii::app()->usertools->calculateFameDifferentials(true);
-    ?>
+<?php
+    //**************** Fama de bandos *********************
+    $fameSides = Yii::app()->usertools->calculateSideFames(true);
+    $prevEvent = Yii::app()->event->getPreviousEvent();
+    $individualFame = Yii::app()->usertools->calculateFameDifferentials(true);
+
+    if ($individualFame!==null):
+?>
 
 
     <!--<div id="battleStatusChart"></div>-->
@@ -128,14 +130,16 @@
 
 
     </script>
+    <?php endif; ?>
 
 
+<?php
+    //************************ PROPABILIDADES USUARIOS ***************************
+    $arr = Yii::app()->usertools->calculateUsersProbabilities();
+    //print_r($arr);
 
-    <?php
-        //************************ PROPABILIDADES USUARIOS ***************************
-        $arr = Yii::app()->usertools->calculateUsersProbabilities();
-        //print_r($arr);
-    ?>
+    if ($arr!==null):
+?>
 	
 	<!--<p class="clear noteProbs">* Nota: la probabilidad de un bando de salir elegido es inversamente proporcional a la cantidad de gungubos que tiene.</p>-->
 
@@ -181,6 +185,9 @@
         chart.draw(data, options);
         }
     </script>
+    <?php else: ?>
+        <br /><p>No se ha alistado ningún jugador, por lo que no hay estadísticas.</p>
+    <?php endif; ?>
 
 
     <?php /*

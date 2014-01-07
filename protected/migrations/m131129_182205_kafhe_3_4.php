@@ -4,6 +4,9 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 {
 	public function safeUp()
 	{
+	    //Tablas obsoletas
+        //$this->dropTable('rank');
+
 	    //Event
         $this->execute('ALTER TABLE event ADD fame_kafhe int(11) NULL DEFAULT NULL AFTER gungubos_kafhe;');
         $this->execute('ALTER TABLE event ADD fame_achikhoria int(11) NULL DEFAULT NULL AFTER gungubos_achikhoria;');
@@ -154,6 +157,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  'usos',  // horas, evento, usos
             'critic'  =>  5,
             'fail'  =>  10,
+            'extra_param' => '100',         //Tueste que quita
             'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
@@ -844,6 +848,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->dropTable('gumbudo');
         $this->dropTable('notification_corral');
         $this->dropTable('comment');
+        $this->dropTable('talent');
+        $this->dropTable('user_talent');
 
         $this->execute("TRUNCATE TABLE cronpile;");
 		//echo "m131129_182205_kafhe_3_4 does not support migration down.\n";

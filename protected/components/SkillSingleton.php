@@ -40,6 +40,7 @@ class SkillSingleton extends CApplicationComponent
 		$this->_privateMessage = '';
 		$this->_generates_notification = $skill->generates_notification;
 		$texto_trampas_publico = $texto_trampas_privado = '';
+        $extraT = 0;
 
         //Saco los nombres de los que intervienen
 		$this->_caster = Yii::app()->currentUser->id;
@@ -70,13 +71,13 @@ class SkillSingleton extends CApplicationComponent
             $tirada = mt_rand(1,100);
         }
 
-        //Trampa de tueste?
+        //Trampa de tueste
         if($trampa!==false && $trampa->keyword==Yii::app()->params->modifierTrampaTueste) {
-            $extraT = $trampa->value;
+            $extraT -= intval($trampa->value);
 
             $texto_trampas_publico = 'Ha caído en una trampa de tueste y ha perdido tueste al ejecutar la habilidad.';
-            $texto_trampas_privado = 'Has caído en una trampa de tueste y has perdido '.$extraT.' de tueste extra.';
-        } else $extraT = null;
+            $texto_trampas_privado = 'Has caído en una trampa de tueste y has perdido '.$trampa->value.' de tueste extra.';
+        }
 
         //Pago el coste.
         if ($this->paySkillCosts($skill, $this->_result, $extraT) === false)

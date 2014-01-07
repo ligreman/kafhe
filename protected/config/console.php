@@ -24,6 +24,7 @@ return array(
 			'username' => 'kafhe',//#mysqlUsername
 			'password' => '',//#mysqlPassword
 			'charset' => 'utf8',
+            'enableParamLogging'=>true, //debug
 		),
 		
 		'log'=>array(
@@ -47,7 +48,13 @@ return array(
                     'logFile'=>date('Y-m-d').'-console-info.log',
                     'levels'=>'info',
                 ),
-			),
+                array( //debug
+                    'class'=>'CFileLogRoute',
+                    'levels'=>'trace,log',
+                    'categories' => 'system.db.CDbCommand',
+                    'logFile' => 'db.log',
+                ),
+            ),
 		),
 		
 				
@@ -100,6 +107,7 @@ return array(
         'modifierDesecado'=>'desecado',
         'modifierTrampaPifia'=>'trampaPifia',
         'modifierTrampaTueste'=>'trampaTueste',
+        'modifierTrampaConfusion'=>'trampaConfusion',
         //'modifierProtegiendo'=>'protegiendo',
         //'modifierOteando'=>'oteando',
         'modifierSenuelo'=>'senuelo',
@@ -141,6 +149,7 @@ return array(
 
 
         //Gumbudos
+        'gumbudoClassDefault'=>'gumbudo',
         'gumbudoClassAsaltante'=>'asaltante',
         'gumbudoClassGuardian'=>'guardian',
         'gumbudoClassCriador'=>'criador',
