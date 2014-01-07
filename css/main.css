@@ -196,6 +196,12 @@ a, a:hover{
     color: #00924a;
 }
 
+.col_tueste { color: #DA6E32; }
+.col_retueste { color: #FF2C61; }
+.col_gungubo { color: #60B97F; }
+.col_lagrima { color: #3C8EFF; }
+.col_tostolar { color: #D9CF0E; }
+
 #main{
     min-height: 100%;
     background: white;
@@ -349,8 +355,9 @@ article.notification .notification_message, article .corral_message{
     padding: 0 5px 0 5px;
 }
 
-.notification_message img, .corral_message img{
+.corral_message img{
     /*margin: 0 1em 0 0;*/
+    width: 50px;
 }
 
 .notification_message span{
@@ -370,12 +377,15 @@ article.notification .notification_message, article .corral_message{
 }
 
 .corral_message.image_message span{
-    width: 65%;
+    width: 70%;
     margin-left: 5%;
 }
 
-.notification_message.image_message .image, .corral_message.image_message .image{
-    width: 30%;
+.notification_message.image_message .image {
+    width: 20%;
+}
+.corral_message.image_message .image{
+    width: 23%;
     margin: 0;
 }
 
