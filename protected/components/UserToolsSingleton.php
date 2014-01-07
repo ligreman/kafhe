@@ -116,12 +116,12 @@ class UserToolsSingleton extends CApplicationComponent
 	public function calculateUsersProbabilities()
 	{
 		//Preparo un array con las probabilidades de cada uno de los usuarios
-		$probabilidadesRango = Yii::app()->usertools->calculateProbabilitiesByRank();
+		$probabilidadesRango = $this->calculateProbabilitiesByRank();
 		if ($probabilidadesRango === null) return null;
 //print_r($probabilidadesRango);
 		//Los diferenciales
 		$diffs = $this->calculateFameDifferentials();		
-		if ($diffs === null) return null;
+		if ($diffs === null) return $probabilidadesRango;
 //print_r($diffs);
 		//Ahora calculo el bruto de la probabilidad según la fama
 		$brutes = array();
@@ -181,9 +181,9 @@ class UserToolsSingleton extends CApplicationComponent
     public function calculateFameDifferentials($soloAlistados=true)
     {
         $users = $this->getUsers();
+        $fames = $differentials = array();
 
         //La fama en bruto
-        $fames = array();
         foreach($users as $user) {
             if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
             $fames[$user->id] = $user->fame;
@@ -199,10 +199,7 @@ class UserToolsSingleton extends CApplicationComponent
                 if ($soloAlistados && $user->status!=Yii::app()->params->statusAlistado) continue;
                 $differentials[$user->id] = $fames[$user->id] - $fameMedia;
             }
-        } else {
-            $fameMedia = 0;
         }
-        
 
         if (empty($differentials)) return null;
         return $differentials;

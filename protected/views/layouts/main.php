@@ -79,8 +79,6 @@
                             if ($userId==Yii::app()->currentUser->id) $miFama = $fame;
                             if (abs($fame) > $max) $max = abs($fame);
                         }
-                    } else {
-                        $max = 0;
                     }
 
                     if ($max==0)

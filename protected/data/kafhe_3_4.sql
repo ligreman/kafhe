@@ -47,6 +47,22 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `talent` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `keyword` varchar(20) NOT NULL,
+  `description` text NOT NULL,
+  `category` enum('aprendiz','experto','maestro') NULL DEFAULT NULL,
+  `required_id` varchar(50) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `user_talent` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NULL DEFAULT NULL,
+  `talent_id` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 
@@ -95,8 +111,6 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('maxNotificacionesMuro', '10', 'Notificaciones', 'Cantidad máxima de notificaciones a mostrar en el muro.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('informacionCafeteria', 'El Espiral (987 213 178)', 'Información', 'Datos de la cafetería a la que se llama.');
-INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
-  ('sobrecargaTamañoHistorico', '3', 'Juego', 'Tamaño del histórico de ejecuciones de habilidades.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 	('sobrecargaPorcentajeTuesteExtra', '25', 'Juego', 'Porcentaje de tueste extra que cuesta una habilidad por cada vez que aparece en el histórico.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES

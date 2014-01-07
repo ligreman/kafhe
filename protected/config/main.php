@@ -217,6 +217,7 @@ return array(
         'modifierDesecado'=>'desecado',
         'modifierTrampaPifia'=>'trampaPifia',
         'modifierTrampaTueste'=>'trampaTueste',
+        'modifierTrampaConfusion'=>'trampaConfusion',
         //'modifierProtegiendo'=>'protegiendo',
         //'modifierOteando'=>'oteando',
         'modifierSenuelo'=>'senuelo',
@@ -258,6 +259,7 @@ return array(
 
 
         //Gumbudos
+        'gumbudoClassDefault'=>'gumbudo',
         'gumbudoClassAsaltante'=>'asaltante',
         'gumbudoClassGuardian'=>'guardian',
         'gumbudoClassCriador'=>'criador',
