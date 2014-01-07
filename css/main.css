@@ -344,17 +344,13 @@ article.omelettus h1{
 
 article.notification .notification_message, article .corral_message{
     margin: 0;
-    font-size: 1em;
+    font-size: 0.9em;
     background-color: #e1e1e1;
-    padding: 0 0 0 1em;
+    padding: 0 5px 0 5px;
 }
 
 .notification_message img, .corral_message img{
-    margin: 0 1em 0 0;
-}
-
-.notification_message.image_message .image, .corral_message.image_message .image{
-    width:auto;
+    /*margin: 0 1em 0 0;*/
 }
 
 .notification_message span{
@@ -374,7 +370,13 @@ article.notification .notification_message, article .corral_message{
 }
 
 .corral_message.image_message span{
-    width: 70%;
+    width: 65%;
+    margin-left: 5%;
+}
+
+.notification_message.image_message .image, .corral_message.image_message .image{
+    width: 30%;
+    margin: 0;
 }
 
 article.notification .timestamp{
