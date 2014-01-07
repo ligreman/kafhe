@@ -22,7 +22,11 @@
         array(
             'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
-                array('label'=>'Notificaciones', 'url'=>array('/administration/notification'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/notification'?true:false),
+                array('label'=>'Notificaciones', 'url'=>'#', 'items'=>array(
+                    array('label'=>'NOTIFICACIONES'),
+                    array('label'=>'Muro', 'url'=>array('/administration/notification'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/notification'?true:false),
+                    array('label'=>'Corral', 'url'=>array('/administration/notificationCorral'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/notificationCorral'?true:false),
+                )),
                 array('label'=>'Usuarios', 'url'=>'#', 'items'=>array(
                     array('label'=>'CUENTAS'),
                     array('label'=>'Grupos', 'url'=>array('/administration/group'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/group'?true:false),
@@ -44,10 +48,19 @@
                     //'---',
                     //array('label'=>'NAV HEADER'),
                 )),
+                array('label'=>'Corrales', 'url'=>'#', 'items'=>array(
+                    array('label'=>'POBLACIÓN'),
+                    array('label'=>'Gungubos', 'url'=>array('/administration/gungubo'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/gungubo'?true:false),
+                    array('label'=>'Gumbudos', 'url'=>array('/administration/gumbudo'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/gumbudo'?true:false),
+                )),
                 array('label'=>'Habilidades', 'url'=>'#', 'items'=>array(
                     array('label'=>'DE USUARIO'),
                     array('label'=>'Habilidades', 'url'=>array('/administration/skill'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/skill'?true:false),
                     array('label'=>'Modificadores', 'url'=>array('/administration/modifier'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/modifier'?true:false),
+                    '---',
+                    array('label'=>'TALENTOS'),
+                    array('label'=>'Lista de talentos', 'url'=>array('/administration/talent'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/talent'?true:false),
+                    array('label'=>'Talentos aprendidos', 'url'=>array('/administration/userTalent'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/userTalent'?true:false),
                 )),
                 array('label'=>'Servidor', 'url'=>'#', 'items'=>array(
                     array('label'=>'SERVIDOR'),

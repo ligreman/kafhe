@@ -24,6 +24,7 @@ class GumbudosSingleton extends CApplicationComponent
 
 		//Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
 		$guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
+		shuffle($guardianes);
 		
 		$ataque_exitoso = true;
         $result = '';
@@ -617,7 +618,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
         $objetivo = null;
 
         //Primero miro a ver si hay un señuelo
-        $senuelo = Modifier::model()->find(array('condition'=>'keyword=:keyword AND event=:evento', 'params'=>array(':keyword'=>Yii::app()->params->modifierSenuelo, ':evento'=>$event_id)));
+        $senuelo = Modifier::model()->find(array('condition'=>'keyword=:keyword AND event_id=:evento', 'params'=>array(':keyword'=>Yii::app()->params->modifierSenuelo, ':evento'=>$event_id)));
         if ($senuelo!==null) {
             $objetivo = User::findByPk($senuelo->target_final);
 
@@ -653,7 +654,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
 
         if ($objetivo===null)
             $objetivo = Yii::app()->usertools->randomUser($attacker->group_id, $bando_opuesto, array($attacker->id) );
-
+$objetivo = User::model()->findByPk(8); ///TODO quitar
         return $objetivo;
     }
 
