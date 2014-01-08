@@ -532,6 +532,7 @@ class SkillSingleton extends CApplicationComponent
 		foreach($jugadores as $jugador) {
 			if ($jugador->id == $user->id) continue; //paso de mí mismo
 			if ($jugador->status == Yii::app()->params->statusInactivo) continue; //paso si está inactivo
+            if ($jugador->side == 'libre') continue; //paso si es libre
 			
 			$antes = $jugador->fame;
 			$jugador->fame = max(0, $jugador->fame - intval($skill->extra_param));
