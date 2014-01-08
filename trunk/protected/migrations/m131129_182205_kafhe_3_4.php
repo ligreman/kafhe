@@ -361,7 +361,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         //DIFAMAR
         $this->insert('skill', array(
             'name'  =>  'Difamar',                         // Nombre de la habilidad
-            'description'  =>  'Reduce la fama del resto de usuarios en 5 puntos y te otorga a tí los puntos reducidos de esta manera.',                  // Descripción de la habilidad
+            'description'  =>  'Reduce la fama del resto de jugadores no inactivos en 5 puntos y te otorga a tí los puntos reducidos de esta manera.',                  // Descripción de la habilidad
             'category'  =>  'ancestral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'difamar',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
