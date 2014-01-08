@@ -61,7 +61,7 @@ p{
 }
 
 /*Header with vertical align*/
-header {
+#page > header {
     text-align: justify;
     height: 3em;
     padding: .3em 0;
@@ -72,14 +72,14 @@ header {
     width: 100%;
 }
 
-header::after {
+#page > header::after {
     content: '';
     display: inline-block;
     width: 100%;
 }
 
 header > div,
-header > div::before,
+#page > header > div::before,
 header nav,
 header > div h1 {
     display: inline-block;
@@ -91,7 +91,7 @@ header > div {
     height: 100%;
 }
 
-header > div::before {
+#page > header > div::before {
     content: '';
     height: 100%;
 }
@@ -268,7 +268,7 @@ a, a:hover{
     width: 25%;
     float: right;
     background: #c0c0c0;
-    padding:1em 0 0 0;
+    padding:1em 0 2em 0;
 }
 
 #corral_notifications article {
@@ -1129,12 +1129,12 @@ img.grayScale{
     height: 5px;
     width: 100%;
 
-    background: -webkit-gradient(linear,left top,right top,color-stop(0, #BF3950),color-stop(0.5, #F0CD33),color-stop(1, #60B97F));
-    background: -o-linear-gradient(right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
-    background: -moz-linear-gradient(right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
-    background: -webkit-linear-gradient(right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
-    background: -ms-linear-gradient(right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
-    background: linear-gradient(to right, #BF3950 0%, #F0CD33 50%, #60B97F 100%);
+    background: -webkit-gradient(linear,left top,right top,color-stop(0, #BF3950),color-stop(0.5, #F0CC33),color-stop(1, #60B97F));
+    background: -o-linear-gradient(right, #BF3950 0%, #F0CC33 50%, #60B97F 100%);
+    background: -moz-linear-gradient(right, #BF3950 0%, #F0CC33 50%, #60B97F 100%);
+    background: -webkit-linear-gradient(right, #BF3950 0%, #F0CC33 50%, #60B97F 100%);
+    background: -ms-linear-gradient(right, #BF3950 0%, #F0CC33 50%, #60B97F 100%);
+    background: linear-gradient(to right, #BF3950 0%, #F0CC33 50%, #60B97F 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#BF3950', endColorstr='#60B97F',GradientType=1 );
 
     /*background: -moz-linear-gradient(left,  #f0cc33 0%, #673c7d 100%);
@@ -2033,119 +2033,117 @@ h2.error404{
 
 
 .hb {
-    position: relative;
-    border: 4px solid #CCC;
-    width: 80%;
-    max-width: 1000px;
-    padding: 1%;
-    margin: 2em auto;
-    background: #E5E5E5;
-}
-.hb_header {
-    width: 100%;
+    float:left;
+    width: 40%;
+    min-width: 450px;
 }
 
-.hbh_icon {
-    width: 10%;
-    float: left;
-    margin-top: 20px;
-    text-align: center;
-    vertical-align: middle;
-    display: inline-block;
+article.hb {
+    margin:3em 2em;
+    box-shadow: 0px 0px 3px #c0c0c0;
+    border: 1px solid #c0c0c0;
+    padding-bottom: 5px;
 }
-.hbh_icon img {
-    width: 90px;
+
+article.hb header {
+    background: #e1e1e1;
+    padding: 5px 5px 0;
+    height: 2.7em;
 }
-.hbh_title {
-    width: 65%;
-    display: inline-block;
-}
-.hbht_1 {
-    font-size: 1.5em;
-    padding: 2em 1em 0 20px;
-}
-.hbht_2 {
-    font-size: 1em;
-    padding-left: 20px;
-}
-.hbht_2.kafhe, .hbht_2.achikhoria, .hbht_2.teh {
-    padding-left: 30px;
-}
-.hbh_data {
-    width: 20%;
-    float: right;
-    text-align: right;
-}
-.hbhd_result {
-    margin: 5px 5px auto auto;
+
+article.hb header h2{
+    color: #363636;
+    font-size: 1.2em;
     font-weight: bold;
 }
-.hbhd_result span {
-    border: 1px solid;
-    border-radius: 15px;
-    padding: 1px 3px;
-    margin: 0 5px;
-    min-width: 20px;
+
+article.hb .hbh_title {
+    margin-top: 10px;
+}
+
+article.hb .hbh_title, article.hb .hbh_cost, article.hb .hbh_icon{
     display: inline-block;
-    text-align: center;
-}
-.hbhd_result span.hbhd_critic {
-    border-color: transparent;
-    background-color: #2CE00C;
-    box-shadow: 0 0 2px #000;
-}
-.hbhd_result span.hbhd_fail {
-    border-color: transparent;
-    background-color: #E20A0A;
-    box-shadow: 0 0 2px #000;
-    color: #F5F5F5;
-}
-.hbhd_cost {
-    margin-top: 15px;
-}
-.hbh_data ul li {
-    list-style: none !important;
 }
 
-.hb_body {
-    margin: 20px 1em 0 1em;
-    text-align: justify;
-    font-size: 1.1em;
-}
-.hb_body p {
-    margin: 10px 0;
-    padding: 0.5em 1em;
+article.hb .hbh_cost {
+    margin-top: 3px;
+    margin-right: 5px;
+} 
+article.hb .hbh_icon, article.hb .hbh_cost {
+    float: right;
 }
 
-.hb_footer {
-    margin-top: 15px;
-    width: 100%;
-    text-align: right;
+article.hb div{
+    display: block;
 }
-.hb_footer p {
-    display: inline;
-    border: 2px solid;
-    border-radius: 5px;
-    padding: 0 3px;
-    margin-left: 15px;
+
+article.hb .hbh_category{
+    clear: left;
+    background-color: #c0c0c0;
 }
-.hb_footer p.red {
-    border-color: #851010;
-    background-color: #F08686;
+
+article.hb .hbh_category p{
+    color: #363636;
+    padding:5px;
 }
-.hb_footer p.green {
-    border-color: #006400;
-    background-color: #8EDB91;
+
+article.hb ul#costes li{
+    list-style: none;
+    line-height: .8em;
+    font-size: .8em;
 }
-.hb_footer p.grey {
-    border-color: #5F5F5F;
-    background-color: #D4D4D4;
+
+article.hb .hb_body {
+    background-color: #ffffff;
+    padding: 10px 0;
 }
-.hb_footer .bandos {
+
+article.hb .hb_body p{
+    padding:7px 5px;
+}
+
+article.hb .hb_others p.others{
+    padding: 5px;
+}
+
+article.hb .hb_footer p{
+    padding:0;
+}
+
+article.hb .hb_footer{
+    margin:5px;
+}
+
+article.hb .bandos{
+    display: inline-block;
     float: left;
 }
-.hb_footer .bandos span {
-    margin-left: 10px;
+
+article.hb .bandos .bando{
+    margin-right: 3px;
+}
+
+article.hb .hbhd_result{
+    display: inline-block;
+    float: right;
+}
+
+.hbhd_critic, .hbhd_fail{
+    display: inline-block;
+    width: 24px;
+    height: 20px;
+    text-align: center;
+    border-radius: 20px;
+    padding: 4px 0 0;
+    color: #ffffff;
+}
+
+.hbhd_fail{
+    background-color: #bf3950;
+}
+
+.hbhd_critic{
+    background-color: #00924a;
 }
 
 #tocSkills {
@@ -2155,12 +2153,11 @@ h2.error404{
     margin: 3em auto 3em auto;
 }
 #tocSkills th {
-    border-bottom: 2px solid #333;
+    border-bottom: 1px solid #363636;
     border-right: 30px solid #fff;
     border-left: 30px solid #fff;
     padding: 8px 2px;
     background: transparent;
-    font-size: 1.2em;
 }
 #tocSkills td {
     border-right: 30px solid #fff;
@@ -2169,7 +2166,6 @@ h2.error404{
 }
 #tocSkills td a {
     color: #333;
-    font-size: 1.1em;
     text-decoration: none;
 }
 #tocSkills td a:hover {
