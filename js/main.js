@@ -166,6 +166,13 @@ function prepareHabilities(){
             $('.skillDescription').hide();
         });
 
+        $('.acceptButton').one('click', function(e){
+            e.preventDefault();
+            var href = $(this).attr('href');
+            $(this).attr('href', '');
+            window.location.replace(href);
+        });
+
         $('.skillDescription .sdcontent ul li a').click(function(){
             $('.skillDescription .sdcontent ul li a').removeClass('selected');
             $(this).addClass('selected');
