@@ -247,8 +247,8 @@ class CronCommand extends CConsoleCommand {
 				//Quito contador a Gungubos, tanto los que tienen Criadores como los que no
 				$this->reduceHealthGungubos($event->id);
 
-                //Repueblo gungubos en cada corral de los jugadores
-                $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
+                //Repueblo gungubos en cada corral de los jugadores que no sean el iluminado
+                $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo AND side!=:bando', 'params'=>array(':grupo'=>$event->group_id, ':bando'=>'libre')));
                 foreach($jugadores as $jugador) {
                     //Calculo cuántos le toca
                     $gungubos_en_corral = intval(Gungubo::model()->count(array('condition'=>'owner_id=:owner AND location=:lugar', 'params'=>array(':owner'=>$jugador->id, ':lugar'=>'corral'))) );
@@ -299,7 +299,7 @@ class CronCommand extends CConsoleCommand {
                 $this->logCron('  Corrales del evento '.$event->id.'.', 'info');
 
                 //Cojo los corrales
-                $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
+                $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo AND side!=:bando', 'params'=>array(':grupo'=>$event->group_id, ':bando'=>'libre')));
                 foreach($jugadores as $jugador) {
                     $this->logCron('     Corral del jugador '.$jugador->username.'.', 'info');
 
@@ -340,7 +340,7 @@ class CronCommand extends CConsoleCommand {
 
         foreach($events as $event) {
             //Corrales/Jugadores de este evento
-            $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo', 'params'=>array(':grupo'=>$event->group_id)));
+            $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo AND side!=:bando', 'params'=>array(':grupo'=>$event->group_id, ':bando'=>'libre')));
             foreach($jugadores as $jugador) {
                 $this->logCron('  Corral del jugador '.$jugador->username.'.', 'info');
 

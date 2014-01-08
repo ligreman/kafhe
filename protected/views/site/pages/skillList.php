@@ -105,7 +105,7 @@
     <?php
 
     //Listado de habilidades
-    $index = 1; //Empiezo en 1 más para que me deje el scroll bien
+    $index = 2; //Empiezo en 1 más para que me deje el scroll bien
     foreach($habilidades as $habilidad) {
         $bandos = '';
         if ($habilidad->require_user_side!==null) {

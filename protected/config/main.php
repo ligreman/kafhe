@@ -304,7 +304,7 @@ return array(
         'gumbudoClassNamesPlural'=>array('asaltante'=>'Asaltantes', 'guardian'=>'Guardianes', 'criador'=>'Criadores', 'nigromante'=>'Nigromantes', 'artificiero'=>'Artificieros', 'hippie'=>'Hippies', 'pestilente'=>'Pestilentes', 'asedio'=>'de Asedio'),
 		'gumbudoWeaponNames'=>array('garras'=>'Garras', 'colmillos'=>'Colmillos', 'puas'=>'Púas'),
 
-		//'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar', 'hiperactivo'=>'Hiperactivo'),
+		'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar', 'hiperactivo'=>'Hiperactivo'),
 		//'conditionNames'=>array('quemadura'=>'Quemadura'),
 	),
 );
