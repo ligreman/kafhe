@@ -121,30 +121,26 @@
         }
 
 		?>
-		<div class="hb">
-			<div class="hb_header">
-				<div class="hbh_icon">
-				    <?php echo CHtml::image(Yii::app()->baseUrl."/images/skills/".$habilidad->keyword.".png",$habilidad->keyword); ?>
-				</div>
-				<div class="hbh_title">
-					<p class="hbht_1"><?php echo $habilidad->name; ?></p>
-					<p class="hbht_2"><?php echo ucfirst($habilidad->category); ?></p>
-					<br /><br />
-				</div>
-				<div class="hbh_data">
-					<p class="hbhd_result">
-						<span title="Crítico" class="hbhd_critic"><?php echo $habilidad->critic; ?></span>
-						<span title="Pifia" class="hbhd_fail"><?php echo $habilidad->fail; ?></span>
-					</p>
-					<ul class="hbhd_cost" id="costes">
-						<?php if ($habilidad->cost_tueste!==null) echo '<li>'.$habilidad->cost_tueste.' tueste</li>'; ?>
-						<?php if ($habilidad->cost_retueste!==null) echo '<li>'.$habilidad->cost_retueste.' retueste</li>'; ?>
-						<?php if ($habilidad->cost_relanzamiento!==null) echo '<li>'.$habilidad->cost_relanzamiento.' lágrimas</li>'; ?>
-						<?php if ($habilidad->cost_gungubos!==null) echo '<li>'.$habilidad->cost_gungubos.' Gungubos</li>'; ?>
-					</ul>
-				</div>
-			</div>
-
+		<article class="hb">
+			<header>
+                <div class="hbh_title">
+                    <h2><?php echo $habilidad->name; ?></h2>
+                </div>
+                <div class="hbh_icon">
+                    <?php echo CHtml::image(Yii::app()->baseUrl."/images/skills/".$habilidad->keyword.".png",$habilidad->keyword); ?>
+                </div>
+                <div class="hbh_cost">
+                    <ul class="hbhd_cost" id="costes">
+                        <?php if ($habilidad->cost_tueste!==null) echo '<li>'.$habilidad->cost_tueste.' tueste</li>'; ?>
+                        <?php if ($habilidad->cost_retueste!==null) echo '<li>'.$habilidad->cost_retueste.' retueste</li>'; ?>
+                        <?php if ($habilidad->cost_relanzamiento!==null) echo '<li>'.$habilidad->cost_relanzamiento.' lágrimas</li>'; ?>
+                        <?php if ($habilidad->cost_gungubos!==null) echo '<li>'.$habilidad->cost_gungubos.' Gungubos</li>'; ?>
+                    </ul>
+                </div>
+            </header>
+            <div class="hbh_category">
+                <p class="hbht_2"><?php echo ucfirst($habilidad->category); ?></p>
+            </div>
 			<div class="hb_body">
 				<p>
 					<?php
@@ -152,29 +148,37 @@
 					?>
 				</p>
 			</div>
+            <div class="hb_others">
+                <?php if ($habilidad->require_user_min_rank!==null) echo '<p class="others">Rango mínimo requerido '.$habilidad->require_user_min_rank.'</p>'; ?>
+                <?php if ($habilidad->require_user_max_rank!==null) echo '<p class="others">Rango máximo requerido '.$habilidad->require_user_max_rank.'</p>'; ?>
+
+                <?php if ($habilidad->generates_notification==false) echo '<p class="others">No crea notificación en el muro</p>'; ?>                
+                <?php if ($habilidad->overload==true) echo '<p class="others">Sobrecarga</p>'; ?>
+            </div>
 
 			<div class="hb_footer" id="in_<?php echo $index; ?>">
-			    <div class="bandos">
+			    <p class="bandos">
                     <?php echo $bandos; ?>
-			    </div>
-				<?php if ($habilidad->require_user_min_rank!==null) echo '<p class="grey">Rango mínimo requerido '.$habilidad->require_user_min_rank.'</p>'; ?>
-				<?php if ($habilidad->require_user_max_rank!==null) echo '<p class="grey">Rango máximo requerido '.$habilidad->require_user_max_rank.'</p>'; ?>
-
-				<?php if ($habilidad->generates_notification==false) echo '<p class="green">No crea notificación en el muro</p>'; ?>				
-				<?php if ($habilidad->overload==true) echo '<p class="red">Sobrecarga</p>'; ?>
-				<br />
+			    </p>
+                <p class="hbhd_result">
+                    <span title="Crítico" class="hbhd_critic"><?php echo $habilidad->critic; ?></span>
+                    <span title="Pifia" class="hbhd_fail"><?php echo $habilidad->fail; ?></span>
+                </p>
 			</div>
-		</div>
+		</article>
 
-		<p class="centerContainer"><a href="#hb_index">Subir</a></p>
+		<?php //<p class="centerContainer"><a href="#hb_index">Subir</a></p>?>
 		<?php
         $index++;
-
+        if($index % 2 == 1):?>
+        <div class="clear"></div>
+    <?php endif;
     }
 
     //$gridDataProvider = new CArrayDataProvider($array);
 
     ?>
+    <div class="clear"></div>
 
 
     <?php
