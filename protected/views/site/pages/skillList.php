@@ -1,6 +1,6 @@
 <div id="hb_index" class="paddedContent page">
     <br />
-    <h1>Grimorio personal de <?php echo Yii::app()->usertools->getAlias(Yii::app()->currentUser->id); ?></h1>
+    <h1>Grimorio personal</h1>
 
     <?php
     /* @var $this SiteController */
