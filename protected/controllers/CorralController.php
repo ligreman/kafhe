@@ -31,8 +31,14 @@ class CorralController extends Controller
 
 	public function actionIndex()
 	{
-        $gungubos = Gungubo::model()->findAll('event_id=:evento AND owner_id=:owner', array(':evento'=>Yii::app()->event->id, ':owner'=>Yii::app()->currentUser->id));
-		$this->render('index', array('gungubos'=>$gungubos));
+	    if (Yii::app()->currentUser->side!='libre') {
+            $gungubos = Gungubo::model()->findAll('event_id=:evento AND owner_id=:owner', array(':evento'=>Yii::app()->event->id, ':owner'=>Yii::app()->currentUser->id));
+            $gumbudos = Gumbudo::model()->findAll('event_id=:evento AND owner_id=:owner ORDER BY class', array(':evento'=>Yii::app()->event->id, ':owner'=>Yii::app()->currentUser->id));
+		    $this->render('index', array('gungubos'=>$gungubos, 'gumbudos'=>$gumbudos));
+        } else {
+            //Para el Iluminado
+            $this->render('iluminado');
+        }
 	}
 
 }
