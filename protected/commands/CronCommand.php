@@ -407,8 +407,9 @@ class CronCommand extends CConsoleCommand {
                 //Activo a los Gumbudos Hippie
                 $n = Gumbudo::model()->updateAll(array('actions'=>Yii::app()->config->getParam('gumbudoHippieActions')),'event_id=:evento AND class=:clase AND trait!=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitHiperactivo, ':clase'=>Yii::app()->params->gumbudoClassHippie));
                 //Para los gumbudos hippie con trait Hiperactivo es una defensa más de la de por defecto
-                $m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoHippieActions').'+trait_value)')),'event_id=:evento AND class=:clase AND trait=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitHiperactivo, ':clase'=>Yii::app()->params->gumbudoClassHippie));
-                $this->logCron('    Activados los '.$n.'+'.$m.' Gumbudos Hippie en el evento '.$event->id.'.', 'info');
+                //$m = Gumbudo::model()->updateAll(array('actions'=>'('.intval(Yii::app()->config->getParam('gumbudoHippieActions').'+trait_value)')),'event_id=:evento AND class=:clase AND trait=:trait', array(':evento'=>$event->id, ':trait'=>Yii::app()->params->traitHiperactivo, ':clase'=>Yii::app()->params->gumbudoClassHippie));
+                Yii::app()->db->createCommand('UPDATE gumbudo SET actions=('.Yii::app()->config->getParam('gumbudoHippieActions').'+trait_value) WHERE event_id='.$event->id.' AND class="'.Yii::app()->params->gumbudoClassHippie.'" AND trait="'.Yii::app()->params->traitHiperactivo.'";')->query();
+                $this->logCron('    Activados los Gumbudos Hippie en el evento '.$event->id.'.', 'info');
             }
         }
 

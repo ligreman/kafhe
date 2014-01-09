@@ -37,7 +37,9 @@ class CorralController extends Controller
 		    $this->render('index', array('gungubos'=>$gungubos, 'gumbudos'=>$gumbudos));
         } else {
             //Para el Iluminado
-            $this->render('iluminado');
+            $gungubos = Gungubo::model()->findAll('event_id=:evento', array(':evento'=>Yii::app()->event->id));
+            $gumbudos = Gumbudo::model()->findAll('event_id=:evento ORDER BY class', array(':evento'=>Yii::app()->event->id));
+            $this->render('iluminado', array('gungubos'=>$gungubos, 'gumbudos'=>$gumbudos));
         }
 	}
 
