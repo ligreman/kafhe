@@ -306,5 +306,6 @@ return array(
 
 		'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar', 'hiperactivo'=>'Hiperactivo'),
 		//'conditionNames'=>array('quemadura'=>'Quemadura'),
+        'trampaNames'=>array('trampaTueste'=>'Trampa de Tueste', 'trampaConfusion'=>'Trampa de Confusión', 'trampaPifia'=>'Trampa de Pifia'),
 	),
 );

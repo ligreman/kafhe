@@ -247,7 +247,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         //SEÑUELO
         $this->insert('skill', array(
             'name'  =>  'Señuelo',                         // Nombre de la habilidad
-            'description'  =>  'Coloca un bote de tueste en el corral de un jugador aleatorio, provocando que durante 1 hora todos los ataques se dirijan contra dicho corral.<br />No se acumula, si se lanza de nuevo se cambia de objetivo.',                  // Descripción de la habilidad
+            'description'  =>  'Coloca un bote de tueste en el corral de un jugador aleatorio, provocando que los próximos 3 ataques se dirijan contra dicho corral.<br />No se acumula, si se lanza de nuevo se cambia de objetivo.',                  // Descripción de la habilidad
             'category'  =>  'hechizo',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'ofensiva',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'senuelo',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos

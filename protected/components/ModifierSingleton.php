@@ -94,11 +94,8 @@ class ModifierSingleton extends CApplicationComponent
 	{
 	    if ($mod_keyword===null && $modifier===null) return false;
 
-		if ($userId === null) {
-			if (isset(Yii::app()->currentUser->id))
-				$userId = Yii::app()->currentUser->id;
-			else
-				return false;
+		if ($mod_keyword!==null && $userId===null) {
+			$userId = Yii::app()->currentUser->id;
 		}
 
 		//Saco el modificador según lo que me hayan pasado
