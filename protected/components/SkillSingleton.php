@@ -819,6 +819,8 @@ class SkillSingleton extends CApplicationComponent
         if (!$modificador->save())
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
 
+        $this->_privateMessage = 'Has marcado a '.Yii::app()->usertools->getAlias($objetivo->id).' como objetivo de los ataques.';
+
         return true;
     }
 
@@ -1232,12 +1234,11 @@ class SkillSingleton extends CApplicationComponent
         $fecha = new DateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
-        $gumbudo->class = Yii::app()->params->gumbudoClassGuardian;
+        $gumbudo->class = Yii::app()->params->gumbudoClassHippie;
         $gumbudo->owner_id = Yii::app()->currentUser->id;
         $gumbudo->event_id = Yii::app()->event->id;
         $gumbudo->side = Yii::app()->currentUser->side;
         $gumbudo->actions = Yii::app()->config->getParam('gumbudoHippieActions');
-        $gumbudo->weapon = $weapon;
         $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
         //A ver si es hiperactivo o no
