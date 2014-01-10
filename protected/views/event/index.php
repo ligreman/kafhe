@@ -18,12 +18,17 @@
         $kafheMembers = '<ul id="achikhoriaMembers">';
         $libre = '<ul id="libreMember">';
         foreach ($users as $user) {
+            if ($user->active==false) {
+                $colorInactive = 'col_retueste';
+                $titleInactive = 'Inactivo';
+            }else $colorInactive = $titleInactive = '';
+
             if($user->side == 'kafhe'){
-                $kafheMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->params->userStatusNames[$user->status].'</li>';
+                $kafheMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): <span class="'.$colorInactive.'" title="'.$titleInactive.'">'.Yii::app()->params->userStatusNames[$user->status].'</span></li>';
             }elseif($user->side == 'achikhoria'){
-                $achikhoriaMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->params->userStatusNames[$user->status].'</li>';
+                $achikhoriaMembers .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): <span class="'.$colorInactive.'" title="'.$titleInactive.'">'.Yii::app()->params->userStatusNames[$user->status].'</span></li>';
             }else{
-				$libre .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): '.Yii::app()->params->userStatusNames[$user->status].'</li>';
+				$libre .= '<li><strong>'.$user->alias.'</strong> (Rango '.$user->rank.'): <span class="'.$colorInactive.'" title="'.$titleInactive.'">'.Yii::app()->params->userStatusNames[$user->status].'</span></li>';
             }
         }
     ?>
@@ -46,7 +51,7 @@
         </div>
     </div>
 
-
+    <p class="noteProbs">* En <span class="col_retueste">rojo</span> los jugadores inactivos.</p>
 
 <?php
     //**************** Fama de bandos *********************
