@@ -170,7 +170,7 @@
 		<?php //<p class="centerContainer"><a href="#hb_index">Subir</a></p>?>
 		<?php
         $index++;
-        if($index % 2 == 1):?>
+        if($index % 2 == 0 && $index > 0):?>
         <div class="clear"></div>
     <?php endif;
     }
