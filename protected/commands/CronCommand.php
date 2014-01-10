@@ -298,17 +298,17 @@ class CronCommand extends CConsoleCommand {
             foreach($events as $event) {
                 $this->logCron('  Corrales del evento '.$event->id.'.', 'info');
 
+                //Primero quito contadores por enfermedad a todos
+                $muertos = $this->reduceHealthGungubos($event->id, null, Yii::app()->params->conditionEnfermedad);
+                $this->logCron('      - Contadores por enfermedad quitados. Mueren '.$muertos['condicion'].' gungubos por enfermedad en todos los corrales.', 'info');
+
+                //Quito la enfermedad a los gungubos, que ya sufrieron bastante
+                Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionNormal, 'condition_value'=>NULL),'event_id=:evento AND condition_status=:condicion', array(':evento'=>$event->id, ':condicion'=>Yii::app()->params->conditionEnfermedad));
+
                 //Cojo los corrales
                 $jugadores = User::model()->findAll(array('condition'=>'group_id=:grupo AND side!=:bando', 'params'=>array(':grupo'=>$event->group_id, ':bando'=>'libre')));
                 foreach($jugadores as $jugador) {
                     $this->logCron('     Corral del jugador '.$jugador->username.'.', 'info');
-
-                    //Primero quito contadores por enfermedad
-                    $muertos = $this->reduceHealthGungubos($event->id, $jugador->id, Yii::app()->params->conditionEnfermedad);
-                    $this->logCron('      - Contadores por enfermedad quitados. Mueren '.$muertos['condicion'].' gungubos por la enfermedad.', 'info');
-
-                    //Quito la enfermedad a los gungubos, que ya sufrieron bastante
-                    Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionNormal, 'condition_value'=>NULL),'event_id=:evento AND condition_status=:condicion AND owner_id=:owner', array(':evento'=>$event->id, ':condicion'=>Yii::app()->params->conditionEnfermedad, ':owner'=>$jugador->id));
 
                     //Saco sus Gumbudos Criadores
                     $gumbudos = Gumbudo::model()->count(array('condition'=>'owner_id=:owner AND event_id=:evento AND class=:clase', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassCriador)));

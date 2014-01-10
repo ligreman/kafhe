@@ -603,7 +603,6 @@ class SkillSingleton extends CApplicationComponent
 			foreach($cadaveres as $cadaver) {
 				$tirada = mt_rand(1,100);
 				if ($tirada <= $probabilidadZombie) {
-					Yii::log('Zombie!!!!', 'info');
 					//$zombies[] = $cadaver;
 					$zombies_muertos_ids[] = $cadaver->id;
 				}
@@ -612,7 +611,7 @@ class SkillSingleton extends CApplicationComponent
 			$zombies_atacan = count($zombies_muertos_ids);
 			//Me cargo de una sola consulta a los zombies convertidos
 			Gungubo::model()->deleteAll('id IN ('.implode(',', $zombies_muertos_ids).')');
-
+    Yii::log(' Atacan '.$zombies_atacan.' al jugador '.$jugador->alias, 'info');
 			//Resuelvo los ataques de los zombies
 			$otros_muertos = 0;
 			$zombies_atacan_aux = $zombies_atacan;
@@ -644,7 +643,7 @@ class SkillSingleton extends CApplicationComponent
 				throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Apocalipsis Zombie en evento '.$event->id.'.');
 			
 			if ($zombies_atacan > 0) {
-				$fama_won++;
+				$fama_won+=2; //Fama por cada corral atacado
 				$corrales_atacados++;
 				$total_zombies += $zombies_atacan;
 				$total_otros_muertos += $cuantos_muertos;
@@ -1140,7 +1139,6 @@ class SkillSingleton extends CApplicationComponent
         $gumbudo->owner_id = Yii::app()->currentUser->id;
         $gumbudo->event_id = Yii::app()->event->id;
         $gumbudo->side = Yii::app()->currentUser->side;
-        $gumbudo->weapon = $weapon;
         $gumbudo->ripdate = $fecha->format('Y-m-d H:i:s');
 
         //A ver si es fetido
