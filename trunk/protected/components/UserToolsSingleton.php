@@ -74,8 +74,8 @@ class UserToolsSingleton extends CApplicationComponent
 			$criteria->condition .= ' AND side="'.$side.'" ';
 
 		if ($soloActivos === true) {
-		    $criteria->condition .= ' AND status!=:inactivo ';
-		    $criteria->params = array(':groupId'=>$groupId, ':inactivo'=>Yii::app()->params->statusInactivo);
+		    $criteria->condition .= ' AND active!=:inactivo ';
+		    $criteria->params = array(':groupId'=>$groupId, ':inactivo'=>false);
         } else
             $criteria->params = array(':groupId'=>$groupId);
 

@@ -35,6 +35,7 @@ $this->menu=array(
 		'ptos_talentos',
 		'tostolares',
 		'experience',
+		'fame',
 		'sugarcubes',
 		'dominio_tueste',
 		'dominio_habilidades',
@@ -43,5 +44,7 @@ $this->menu=array(
 		'calls',
 		'last_regen_timestamp',
 		'last_notification_read',
+		'last_activity',
+		'active',
 	),
 )); ?>

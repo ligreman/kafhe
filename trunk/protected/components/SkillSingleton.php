@@ -257,271 +257,6 @@ class SkillSingleton extends CApplicationComponent
 		return true;
 	}
 
-    /** Caza gungubos y me pone como Cazador si estaba como Criador
-     * @return bool
-     */
-	/*private function cazarGungubos($skill)
-	{
-		$user = Yii::app()->currentUser->model; //cojo el usuario actual
-		$proportion = 0.5; //Precisión a la hora de cazar
-		
-		//Miro a ver si tengo modificador de Otear		
-        $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$user->id, ':keyword'=>Yii::app()->params->modifierOteando)));
-
-		if ($modificador!==null) {
-			$proportion += intval($modificador->value)/100;
-			$proportion = min($proportion, 1);
-
-			//Elimino el modificador
-			if (!$modificador->delete())
-                throw new CHttpException(400, 'Error al eliminar el modificador ('.Yii::app()->params->modifierOteando.'). ['.print_r($modificador->getErrors(),true).']');
-		}
-		
-		
-		$amount = $this->randomWithRangeProportion(intval($skill->extra_param), $proportion);
-	
-		//Cambio al usuario a Cazador si era criador
-		if ($user->status == Yii::app()->params->statusInactivo) {
-			$user->status = Yii::app()->params->statusCazador;
-		
-			if (!$user->save())
-				throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
-		}
-
-        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
-
-        //Si hay menos gungubos libres de los que iba a cazar, cazo los que quedan
-        if($amount > $event->gungubos_population) $amount = $event->gungubos_population;
-
-		if($user->side == 'kafhe') {
-			$event->gungubos_kafhe += $amount;
-		} elseif ($user->side == 'achikhoria') {
-			$event->gungubos_achikhoria += $amount;
-		}
-
-        //La población de gungubos merma en la cantidad de gungubos cazados
-        $event->gungubos_population -= $amount;
-		
-		if (!$event->save())
-            throw new CHttpException(400, 'Error al sumar gungubos al bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
-
-        $this->_publicMessage = 'Ha logrado hacerse con '.$amount.' gungubos.';
-        $this->_privateMessage = 'Has logrado hacerte con '.$amount.' gungubos.';
-
-		return true;
-	}*/
-
-    /** Libera gungubos del bando oponente
-     * @return bool
-     */
-    /*private function liberarGungubos($skill)
-    {
-        $user = Yii::app()->currentUser->model; //cojo el usuario actual
-        $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
-        $protected = false;
-
-        //Cambio al usuario a Cazador si era criador
-        if ($user->status == Yii::app()->params->statusInactivo) {
-            $user->status = Yii::app()->params->statusCazador;
-
-            if (!$user->save())
-                throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
-        }
-
-        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
-        if($user->side == 'kafhe') {
-            //No se pueden liberar más de los que existen
-            if($event->gungubos_achikhoria < $amount) $amount = $event->gungubos_achikhoria;
-
-            $targetSide = 'achikhoria';
-            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($targetSide));
-            if($modifier!=null){
-                $protected = true;
-                $finalAmount = $amount - $modifier->value;
-                if($finalAmount <0) $finalAmount = 0;
-                $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) {
-                    if (!$modifier->delete())
-                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$targetSide.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
-                } else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
-            }else $finalAmount = $amount;
-
-            $event->gungubos_achikhoria -= $finalAmount;
-        } elseif ($user->side == 'achikhoria') {
-            if($event->gungubos_kafhe < $amount) $amount = $event->gungubos_kafhe;
-
-            $targetSide = 'kafhe';
-            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($targetSide));
-            if($modifier!=null){
-                $protected = true;
-                $finalAmount = $amount - $modifier->value;
-                if($finalAmount <0) $finalAmount = 0;
-                $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) {
-                    if (!$modifier->delete())
-                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$targetSide.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
-                } else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
-            }else $finalAmount = $amount;
-
-            $event->gungubos_kafhe -= $finalAmount;
-        }
-
-        $event->gungubos_population += $finalAmount;
-
-        if (!$event->save())
-            throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
-
-        if(!$protected) {
-            $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos.';
-            $this->_privateMessage = 'Has logrado liberar a '.$finalAmount.' gungubos.';
-        }
-        if($protected && $finalAmount == 0) {
-            $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido liberarlos.';
-            $this->_privateMessage = 'Los gungubos estaban protegidos y no has podido liberarlos.';
-        }
-        if($protected && $finalAmount > 0) {
-            $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos rompiendo la protección.';
-            $this->_privateMessage = 'Has logrado liberar a '.$finalAmount.' gungubos rompiendo la protección.';
-        }
-
-        return true;
-    }*/
-
-    /** Le quita al bando oponente una cantidad de gungubos para darsela a tu bando
-     * @return bool
-     */
-    /*private function atraerGungubos($skill)
-    {
-        $user = Yii::app()->currentUser->model; //cojo el usuario actual
-        $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
-        $protected = false;
-
-        //Cambio al usuario a Cazador si era criador
-		if ($user->status == Yii::app()->params->statusInactivo) {
-            $user->status = Yii::app()->params->statusCazador;
-
-            if (!$user->save())
-                throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
-        }
-
-        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
-        if($user->side == 'kafhe') {
-            //No se pueden atraer más de los que existen
-            if($event->gungubos_achikhoria < $amount) $amount = $event->gungubos_achikhoria;
-
-            $targetSide = 'achikhoria';
-            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($targetSide));
-            if($modifier!=null){
-                $protected = true;
-                $finalAmount = $amount - $modifier->value;
-                if($finalAmount <0) $finalAmount = 0;
-                $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) {
-                    if (!$modifier->delete())
-                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$targetSide.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
-                } else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
-            }else $finalAmount = $amount;
-
-            $event->gungubos_achikhoria -= $finalAmount;
-            $event->gungubos_kafhe += $finalAmount;
-        } elseif ($user->side == 'achikhoria') {
-
-            if($event->gungubos_kafhe < $amount) $amount = $event->gungubos_kafhe;
-
-            $targetSide = 'kafhe';
-            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($targetSide));
-            if($modifier!=null){
-                $protected = true;
-                $finalAmount = $amount - $modifier->value;
-                if($finalAmount <0) $finalAmount = 0;
-                $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) {
-                    if (!$modifier->delete())
-                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$targetSide.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
-                } else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$targetSide.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
-            }else $finalAmount = $amount;
-
-            $event->gungubos_kafhe -= $finalAmount;
-            $event->gungubos_achikhoria += $finalAmount;
-        }
-
-        if (!$event->save())
-            throw new CHttpException(400, 'Error al restar gungubos desde el bando '.$user->side.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
-
-        if(!$protected) {
-            $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos.';
-            $this->_privateMessage = 'Has logrado atraer a tu bando a '.$finalAmount.' gungubos.';
-        }
-        if($protected && $finalAmount == 0) {
-            $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido atraerlos.';
-            $this->_privateMessage = 'Los gungubos estaban protegidos y no has podido atraerlos.';
-        }
-        if($protected && $finalAmount > 0) {
-            $this->_publicMessage = 'Ha logrado atraer a su bando a '.$finalAmount.' gungubos rompiendo la protección.';
-            $this->_privateMessage = 'Has logrado atraer a tu bando a '.$finalAmount.' gungubos rompiendo la protección.';
-        }
-
-        return true;
-    }*/
-
-    /** Protegeré una cantidad de gungubos de ser liberados o robados
-     * @return bool
-     */
-    /*private function protegerGungubos($skill, $target)
-    {
-        $user = Yii::app()->currentUser->model; //cojo el usuario actual
-        //Cambio al usuario a Cazador si era criador
-        if ($user->status == Yii::app()->params->statusInactivo) {
-            $user->status = Yii::app()->params->statusCazador;
-
-            if (!$user->save())
-                throw new CHttpException(400, 'Error al guardar el estado del usuario ('.$user->id.') a Cazador. ['.print_r($user->getErrors(),true).']');
-        }
-		
-		//Saco el máximo de gungubos que se pueden proteger en el bando del usuario actual
-		if (Yii::app()->currentUser->side=='kafhe')
-			$max_proteger = Yii::app()->event->gungubosKafhe;
-		elseif (Yii::app()->currentUser->side=='achikhoria')
-			$max_proteger = Yii::app()->event->gungubosAchikhoria;
-
-        //Si ya tengo proteger lo que haré será sumar al valor los gungubos nuevos que puedo proteger
-        $modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->side, ':keyword'=>$skill->modifier_keyword)));
-
-        if ($modificador == null) {
-            $modificador = new Modifier;
-            $modificador->duration = $skill->duration;
-            $modificador->value = 0;
-        } else {
-			//Como ya existe, miro cuántos gúngubos hay protegidos y lo resto al máximo posible a proteger
-			$max_proteger = max( ($max_proteger - $modificador->value) , 0); //Que no sea menor de cero
-		}
-
-        $amount = $this->randomWithRangeProportion(intval($skill->extra_param), 0.75);
-		$amount = min($max_proteger, $amount); //Protejo como mucho los que tengo desprotegidos
-		
-		if ($amount>0) {
-			$modificador->value += $amount;
-			$modificador->event_id = Yii::app()->event->id;
-			$modificador->caster_id = Yii::app()->currentUser->id;
-			$modificador->target_final = $target->side;
-			$modificador->skill_id = $skill->id;
-			$modificador->keyword = $skill->modifier_keyword;
-			$modificador->duration_type = $skill->duration_type;
-			$modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
-
-			if (!$modificador->save())
-				throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
-			
-			$this->_privateMessage = 'Has logrado proteger a '.$amount.' gungubos.';
-		} else
-			$this->_privateMessage = 'No había gungubos a los que proteger.';      
-
-        return true;
-    }*/
 	
 	private function difamar($skill)
 	{
@@ -531,7 +266,7 @@ class SkillSingleton extends CApplicationComponent
 		$fama_quitada = 0;
 		foreach($jugadores as $jugador) {
 			if ($jugador->id == $user->id) continue; //paso de mí mismo
-			if ($jugador->status == Yii::app()->params->statusInactivo) continue; //paso si está inactivo
+			if ($jugador->active == false) continue; //paso si está inactivo
             if ($jugador->side == 'libre') continue; //paso si es libre
 			
 			$antes = $jugador->fame;
@@ -591,7 +326,7 @@ class SkillSingleton extends CApplicationComponent
 	    //Recorro los corrales de los jugadores
 		foreach($jugadores as $jugador) {
 			if ($jugador->side!=$bando_opuesto) continue; //Si no es del bando opuesto no hago nada
-			if ($jugador->status == Yii::app()->params->statusInactivo) continue; //paso si está inactivo
+            if ($jugador->active == false) continue; //paso si está inactivo
 			
 			//Voy mirando si se convierten o no zombies en cada corral
 			$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':lugar'=>'cementerio')));
@@ -694,71 +429,7 @@ class SkillSingleton extends CApplicationComponent
 		
 		return true;
 	}
-	
-    /** Libera gungubos de un bando aleatorio
-     * @return bool
-     */
-	/*private function rescatarGungubos($skill)
-	{
-		//Elijo un bando aleatorio
-		$rand = mt_rand(0,1);
-		if ($rand==0) $bando = 'kafhe';
-		else $bando = 'achikhoria';
 
-        $amount = $this->randomWithRangeProportion(intval($skill->extra_param),0.5);
-        $protected = false;
-
-        $event = Yii::app()->event->model; //Cojo el evento (desayuno) actual
-        if($bando == 'kafhe') {
-            //No se pueden liberar más de los que existen
-            if($event->gungubos_kafhe < $amount) $amount = $event->gungubos_kafhe;
-
-            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($bando));
-            if($modifier!=null){
-                $protected = true;
-                $finalAmount = $amount - $modifier->value;
-                if($finalAmount <0) $finalAmount = 0;
-                $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) {
-                    if (!$modifier->delete())
-                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$bando.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
-                } else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$bando.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
-            }else $finalAmount = $amount;
-
-            $event->gungubos_kafhe -= $finalAmount;
-            $event->gungubos_population += $finalAmount;
-
-        } elseif ($bando == 'achikhoria') {
-
-            if($event->gungubos_achikhoria < $amount) $amount = $event->gungubos_achikhoria;
-
-            $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierProtegiendo,Yii::app()->modifier->getSideModifiers($bando));
-            if($modifier!=null){
-                $protected = true;
-                $finalAmount = $amount - $modifier->value;
-                if($finalAmount <0) $finalAmount = 0;
-                $modifier->value -= $amount-$finalAmount;
-                if($modifier->value <= 0) {
-                    if (!$modifier->delete())
-                        throw new CHttpException(400, 'Error al eliminar el modificador de protección de gungubos del bando '.$bando.' del evento '.$event->id.' ['.print_r($modifier->getErrors(),true).']');
-                } else if (!$modifier->save())
-                    throw new CHttpException(400, 'Error al actualizar la protección del bando '.$bando.' del evento ('.$event->id.'). ['.print_r($modifier->getErrors(),true).']');
-            }else $finalAmount = $amount;
-
-            $event->gungubos_achikhoria -= $finalAmount;
-            $event->gungubos_population += $finalAmount;
-        }
-
-        if (!$event->save())
-            throw new CHttpException(400, 'Error al liberar gungubos del bando '.$bando.' del evento ('.$event->id.'). ['.print_r($event->getErrors(),true).']');
-
-        if(!$protected) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos del bando de '.ucfirst($bando).'.';
-        if($protected && $finalAmount == 0) $this->_publicMessage = 'Los gungubos estaban protegidos y no ha podido atraerlos.';
-        if($protected && $finalAmount > 0) $this->_publicMessage = 'Ha logrado liberar a '.$finalAmount.' gungubos del bando de '.ucfirst($bando).', rompiendo la protección.';
-			
-		return true;
-	}*/
 
 
     /** Crea un modificador de "trampa", sea del tipo que sea
@@ -844,7 +515,7 @@ class SkillSingleton extends CApplicationComponent
         $usuarios_full = $usuarios_partial = $u_partial_tueste = array();
 
         foreach ($posiblesUsuarios as $usuario) {
-            if ($usuario->id==Yii::app()->currentUser->id || $usuario->status==Yii::app()->params->statusInactivo || $usuario->status==Yii::app()->params->statusIluminado || $usuario->status==Yii::app()->params->statusLibertador)
+            if ($usuario->id==Yii::app()->currentUser->id || $usuario->active==false || $usuario->side=='libre')
                 continue; //Si está inactivo o es el iluminado o soy yo paso de él
 
             if ($usuario->ptos_tueste >= intval($skill->extra_param)) {
@@ -892,40 +563,6 @@ class SkillSingleton extends CApplicationComponent
         return true;
     }
 
-    /** Crea un modificador de "oteando"
-     * @param $skill Obj de la skill
-     * @return bool
-     */
-    /*private function otear($skill, $target)
-    {
-        //si ya tengo oteando, lo que hago es renovar su tiempo de ejecución y punto        
-		$modificador = Modifier::model()->find(array('condition'=>'target_final=:target AND keyword=:keyword', 'params'=>array(':target'=>$target->id, ':keyword'=>$skill->modifier_keyword)));
-
-        if ($modificador === null) {
-            $modificador = new Modifier;
-            $modificador->duration = $skill->duration;
-        }
-
-        $modificador->duration_type = $skill->duration_type;
-        $modificador->event_id = Yii::app()->event->id;
-        $modificador->caster_id = Yii::app()->currentUser->id;
-        $modificador->target_final = Yii::app()->currentUser->id; //Siempre va a ser el usuario actual
-        $modificador->skill_id = $skill->id;
-        $modificador->keyword = $skill->modifier_keyword;
-        $modificador->hidden = $skill->modifier_hidden;
-		$modificador->value = $skill->extra_param;
-        $modificador->timestamp = date('Y-m-d H:i:s'); //he de ponerlo para cuando se actualiza
-
-        if (!$modificador->save())
-            throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
-
-        //Oteo para mostrar el resultado
-        $oteados = Yii::app()->gungubos->getGungubosOteados(Yii::app()->event->model);
-
-        $this->_privateMessage = $oteados['texto'];
-
-        return true;
-    }*/
 
     private function otearKafhe($skill)
     {
@@ -1317,14 +954,15 @@ class SkillSingleton extends CApplicationComponent
         }
 			
 		//Pongo al jugador activo
-		if ($user->status == Yii::app()->params->statusInactivo) {
+		if ($user->active == false) {
 			//Miro si había metido el desayuno para saber qué estado ponerle
-			$has_enrollment = Enrollment::model()->exists(array('condition'=>'user_id=:user AND event_id=:event', 'params'=>array(':user'=>$user->id, ':event'=>Yii::app()->event->id)));
+			/*$has_enrollment = Enrollment::model()->exists(array('condition'=>'user_id=:user AND event_id=:event', 'params'=>array(':user'=>$user->id, ':event'=>Yii::app()->event->id)));
 			
 			if ($has_enrollment)
 				$user->status = Yii::app()->params->statusAlistado;
 			else
-				$user->status = Yii::app()->params->statusCazador;
+				$user->status = Yii::app()->params->statusCazador;*/
+			$user->active = true;
 		}
 		$user->last_activity = date('Y-m-d H:i:s'); //Actualizo la última vez que ha hecho algo
 

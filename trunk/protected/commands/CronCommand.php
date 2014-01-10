@@ -156,14 +156,14 @@ class CronCommand extends CConsoleCommand {
 
 
                 //Si el usuario estaba inactivo, le resto fama
-                if ($usuario->status == Yii::app()->params->statusInactivo) {
+                if ($usuario->active == false) {
                     $usuario->fame = max(0, $usuario->fame-intval(Yii::app()->config->getParam('lostFameByInactivity')));
                     $this->logCron('        - Pierde fama por inactivo.', 'info');
                 } else {
                     //Compruebo si está inactivo el usuario
                     $user_inactive_time = strtotime($usuario->last_activity) + 25*60*60; //Le sumo 25 horas para ver si ha pasado
                     if (time() > $user_inactive_time) {
-                        $usuario->status = Yii::app()->params->statusInactivo;
+                        $usuario->active = false;
                         $this->logCron('        - Pasa a estar inactivo.', 'info');
                     }
                 }
@@ -505,7 +505,7 @@ class CronCommand extends CConsoleCommand {
         }
 		
 		//A todos los jugadores les pongo activos y actualizo su last_activity
-		User::model()->updateAll(array('status'=>Yii::app()->params->statusCazador, 'last_activity'=>date('Y-m-d H:i:s')));
+		User::model()->updateAll(array('active'=>true, 'last_activity'=>date('Y-m-d H:i:s')));
 
         return 0;
     }
