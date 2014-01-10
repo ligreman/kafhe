@@ -59,6 +59,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'ptos_talentos',
 		'tostolares',
 		'experience',
+		'fame',
 		'sugarcubes',
 		'dominio_tueste',
 		'dominio_habilidades',
@@ -67,6 +68,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'calls',
 		'last_regen_timestamp',
 		'last_notification_read',
+		'last_activity',
+		'active',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),

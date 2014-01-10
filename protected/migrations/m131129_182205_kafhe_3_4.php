@@ -22,6 +22,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 	    //User
         $this->execute('ALTER TABLE user ADD fame int(11) NOT NULL DEFAULT 0 AFTER experience;');
 		$this->execute('ALTER TABLE user ADD last_activity timestamp NULL DEFAULT NULL AFTER last_notification_read;');
+        $this->execute('ALTER TABLE user ADD active int(1) NOT NULL DEFAULT 0 AFTER last_activity;');
 
 		//Cron
         $this->execute('ALTER TABLE cronpile ADD type varchar(20) NULL DEFAULT NULL AFTER id;');
@@ -858,13 +859,14 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE event DROP COLUMN fame_achikhoria;');
         $this->execute('ALTER TABLE user DROP COLUMN fame;');
 		$this->execute('ALTER TABLE user DROP COLUMN last_activity;');
+        $this->execute('ALTER TABLE user DROP COLUMN active;');
         $this->execute('ALTER TABLE skill DROP COLUMN gumbudo_action_duration;');
         $this->execute('ALTER TABLE skill DROP COLUMN gumbudo_action_rate;');
         $this->execute('ALTER TABLE skill DROP COLUMN generates_notification;');
         $this->execute('ALTER TABLE skill DROP COLUMN overload;');
         $this->execute('ALTER TABLE skill DROP COLUMN cost_gungubos;');
         $this->execute('ALTER TABLE cronpile DROP COLUMN type;');
-        $this->execute("ALTER TABLE `skill` CHANGE `category` `category` ENUM('gungubos','batalla','relanzamiento','ancestral');");
+        $this->execute("ALTER TABLE skill CHANGE `category` `category` ENUM('gungubos','batalla','relanzamiento','ancestral');");
         $this->execute('ALTER TABLE skill CHANGE `description` `description` varchar(255) NOT NULL;');
         $this->execute('ALTER TABLE modifier CHANGE `value` `value` INT(10);');
 

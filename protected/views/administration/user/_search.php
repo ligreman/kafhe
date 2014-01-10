@@ -35,6 +35,8 @@
 
 	<?php echo $form->textFieldRow($model,'experience',array('class'=>'span5')); ?>
 
+	<?php echo $form->textFieldRow($model,'fame',array('class'=>'span5')); ?>
+
 	<?php echo $form->textFieldRow($model,'sugarcubes',array('class'=>'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'dominio_tueste',array('class'=>'span5')); ?>
@@ -50,6 +52,10 @@
 	<?php echo $form->textFieldRow($model,'last_regen_timestamp',array('class'=>'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'last_notification_read',array('class'=>'span5')); ?>
+
+	<?php echo $form->textFieldRow($model,'last_activity',array('class'=>'span5')); ?>
+
+	<?php echo $form->textFieldRow($model,'active',array('class'=>'span5')); ?>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

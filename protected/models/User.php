@@ -31,6 +31,7 @@
  * @property string $last_regen_timestamp
  * @property string $last_notification_read
  * @property string $last_activity
+ * @property integer $active
  */
 class User extends CActiveRecord
 {
@@ -61,14 +62,14 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password, alias, email', 'required'),
-			array('group_id, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, fame, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls', 'numerical', 'integerOnly'=>true),
+			array('group_id, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, fame, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls, active', 'numerical', 'integerOnly'=>true),
 			array('username, password, alias, email', 'length', 'max'=>128),
 			array('role', 'length', 'max'=>5),
 			array('side', 'length', 'max'=>10),
 			array('birthdate, last_regen_timestamp, last_notification_read, last_activity', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, password, alias, email, birthdate, role, group_id, side, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, fame, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls, last_regen_timestamp, last_notification_read, last_activity', 'safe', 'on'=>'search'),
+			array('id, username, password, alias, email, birthdate, role, group_id, side, status, rank, ptos_tueste, ptos_retueste, ptos_relanzamiento, ptos_talentos, tostolares, experience, fame, sugarcubes, dominio_tueste, dominio_habilidades, dominio_bandos, times, calls, last_regen_timestamp, last_notification_read, last_activity, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -116,6 +117,7 @@ class User extends CActiveRecord
 			'last_regen_timestamp' => 'Last Regen Timestamp',
 			'last_notification_read' => 'Last Notification Read',
 			'last_activity' => 'Last Activity',
+			'active' => 'Active',
 		);
 	}
 
@@ -157,6 +159,7 @@ class User extends CActiveRecord
 		$criteria->compare('last_regen_timestamp',$this->last_regen_timestamp,true);
 		$criteria->compare('last_notification_read',$this->last_notification_read,true);
 		$criteria->compare('last_activity',$this->last_activity,true);
+		$criteria->compare('active',$this->active);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

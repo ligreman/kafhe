@@ -69,6 +69,10 @@
 	<?php echo CHtml::encode($data->experience); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fame')); ?>:</b>
+	<?php echo CHtml::encode($data->fame); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('sugarcubes')); ?>:</b>
 	<?php echo CHtml::encode($data->sugarcubes); ?>
 	<br />
@@ -99,6 +103,14 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('last_notification_read')); ?>:</b>
 	<?php echo CHtml::encode($data->last_notification_read); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('last_activity')); ?>:</b>
+	<?php echo CHtml::encode($data->last_activity); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('active')); ?>:</b>
+	<?php echo CHtml::encode($data->active); ?>
 	<br />
 
 	*/ ?>
