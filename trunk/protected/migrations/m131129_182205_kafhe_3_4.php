@@ -371,8 +371,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
             'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
             'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
-            'critic'  =>  5,                         // Int con el % crítico
-            'fail'  =>  5,                           // Int con el % de pifia
+            'critic'  =>  0,                         // Int con el % crítico
+            'fail'  => 0,                           // Int con el % de pifia
             'extra_param' => '5',                  // Fama que quitas
             'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
             'cost_retueste'  =>  400,              // Int con el coste en puntos de retueste
@@ -409,8 +409,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
             'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
             'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
-            'critic'  =>  5,                         // Int con el % crítico
-            'fail'  =>  5,                           // Int con el % de pifia
+            'critic'  =>  0,                         // Int con el % crítico
+            'fail'  =>  0,                           // Int con el % de pifia
             'extra_param' => NULL,                  // Tueste que obtienes con la habilidad
             'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
             'cost_retueste'  =>  75,              // Int con el coste en puntos de retueste
@@ -447,8 +447,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
             'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
             'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
-            'critic'  =>  5,                         // Int con el % crítico
-            'fail'  =>  5,                           // Int con el % de pifia
+            'critic'  =>  0,                         // Int con el % crítico
+            'fail'  =>  0,                           // Int con el % de pifia
             'extra_param' => NULL,                  // Tueste que obtienes con la habilidad
             'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
             'cost_retueste'  =>  250,              // Int con el coste en puntos de retueste
@@ -485,8 +485,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
             'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
             'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
-            'critic'  =>  5,                         // Int con el % crítico
-            'fail'  =>  5,                           // Int con el % de pifia
+            'critic'  =>  0,                         // Int con el % crítico
+            'fail'  =>  0,                           // Int con el % de pifia
             'extra_param' => '25',                  // Probabilidad de convertir en zombies
             'cost_tueste'  =>  NULL,                // Int con el coste en puntos de tueste
             'cost_retueste'  =>  250,              // Int con el coste en puntos de retueste
@@ -814,6 +814,36 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'require_talent_id'  =>  NULL,          // ID del talento requerido para ejecutar la habilidad
             'overload'  =>  0,
             'generates_notification' => 0           // Bool. Genera notificación en el muro.
+        ));
+
+        // ESCAQUEARSE
+        $this->insert('skill', array(
+            'name'  =>  'Escaquearse',
+            'description'  =>  'Relanza la selección del llamador para intentar escaquearte.',
+            'category'  =>  'relanzamiento',     // gungubos, batalla, relanzamiento, ancestral
+            'type'  =>  'utilidad',         // ofensiva, mejora, utilidad
+            'keyword'  =>  'escaquearse',
+            'modifier_keyword'  =>  '',
+            'duration'  =>  NULL,       // Int cantidad para la duración
+            'duration_type'  =>  NULL,  // horas, evento, usos
+            'critic'  =>  10,
+            'fail'  =>  10,
+            'cost_tueste'  =>  NULL,
+            'cost_retueste'  =>  NULL,
+            'cost_relanzamiento'  =>  2,
+            'cost_tostolares'  =>  NULL,
+            'is_cooperative'  =>  0,         // 0,1
+            'cost_tueste_cooperate'  =>  NULL,
+            'cost_tostolares_cooperate'  =>  NULL,
+            'cooperate_benefit'  =>  NULL,      // Int valor numérico de beneficio, normalmente %
+            'require_target_user'  =>  0,         // 0,1
+            'require_target_side'  =>  NULL,    // String valores (kafhe, achikhoria, libre) separados por comas
+            'require_caller'  =>  1,         // 0,1
+            'require_user_side'  =>  NULL,      // String valores (kafhe, achikhoria, libre) separados por comas
+            'require_user_min_rank'  =>  NULL,  // Int Rango mínimo para ejecutarla
+            'require_user_status'  =>  NULL,    // String valores separados por comas (0 Criador, 1 Cazador, 2 Alistado, 3 Baja, 4 Desertor, 5 Agente Libre)
+            'require_event_status'  =>  '2',   // ID del estado (0 Cerrado, 1 Iniciado, 2 Batalla, 3 Finalizado)
+            'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
 
 	    //NEW
