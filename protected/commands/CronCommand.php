@@ -366,8 +366,8 @@ class CronCommand extends CConsoleCommand {
 
                 $this->logCron('    - Nuevos quemados '.$nuevos_quemados.' Gungubos.', 'info');
 
-                //Pongo quemadura a los nuevos Gungubos quemados
-                $cuantos_quemados = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionQuemadura), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$nuevos_quemados.';', array(':evento'=>$event->id, ':owner'=>$jugador->id, ':lugar'=>'corral'));
+                //Pongo quemadura a los nuevos Gungubos quemados (que no estuvieran quemados antes)
+                $cuantos_quemados = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionQuemadura), 'event_id=:evento AND owner_id=:owner AND location=:lugar AND condition_status!=:quemado ORDER BY RAND() LIMIT '.$nuevos_quemados.';', array(':evento'=>$event->id, ':owner'=>$jugador->id, ':lugar'=>'corral', ':quemado'=>Yii::app()->params->conditionQuemadura));
 
                 //Notifico de las muertes y nuevos quemados al dueño del corral
                 $notiD = new NotificationCorral;
@@ -553,7 +553,9 @@ class CronCommand extends CConsoleCommand {
                 case 'gumbudoAsedioAttack':
                     $result = Yii::app()->gumbudos->gumbudoAsedioAttack($cronjob->params); //En params va el id del gumbudo que ataca
                     break;
-
+                case 'darRecompensas':
+                    $result = Yii::app()->evento->reward->grantRewards($cronjob->params);
+                    break;
             }
 			
 			if ($result !== true)

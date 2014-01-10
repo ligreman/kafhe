@@ -174,8 +174,9 @@ class EventController extends Controller
 		
 		//Saco los pedidos de este evento
 		$orders = Yii::app()->event->getOrder($event->id);
+        $individual_orders = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$event-id)));
 
-		$this->render('finish', array('orders'=>$orders)); //mostraré el pedido y un botón de ya he llamado, aunque el mismo enlace salga en el menú
+		$this->render('finish', array('orders'=>$orders, 'individual_orders'=>$individual_orders)); //mostraré el pedido y un botón de ya he llamado, aunque el mismo enlace salga en el menú
 	}
 
     /** Cerrar el evento al pulsar en Ya he llamado
@@ -202,16 +203,25 @@ class EventController extends Controller
         Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
         Gumbudo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
 
+        //Fama de los bandos
+        $bandoGanador = '';
+        $famaSides = Yii::app()->usertools->calculateSideFames();
+        if ($famaSides['kafhe']>$famaSides['achikhoria'])
+            $bandoGanador = 'kafhe';
+        elseif ($famaSides['kafhe']<$famaSides['achikhoria'])
+            $bandoGanador = 'achikhoria';
+
         //Doy experiencia y sumo llamadas y participaciones, pongo rangos como tienen que ser, elimino ptos de relanzamiento de la gente, y les pongo como Cazadores
 		$usuarios = Yii::app()->usertools->getUsers();
-		$new_usuarios = $fame_old = array();
+		$new_usuarios = $ganadores = array();
 		$anterior_llamador = null;
 		$llamador_id = null;
 		foreach($usuarios as $usuario) {			
 			$usuario->ptos_relanzamiento = 0;
 			$usuario->ptos_tueste = Yii::app()->tueste->maxTuesteUser($usuario); //Tueste al máximo
-            $fame_old[$usuario->side] += $usuario->fame;
+            //$fame_old[$usuario->side] += $usuario->fame;
 			$usuario->fame = Yii::app()->config->getParam('initialFame');
+			if ($usuario->side == $bandoGanador) $ganadores[] = $usuario->id; //Le meto como ganador
 
 			//Al llamador le pongo rango 1 y estado iluminado, y side libre
 			if ($usuario->id == $event->caller_id) {
@@ -264,10 +274,17 @@ class EventController extends Controller
         $final_users = Yii::app()->event->createSides($new_usuarios, $anterior_llamador);  //le paso el array de objetos usuarios y el objeto usuario anterior-llamador que no está en la lista
 
         //Guardo el evento
-        $event->fame_kafhe = $fame_old['kafhe'];
-        $event->fame_achikhoria = $fame_old['achikhoria'];
+        $event->fame_kafhe = $famaSides['kafhe'];
+        $event->fame_achikhoria = $famaSides['achikhoria'];
         if (!$event->save())
             throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
+
+        //Actividad cron para que se calculen y otorguen recompensas
+        $cron = new Cronpile;
+        $cron->operation = 'darRecompensas';
+        $cron->params = $event->id.'##'.implode(',', $ganadores);
+        if (!$cron->save())
+            throw new CHttpException(400, 'Error al guardar en la pila de cron a los del bando ganador. ['.print_r($cron->getErrors(),true).']');
 
         //Abro un evento nuevo de desayuno
         $nuevoEvento = new Event;
