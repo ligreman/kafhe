@@ -325,6 +325,7 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corra
             } else
                 $infecto = true;
 
+            $cuantos_infecto = 0;
             if ($infecto) {
                 $cuantos_infecto = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionEnfermedad, 'condition_value'=>Yii::app()->config->getParam('gumbudoPestilenteIntensidadEnfermedad'), 'attacker_id'=>$pestilente->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
 
@@ -663,7 +664,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
 
         if ($objetivo===null)
             $objetivo = Yii::app()->usertools->randomUser($attacker->group_id, $bando_opuesto, array($attacker->id) );
-//$objetivo = User::model()->findByPk(8); ///TODO quitar
+$objetivo = User::model()->findByPk(8); ///TODO quitar
         return $objetivo;
     }
 
