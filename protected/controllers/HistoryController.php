@@ -47,6 +47,8 @@ class HistoryController extends Controller
 		$command->bindParam(":grupo", $group, PDO::PARAM_INT);
 		$data['ranking'] = $command->queryAll();
 
+		$data['individual_orders'] = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$past_event-id)));
+
         $this->render('index', $data);
     }
 }

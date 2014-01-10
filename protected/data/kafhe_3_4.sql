@@ -184,9 +184,9 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('incendiarMinQuemados', '1', 'Características y Condiciones', 'Mínimo número de Gungubos quemados por causa de un Incendiar.');
+	('incendiarMinQuemados', '2', 'Características y Condiciones', 'Mínimo número de Gungubos quemados por causa de un Incendiar.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
-	('incendiarMaxQuemados', '3', 'Características y Condiciones', 'Máximo número de Gungubos quemados por causa de un Incendiar.');
+	('incendiarMaxQuemados', '4', 'Características y Condiciones', 'Máximo número de Gungubos quemados por causa de un Incendiar.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
 	('canibalMinComidos', '1', 'Características y Condiciones', 'Mínimo número de Gungubos comidos por un Gungubo Caníbal.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES 
