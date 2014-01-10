@@ -46,13 +46,13 @@ class TuesteSingleton extends CApplicationComponent
 		}
 
 		//Si el usuario no es inactivo le afecta la hidratación
-		if($estaHidratado && $user->status!=Yii::app()->params->statusInactivo) {
+		if($estaHidratado && $user->active) {
 		    $skillH = Skill::model()->findByAttributes(array('keyword'=>Yii::app()->params->skillHidratar));
             $porcentajePorModificadores += intval($skillH->extra_param); //Este extra param indica el % de regeneración extra
         }
 		
 		//Si tiene una recompensa		
-		if($user->status!=Yii::app()->params->statusInactivo && $recompensaMoreRegen!==false) {		    
+		if($recompensaMoreRegen!==false && $user->active) {
             $porcentajePorModificadores += $recompensaMoreRegen->value;
         }
 

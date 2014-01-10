@@ -189,10 +189,10 @@ return array(
 		'mailServerPassword'=>'',//#mailPassword
 		
 		//Estados de Usuario
-		'statusInactivo'=>0,
+		//'statusInactivo'=>0,
 		'statusCazador'=>1,
 		'statusAlistado'=>2,
-		'statusBaja'=>3,
+		//'statusBaja'=>3,
 		'statusIluminado'=>4,
 		'statusLibertador'=>5,
 		

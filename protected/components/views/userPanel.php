@@ -17,6 +17,8 @@
                     }
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$user->side.".png",Yii::app()->params->sideNames[$user->side],array('class' => 'modifier','title' => $side));
                     echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status".$user->status.".png",Yii::app()->params->userStatusNames[$user->status],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[$user->status]));
+
+                    if ($user->active==false) echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/status0.png",Yii::app()->params->userStatusNames[0],array('class' => 'modifier','title' => ''.Yii::app()->params->userStatusNames[0]));
                 }
                 ?>
             </span>

@@ -54,6 +54,7 @@ class UserSingleton extends CApplicationComponent
     public function getLastRegenTimestamp() { return $this->model->last_regen_timestamp; }
     public function getLastNotificationRead() { return $this->model->last_notification_read; }
     public function getLastActivity() { return $this->model->last_activity; }
+    public function getActive() { return $this->model->active; }
 	
 	public function getGungubosCorral() { return $this->_gungubos; }
 	

@@ -242,7 +242,7 @@ class EventController extends Controller
 				//A los alistados les pongo como criadores
 				$usuario->rank++;
 				$usuario->times++;
-				$usuario->status = Yii::app()->params->statusInactivo;
+				$usuario->status = Yii::app()->params->statusCazador;
 
                 $usuario->experience += ( Yii::app()->config->getParam('expParticipar') + Yii::app()->config->getParam('expNoLlamar') + ( ($usuario->rank-2) * Yii::app()->config->getParam('expPorRango') ) ); //Experiencia por participar + NoLLamar + Rango (de rango 1 a 2 no ganas exp)
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
@@ -251,21 +251,21 @@ class EventController extends Controller
 			} elseif ($usuario->status==Yii::app()->params->statusIluminado) {
 				//Si era "libre" pero no fue al desayuno
                 $usuario->rank++; //Aunque no fue al desayuno le subo de nivel igualmente para que todos los de bando sean nivel 2
-				$usuario->status = Yii::app()->params->statusInactivo;
+				$usuario->status = Yii::app()->params->statusCazador;
 				$anterior_llamador = $usuario;
 			} elseif ($usuario->status==Yii::app()->params->statusLibertador) {
 				//Al anterior libre, que si fue al desayuno, le pongo como criadores también
 				$usuario->rank++;
 				$usuario->times++;
-				$usuario->status = Yii::app()->params->statusInactivo;
+				$usuario->status = Yii::app()->params->statusCazador;
 
                 $usuario->experience += Yii::app()->config->getParam('expParticipar'); //Experiencia por participar
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
         
 				$anterior_llamador = $usuario;
-			} elseif ($usuario->status==Yii::app()->params->statusInactivo  ||  $usuario->status==Yii::app()->params->statusCazador  ||  $usuario->status==Yii::app()->params->statusBaja) {
+			} elseif ($usuario->active==false  ||  $usuario->status==Yii::app()->params->statusCazador) {
 				//Al resto sólo les pongo de criadores
-				$usuario->status = Yii::app()->params->statusInactivo;
+				$usuario->status = Yii::app()->params->statusCazador;
                 $new_usuarios[$usuario->id] = $usuario;
 			}
 		}
