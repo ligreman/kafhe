@@ -40,54 +40,44 @@
 
 
     <div id="bestiary">
-        <div id="carousel">
-            <?php
-            foreach ($gumbudos as $gumbudo) {
-                $nombre = array_shift($gumbudo);
-                $imagen = array_shift($gumbudo);
-                $bando = array_shift($gumbudo);
-                $descripcion = array_shift($gumbudo);
-            ?>
-            <div class="<?php echo $bando;?>" rel="<?php echo $nombre;?>">
-                <p><?php
-                    $texto = str_replace('##', '<br /><br />', $descripcion);
-
-                    foreach($caracteristicas as $caracteristica=>$descripcion) {
-                        $texto = str_replace('::'.$caracteristica.'::', '<span class="text">'.$descripcion.'</span>', $texto);
-                    }
-
-                    echo $texto;
-                ?></p>
-
+        <?php
+        $index = 0;
+        foreach ($gumbudos as $gumbudo) {
+            $nombre = array_shift($gumbudo);
+            $imagen = array_shift($gumbudo);
+            $bando = array_shift($gumbudo);
+            $descripcion = array_shift($gumbudo);
+        ?>
+        <article rel="<?php echo $nombre;?>">
+            <header>
+                <h2><?php echo $nombre; ?></h2>
+            </header>
+            <div class="image">
                 <?php echo CHtml::image(Yii::app()->baseUrl."/images/bestiary/".$imagen.".png",$nombre); ?>
             </div>
-            <?php
-            } ?>
-        </div>
-        <div id="pager"></div>
-    </div>
+            <p><?php
+                $texto = str_replace('##', '<br /><br />', $descripcion);
 
-</div>
-
-
-<script type="text/javascript">
-    $(function() {
-        $('#carousel').carouFredSel({
-            direction: 'up',
-            circular: false,
-            infinite: false,
-            auto: false,
-            scroll: {
-                duration: 1000,
-                easing: 'cubic'
-            },
-            pagination: {
-                container: '#pager',
-                anchorBuilder: function() {
-                    return '<a href="#">'+ $(this).attr('rel') +'</a>';
+                foreach($caracteristicas as $caracteristica=>$descripcion) {
+                    $texto = str_replace('::'.$caracteristica.'::', '<span class="text">'.$descripcion.'</span>', $texto);
                 }
-            }
-        });
-    });
-</script>
 
+                echo $texto;
+            ?></p>
+            <?php
+            $bandos = "";
+            if(strcmp($bando, "kafhe") == 0 || strcmp($bando, "comun") == 0) $bandos .= '<span class="bando" title="'.Yii::app()->params->sideNames['kafhe'].'">'.CHtml::image(Yii::app()->baseUrl."/images/modifiers/kafhe.png").'</span>';
+            if(strcmp($bando, "achikhoria") == 0 || strcmp($bando, "comun") == 0) $bandos .= '<span class="bando" title="'.Yii::app()->params->sideNames['achikhoria'].'">'.CHtml::image(Yii::app()->baseUrl."/images/modifiers/achikhoria.png").'</span>';
+            if(strcmp($bando, "libre") == 0 || strcmp($bando, "comun") == 0) $bandos .= '<span class="bando" title="'.Yii::app()->params->sideNames['libre'].'">'.CHtml::image(Yii::app()->baseUrl."/images/modifiers/libre.png").'</span>';
+            echo '<p class="bandos">'.$bandos.'</p>';
+            ?>
+        </article>
+        <?php
+        $index++;
+        if($index % 2 == 0 && $index > 0):?>
+        <div class="clear"></div>
+        <?php endif;
+        } ?>
+        <div class="clear"></div>
+    </div>
+</div>

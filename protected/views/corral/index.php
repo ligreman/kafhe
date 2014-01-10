@@ -46,10 +46,10 @@ if ($gungubos!==null):
                 ['Estado', 'Cantidad', {role:'style'}, {role:'annotation'}],
                 <?php
                     //echo '[0,0,0,0,0,0],';
-                    echo'["Normal", '.count($normales).', "#00C24a", "'.count($normales).'"],';
-                    echo'["Quemadura", '.count($quemados).', "#FF2300", "'.count($quemados).'"],';
-                    echo'["Enfermo", '.count($enfermos).', "#8F6032", "'.count($enfermos).'"],';
-                    echo'["Cementerio", '.count($cementerio).', "#000000", "'.count($cementerio).'"]';
+                    echo'["Normal", '.count($normales).', "#00924a", "'.count($normales).'"],';
+                    echo'["Quemadura", '.count($quemados).', "#bf3950", "'.count($quemados).'"],';
+                    echo'["Enfermo", '.count($enfermos).', "#8f6255", "'.count($enfermos).'"],';
+                    echo'["Cementerio", '.count($cementerio).', "#363636", "'.count($cementerio).'"]';
                 ?>
 
             ]);
@@ -117,10 +117,10 @@ if ($gungubos!==null):
                 vAxis: {title: 'Vida del Gungubo', minValue: 0, maxValue: 10, ticks: [0,1,2,3,4,5,6,7,8,9,10] },
                 tooltip: {trigger:'none'},
                 series: [
-                    {color: '#00C24a'}, //normal
-                    {color: '#FF2300'}, //quemadura
-                    {color: '#8F6032'}, //enfermo
-                    {color: '#000000'}, //cementerio
+                    {color: '#00924a'}, //normal
+                    {color: '#bf3950'}, //quemadura
+                    {color: '#8f6255'}, //enfermo
+                    {color: '#363636'}, //cementerio
                     {color: '#FFFFFF', visibleInLegend: false} //valor dummy
                 ]
             };
