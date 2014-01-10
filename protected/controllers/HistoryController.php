@@ -32,10 +32,13 @@ class HistoryController extends Controller
     {
         //Saco el pedido del evento anterior
         $past_event = Event::model()->find(array('condition'=>'id!=:id', 'params'=>array(':id'=>Yii::app()->event->id), 'order'=>'date DESC'));
-        if ($past_event!==null)
+        if ($past_event!==null) {
             $data['orders'] = Yii::app()->event->getOrder($past_event->id);
-        else
+            $data['individual_orders'] = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$past_event->id)));
+        } else {
             $data['orders'] = null;
+            $data['individual_orders'] = null;
+        }
 
         $data['event'] = $past_event;
 		
@@ -46,8 +49,6 @@ class HistoryController extends Controller
         $group = Yii::app()->currentUser->groupId;
 		$command->bindParam(":grupo", $group, PDO::PARAM_INT);
 		$data['ranking'] = $command->queryAll();
-
-		$data['individual_orders'] = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$past_event-id)));
 
         $this->render('index', $data);
     }

@@ -1280,7 +1280,7 @@ class SkillSingleton extends CApplicationComponent
         //Si ha sido crítico, cuesta menos
         $criticModificator = array('tueste'=>1, 'retueste'=>1, 'tostolares'=>1, 'relanzamiento'=>1);
         if ($executionResult == 'critic') {
-            $criticModificator = array('tueste'=>0.5, 'retueste'=>0.75, 'tostolares'=>0.5, 'relanzamiento'=>1);
+            $criticModificator = array('tueste'=>0.5, 'retueste'=>1, 'tostolares'=>0.5, 'relanzamiento'=>0.5);
         }
 
         //Pago el tueste
