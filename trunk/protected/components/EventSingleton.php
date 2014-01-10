@@ -644,7 +644,7 @@ class EventSingleton extends CApplicationComponent
 	public function getCallerId() { return $this->model->caller_id; }
     public function getCallerSide() { return $this->model->caller_side; }
     public function getType() { return $this->model->type; }
-    public function getGungubosPopulation() { return $this->model->gungubos_population; }
-	public function getGungubosKafhe() { return $this->model->gungubos_kafhe; }
-	public function getGungubosAchikhoria() { return $this->model->gungubos_achikhoria; }
+    //public function getGungubosPopulation() { return $this->model->gungubos_population; }
+	//public function getGungubosKafhe() { return $this->model->gungubos_kafhe; }
+	//public function getGungubosAchikhoria() { return $this->model->gungubos_achikhoria; }
 }

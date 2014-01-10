@@ -535,8 +535,16 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
         if ($afectaHippie) return true; //Si me ha afectado un Hippie salgo
 
         //Si no tengo 2 gungubos en el corral mal vamos...
-        $gungubitos = Gungubo__model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar ORDER BY health LIMIT 2', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'corral')));
+        $gungubitos = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar ORDER BY health LIMIT 2', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'corral')));
         if (count($gungubitos)!==2) return true; //Me salgo que no puedo atacar!!!
+        else {
+            //Mato a los gungubos
+            foreach($gungubitos as $gungubo) {
+                $id[] = $gungubo->id;
+            }
+
+            Gungubo::model()->deleteAll('id=:id1 OR id=:id2', array(':id1'=>$id[0], ':id2'=>$id[1]));
+        }
 
         //Me quito fama por matar pobres gungubos
         $owner->fame = max(0, $owner->fame-2); //Un punto por gungubo achechinado
@@ -664,7 +672,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
 
         if ($objetivo===null)
             $objetivo = Yii::app()->usertools->randomUser($attacker->group_id, $bando_opuesto, array($attacker->id) );
-$objetivo = User::model()->findByPk(8); ///TODO quitar
+$objetivo = User::model()->findByPk(5); ///TODO quitar
         return $objetivo;
     }
 

@@ -7,6 +7,19 @@ class RewardSingleton extends CApplicationComponent
     private $_rewards = array(
 		'rwMoreCritic', 'rwLessFail', 'rwMinTueste', 'rwMoreRegen'
 	);
+
+	public function grantRewards($userList) {
+	    $aux = explode('##', $userList);
+	    $event_id = $aux[0];
+	    $ganadores = explode(',', $aux[1]);
+
+	    foreach($ganadores as $ganador){
+	        $user = User::model()->findByPk($ganador);
+	        $this->giveReward($user, $event_id);
+	    }
+
+	    return true;
+	}
 	
 	public function giveReward($user, $eventId, $reward=null) {
 		$recompensas = $this->_rewards;

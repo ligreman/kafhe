@@ -1313,7 +1313,7 @@ class SkillSingleton extends CApplicationComponent
         //Pago los gungubos
         if ($skill->cost_gungubos !== null) {
             //Remuevo los gungubos que indique empezando por los que menos vida tienen
-            Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND location=:lugar AND health>0 ORDER BY health DESC LIMIT '.$skill->cost_gungubos, 'params'=>array(':evento'=>Yii::app()->event->id, ':owner'=>$user->id, ':lugar'=>'corral')));
+            Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND location=:lugar AND health>0 ORDER BY health LIMIT '.$skill->cost_gungubos, 'params'=>array(':evento'=>Yii::app()->event->id, ':owner'=>$user->id, ':lugar'=>'corral')));
         }
 			
 		//Pongo al jugador activo
