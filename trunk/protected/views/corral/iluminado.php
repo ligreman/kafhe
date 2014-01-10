@@ -29,24 +29,84 @@ if ($gungubos!==null) {
 
 
     <p>En el mundo hay <?php echo count($gungubos);?> Gungubos:</p>
-    <p><ul>
-        <?php
-            echo '<li>'.count($normales).' Gungubos en estado normal.</li>';
-            echo '<li>'.count($quemados).' Gungubos con quemadura.</li>';
-            echo '<li>'.count($enfermos).' Gungubos enfermos.</li>';
-            echo '<li>'.count($cementerio).' Gungubos en el cementerio.</li>';
-        ?>
-    </ul></p>
+    <div id="corralNumeric"></div>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Estado', 'Cantidad', {role:'style'}, {role:'annotation'}],
+                <?php
+                    //echo '[0,0,0,0,0,0],';
+                    echo'["Normal", '.count($normales).', "#00924a", "'.count($normales).'"],';
+                    echo'["Quemadura", '.count($quemados).', "#bf3950", "'.count($quemados).'"],';
+                    echo'["Enfermo", '.count($enfermos).', "#8f6255", "'.count($enfermos).'"],';
+                    echo'["Cementerio", '.count($cementerio).', "#363636", "'.count($cementerio).'"]';
+                ?>
+
+            ]);
+
+            var options = {
+                title: 'El mundo',
+                titleTextStyle: { fontName: 'Lato', fontSize: 20 },
+                height: 400,
+                hAxis: { textStyle: {bold: true} },
+                vAxis: { title:'Gungubos', maxValue:50, gridlines: { count: 11 } },
+                bar: {groupWidth: "80%"},
+                legend: {position:'none'}
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('corralNumeric'));
+            chart.draw(data, options);
+        }
+    </script>
+
     <p>Lista de Gumbudos:</p>
-
-    <p><ul>
+    <div id="corralGumbudos"></div>
     <?php
-    foreach ($gumbudos as $gumbudo) {
-        echo '<li>'.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' ('.Yii::app()->params->sideNames[$gumbudo->side].')</li>';
-    }
+    $index = 0;
+    if (count($gumbudos) > 0) {
+        $current_class = $gumbudos[$index]->class;
+    }?>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
 
-    ?>
-    </ul></p>
+            var data = google.visualization.arrayToDataTable([
+                ['Estado', 'Cantidad'],
+                
+                <?php
+                    while(count($gumbudos) > $index){
+                        $count = 0;
+                        while(count($gumbudos) > $index && strcmp($gumbudos[$index]->class,$current_class) == 0){
+                            $count++;
+                            $index++;
+                        }
+                        echo'["Gumbudo '.$current_class.'", '.$count.']';
+                        if (count($gumbudos) > $index){
+                            $current_class = $gumbudos[$index]->class;
+                            echo ',';
+                        }
+                    }
+                ?>
 
-    <br class="clear" />
+            ]);
+
+            var options = {
+                title: 'El mundo',
+                titleTextStyle: { fontName: 'Lato', fontSize: 20 },
+                height: 400,
+                colors:['#00924a'],
+                hAxis: { textStyle: {bold: true} },
+                vAxis: { title:'Gumbudos'},
+                legend: {position:'none'}
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('corralGumbudos'));
+            chart.draw(data, options);
+        }
+    </script>
+    <div class="clear"></div>
 </div>
