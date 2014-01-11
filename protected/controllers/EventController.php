@@ -65,29 +65,30 @@ class EventController extends Controller
 					
 		//Elijo al primer llamador
 		$battleResult = Yii::app()->event->selectCaller();
-      
+        $caller = User::model()->findByPk($battleResult['userId']);
+
         if ($battleResult === null) {
             Yii::app()->user->setFlash('error', 'No se ha podido iniciar la batalla ya que no se había alistado nadie.');
             $this->redirect(array('event/index'));
             return false;
         }
-      
-		$event->caller_id = $battleResult['userId'];
-		$event->caller_side = $battleResult['side'];
-		
+
+        $event->caller_id = $battleResult['userId'];
+        $event->caller_side = $caller->side;
+
 		//Guardo el evento
 		if (!$event->save())
 			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
 		//Creo la notificación		
 		$nota = new Notification;        
-        $nota->message = ':battle: ¡Que de comienzo la batalla!';
+        $nota->message = ':battle: ¡Que de comienzo la batalla! Nuestro primer llamador es... ¡'.Yii::app()->usertools->getAlias($event->caller_id).'!';
         $nota->type = 'omelettus';
 		if (!$nota->save())
 			throw new CHttpException(400, 'Error al guardar la notificación de aviso de inicio de batalla del evento '.$event->id.'. ['.print_r($nota->getErrors(),true).']');
-			
+
+
 		//Aviso al llamador
-		$caller = User::model()->findByPk($event->caller_id);
 		$sent = Yii::app()->mail->sendEmail(array(
 		    'to'=>$caller->email,
 		    'subject'=>'¡A llamar!',
@@ -174,7 +175,7 @@ class EventController extends Controller
 		
 		//Saco los pedidos de este evento
 		$orders = Yii::app()->event->getOrder($event->id);
-        $individual_orders = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$event-id)));
+        $individual_orders = Enrollment::model()->findAll(array('condition'=>'event_id=:event', 'params'=>array(':event'=>$event->id)));
 
 		$this->render('finish', array('orders'=>$orders, 'individual_orders'=>$individual_orders)); //mostraré el pedido y un botón de ya he llamado, aunque el mismo enlace salga en el menú
 	}
@@ -218,10 +219,9 @@ class EventController extends Controller
 		$llamador_id = null;
 		foreach($usuarios as $usuario) {			
 			$usuario->ptos_relanzamiento = 0;
-			$usuario->ptos_tueste = Yii::app()->tueste->maxTuesteUser($usuario); //Tueste al máximo
+			$usuario->ptos_tueste = Yii::app()->tueste->getMaxTuesteUser($usuario); //Tueste al máximo
             //$fame_old[$usuario->side] += $usuario->fame;
 			$usuario->fame = Yii::app()->config->getParam('initialFame');
-			if ($usuario->side == $bandoGanador) $ganadores[] = $usuario->id; //Le meto como ganador
 
 			//Al llamador le pongo rango 1 y estado iluminado, y side libre
 			if ($usuario->id == $event->caller_id) {
@@ -244,6 +244,9 @@ class EventController extends Controller
 				$usuario->times++;
 				$usuario->status = Yii::app()->params->statusCazador;
 
+                //Si era del bando ganador, le daré recompensa así que le pongo como ganador
+                if ($usuario->side == $bandoGanador) $ganadores[] = $usuario->id;
+
                 $usuario->experience += ( Yii::app()->config->getParam('expParticipar') + Yii::app()->config->getParam('expNoLlamar') + ( ($usuario->rank-2) * Yii::app()->config->getParam('expPorRango') ) ); //Experiencia por participar + NoLLamar + Rango (de rango 1 a 2 no ganas exp)
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
            
@@ -263,7 +266,7 @@ class EventController extends Controller
                 Yii::app()->usertools->checkLvlUpUser($usuario, false); // ¿Subo nivel?
         
 				$anterior_llamador = $usuario;
-			} elseif ($usuario->active==false  ||  $usuario->status==Yii::app()->params->statusCazador) {
+			} elseif ($usuario->status==Yii::app()->params->statusCazador) {
 				//Al resto sólo les pongo de criadores
 				$usuario->status = Yii::app()->params->statusCazador;
                 $new_usuarios[$usuario->id] = $usuario;

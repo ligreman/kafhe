@@ -409,8 +409,10 @@ class SkillSingleton extends CApplicationComponent
 		
 		//Elijo al llamador
 		$battleResult = Yii::app()->event->selectCaller();
+        $caller = User::model()->findByPk($battleResult['userId']);
+
 		$event->caller_id = $battleResult['userId'];
-		$event->caller_side = $battleResult['side'];
+		$event->caller_side = $caller->side;
 		$event->relauncher_id = Yii::app()->currentUser->id;
 		
 		//Guardo el evento
@@ -418,7 +420,6 @@ class SkillSingleton extends CApplicationComponent
 			throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
 		//Aviso al llamador
-		$caller = User::model()->findByPk($event->caller_id);
 		$sent = Yii::app()->mail->sendEmail(array(
 		    'to'=>$caller->email,
 		    'subject'=>'¡A llamar!',
@@ -426,6 +427,9 @@ class SkillSingleton extends CApplicationComponent
 		    ));
 		if ($sent !== true)
 		    Yii::log($sent, 'error', 'Email escaqueo');
+
+		//Lo hago público
+		$this->_publicMessage = 'Le ha pasado el marrón a... ¡'.Yii::app()->usertools->getAlias($event->caller_id).'!';
 		
 		return true;
 	}
@@ -1027,13 +1031,13 @@ class SkillSingleton extends CApplicationComponent
      * @param $skill Obj de la skill
      * @return int Valor del crítico
      */
-    private function criticValue($skill) {
+    public function criticValue($skill) {
 		$critic = $skill->critic;
 		
 		//Modificadores
-		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->config->getParam('rewardMoreCritic'));
+		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->params->rwMoreCritic);
 		if ($mod1 !== false)
-			$critic = min($critic+$mod1->value, 100);
+			$critic = min($critic+intval($mod1->value), 100);
 		
 		return $critic;
 	}
@@ -1042,14 +1046,14 @@ class SkillSingleton extends CApplicationComponent
      * @param $skill Obj de la skill
      * @return int Valor de la pifia
      */
-	private function failValue($skill) {
+	public function failValue($skill) {
 		$fail = $skill->fail;
-		
+
 		//Modificadores
-		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->config->getParam('rewardLessFail'));
+		$mod1 = Yii::app()->modifier->inModifiers(Yii::app()->params->rwLessFail);
 		if ($mod1 !== false)
-			$fail = max(0, $fail-$mod1->value);
-			
+			$fail = max(0, $fail-intval($mod1->value));
+
 		return $fail;
 	}
 

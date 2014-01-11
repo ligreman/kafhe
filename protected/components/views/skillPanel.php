@@ -30,16 +30,19 @@ $prevCategory = '';
 <div id="skillsPanel">
     <ul>
         <?php foreach($skills as $skill):
-            if ($prevCategory=='') $prevCategory = $skill->category;
-            elseif ($prevCategory!=$skill->category) {
-                echo '<li class="separator"></li>';
-                $prevCategory = $skill->category;
-            }
-
             $execCode = $validator->canExecute($skill);
 
             //Se muestra siempre que el bando, estado del jugador, estado del desayuno o talentos adquiridos no sean un requisito.
-            if ($execCode < 3 || $execCode == 8): ?>
+            if ($execCode < 3 || $execCode == 8):
+
+                //Coloco el separador, si toca
+                if ($prevCategory=='') $prevCategory = $skill->category;
+                elseif ($prevCategory!=$skill->category) {
+                    echo '<li class="separator"></li>';
+                    $prevCategory = $skill->category;
+                }
+                ?>
+
                 <li><?php
                     $class = 'skillImage';
                     if($execCode != 1) $class .= " grayScale";
@@ -79,9 +82,9 @@ $prevCategory = '';
 
                                     ?></dd>
                                 <dt>Probabilidad de Crítico:</dt>
-                                <dd><?php echo $skill->critic; ?></dd>
+                                <dd><?php echo Yii::app()->skill->criticValue($skill); ?></dd>
                                 <dt>Probabilidad de Pifia:</dt>
-                                <dd><?php echo $skill->fail; ?></dd>
+                                <dd><?php echo Yii::app()->skill->failValue($skill); ?></dd>
 
                                 <?php if($execCode == 1): ?>
 

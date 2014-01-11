@@ -14,7 +14,7 @@ class EventSingleton extends CApplicationComponent
 		if (!isset(Yii::app()->currentUser->groupId))
             return null;
 			
-		//Miro a ver qué bando es el perdedor de la guerra de famas (no vale para mucho pero...)
+		/*//Miro a ver qué bando es el perdedor de la guerra de famas (no vale para mucho pero...)
 		$famaSides = Yii::app()->usertools->calculateSideFames();
 		if ($famaSides['kafhe'] > $famaSides['achikhoria'])
 			$bandoPerdedor = 'achikhoria';
@@ -22,6 +22,8 @@ class EventSingleton extends CApplicationComponent
 			$bandoPerdedor = 'kafhe';
 		else
 			$bandoPerdedor = 'none';
+
+        Yii::log('Pierde el bando: '.$bandoPerdedor.'. Famas: '.print_r($famaSides,true), 'info');*/
 		
 		//Obtengo un array con las probabilidades
 		$probabilidades = Yii::app()->usertools->calculateUsersProbabilities();
@@ -101,7 +103,7 @@ class EventSingleton extends CApplicationComponent
 		if ($caller === null) return null;
         Yii::log('Llama: '.$caller, 'info');
 		
-		return array('side'=>$bandoPerdedor, 'userId'=>$caller);
+		return array('userId'=>$caller);
 	}
 
     /** Comprueba si un evento tiene gente alistada o no
@@ -424,25 +426,28 @@ class EventSingleton extends CApplicationComponent
             $finalteams['achikhoria'] = $teams['teamB'];
         } else {
             $bandoAnterior = Yii::app()->usertools->getPreviousSide(); //bando anterior del ex-libre
-			if ($bandoAnterior === null)
-				throw new CHttpException(400, 'Error al obtener el bando anterior del agente libre del evento '.Yii::app()->event->id.'.'); //Tiene que existir por narices si existe un agente libre
-
-            //Reparto los bandos dependiendo del agente libre
-            if(array_key_exists($exAgenteLibre->id, $teams['teamA'])) {
-                if($bandoAnterior == 'kafhe') {
-                    $finalteams['achikhoria'] = $teams['teamA'];
-                    $finalteams['kafhe'] = $teams['teamB'];
+			if ($bandoAnterior === null) {
+			    //No había evento antes así que asigno bandos al tuntún
+                $finalteams['kafhe'] = $teams['teamA'];
+                $finalteams['achikhoria'] = $teams['teamB'];
+			} else {
+                //Reparto los bandos dependiendo del agente libre
+                if(array_key_exists($exAgenteLibre->id, $teams['teamA'])) {
+                    if($bandoAnterior == 'kafhe') {
+                        $finalteams['achikhoria'] = $teams['teamA'];
+                        $finalteams['kafhe'] = $teams['teamB'];
+                    } else {
+                        $finalteams['achikhoria'] = $teams['teamB'];
+                        $finalteams['kafhe'] = $teams['teamA'];
+                    }
                 } else {
-                    $finalteams['achikhoria'] = $teams['teamB'];
-                    $finalteams['kafhe'] = $teams['teamA'];
-                }
-            } else {
-                if($bandoAnterior == 'kafhe') {
-                    $finalteams['achikhoria'] = $teams['teamB'];
-                    $finalteams['kafhe'] = $teams['teamA'];
-                } else {
-                    $finalteams['achikhoria'] = $teams['teamA'];
-                    $finalteams['kafhe'] = $teams['teamB'];
+                    if($bandoAnterior == 'kafhe') {
+                        $finalteams['achikhoria'] = $teams['teamB'];
+                        $finalteams['kafhe'] = $teams['teamA'];
+                    } else {
+                        $finalteams['achikhoria'] = $teams['teamA'];
+                        $finalteams['kafhe'] = $teams['teamB'];
+                    }
                 }
             }
         }
