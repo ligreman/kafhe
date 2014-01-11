@@ -10,8 +10,6 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 	    //Event
         $this->execute('ALTER TABLE event ADD fame_kafhe int(11) NULL DEFAULT NULL AFTER gungubos_kafhe;');
         $this->execute('ALTER TABLE event ADD fame_achikhoria int(11) NULL DEFAULT NULL AFTER gungubos_achikhoria;');
-        $this->execute('ALTER TABLE event ADD last_tueste_regeneration_timestamp timestamp NULL DEFAULT NULL AFTER status;');
-        $this->execute('ALTER TABLE event ADD last_gungubos_repopulate_timestamp timestamp NULL DEFAULT NULL AFTER status;');
         //$this->execute('ALTER TABLE event DROP COLUMN gungubos_population;');
         //$this->execute('ALTER TABLE event DROP COLUMN gungubos_kafhe;');
         //$this->execute('ALTER TABLE event DROP COLUMN gungubos_achikhoria;');
@@ -853,8 +851,6 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 
 	public function down()
 	{
-        $this->execute('ALTER TABLE event DROP COLUMN last_tueste_regeneration_timestamp;');
-        $this->execute('ALTER TABLE event DROP COLUMN last_gungubos_repopulate_timestamp;');
         $this->execute('ALTER TABLE event DROP COLUMN fame_kafhe;');
         $this->execute('ALTER TABLE event DROP COLUMN fame_achikhoria;');
         $this->execute('ALTER TABLE user DROP COLUMN fame;');

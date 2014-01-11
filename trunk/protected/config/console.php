@@ -24,7 +24,9 @@ return array(
 			'username' => 'kafhe',//#mysqlUsername
 			'password' => '',//#mysqlPassword
 			'charset' => 'utf8',
+            //#iniLog
             'enableParamLogging'=>true, //debug
+            //#finLog
 		),
 		
 		'log'=>array(
@@ -48,12 +50,14 @@ return array(
                     'logFile'=>date('Y-m-d').'-console-info.log',
                     'levels'=>'info',
                 ),
+                //#iniLog
                 array( //debug
                     'class'=>'CFileLogRoute',
                     'levels'=>'trace,log',
                     'categories' => 'system.db.CDbCommand',
                     'logFile' => 'db.log',
                 ),
+                //#finLog
             ),
 		),
 		
@@ -70,6 +74,7 @@ return array(
 		'tueste'=>array('class'=>'TuesteSingleton'),		
 		'config'=>array('class'=>'ConfigurationSingleton'),
         'skill'=>array('class'=>'SkillSingleton'),
+        'reward'=>array('class'=>'RewardSingleton'),
         //'mail'=>array('class'=>'MailSingleton'),
 	),
 	

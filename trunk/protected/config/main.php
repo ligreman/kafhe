@@ -94,7 +94,7 @@ return array(
 		'tueste'=>array('class'=>'TuesteSingleton'),
 		'skill'=>array('class'=>'SkillSingleton'),
 		'config'=>array('class'=>'ConfigurationSingleton'),
-		'reward'=>array('class'=>'RewardSingleton'),
+		//'reward'=>array('class'=>'RewardSingleton'),
 		'historySkill'=>array('class'=>'HistorySkillSingleton'),
         'mail'=>array('class'=>'MailSingleton'),
 
