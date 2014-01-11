@@ -75,39 +75,39 @@
 
 //0,10,20,30,40,50 * * * * root /PathToCommand/Command
 
+
+
+#Gumbudos Lifecycle, cada hora de lunes a viernes 10:01, 11:01...
+//1 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gumbudosLifecycle
+
+#Gungubos Lifecycle, cada hora de lunes a viernes 10:00, 11:00...
+//0 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gungubosLifecycle
+
+#Cron Pile cada 5 minutos a partir del minuto 4, 10:04, 10:09....
+//4-59/5 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron processCronPile
+
+#Muerte de gumbudos cada 5 minutos a partir del minuto 3
+//3-59/5 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gumbudosCheckMuerte
+
+#regenerar tueste cada 10 minutos a partir del minuto 3
+//3-59/10 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron regenerarTueste
+
+#Comprobar quemaduras cada 15 minutos a partir del minuto 2
+//2-59/15 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gungubosCheckQuemados
+
+#Reducir vida a gungubos por otras cosas (no tener criador, enfermedad...) cada hora 10:30, 11:30...
+//30 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gungubosReduceHealthExtra
+
+#Los viernes a las 10am (el servidor tiene otra hora) pone los eventos en Calma
+//0 9 * * 5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron eventosEnCalma
+
+#Los lunes a las 9 de la mañana pongo los eventos en Preparativos
+//0 8 * * 1 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron iniciarEventos
+
+#Todos los días a las 4 de la mañana hago backup de base de datos
+//0 3 * * * sh /home/kafhe/mysql_backup.sh
+
 */
-
-//Gumbudos Lifecycle, cada hora de lunes a viernes 10:01, 11:01...
-// 1 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gumbudosLifecycle
-
-//Gungubos Lifecycle, cada hora de lunes a viernes 10:00, 11:00...
-// 0 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gungubosLifecycle
-
-//Cron Pile cada 5 minutos a partir del minuto 4, 10:04, 10:09....
-// 4-59/5 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron processCronPile
-
-//Muerte de gumbudos cada 5 minutos a partir del minuto 3
-// 3-59/5 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron muerteGumbudos
-
-//regenerar tueste cada 10 minutos a partir del minuto 3
-// 3-59/10 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron regenerarTueste
-
-//Comprobar quemaduras cada 15 minutos a partir del minuto 2
-// 2-59/15 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron checkQuemados
-
-//Reducir vida a gungubos por otras cosas (no tener criador, enfermedad...) cada hora 10:30, 11:30...
-// 30 * * * 1-5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron gungubosReduceHealthExtra
-
-// #Los viernes a las 10am (el servidor tiene otra hora) pone los eventos en Calma
-// 0 9 * * 5 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron eventosEnCalma
-
-// #Los lunes a las 9 de la mañana pongo los eventos en Preparativos
-// 0 8 * * 1 /usr/local/bin/php /home/kafhe/kafhe/protected/yiic cron iniciarEventos
-
-// #Todos los días a las 4 de la mañana hago backup de base de datos
-// 0 3 * * * sh /home/kafhe/mysql_backup.sh
-
-
 
 class CronCommand extends CConsoleCommand {
     public $global_param = true;
