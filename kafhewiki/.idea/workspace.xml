@@ -25,19 +25,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Kafhe.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Kafhe.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/skins/Kafhe.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="28" selection-start="2224" selection-end="2224" vertical-scroll-proportion="0.0">
+            <state line="80" column="28" selection-start="2224" selection-end="2224" vertical-scroll-proportion="0.12515338">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LocalSettings.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="LocalSettings.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LocalSettings.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="0" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.321513">
+            <state line="138" column="25" selection-start="4859" selection-end="4859" vertical-scroll-proportion="-24.692308">
               <folding />
             </state>
           </provider>
@@ -46,7 +46,7 @@
       <file leaf-file-name="MonoBook.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/skins/MonoBook.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="250" column="34" selection-start="7328" selection-end="7328" vertical-scroll-proportion="0.0">
+            <state line="250" column="34" selection-start="7328" selection-end="7328" vertical-scroll-proportion="-0.65384614">
               <folding />
             </state>
           </provider>
@@ -62,16 +62,16 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/skins/Kafhe.php" />
         <option value="$PROJECT_DIR$/LocalSettings.php" />
+        <option value="$PROJECT_DIR$/skins/Kafhe.php" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="1" />
+    <option name="y" value="1" />
+    <option name="width" value="1918" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -99,6 +99,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -119,7 +120,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -127,8 +127,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../kafhe" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <list size="0" />
@@ -143,14 +143,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1" y="1" width="1918" height="1038" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25773746" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26239225" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -228,6 +228,27 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/skins/Kafhe.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LocalSettings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="0" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skins/MonoBook.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="250" column="34" selection-start="7328" selection-end="7328" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skins/Kafhe.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state line="80" column="28" selection-start="2224" selection-end="2224" vertical-scroll-proportion="0.0">
           <folding />
         </state>
@@ -275,21 +296,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/skins/MonoBook.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="250" column="34" selection-start="7328" selection-end="7328" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skins/Kafhe.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="28" selection-start="2224" selection-end="2224" vertical-scroll-proportion="0.0">
+        <state line="250" column="34" selection-start="7328" selection-end="7328" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LocalSettings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.321513">
+        <state line="138" column="25" selection-start="4859" selection-end="4859" vertical-scroll-proportion="-24.692308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skins/Kafhe.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="28" selection-start="2224" selection-end="2224" vertical-scroll-proportion="0.12515338">
           <folding />
         </state>
       </provider>

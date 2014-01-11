@@ -81,7 +81,10 @@ class KafheTemplate extends MonoBookTemplate {
                     <?php //print_r($this->data);?>
 				  	<?php if(isset($this->data['personal_urls']['anonlogin'])){?>
 			  		<?php echo $this->makeListItem('anonlogin', $this->data['personal_urls']['anonlogin']);?>
-			  	<?php }?>
+			  	    <?php }?>
+                    <?php if(isset($this->data['personal_urls']['login'])){?>
+                        <?php echo $this->makeListItem('login', $this->data['personal_urls']['login']);?>
+                    <?php }?>
 			  	<?php if(isset($this->data['personal_urls']['logout'])){?>
 			  		<?php echo $this->makeListItem('logout', $this->data['personal_urls']['logout']);?>
 			  	<?php }?>

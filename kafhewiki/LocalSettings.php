@@ -136,7 +136,7 @@ $wgResourceLoaderMaxQueryLength = -1;
 # The following permissions were set based on your choice in the installer
 $wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['edit'] = false;
-$wgGroupPermissions['Admin']['edit'] = true;
+$wgGroupPermissions['user']['edit'] = true;
 
 
 # End of automatically generated settings.
