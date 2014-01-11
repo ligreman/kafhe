@@ -672,7 +672,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
 
         if ($objetivo===null)
             $objetivo = Yii::app()->usertools->randomUser($attacker->group_id, $bando_opuesto, array($attacker->id) );
-$objetivo = User::model()->findByPk(5); ///TODO quitar
+//$objetivo = User::model()->findByPk(5); ///TODO quitar
         return $objetivo;
     }
 
