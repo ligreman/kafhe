@@ -52,7 +52,7 @@ class RewardSingleton extends CApplicationComponent
 			//Creo notificación para él solo
 			$notiA = new Notification;			
 			$notiA->recipient_final = $user->id;
-			$notiA->type = 'system';
+			$notiA->type = 'omelettus';
 			$notiA->message = $result;
 			if (!$notiA->save())
 				throw new CHttpException(400, 'Error al guardar la notificación de dar recompensa '.$reward.' al usuario '.$user->username.' en evento '.$eventId.'.');
@@ -75,7 +75,7 @@ class RewardSingleton extends CApplicationComponent
 		if (!$mod->save())
 			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwMoreCritic del usuario '.$user->username.' en evento '.$eventId.'.');
 			
-		$msg = 'Omelettus te ha concedido un aumento del '.$mod->value.'% al crítico durante esta nueva batalla, como recompensa porque tu bando ganó la batalla anterior.';
+		$msg = 'Por haber luchado con honor y bravura en el anterior evento, te concedo un aumento del '.$mod->value.'% al crítico durante esta nueva batalla.';
 		return $msg;
 	}
 	
@@ -93,7 +93,7 @@ class RewardSingleton extends CApplicationComponent
 		if (!$mod->save())
 			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwLessFail del usuario '.$user->username.' en evento '.$eventId.'.');
 			
-		$msg = 'Omelettus te ha concedido una disminución del '.$mod->value.'% a la pifia durante esta nueva batalla, como recompensa porque tu bando ganó la batalla anterior.';
+		$msg = 'Por haber luchado con honor y bravura en el anterior evento, te concedo una disminución del '.$mod->value.'% a la pifia durante esta nueva batalla.';
 		return $msg;
 	}
 	
@@ -111,7 +111,7 @@ class RewardSingleton extends CApplicationComponent
 		if (!$mod->save())
 			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwMinTueste del usuario '.$user->username.' en evento '.$eventId.'.');
 			
-		$msg = 'Omelettus te ha concedido que durante la próxima batalla tu tueste mínimo no bajará de '.$mod->value.'puntos, como recompensa porque tu bando ganó la batalla anterior.';
+		$msg = 'Por haber luchado con honor y bravura en el anterior evento, te concedo que durante la próxima batalla tu tueste mínimo no bajará de '.$mod->value.'puntos.';
 		return $msg;
 	}
 	
@@ -129,7 +129,7 @@ class RewardSingleton extends CApplicationComponent
 		if (!$mod->save())
 			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwMoreRegen del usuario '.$user->username.' en evento '.$eventId.'.');
 			
-		$msg = 'Omelettus te ha concedido un aumento del '.$mod->value.'% a tu ritmo de regeneración de tueste durante esta nueva batalla, como recompensa porque tu bando ganó la batalla anterior.';
+		$msg = 'Por haber luchado con honor y bravura en el anterior evento, te concedo un aumento del '.$mod->value.'% a tu ritmo de regeneración de tueste durante esta nueva batalla.';
 		return $msg;
 	}
 }
