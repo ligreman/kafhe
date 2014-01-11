@@ -60,9 +60,9 @@
                             $duration_type = $modifier->duration_type;
                         }
 
-                        $title = ucfirst($modifier->keyword).': '.$duration.' '.$duration_type;
+                        $title = Yii::app()->params->modifierNames[$modifier->keyword].': '.$duration.' '.$duration_type;
 
-                        if($modifier->value != null) $title .= ' ('.$modifier->value.')';
+                        if($modifier->value != null) $title .= ' (valor: '.$modifier->value.')';
 
                         echo CHtml::image(Yii::app()->baseUrl."/images/modifiers/".$modifier->keyword.".png",$modifier->keyword,array('class' => 'modifier','title' => $title));
                     }

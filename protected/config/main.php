@@ -307,5 +307,7 @@ return array(
 		'traitNames'=>array('acorazado'=>'Acorazado', 'sanguinario'=>'Sanguinario', 'consumeCadaveres'=>'Consume cadáveres', 'canibal'=>'Caníbal', 'incendiar'=>'Incendiar', 'colera'=>'Cólera', 'zombificar'=>'Zombificar', 'hiperactivo'=>'Hiperactivo'),
 		//'conditionNames'=>array('quemadura'=>'Quemadura'),
         'trampaNames'=>array('trampaTueste'=>'Trampa de Tueste', 'trampaConfusion'=>'Trampa de Confusión', 'trampaPifia'=>'Trampa de Pifia'),
+
+        'modifierNames'=>array('hidratado'=>'Hidratado', 'disimulando'=>'Disimulando', 'impersonando'=>'Impersonando', 'desecado'=>'Desecado', 'trampaPifia'=>'Trampa de pifia', 'trampaTueste'=>'Trampa de tueste', 'trampaConfusion'=>'Trampa de confusión', 'senuelo'=>'Marcado con señuelo', 'rwMoreCritic'=>'Recompensa de más crítico', 'rwLessFail'=>'Recompensa de menos pifia', 'rwMinTueste'=>'Recompensa de mínimo de tueste', 'rwMoreRegen'=>'Recompensa de mayor regeneración de tueste'),
 	),
 );
