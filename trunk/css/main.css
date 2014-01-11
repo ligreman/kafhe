@@ -571,11 +571,14 @@ label.title{
     color: #ffffff;
 }
 
+#btnBattle {
+    margin-top: 15px;
+}
 #btnBattle a, #btnBattle a:focus{
     border-style: solid;
     border-radius: 3px;
     border-width: 3px 0 3px 0;
-    padding: .7em 1em;
+    padding: .5em 1em;
     background-color: #e0e0e0;
     border-color: transparent transparent #c5c5c5;
     cursor: pointer;
