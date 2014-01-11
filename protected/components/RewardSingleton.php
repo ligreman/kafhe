@@ -63,12 +63,12 @@ class RewardSingleton extends CApplicationComponent
 	
 	private function rwMoreCritic($user, $eventId) {
 		//Creo un modificador para el usuario
-		$mod = new Modidier;
+		$mod = new Modifier;
 		$mod->event_id = $eventId;
 		$mod->caster_id = $user->id;
 		$mod->target_final = $user->id;		
 		$mod->keyword = Yii::app()->params->rwMoreCritic;
-		$mod->value = intval(Yii::app()->config->getParam('rewardMoreCritic'));
+		$mod->value = Yii::app()->config->getParam('rewardMoreCritic');
 		$mod->duration = 1;
 		$mod->duration_type = 'evento'; //Todo el desayuno
 		
@@ -81,12 +81,12 @@ class RewardSingleton extends CApplicationComponent
 	
 	private function rwLessFail($user, $eventId) {
 		//Creo un modificador para el usuario
-		$mod = new Modidier;
+		$mod = new Modifier;
 		$mod->event_id = $eventId;
 		$mod->caster_id = $user->id;
 		$mod->target_final = $user->id;		
 		$mod->keyword = Yii::app()->params->rwLessFail;
-		$mod->value = intval(Yii::app()->config->getParam('rewardLessFail'));
+		$mod->value = Yii::app()->config->getParam('rewardLessFail');
 		$mod->duration = 1;
 		$mod->duration_type = 'evento'; //Todo el desayuno
 		
@@ -99,12 +99,12 @@ class RewardSingleton extends CApplicationComponent
 	
 	private function rwMinTueste($user, $eventId) {
 		//Creo un modificador para el usuario
-		$mod = new Modidier;
+		$mod = new Modifier;
 		$mod->event_id = $eventId;
 		$mod->caster_id = $user->id;
 		$mod->target_final = $user->id;		
 		$mod->keyword = Yii::app()->params->rwMinTueste;
-		$mod->value = intval(Yii::app()->config->getParam('rewardMinTueste'));
+		$mod->value = Yii::app()->config->getParam('rewardMinTueste');
 		$mod->duration = 1;
 		$mod->duration_type = 'evento'; //Todo el desayuno
 		
@@ -117,12 +117,12 @@ class RewardSingleton extends CApplicationComponent
 	
 	private function rwMoreRegen($user, $eventId) {
 		//Creo un modificador para el usuario
-		$mod = new Modidier;
+		$mod = new Modifier;
 		$mod->event_id = $eventId;
 		$mod->caster_id = $user->id;
 		$mod->target_final = $user->id;		
 		$mod->keyword = Yii::app()->params->rwMoreRegen;
-		$mod->value = intval(Yii::app()->config->getParam('rewardMoreRegen'));
+		$mod->value = Yii::app()->config->getParam('rewardMoreRegen');
 		$mod->duration = 1;
 		$mod->duration_type = 'evento'; //Todo el desayuno
 		

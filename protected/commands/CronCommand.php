@@ -276,7 +276,7 @@ class CronCommand extends CConsoleCommand {
                 //Salvo los gungubos nuevos
                 Yii::app()->db->createCommand('INSERT INTO gungubo (`event_id`, `owner_id`, `health`, `location`, `condition_status`, `birthdate`) VALUES '.implode(',', $gungubosNuevosSQL).';')->query();
 
-                $event->last_gungubos_repopulate_timestamp = date('Y-m-d H:i:s'); //Actualizo la hora de repoblación
+                //$event->last_gungubos_repopulate_timestamp = date('Y-m-d H:i:s'); //Actualizo la hora de repoblación
                 if (!$event->save())
                     $this->logCron('** ERROR al guardar el evento ('.$event->id.') repoblando gungubos', 'info');
 
@@ -468,7 +468,7 @@ class CronCommand extends CConsoleCommand {
 
                 //Creo la notificación
                 $nota = new Notification;
-                $nota->message = 'Valientes y valientas, habéis luchado con honor y valor. Descansad ahora a la espera de mi veredicto del día de mañana.';
+                $nota->message = 'Valientes y valientas, habéis luchado con honor y valor. Descansad ahora a la espera de mi veredicto sobre quién debe llamar.';
                 $nota->type = 'omelettus';
                 if (!$nota->save())
                     $this->logCron('** ERROR al guardar la notificación de fin de batalla del evento ('.$event->id.').', 'info');
@@ -554,7 +554,7 @@ class CronCommand extends CConsoleCommand {
                     $result = Yii::app()->gumbudos->gumbudoAsedioAttack($cronjob->params); //En params va el id del gumbudo que ataca
                     break;
                 case 'darRecompensas':
-                    $result = Yii::app()->evento->reward->grantRewards($cronjob->params);
+                    $result = Yii::app()->reward->grantRewards($cronjob->params);
                     break;
             }
 			
