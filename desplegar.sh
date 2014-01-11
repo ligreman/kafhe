@@ -33,7 +33,7 @@ if [ -f "$1" ]
       #MySQL
         sed -i 's/mysql:host=localhost;dbname=kafhe_refactor/mysql:host=localhost;dbname=kafhe/g' kafhe/protected/config/*.php
         #sed -i "s/'kafhe',\/\/#mysqlUsername/'kafhe',\/\/#mysqlUsername/g" kafhe/protected/config/*.php
-        sed -i "s/'',\/\/#mysqlPassword/'nhKF57LsMy',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
+        sed -i "s/'',\/\/#mysqlPassword/'',\/\/#mysqlPassword/g" kafhe/protected/config/*.php
 
       #Log
         sed -i 's/\/\/#iniLog/\/*\/\/#iniLog/g' kafhe/protected/config/*.php
