@@ -516,9 +516,9 @@ class CronCommand extends CConsoleCommand {
     public function actionProcessCronPile()
     {		
         $pila = Cronpile::model()->findAll(array('order'=>'due_date ASC'));
-		//$now = time();
-		$dateNow = Yii::app()->event->getCurrentDate();
-		$now = strtotime($dateNow);
+		$now = time();
+		//$dateNow = Yii::app()->event->getCurrentDate();
+		//$now = strtotime($dateNow);
 		$init_time = time();
 
         foreach($pila as $cronjob) {

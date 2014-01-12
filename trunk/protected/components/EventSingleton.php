@@ -392,6 +392,25 @@ class EventSingleton extends CApplicationComponent
         return $date;
     }
 
+    public function getCurrentDateTime() {
+        $date = $this->getCurrentDate();
+        return date_create($date);
+    }
+
+    /** Convierte la fecha del uso horario en que esté a GMT+1
+     * @param $fecha Texto con el timestamp de la fecha
+     */
+    public function convertDate($fecha, $returnDateTime=false) {
+        $actual = date_create($fecha);
+        date_timezone_set($actual, timezone_open('Europe/Madrid'));
+        $date = date_format($actual, 'Y-m-d H:i:s');
+
+        if ($returnDateTime)
+            return $actual;
+        else
+            return $date;
+    }
+
 
     /** Distribuye en bandos a los usuarios
      * @param $usuarios $usuarios[$usuario->id] = $usuario;
