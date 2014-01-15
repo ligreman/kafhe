@@ -52,10 +52,11 @@ function resizeNavBar(){
         corral = $('#corral_notifications'),
         secondary_nav = $('#secondary_nav');
 
-    if(corral.innerHeight() > muro.innerHeight()){
+    if(corral.height() > muro.innerHeight()){
         secondary_nav.height(corral.innerHeight());
         //muro.height(corral.innerHeight());
     }else{
+        muro.height(main.innerHeight());
         secondary_nav.height(muro.innerHeight());
         corral.height(muro.innerHeight());
     }

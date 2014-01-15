@@ -208,7 +208,6 @@ a, a:hover{
     width: 80%;
     padding-top: 6.5em;
     margin-left: 20%;
-    padding-bottom: 5em;
 }
 
 #main.full{
@@ -619,6 +618,10 @@ label.title{
 
 .clear{
     clear:both;
+}
+
+p.clear{
+    margin: 2em 0;
 }
 
 #submenuBlock{
@@ -1550,6 +1553,7 @@ img.grayScale{
 
 #battleResults{
     clear:both;
+    padding-bottom: 7em;
 }
 
 #battleResults h2{
@@ -2179,4 +2183,17 @@ article.hb .hbhd_result{
 }
 #misGumbudos table td .tooltip {
     font-style: normal;
+}
+
+ul.individualOrder {
+    list-style: disc;
+    padding-left: 4em;
+}
+
+h2.pedidoIndividual {
+    font-weight: bold;
+    padding: 1em;
+    font-size: 1.2em;
+    color: #363636;
+    clear: both;
 }
