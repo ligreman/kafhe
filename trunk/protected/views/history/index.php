@@ -133,6 +133,24 @@
             </div>
           <?php endif; //orders ?>
         <?php endif; //event ?>
+        <div class="clear"></div>
+        <h2>Pedidos individuales</h2>
+        <?php if (count($individual_orders) > 0): ?>
+            <?php
+                $bebidas = $orders['bebidas'];
+                $comidas = $orders['comidas'];
+            ?>
+            <ul class="individualOrder">
+            <?php foreach($individual_orders as $order): ?>
+                <li>
+                    <strong><?php  echo Yii::app()->usertools->getAlias($order->user_id);?></strong>: 
+                    <em><?php  echo $bebidas[$order->drink_id];?></em> y 
+                    <em><?php  echo $comidas[$order->meal_id];?></em>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+
         <p class="clear"><em>Más datos próximamente.</em></p>
 
     </div>
