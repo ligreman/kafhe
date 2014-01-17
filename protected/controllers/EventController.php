@@ -102,6 +102,7 @@ class EventController extends Controller
 		$sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibertador.' );';
         $users = Yii::app()->db->createCommand($sql)->queryAll();
         if (count($users)>0) {
+            $emails = array();
             foreach($users as $user) {
 				///TODO eliminar esto: le doy ptos relance a todos los usuarios
                     $us = User::model()->findByPk($user['id']);
@@ -112,13 +113,15 @@ class EventController extends Controller
                     $emails[] = $user['email'];
             }
 
-            $sent = Yii::app()->mail->sendEmail(array(
-                'to'=>$emails,
-                'subject'=>'¡Comienza la batalla!',
-                'body'=>'El Gran Omelettus te informa de que se ha iniciado la batalla.'
-            ));
-            if ($sent !== true)
-                throw new CHttpException(400, $sent);
+            if (count($emails)>0) {
+                $sent = Yii::app()->mail->sendEmail(array(
+                    'to'=>$emails,
+                    'subject'=>'¡Comienza la batalla!',
+                    'body'=>'El Gran Omelettus te informa de que se ha iniciado la batalla.'
+                ));
+                if ($sent !== true)
+                    throw new CHttpException(400, $sent);
+            }
         }
 
 
