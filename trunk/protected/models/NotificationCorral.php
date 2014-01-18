@@ -38,9 +38,8 @@ class NotificationCorral extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('message', 'required'),
+			array('message, timestamp', 'required'),
 			array('event_id, user_id', 'numerical', 'integerOnly'=>true),
-			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, user_id, message, timestamp', 'safe', 'on'=>'search'),

@@ -106,6 +106,7 @@ class UserToolsSingleton extends CApplicationComponent
             $nota->recipient_final = $user->id;
             $nota->message = '¡Felicidades! Has aumentado tu conocimiento en los talentos y artes Omelettianas. Ganas un azucarillo.'; //Mensaje para el muro
             $nota->type = 'system';
+            $nota->timestamp = Yii::app()->event->getCurrentDate();
 
             if (!$nota->save())
                 throw new CHttpException(400, 'Error al guardar una notificación por subir nivel al usuario ('.$user->id.').');

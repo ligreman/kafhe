@@ -189,7 +189,7 @@ endif;
 
 
         //Datos
-        $rip = Yii::app()->event->convertDate($gumbudo->ripdate);
+        $rip = $gumbudo->ripdate;
         echo '<td>'.date('H:i \d\e\l d/m', strtotime($rip)).'</td>';
         echo '<td>'.$trait.'</td>';
         echo '<td class="otros">'.$otro.'</td>';

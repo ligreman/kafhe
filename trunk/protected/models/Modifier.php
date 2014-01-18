@@ -45,12 +45,11 @@ class Modifier extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, caster_id, target_final, keyword', 'required'),
+			array('event_id, caster_id, target_final, keyword, timestamp', 'required'),
 			array('event_id, caster_id, skill_id, item_id, duration, hidden', 'numerical', 'integerOnly'=>true),
 			array('target_final, keyword', 'length', 'max'=>50),
 			array('value', 'length', 'max'=>15),
 			array('duration_type', 'length', 'max'=>6),
-			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, caster_id, target_final, skill_id, item_id, keyword, value, duration, duration_type, hidden, timestamp', 'safe', 'on'=>'search'),

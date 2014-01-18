@@ -51,7 +51,7 @@
                     foreach($modifiers as $modifier) {
                         if($modifier->duration_type=='horas') {
                             $duration = $modifier->duration * 60 * 60; //en segundos
-                            $duration = (strtotime($modifier->timestamp) + $duration) - time();
+                            $duration = (strtotime($modifier->timestamp) + $duration) - Yii::app()->event->getCurrentTime();
                           //$duration = gmdate("H:i:s", $duration);
                           $duration = str_pad(floor($duration/3600), 2, '0', STR_PAD_LEFT).':'.str_pad(($duration/60)%60, 2, '0', STR_PAD_LEFT).':'.str_pad($duration%60, 2, '0', STR_PAD_LEFT);
                             $duration_type = $modifier->duration_type;

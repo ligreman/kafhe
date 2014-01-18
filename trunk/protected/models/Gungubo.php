@@ -45,12 +45,11 @@ class Gungubo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, owner_id, health', 'required'),
+			array('event_id, owner_id, health, birthdate', 'required'),
 			array('event_id, owner_id, attacker_id, health, trait_value, condition_value', 'numerical', 'integerOnly'=>true),
 			array('side', 'length', 'max'=>10),
 			array('location', 'length', 'max'=>20),
 			array('trait, condition_status', 'length', 'max'=>50),
-			array('birthdate', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, owner_id, attacker_id, side, health, location, trait, trait_value, condition_status, condition_value, birthdate', 'safe', 'on'=>'search'),

@@ -43,12 +43,11 @@ class Gumbudo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, owner_id, class', 'required'),
+			array('event_id, owner_id, class, ripdate', 'required'),
 			array('event_id, owner_id, actions, trait_value', 'numerical', 'integerOnly'=>true),
 			array('side', 'length', 'max'=>10),
 			array('class', 'length', 'max'=>20),
 			array('trait, weapon', 'length', 'max'=>50),
-			array('ripdate', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, owner_id, side, class, actions, trait, trait_value, weapon, ripdate', 'safe', 'on'=>'search'),
