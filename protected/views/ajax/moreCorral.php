@@ -2,11 +2,12 @@
     $nombres_tiempo=array('día','hora','minuto','segundo');
     $pattern = '/:+([a-zA-Z]+):+/i';
     foreach ($notifications as $key => $notif): ?>
-    <article data-rel="<?php echo $notif->timestamp; ?>">
+    <article data-rel="<?php echo Yii::app()->event->getCurrentDate($notif->timestamp); ?>">
             <?php
                     //Calculamos el tiempo que hace
-                    $fecha_noti = date_create($notif->timestamp);
-                    $intervalo = date_diff(date_create(), $fecha_noti);
+                    //$fecha_noti = date_create($notif->timestamp);
+                    $fecha_noti = Yii::app()->event->getCurrentDateTime($notif->timestamp);
+                    $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
                     $i=0;

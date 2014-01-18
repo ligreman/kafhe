@@ -41,11 +41,11 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE skill CHANGE `description` `description` TEXT NOT NULL;');
         $this->execute('ALTER TABLE modifier CHANGE `value` `value` VARCHAR(15);');
 
-        $this->execute('ALTER TABLE enrollment CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
-        $this->execute('ALTER TABLE history_skill_execution CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
-        $this->execute('ALTER TABLE modifier CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
-        $this->execute('ALTER TABLE notification CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
-        $this->execute('ALTER TABLE notification_corral CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
+        $this->execute('ALTER TABLE enrollment CHANGE `timestamp` `timestamp` timestamp NULL DEFAULT NULL;');
+        $this->execute('ALTER TABLE history_skill_execution CHANGE `timestamp` `timestamp` timestamp NULL DEFAULT NULL;');
+        $this->execute('ALTER TABLE modifier CHANGE `timestamp` `timestamp` timestamp NULL DEFAULT NULL;');
+        $this->execute('ALTER TABLE notification CHANGE `timestamp` `timestamp` timestamp NULL DEFAULT NULL;');
+        $this->execute('ALTER TABLE notification_corral CHANGE `timestamp` `timestamp` timestamp NULL DEFAULT NULL;');
 
         // OTEAR
         $this->insert('skill', array(
@@ -445,7 +445,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 		//CONVERSIÓN DIVINA
         $this->insert('skill', array(
             'name'  =>  'Conversión divina',                         // Nombre de la habilidad
-            'description'  =>  'Convierte a todos los Gumbudos Asaltantes activos y pasas a controlarlos.',                  // Descripción de la habilidad
+            'description'  =>  'Convierte a todos los Gumbudos Asaltantes activos y pasas a controlarlos.<br />Otorga puntos de fama por Gumbudo convertido.',                  // Descripción de la habilidad
             'category'  =>  'ancestral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'conversionDivina',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -483,7 +483,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 		//APOCALIPSIS ZOMBIE
         $this->insert('skill', array(
             'name'  =>  'Apocalipsis Zombie',                         // Nombre de la habilidad
-            'description'  =>  'Convierte en Gungubos Zombie cada cadáver de los cementerios del resto de jugadores enemigos, con un 25% de probabilidades cada uno. Los zombies convertidos atacarán por sorpresa a su propio corral saltándose cualquier defensa.',                  // Descripción de la habilidad
+            'description'  =>  'Convierte en Gungubos Zombie cada cadáver de los cementerios del resto de jugadores enemigos, con un 25% de probabilidades cada uno. Los zombies convertidos atacarán por sorpresa a su propio corral saltándose cualquier defensa.<br />Otorga puntos de fama por corral atacado.',                  // Descripción de la habilidad
             'category'  =>  'ancestral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'apocalipsisZombie',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -522,7 +522,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         // GUMBUDO ASALTANTE
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Asaltante',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Asaltante.',                  // Descripción de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Asaltante.<br />Otorga puntos de fama por cada ataque exitoso. Pierdes fama en caso de derrota en un ataque.',                  // Descripción de la habilidad
             'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoAsaltante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -560,7 +560,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         // GUNBUDO GUARDIAN
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Guardián',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Guardián.',                  // Descripción de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Guardián.<br />Otorga puntos de fama cada vez que defienda con éxito el corral. Pierdes fama en caso de derrota en una defensa.',                  // Descripción de la habilidad
             'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoGuardian',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -598,7 +598,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         // GUNBUDO CRIADOR
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Criador',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Criador.',                  // Descripción de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Criador.<br />Otorga puntos de fama cada vez que cuida a los Gungubos.',                  // Descripción de la habilidad
             'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoCriador',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -636,7 +636,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 		// GUNBUDO NIGROMANTE
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Nigromante',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Nigromante.',                  // Descripción de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Nigromante.<br />Otorga puntos de fama al crear zombies en tu cementerio y al convertirlos en los corrales enemigos.',                  // Descripción de la habilidad
             'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoNigromante',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -674,7 +674,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         // GUNBUDO PESTILENTE
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Pestilente',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Pestilente.',                  // Descripción de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Pestilente.<br />Otorga puntos de fama por cada corral infectado.',                  // Descripción de la habilidad
             'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoPestilente',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -712,7 +712,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 		// GUNBUDO ARTIFICIERO
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Artificiero',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Artificiero.',                  // Descripción de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo Artificiero.<br />Otorga puntos de fama al matar Gungubos en los corrales enemigos.',                  // Descripción de la habilidad
             'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoArtificiero',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos
@@ -750,7 +750,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         // GUNBUDO de ASEDIO
         $this->insert('skill', array(
             'name'  =>  'Gumbudo de Asedio',                         // Nombre de la habilidad
-            'description'  =>  'Evoluciona un Gungubo en un Gumbudo de Asedio.',                  // Descripción de la habilidad
+            'description'  =>  'Evoluciona un Gungubo en un Gumbudo de Asedio.<br />Otorga puntos de fama al quemar Gungubos en corrales enemigos. Pierdes un punto de fama en cada ataque.',                  // Descripción de la habilidad
             'category'  =>  'corral',                     // Categoría. Puede ser: gungubos, batalla, relanzamiento, ancestral
             'type'  =>  'utilidad',                         // Tipo. Puede ser: ofensiva, mejora, utilidad
             'keyword'  =>  'gumbudoAsedio',                      // Palabra clave para reconocer la habilidad programáticamente. Formato: usar el nombre de la habilidad, todo junto sin espacios y "camelcase" salvo primera palabra. Ej: de Cazar gungubos -> cazarGugubos

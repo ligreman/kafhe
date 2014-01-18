@@ -12,7 +12,7 @@ if($notifications != null):
 ?>
 <?php $last_type = trim($type);?>
     <?php foreach($notifications as $notification):?>
-        <article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
+        <article data-rel="<?php echo Yii::app()->event->getCurrentDate($notification->timestamp); ?>" class="notification <?php echo $notification->type;?> <?php
             if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
                 echo 'first';
                 $last_type = $notification->type;
@@ -28,8 +28,9 @@ if($notifications != null):
             <h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
             <?php
                 //Calculamos el tiempo que hace
-                $fecha_noti = date_create($notification->timestamp);
-                $intervalo = date_diff(date_create(), $fecha_noti);
+                //$fecha_noti = date_create($notification->timestamp);
+                $fecha_noti = Yii::app()->event->getCurrentDateTime($notification->timestamp);
+                $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                 $tiempo = $intervalo->format("%d,%h,%i,%s");
                 $t = explode(',',$tiempo);
                 $i=0;
