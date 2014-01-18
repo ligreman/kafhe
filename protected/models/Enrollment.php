@@ -40,9 +40,8 @@ class Enrollment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, event_id', 'required'),
+			array('user_id, event_id, timestamp', 'required'),
 			array('user_id, event_id, meal_id, drink_id, ito', 'numerical', 'integerOnly'=>true),
-			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, user_id, event_id, meal_id, drink_id, ito, timestamp', 'safe', 'on'=>'search'),

@@ -40,11 +40,10 @@ class HistorySkillExecution extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, skill_id, caster_id, target_final, result', 'required'),
+			array('event_id, skill_id, caster_id, target_final, result, timestamp', 'required'),
 			array('event_id, skill_id, caster_id', 'numerical', 'integerOnly'=>true),
 			array('target_final', 'length', 'max'=>50),
 			array('result', 'length', 'max'=>6),
-			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, skill_id, caster_id, target_final, result, timestamp', 'safe', 'on'=>'search'),

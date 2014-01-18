@@ -7,6 +7,12 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 	    //Tablas obsoletas
         //$this->dropTable('rank');
 
+        $this->execute('TRUNCATE TABLE skill;');
+        $this->execute("TRUNCATE TABLE configuration;");
+
+        //NEW
+        $this->executeFile('data/kafhe_3_4.sql');
+
 	    //Event
         $this->execute('ALTER TABLE event ADD fame_kafhe int(11) NULL DEFAULT NULL AFTER gungubos_kafhe;');
         $this->execute('ALTER TABLE event ADD fame_achikhoria int(11) NULL DEFAULT NULL AFTER gungubos_achikhoria;');
@@ -35,8 +41,11 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE skill CHANGE `description` `description` TEXT NOT NULL;');
         $this->execute('ALTER TABLE modifier CHANGE `value` `value` VARCHAR(15);');
 
-        $this->execute('TRUNCATE TABLE skill;');
-        $this->execute("TRUNCATE TABLE configuration;");
+        $this->execute('ALTER TABLE enrollment CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
+        $this->execute('ALTER TABLE history_skill_execution CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
+        $this->execute('ALTER TABLE modifier CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
+        $this->execute('ALTER TABLE notification CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
+        $this->execute('ALTER TABLE notification_corral CHANGE `timestamp` `timestamp` timestamp NOT NULL;');
 
         // OTEAR
         $this->insert('skill', array(
@@ -845,8 +854,6 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'require_talent_id'  =>  NULL      // ID del talento requerido
         ));
 
-	    //NEW
-        $this->executeFile('data/kafhe_3_4.sql');
 	}
 
 	public function down()

@@ -229,7 +229,7 @@ class EventSingleton extends CApplicationComponent
                     $newR->user_id = $user->id;
                     $newR->group_id = $user->group_id;
                     $newR->rank = $user->rank;
-                    $newR->date = date('Y-m-d');
+                    $newR->date = $this->getCurrentDate('now', 'Y-m-d');
 
                     $ranking[] = $newR;
                 }
@@ -244,7 +244,7 @@ class EventSingleton extends CApplicationComponent
                     $newR->user_id = $user->id;
                     $newR->group_id = $user->group_id;
                     $newR->rank = $user->rank;
-                    $newR->date = date('Y-m-d');
+                    $newR->date = $this->getCurrentDate('now', 'Y-m-d');
 
                     //Miro a ver si estoy en el ranking y con qué rango
                     for ($i=0; $i<count($ranking); $i++) {
@@ -256,7 +256,7 @@ class EventSingleton extends CApplicationComponent
                             if($ranking[$i]->rank > $user->rank) {
                                 //No hago nada
                             } elseif($ranking[$i]->rank > $user->rank) {
-                                $ranking[$i]->date = date('Y-m-d'); //Actualizo la fecha simplemente
+                                $ranking[$i]->date = $this->getCurrentDate('now', 'Y-m-d'); //Actualizo la fecha simplemente
                             } else {
                                 //Tengo que reoganizarme y colocarme en el ranking de nuevo
                                 $reorganizarme = true;
@@ -376,31 +376,39 @@ class EventSingleton extends CApplicationComponent
 		return true;
 	}*/
 
-
-    /** Obtiene la fecha y hora actual en formato GMT+1 Europa/Madrid
-     * @param string $format Formato para la fecha de salida
-     * @return string La fecha GMT+1 (con horario verano) en el formato indicado
+    /** Devuelve la fecha actual formateada
+     * @param string $fecha Si se indica una fecha, se convierte a GMT+1
+     * @param string $format Formato de salida de la fecha
+     * @return bool|string
      */
-    public function getCurrentDate($format='Y-m-d H:i:s')
-    {
-        $actual = date_default_timezone_get(); //Timezone actual
+    public function getCurrentDate($fecha='now', $format='Y-m-d H:i:s') {
+        $date = new DateTime($fecha, new DateTimeZone('Europe/Madrid'));
+        return date_format($date, $format);
+    }
 
-        date_default_timezone_set('Europe/Madrid');
-        $date = date('Y-m-d H:i:s');//, new DateTimeZone('Europe/Madrid'));
-        date_default_timezone_set($actual); //Lo dejo como estaba
-
+    /** Devuelve un objeto DateTime actual
+     * @param string $fecha Si se indica una fecha, se convierte a GMT+1
+     * @return DateTime
+     */
+    public function getCurrentDateTime($fecha='now') {
+        $date = new DateTime($fecha, new DateTimeZone('Europe/Madrid'));
         return $date;
     }
 
-    public function getCurrentDateTime() {
-        $date = $this->getCurrentDate();
-        return date_create($date);
+    /** Devuelte el time actual
+     * @param string $fecha Si se indica, se convierte a GMT+1
+     * @return int
+     */
+    public function getCurrentTime($fecha='now') {
+        $date = new DateTime($fecha, new DateTimeZone('Europe/Madrid'));
+        return $date->getTimestamp();
     }
+
 
     /** Convierte la fecha del uso horario en que esté a GMT+1
      * @param $fecha Texto con el timestamp de la fecha
      */
-    public function convertDate($fecha, $returnDateTime=false) {
+    /*public function convertDate($fecha, $returnDateTime=false) {
         $actual = date_create($fecha);
         date_timezone_set($actual, timezone_open('Europe/Madrid'));
         $date = date_format($actual, 'Y-m-d H:i:s');
@@ -409,7 +417,7 @@ class EventSingleton extends CApplicationComponent
             return $actual;
         else
             return $date;
-    }
+    }*/
 
 
     /** Distribuye en bandos a los usuarios
