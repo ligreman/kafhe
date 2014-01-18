@@ -75,6 +75,7 @@ class EnrollmentController extends Controller
 		if(isset($_POST['Enrollment']))
 		{
 			$model->attributes=$_POST['Enrollment'];
+			$model->timestamp = Yii::app()->event->getCurrentDate();
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

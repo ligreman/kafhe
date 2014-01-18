@@ -104,6 +104,7 @@ class GumbudosSingleton extends CApplicationComponent
 		$notiA->event_id = $event_id;
 		$notiA->user_id = $asaltante->owner_id;
 		$notiA->message = $txtA;
+        $notiA->timestamp = Yii::app()->event->getCurrentDate();
 		if (!$notiA->save())
 			throw new CHttpException(400, 'Error al guardar la notificación A del Asaltante en evento '.$event_id.'.');
 		
@@ -112,6 +113,7 @@ class GumbudosSingleton extends CApplicationComponent
 		$notiD->event_id = $event_id;
 		$notiD->user_id = $objetivo->id;
 		$notiD->message = $txtD;
+        $notiD->timestamp = Yii::app()->event->getCurrentDate();
 		if (!$notiD->save())
 			throw new CHttpException(400, 'Error al guardar la notificación D del Asaltante en evento '.$event_id.'.');
 		
@@ -249,6 +251,7 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corra
 		$notiA->event_id = $event_id;
 		$notiA->user_id = $nigromante->owner_id;
 		$notiA->message = ':'.Yii::app()->params->gumbudoClassNigromante.': Tu Gumbudo Nigromante creó '.count($zombies).' Gungubos Zombie'.$txt_colericos.' con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos en el corral de '.ucfirst($objetivo->alias).'.';
+        $notiA->timestamp = Yii::app()->event->getCurrentDate();
 		if (!$notiA->save())
 			throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Zombie en evento '.$event_id.'.');
 
@@ -257,6 +260,7 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corra
 		$notiD->event_id = $event_id;
 		$notiD->user_id = $objetivo->id;
 		$notiD->message = ':'.Yii::app()->params->gunguboClassZombie.': Un grupo de Gungubos Zombie ha penetrado en tu corral matando a '.$cuantos_muertos.' Gungubos.';
+        $notiD->timestamp = Yii::app()->event->getCurrentDate();
 		if (!$notiD->save())
 			throw new CHttpException(400, 'Error al guardar la notificación D de corral de Ataque Zombie en evento '.$event_id.'.');
 
@@ -356,6 +360,7 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corra
         $notiA->event_id = $event_id;
         $notiA->user_id = $pestilente->owner_id;
         $notiA->message = $txtA;
+        $notiA->timestamp = Yii::app()->event->getCurrentDate();
         if (!$notiA->save())
             throw new CHttpException(400, 'Error al guardar la notificación A del Pestilente en evento '.$event_id.'.');
 
@@ -364,6 +369,7 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corra
         $notiD->event_id = $event_id;
         $notiD->user_id = $objetivo->id;
         $notiD->message = $txtD;
+        $notiD->timestamp = Yii::app()->event->getCurrentDate();
         if (!$notiD->save())
             throw new CHttpException(400, 'Error al guardar la notificación D del Pestilente en evento '.$event_id.'.');
 
@@ -504,6 +510,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
 		$notiA->event_id = $event_id;
 		$notiA->user_id = $artificiero->owner_id;
 		$notiA->message = ':'.Yii::app()->params->gumbudoClassArtificiero.': Tu Gumbudo Artificiero creó '.count($bombas).' Gungubos Bomba con los cadáveres de tu cementerio, que han matado '.$cuantos_muertos.' Gungubos'.$txt_quemados.' en el corral de '.ucfirst($objetivo->alias).'.';
+        $notiA->timestamp = Yii::app()->event->getCurrentDate();
 		if (!$notiA->save())
 			throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Bomba en evento '.$event_id.'.');
 
@@ -512,6 +519,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
 		$notiD->event_id = $event_id;
 		$notiD->user_id = $objetivo->id;
 		$notiD->message = ':'.Yii::app()->params->gunguboClassBomba.': Un grupo de Gungubos Bomba ha penetrado en tu corral y ha matado a '.$cuantos_muertos.' Gungubos'.$txt_quemados.'.';
+        $notiD->timestamp = Yii::app()->event->getCurrentDate();
 		if (!$notiD->save())
 			throw new CHttpException(400, 'Error al guardar la notificación D de corral de Ataque Bomba en evento '.$event_id.'.');
 
@@ -580,6 +588,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
         $notiA->event_id = $event_id;
         $notiA->user_id = $gumbudo->owner_id;
         $notiA->message = ':'.Yii::app()->params->gumbudoClassAsedio.': Tu Gumbudo de Asedio lanzó dos Gungubos Molotov, quemando a '.$cuantos_quemados.' Gungubos en el corral de '.ucfirst($objetivo->alias).'.';
+        $notiA->timestamp = Yii::app()->event->getCurrentDate();
         if (!$notiA->save())
             throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Molotov en evento '.$event_id.'.');
 
@@ -588,6 +597,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
         $notiD->event_id = $event_id;
         $notiD->user_id = $objetivo->id;
         $notiD->message = ':'.Yii::app()->params->gunguboClassMolotov.': Han lanzado unos Gungubos Molotov a tu corral y han quemado '.$cuantos_quemados.' Gungubos de tu corral.';
+        $notiD->timestamp = Yii::app()->event->getCurrentDate();
         if (!$notiD->save())
             throw new CHttpException(400, 'Error al guardar la notificación D de corral de Ataque Molotov en evento '.$event_id.'.');
 
@@ -639,6 +649,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
             $noti->event_id = $event_id;
             $noti->user_id = $attacker->id;
             $noti->message = ':'.Yii::app()->params->gumbudoClassNames[$gumbudo->class].': Tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' se ha sentido atraído por un señuelo que había en tu corral.';
+            $noti->timestamp = Yii::app()->event->getCurrentDate();
             if (!$noti->save())
                 throw new CHttpException(400, 'Error al guardar la notificación de que un Gumbudo ha caído en señuelo.');
 
@@ -666,6 +677,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
             $noti->event_id = $event_id;
             $noti->user_id = $attacker->id;
             $noti->message = ':'.Yii::app()->params->gumbudoClassNames[$gumbudo->class].': Tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' ha caído en una '.Yii::app()->params->trampaNames[$trampa->keyword].'.';
+            $noti->timestamp = Yii::app()->event->getCurrentDate();
             if (!$noti->save())
                 throw new CHttpException(400, 'Error al guardar la notificación de que un Gumbudo ha caído en trampa.');
         }
@@ -720,6 +732,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
                 $notiA->event_id = $event_id;
                 $notiA->user_id = $hippie->owner_id;
                 $notiA->message = ':'.Yii::app()->params->gumbudoClassHippie.': Tu Gumbudo Hippie ha pacificado a un Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].', de '.ucfirst($owner->alias).',  impidiendo que actuara.';
+                $notiA->timestamp = Yii::app()->event->getCurrentDate();
                 if (!$notiA->save())
                     throw new CHttpException(400, 'Error al guardar la notificación A de corral de actuación de Gumbudo Hippie en evento '.$event_id.'.');
 
@@ -728,6 +741,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
                 $notiD->event_id = $event_id;
                 $notiD->user_id = $gumbudo->owner_id;
                 $notiD->message = ':'.$gumbudo->class.': Un Gumbudo '.Yii::app()->params->gumbudoClassNames[$hippie->class].' ha convencido a tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' de que no debe portarse mal, y por ello no ataca esta vez.';
+                $notiD->timestamp = Yii::app()->event->getCurrentDate();
                 if (!$notiD->save())
                     throw new CHttpException(400, 'Error al guardar la notificación D de corral de actuación de Gumbudo Hippie en evento '.$event_id.'.');
 

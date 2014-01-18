@@ -247,7 +247,7 @@ class SiteController extends Controller
 		
 		$last_read = $user->last_notification_read;
 		if($last_read==null)
-			$last_read = date('Y-m-d H:i:s');
+			$last_read = Yii::app()->event->getCurrentDate();
 						
 		//Proceso las notificaciones
 		$nuevas = $viejas_aux = $viejas = array();

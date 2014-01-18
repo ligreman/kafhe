@@ -58,8 +58,8 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 						<h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
 						<?php
 							//Calculamos el tiempo que hace
-							//$fecha_noti = date_create($notification->timestamp);
-							$fecha_noti = Yii::app()->event->convertDate($notification->timestamp, true);
+							$fecha_noti = date_create($notification->timestamp);
+							//$fecha_noti = Yii::app()->event->convertDate($notification->timestamp, true);
 							//$intervalo = date_diff(date_create(), $fecha_noti);
                             $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
 							$tiempo = $intervalo->format("%d,%h,%i,%s");
@@ -111,8 +111,8 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 						<h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
 						<?php
 							//Calculamos el tiempo que hace
-							//$fecha_noti = date_create($notification->timestamp);
-                            $fecha_noti = Yii::app()->event->convertDate($notification->timestamp, true);
+							$fecha_noti = date_create($notification->timestamp);
+                            //$fecha_noti = Yii::app()->event->convertDate($notification->timestamp, true);
                             //$intervalo = date_diff(date_create(), $fecha_noti);
                             $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
 							$tiempo = $intervalo->format("%d,%h,%i,%s");
@@ -150,7 +150,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
             <?php endif;
 		endif;?>
 
-    <?php if($hay_mas): ?>
+    <?php if(isset($hay_mas) && $hay_mas): ?>
         <p id="moreNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
     <?php else: ?>
         <p class="categoriaNotif"><span>No hay más notificaciones</span></p>
@@ -172,9 +172,9 @@ $pattern = '/:+([a-zA-Z]+):+/i';
             <article data-rel="<?php echo $notif->timestamp; ?>">
                 <?php
                     //Calculamos el tiempo que hace
-                    //$fecha_noti = date_create($notif->timestamp);
+                    $fecha_noti = date_create($notif->timestamp);
                     //$intervalo = date_diff(date_create(), $fecha_noti);
-                    $fecha_noti = Yii::app()->event->convertDate($notif->timestamp, true);
+                    //$fecha_noti = Yii::app()->event->convertDate($notif->timestamp, true);
                     $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
@@ -209,9 +209,9 @@ $pattern = '/:+([a-zA-Z]+):+/i';
         <article data-rel="<?php echo $notif->timestamp; ?>">
             <?php
                     //Calculamos el tiempo que hace
-                    //$fecha_noti = date_create($notif->timestamp);
+                    $fecha_noti = date_create($notif->timestamp);
                     //$intervalo = date_diff(date_create(), $fecha_noti);
-                    $fecha_noti = Yii::app()->event->convertDate($notif->timestamp, true);
+                    //$fecha_noti = Yii::app()->event->convertDate($notif->timestamp, true);
                     $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
@@ -239,7 +239,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
                 <?php endif;?>
         </article>
         <?php endforeach;?>
-        <?php if($hay_mas): ?>
+        <?php if(isset($hay_mas) && $hay_mas): ?>
             <p id="moreCorralNotifications"><a href="#" class="btn btn<?php echo YIi::app()->currentUser->side?>">Ver más notificaciones</a></p>
         <?php else: ?>
             <p class="corralNotif"><span>No hay más notificaciones</span></p>

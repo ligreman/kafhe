@@ -163,14 +163,14 @@ class CronCommand extends CConsoleCommand {
                 } else {
                     //Compruebo si está inactivo el usuario
                     $user_inactive_time = strtotime($usuario->last_activity) + 25*60*60; //Le sumo 25 horas para ver si ha pasado
-                    if (time() > $user_inactive_time) {
-                        $usuario->active = false;
+                    if (Yii::app()->event->getCurrentTime() > $user_inactive_time) {
+                        $usuario->active = 0;
                         $this->logCron('        - Pasa a estar inactivo.', 'info');
                     }
                 }
 
                 if (!$usuario->save())
-                    $this->logCron('** ERROR al guardar el usuario ('.$usuario->id.') regenerando su tueste.', 'info');
+                    $this->logCron('** ERROR al guardar el usuario ('.$usuario->id.') regenerando su tueste.'.print_r($usuario->getErrors(), true), 'info');
 
 
             }
@@ -269,6 +269,7 @@ class CronCommand extends CConsoleCommand {
                     $noti->event_id = $event->id;
                     $noti->user_id = $jugador->id;
                     $noti->message = 'Repoblados '.$a_repoblar.' Gungubos en tu corral.';
+                    $noti->timestamp = Yii::app()->event->getCurrentDate();
 
                     if (!$noti->save())
                         $this->logCron('** ERROR al guardar la notificación de gungubos repoblados para el jugador '.$jugador->username.' del evento ('.$event->id.').', 'info');
@@ -375,6 +376,7 @@ class CronCommand extends CConsoleCommand {
                 $notiD->event_id = $event->id;
                 $notiD->user_id = $jugador->id;
                 $notiD->message = ':'.Yii::app()->params->gunguboClassDefault.': Han muerto '.$mueren['condicion'].' Gungubos en tu corral a causa de quemaduras, las cuáles se han propagado a otros '.$cuantos_quemados.' Gungubos más. Los muertos reposan ahora en el cementerio.';
+                $notiD->timestamp = Yii::app()->event->getCurrentDate();
                 if (!$notiD->save())
                     throw new CHttpException(400, 'Error al guardar la notificación de corral al comprobar quemados en evento '.$event_id.'.');
             }
@@ -471,6 +473,7 @@ class CronCommand extends CConsoleCommand {
                 $nota = new Notification;
                 $nota->message = 'Valientes y valientas, habéis luchado con honor y valor. Descansad ahora a la espera de mi veredicto sobre quién debe llamar.';
                 $nota->type = 'omelettus';
+                $nota->timestamp = Yii::app()->event->getCurrentDate();
                 if (!$nota->save())
                     $this->logCron('** ERROR al guardar la notificación de fin de batalla del evento ('.$event->id.').', 'info');
             }
@@ -500,6 +503,7 @@ class CronCommand extends CConsoleCommand {
                 $nota = new Notification;
                 $nota->message = 'Amados súbditos, un lunes os prometí y un lunes os doy, por lo tanto... ¡comienza la temporada de cría de gungubos!';
                 $nota->type = 'omelettus';
+                $nota->timestamp = Yii::app()->event->getCurrentDate();
                 if (!$nota->save())
                     $this->logCron('** ERROR al guardar la notificación de inicio del evento ('.$event->id.').', 'info');
             }
@@ -517,19 +521,16 @@ class CronCommand extends CConsoleCommand {
     public function actionProcessCronPile()
     {		
         $pila = Cronpile::model()->findAll(array('order'=>'due_date ASC'));
-		$now = time();
-		//$dateNow = Yii::app()->event->getCurrentDate();
-		//$now = strtotime($dateNow);
-		$init_time = time();
+		$now = $init_time = Yii::app()->event->getCurrentTime(); //time();
 
         foreach($pila as $cronjob) {
 			$result = true;
             $this->logCron('Procesando '.$cronjob->operation.' ['.$cronjob->params.'] programado para '.$cronjob->due_date.'.', 'info');
 
 			if ($cronjob->due_date !== NULL) {
-				$fecha = strtotime($cronjob->due_date);
+				$dueTime = strtotime($cronjob->due_date);
 				
-				if ($now <= $fecha) {
+				if ($now <= $dueTime) {
                     $this->logCron('  Todavia no se tiene que ejecutar esta tarea.', 'info');
 					continue; //Me salto la tarea porque aún no ha de lanzarse
 				}
@@ -566,7 +567,7 @@ class CronCommand extends CConsoleCommand {
             ///TODO volver a activar
             //$cronjob->delete();
 
-            $actual_time = time();
+            $actual_time = Yii::app()->event->getCurrentTime();
             if (($actual_time-$init_time) >= 15)
                 return 0; //No ejecuto más tareas si ya llevo 15 segundos
         }
@@ -651,7 +652,7 @@ class CronCommand extends CConsoleCommand {
     }
 
     public function actionDebugTestCron() {
-        $this->logCron('Probando cron');
+        $this->logCron('Probando cron. '.date('Y-m-d H:i:s'));
     }
 
 }

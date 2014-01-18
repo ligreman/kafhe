@@ -131,9 +131,9 @@
                 </div>
                 <div class="hbh_cost">
                     <ul class="hbhd_cost" id="costes">
-                        <?php if ($habilidad->cost_tueste!==null) echo '<li>'.$habilidad->cost_tueste.' tueste</li>'; ?>
-                        <?php if ($habilidad->cost_retueste!==null) echo '<li>'.$habilidad->cost_retueste.' retueste</li>'; ?>
-                        <?php if ($habilidad->cost_relanzamiento!==null) echo '<li>'.$habilidad->cost_relanzamiento.' lágrimas</li>'; ?>
+                        <?php if ($habilidad->cost_tueste!==null) echo '<li>'.$habilidad->cost_tueste.' Tueste</li>'; ?>
+                        <?php if ($habilidad->cost_retueste!==null) echo '<li>'.$habilidad->cost_retueste.' Retueste</li>'; ?>
+                        <?php if ($habilidad->cost_relanzamiento!==null) echo '<li>'.$habilidad->cost_relanzamiento.' Lágrimas</li>'; ?>
                         <?php if ($habilidad->cost_gungubos!==null) echo '<li>'.$habilidad->cost_gungubos.' Gungubos</li>'; ?>
                     </ul>
                 </div>

@@ -62,7 +62,7 @@ class ModifierSingleton extends CApplicationComponent
 		$modifiers = Modifier::model()->findAll(array('condition'=>'duration IS NOT NULL AND duration_type IS NOT NULL'));
 		if($modifiers != null) 
 		{		
-			$currentTime = time();
+			$currentTime = Yii::app()->event->getCurrentTime();
 			foreach($modifiers as $modifier) {			
 				//Compruebo si ha expirado en caso de ser horas
 				$tiempoCaducidad =  strtotime($modifier->timestamp) + ($modifier->duration * 60 *60); //en segundos
