@@ -33,8 +33,16 @@
 	<?php echo CHtml::encode($data->gungubos_kafhe); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fame_kafhe')); ?>:</b>
+	<?php echo CHtml::encode($data->fame_kafhe); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('gungubos_achikhoria')); ?>:</b>
 	<?php echo CHtml::encode($data->gungubos_achikhoria); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fame_achikhoria')); ?>:</b>
+	<?php echo CHtml::encode($data->fame_achikhoria); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('last_gungubos_criadores')); ?>:</b>

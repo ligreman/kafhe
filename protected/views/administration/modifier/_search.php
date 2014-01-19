@@ -17,7 +17,7 @@
 
 	<?php echo $form->textFieldRow($model,'keyword',array('class'=>'span5','maxlength'=>50)); ?>
 
-	<?php echo $form->textFieldRow($model,'value',array('class'=>'span5')); ?>
+	<?php echo $form->textFieldRow($model,'value',array('class'=>'span5','maxlength'=>15)); ?>
 
 	<?php echo $form->textFieldRow($model,'duration',array('class'=>'span5')); ?>
 
