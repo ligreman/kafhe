@@ -40,10 +40,11 @@ class Notification extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('message, timestamp, type', 'required'),
+			array('message, type', 'required'),
 			array('sender', 'numerical', 'integerOnly'=>true),
 			array('recipient_original, recipient_final', 'length', 'max'=>50),
 			array('type', 'length', 'max'=>10),
+			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, sender, recipient_original, recipient_final, message, timestamp, type', 'safe', 'on'=>'search'),
