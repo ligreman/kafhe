@@ -27,7 +27,8 @@
 				$libreSkill[] = $habilidad->name.'##'.$index;
 			else
 				$commonSkill[] = $habilidad->name.'##'.$index;
-		}
+		}else
+            $commonSkill[] = $habilidad->name.'##'.$index;
 
         //echo '<li><a href="#in_'.$index.'">'.$habilidad->name.'</a></li>';
         $index++;
@@ -179,6 +180,7 @@
 
     ?>
     <div class="clear"></div>
+    <br /><br /><br />
 
 
     <?php

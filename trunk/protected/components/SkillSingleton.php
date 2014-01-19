@@ -306,7 +306,7 @@ class SkillSingleton extends CApplicationComponent
 		$cuantos = Gumbudo::model()->updateAll(array('owner_id'=>$user->id), 'event_id=:evento AND class=:clase', array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassAsaltante));
 
         //Doy la fama al jugador
-        $user->fame += $cuantos*2; //2 puntos por convertido
+        $user->fame += $cuantos*1; //1 puntos por convertido
 
         if (!$user->save())
             throw new CHttpException(400, 'Error al guardar el usuario ('.$user->username.') al darle fama por '.$skill->name.'. ['.print_r($user->getErrors(),true).']');
