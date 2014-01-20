@@ -180,7 +180,6 @@
 
     ?>
     <div class="clear"></div>
-    <br /><br /><br />
 
 
     <?php
