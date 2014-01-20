@@ -169,7 +169,7 @@
 
             <footer>
                 <ul id="tools">
-                    <li>&copy;2014 Omelettus</li>
+                    <li>Kafhe <?php echo Yii::app()->params->appVersion;?> &copy;2014 Omelettus</li>
                     <li><a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a></li>
                     <?php if (!Yii::app()->user->isGuest): ?>
                         <li><a target="_blank" href="http://kafhe.hol.es/wiki/index.php/Changelog">Log de cambios</a></li>

@@ -565,7 +565,7 @@ class CronCommand extends CConsoleCommand {
 
             $this->logCron('  Elimino la tarea '.$cronjob->operation.' ['.$cronjob->params.'] de la pila.', 'info');
             ///TODO volver a activar
-            //$cronjob->delete();
+            $cronjob->delete();
 
             $actual_time = Yii::app()->event->getCurrentTime();
             if (($actual_time-$init_time) >= 15)
