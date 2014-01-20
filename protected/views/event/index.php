@@ -113,7 +113,7 @@
                 <?php
                     foreach ($users as $user) {
                         if(isset($individualFame[$user->id])){
-                            echo '["'.$user->alias.'",'.$individualFame[$user->id].'],';
+                            echo '["'.$user->alias.'",'.round($individualFame[$user->id],2).'],';
                         }
                     }
                 ?>
@@ -168,10 +168,13 @@
                         //Me saco yo si estoy entre los que se pintan
                         if ($user->id == Yii::app()->currentUser->id)
                             $miOffset = $offset;
+
+                        $offset++;
                     }
 
-                    $offset++;
+
                 }
+
             ?>
         ]);
 

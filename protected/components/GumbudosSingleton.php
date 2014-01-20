@@ -1,5 +1,5 @@
 <?php
-
+///TODO comentar los Yii::log antes de poner en producción
 /** GumbudosSingleton para operaciones relacionadas con los Gungubos de un evento
  */
 class GumbudosSingleton extends CApplicationComponent
@@ -76,7 +76,8 @@ class GumbudosSingleton extends CApplicationComponent
 			
 			//Textos de notificaciones
 			$txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Tu Gumbudo Asaltante ha matado '.$cuantos.' Gungubos en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).'.';
-			$txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Asaltante ha superado a tus Guardianes matando a '.$cuantos.' Gungubos en tu corral.';
+			if ($result===1) $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Asaltante ha superado a tus Guardianes matando a '.$cuantos.' Gungubos en tu corral.';
+            else $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Asaltante ha matado a '.$cuantos.' Gungubos en tu corral.';
 
 			//Fama Asaltante exitoso
             $owner->fame += 2; // 2 de fama por atacar con éxito
@@ -339,7 +340,8 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corra
 
             //Textos de notificaciones
             $txtA = ':'.Yii::app()->params->gumbudoClassPestilente.': Tu Gumbudo Pestilente ha irrumpido en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).' propagando una enfermedad a sus '.$cuantos_infecto.' Gungubos.';
-            $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Pestilente ha superado a tus Guardianes y ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
+            if ($result===1) $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Pestilente ha superado a tus Guardianes y ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
+            else $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Pestilente ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
         } else {
             //Textos de notificaciones
             $txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Los Gumbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gumbudo Pestilente.';
@@ -518,7 +520,8 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
 		$notiD = new NotificationCorral;
 		$notiD->event_id = $event_id;
 		$notiD->user_id = $objetivo->id;
-		$notiD->message = ':'.Yii::app()->params->gunguboClassBomba.': Un grupo de Gungubos Bomba ha penetrado en tu corral y ha matado a '.$cuantos_muertos.' Gungubos'.$txt_quemados.'.';
+		if (count($guardianes)>0) $notiD->message = ':'.Yii::app()->params->gunguboClassBomba.': Un grupo de Gungubos Bomba ha superado a tus Gumbudos Guardianes y ha penetrado en tu corral matando a '.$cuantos_muertos.' Gungubos'.$txt_quemados.'.';
+		else $notiD->message = ':'.Yii::app()->params->gunguboClassBomba.': Un grupo de Gungubos Bomba ha penetrado en tu corral y ha matado a '.$cuantos_muertos.' Gungubos'.$txt_quemados.'.';
         $notiD->timestamp = Yii::app()->event->getCurrentDate();
 		if (!$notiD->save())
 			throw new CHttpException(400, 'Error al guardar la notificación D de corral de Ataque Bomba en evento '.$event_id.'.');
