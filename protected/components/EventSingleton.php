@@ -383,7 +383,7 @@ class EventSingleton extends CApplicationComponent
      */
     public function getCurrentDate($fecha='now', $format='Y-m-d H:i:s') {
         $date = new DateTime($fecha, new DateTimeZone('Europe/Madrid'));
-        return date_format($date, $format);
+        return $date->format($format);
     }
 
     /** Devuelve un objeto DateTime actual
@@ -401,7 +401,7 @@ class EventSingleton extends CApplicationComponent
      */
     public function getCurrentTime($fecha='now') {
         $date = new DateTime($fecha, new DateTimeZone('Europe/Madrid'));
-        return $date->getTimestamp();
+        return strtotime($date->format('Y-m-d H:i:d'));
     }
 
 
