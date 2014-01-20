@@ -98,7 +98,7 @@ class SkillValidator
 				return 0;
 
 			//Es una habilidad especial que requiere parámetros extra
-			    if ($skill->keyword==Yii::app()->params->skillGumbudoAsaltante && !$this->checkGumbudoAsaltanteWeapons($skill, $extra_param))
+			    if ( ($skill->keyword==Yii::app()->params->skillGumbudoAsaltante || $skill->keyword==Yii::app()->params->skillGumbudoGuardian) && !$this->checkGumbudoWeapons($skill, $extra_param))
 			        return 9;
 
 		}
@@ -280,13 +280,13 @@ class SkillValidator
 		}
 	}
 
-	private function checkGumbudoAsaltanteWeapons($skill, $extra_param) {
-        if ($skill->keyword!=Yii::app()->params->skillGumbudoAsaltante)
+	private function checkGumbudoWeapons($skill, $extra_param) {
+        if ($skill->keyword!=Yii::app()->params->skillGumbudoAsaltante && $skill->keyword!=Yii::app()->params->skillGumbudoGuardian)
             return true;
         else {
         Yii::log("Arma: ".$extra_param);
             if ($extra_param!=Yii::app()->params->gumbudoWeapon1 && $extra_param!=Yii::app()->params->gumbudoWeapon2 && $extra_param!=Yii::app()->params->gumbudoWeapon3) {
-                $this->_lastError = 'No has seleccionado un arma válida para el Gumbudo Asaltante.';
+                $this->_lastError = 'No has seleccionado un arma válida para el Gumbudo.';
                 return false;
             } else
                 return true;
