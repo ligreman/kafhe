@@ -25,7 +25,7 @@
 
                 <?php if(preg_match($pattern,$notif->message)):?>
                     <p class="corral_message image_message">
-                    <?php echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/skills/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';?>
+                    <?php echo preg_replace($pattern, '<span class="image">'.CHtml::image(Yii::app()->baseUrl."/images/bestiary/minis/$1.png",'$1',array('class' => 'icon')).'</span><span>', $notif->message).'</span>';?>
                     </p>
                 <?php else:?>
                     <p class="corral_message">
