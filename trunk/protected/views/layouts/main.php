@@ -209,6 +209,7 @@
             }*/
             ?>
             <?php echo $content; ?>
+            <br /><br /><br /><br /><br />
         </section>
 
         <section id="skillsUserBlock">

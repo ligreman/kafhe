@@ -174,7 +174,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
                     //Calculamos el tiempo que hace
                     //$fecha_noti = date_create($notif->timestamp);
                     //$intervalo = date_diff(date_create(), $fecha_noti);
-                    $fecha_noti = Yii::app()->event->getCurrentDateTime($notification->timestamp);
+                    $fecha_noti = Yii::app()->event->getCurrentDateTime($notif->timestamp);
                     $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
@@ -211,7 +211,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
                     //Calculamos el tiempo que hace
                     //$fecha_noti = date_create($notif->timestamp);
                     //$intervalo = date_diff(date_create(), $fecha_noti);
-                    $fecha_noti = Yii::app()->event->getCurrentDateTime($notification->timestamp);
+                    $fecha_noti = Yii::app()->event->getCurrentDateTime($notif->timestamp);
                     $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
