@@ -430,10 +430,11 @@ class CronCommand extends CConsoleCommand {
         if ($events != null) {
             foreach($events as $event) {
                 //Cojo Gumbudos que hayan caducado
-                $gumbudos = Gumbudo::model()->findAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+                $now = Yii::app()->event->getCurrentDate();
+                $gumbudos = Gumbudo::model()->findAll(array('condition'=>"'".$now."'>ripdate AND event_id=:evento", 'params'=>array(':evento'=>$event->id)));
 
                 //Mato a los gumbudos que se les haya pasado el arroz
-                $n = Gumbudo::model()->deleteAll(array('condition'=>'NOW()>ripdate AND event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+                $n = Gumbudo::model()->deleteAll(array('condition'=>"'".$now."'>ripdate AND event_id=:evento", 'params'=>array(':evento'=>$event->id)));
                 $this->logCron('    Eliminados '.$n.' Gumbudos caducados en el evento '.$event->id.'.', 'info');
 
                 //Quito los pilacron de los gumbudos muertos
