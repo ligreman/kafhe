@@ -1,6 +1,18 @@
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.carouFredSel-6.2.0-packed.js"></script>
 
+
 <div class="paddedContent page">
+    <?php
+    $flashMessages = Yii::app()->user->getFlashes();
+    if ($flashMessages) {
+        echo '<ul class="flashes">';
+        foreach($flashMessages as $key => $message) {
+            echo '<li><div class="flash-' . $key . '">' . $message . "</div></li>\n";
+        }
+        echo '</ul>';
+    }
+    ?>
+
     <?php
     $this->pageTitle=Yii::app()->name . ' - Bestiario';
 

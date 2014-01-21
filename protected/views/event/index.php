@@ -185,7 +185,7 @@
             colors:['#bf3950','#ff8139','#f0cc33','#60b97f','#4f77c1','#673c7d','#ff2c61','#8f6255','#e2a30a','#00924a','#50cae6','#2a0e3d'],
             fontName: 'Lato',
             pieSliceText: 'percentage',
-            height:500,
+            height: 500,
             slices: {  <?php echo $miOffset; ?>: {offset: 0.1} }
         };
 
