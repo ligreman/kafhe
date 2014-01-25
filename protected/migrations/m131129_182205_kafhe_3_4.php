@@ -60,10 +60,10 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
             'gumbudo_action_duration' => NULL,        // Duración de actividad de un Gumbudo
             'gumbudo_action_rate' => NULL,             // Cada cuanto actúa el Gumbudo
-            'critic'  =>  10,                        // Int con el % crítico
+            'critic'  =>  15,                        // Int con el % crítico
             'fail'  =>  10,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  50,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -94,10 +94,10 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
             'gumbudo_action_duration' => NULL,        // Duración de actividad de un Gumbudo
             'gumbudo_action_rate' => NULL,             // Cada cuanto actúa el Gumbudo
-            'critic'  =>  10,                        // Int con el % crítico
+            'critic'  =>  15,                        // Int con el % crítico
             'fail'  =>  10,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  50,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -129,9 +129,9 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration'  =>  24,
             'duration_type'  =>  'horas',  // horas, evento, usos
             'critic'  =>  10,
-            'fail'  =>  5,
+            'fail'  =>  10,
             'extra_param' => 50,        // Porcentaje que aumenta la regeneración
-            'cost_tueste'  =>  200,
+            'cost_tueste'  =>  150,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -166,7 +166,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  5,
             'fail'  =>  10,
             'extra_param' => '100',         //Tueste que quita
-            'cost_tueste'  =>  200,
+            'cost_tueste'  =>  100,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -197,7 +197,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'modifier_hidden' => 1,
             'duration'  =>  1,
             'duration_type'  =>  'usos',  // horas, evento, usos
-            'critic'  =>  5,
+            'critic'  =>  10,
             'fail'  =>  10,
             'cost_tueste'  =>  200,
             'cost_retueste'  =>  NULL,
@@ -232,7 +232,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  'usos',  // horas, evento, usos
             'critic'  =>  5,
             'fail'  =>  10,
-            'cost_tueste'  =>  200,
+            'cost_tueste'  =>  150,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  NULL,
             'cost_tostolares'  =>  NULL,
@@ -265,10 +265,10 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  'usos',              // Tipo de duración. Puede ser: horas, evento, usos
             'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
             'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
-            'critic'  =>  5,                         // Int con el % crítico
+            'critic'  =>  15,                         // Int con el % crítico
             'fail'  =>  10,                           // Int con el % de pifia
             'extra_param' => NULL,                  // String con parámetro extra que se necesite para algo. Por ejemplo, CazarGungubos, para la cantidad de gugubos a cazar.
-            'cost_tueste'  =>  250,                // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  300,                // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -303,8 +303,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'duration_type'  =>  NULL,              // Tipo de duración. Puede ser: horas, evento, usos
             'gumbudo_action_duration' => NULL,      // Duración de actividad de un Gumbudo
             'gumbudo_action_rate' => NULL,          // Cada cuanto actúa el Gumbudo
-            'critic'  =>  5,                         // Int con el % crítico
-            'fail'  =>  10,                           // Int con el % de pifia
+            'critic'  =>  0,                         // Int con el % crítico
+            'fail'  =>  5,                           // Int con el % de pifia
             'extra_param' => '200',                  // Tueste que obtienes con la habilidad
             'cost_tueste'  =>  0,                // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
@@ -535,7 +535,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  300,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -573,7 +573,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  250,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -611,7 +611,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de que salga Guardián
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  200,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -649,7 +649,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de 
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  300,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -687,7 +687,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  300,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -725,7 +725,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de 
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  300,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -763,7 +763,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  300,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -802,7 +802,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'critic'  =>  0,                        // Int con el % crítico
             'fail'  =>  0,                          // Int con el % de pifia
             'extra_param' => NULL,                  // Probabilidad de
-            'cost_tueste'  =>  1,                   // Int con el coste en puntos de tueste
+            'cost_tueste'  =>  200,                   // Int con el coste en puntos de tueste
             'cost_retueste'  =>  NULL,              // Int con el coste en puntos de retueste
             'cost_relanzamiento'  =>  NULL,         // Int con el coste en puntos de relanzamiento
             'cost_tostolares'  =>  NULL,            // Int con el coste en tostólares
@@ -834,8 +834,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'modifier_keyword'  =>  '',
             'duration'  =>  NULL,       // Int cantidad para la duración
             'duration_type'  =>  NULL,  // horas, evento, usos
-            'critic'  =>  10,
-            'fail'  =>  10,
+            'critic'  =>  0,
+            'fail'  =>  0,
             'cost_tueste'  =>  NULL,
             'cost_retueste'  =>  NULL,
             'cost_relanzamiento'  =>  2,

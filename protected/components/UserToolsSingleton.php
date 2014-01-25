@@ -127,7 +127,7 @@ class UserToolsSingleton extends CApplicationComponent
 		//Ahora calculo el bruto de la probabilidad según la fama
 		$brutes = array();
 		foreach($diffs as $userId=>$differential) {
-			$brutes[$userId] = $probabilidadesRango[$userId] - ( $probabilidadesRango[$userId]*$differential / 100 );
+			$brutes[$userId] = max(0, $probabilidadesRango[$userId] - ( $probabilidadesRango[$userId]*$differential / 100 ));
 		}
 //print_r($brutes);
 		$sumaBrutes = array_sum($brutes);
