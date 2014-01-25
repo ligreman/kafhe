@@ -160,6 +160,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 </div>
 
 <div id="corral_notifications">
+    <p class="gungubosCounter"><span>Hay <?php echo Yii::app()->currentUser->gungubosCorral; ?> gungubos en tu corral</span></p>
     <?php
     if ($notifications_corral!==null && !empty($notifications_corral)):
         $nuevas = $notifications_corral['new'];

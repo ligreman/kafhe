@@ -25,7 +25,7 @@
         </p>
         <p class="dato">
             <span class="concepto">rango</span>
-            <span class="numero"><?php echo $user->rank; ?></span>
+            <span class="numero"><?php echo $romanRank; ?></span>
         </p>
 
         <p class="dato">
