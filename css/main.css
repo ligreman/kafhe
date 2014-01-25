@@ -263,11 +263,24 @@ a, a:hover{
     text-decoration: underline;
 }
 
+.gungubosCounter {
+    text-align: center;
+    background: #FFF;
+    padding: 3px;
+    margin: 0;
+    position: relative;
+    top: -1em;
+}
+.gungubosCounter span {
+    font-size: 0.9em;
+}
+
 #corral_notifications {
     width: 25%;
     float: right;
     background: #c0c0c0;
     padding:1em 0 2em 0;
+    position: relative;
 }
 
 #corral_notifications article {
