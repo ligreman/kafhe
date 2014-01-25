@@ -17,7 +17,7 @@
             <?php
             $pos = 1;
             foreach ($ranking as $user) {
-                echo '<li id="rankingPos'.$pos.'" title="'.date("d/m/Y", strtotime($user['date'])).'"><strong>Rango '.$user['rank'].'</strong><em>'.Yii::app()->usertools->getAlias($user['user_id']).'</em></li>';
+                echo '<li id="rankingPos'.$pos.'" title="'.date("d/m/Y", strtotime($user['date'])).'"><strong>Rango '.Yii::app()->usertools->roman_numerals($user['rank']).'</strong><em>'.Yii::app()->usertools->getAlias($user['user_id']).'</em></li>';
                 $pos++;
             }
             ?>
