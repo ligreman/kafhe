@@ -3,6 +3,7 @@ var favicon = new Favico({
     animation : 'fade',
     bgcolor: '#bf3950'
 });
+var sly;
 
 $(document).ready(function() {
     resizeNavBar();
@@ -24,15 +25,14 @@ $(document).ready(function() {
     //$('#skillsPanel ul').width($('#skillsPanel ul li').outerWidth()*$('#skillsPanel ul li').size());
     //DESCOMENTAR SI SE USA SLY
     var $frame = $('#skillsPanel');
-    var sly = new Sly($frame, {
+    sly = new Sly($frame, {
         horizontal: 1,
-        itemNav: 'basic',
+        itemNav: 'centered',
         activateMiddle: 0,
-        smart: 1,
         activateOn: null,
         mouseDragging: 1,
         touchDragging: 1,
-        releaseSwing: 1,
+        releaseSwing: 0,
         startAt: 0,
         activatePageOn: null,
         speed: 400,
@@ -43,6 +43,7 @@ $(document).ready(function() {
         clickBar: 0
     }).init();
     prepareHabilities();
+    prepareWindowResize();
 });
 
 function resizeNavBar(){
@@ -56,7 +57,8 @@ function resizeNavBar(){
         secondary_nav.height(corral.innerHeight());
         //muro.height(corral.innerHeight());
     }else{
-        muro.height(main.innerHeight());
+        //muro.height(main.innerHeight());
+        main.height(muro.height());
         secondary_nav.height(muro.innerHeight());
         corral.height(muro.innerHeight());
     }
@@ -248,7 +250,7 @@ function loadMoreNotifications(){
 				//$(".categoriaNotif.hidden").removeClass("hidden");
 				$('#moreNotifications').detach();
 				$('#muro').html($('#muro').html()+data);
-				resizeNavBar();
+                resizeNavBar();
 			}
 		});
         return false;
@@ -327,5 +329,11 @@ function prepareUnreadNotifications(){
         $("#unreadSelfNotificationsList").toggle();
 
         return false;
+    });
+}
+
+function prepareWindowResize(){
+    $( window ).resize(function() {
+      sly.reload();
     });
 }
