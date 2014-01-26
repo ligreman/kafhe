@@ -64,7 +64,25 @@
     </div>
     <div class="clear"></div>
     <h2 class="pedidoIndividual">Pedidos individuales</h2>
-    <?php if (count($individual_orders) > 0): ?>
+    <?php if ($individual_orders!==null): ?>
+        <?php
+        //$bebidas = $individual_orders['bebidas'];
+        //$comidas = $individual_orders['comidas'];
+        ?>
+        <ul class="individualOrder">
+            <?php foreach($individual_orders as $order): ?>
+                <li>
+                    <strong><?php  echo Yii::app()->usertools->getAlias($order->user_id);?></strong>:
+                    <?php if ($order->ito) echo "ITO de ";?>
+                    <?php if (!empty($order->drink_id)) echo $bebidas[$order->drink_id];?>
+                    <?php if (!empty($order->drink_id) && !empty($order->meal_id)) echo " y ";?>
+                    <?php if (!empty($order->meal_id)) echo $comidas[$order->meal_id];?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; //individual order ?>
+
+    <?php /*if (count($individual_orders) > 0): ?>
         <?php
             $bebidas = $orders['bebidas'];
             $comidas = $orders['comidas'];
@@ -78,5 +96,5 @@
             </li>
         <?php endforeach; ?>
         </ul>
-    <?php endif; ?>
+    <?php endif;*/ ?>
 </div>
