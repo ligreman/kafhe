@@ -1,5 +1,5 @@
 <div id="menuContent" class="paddedContent">
-    <h1 class="battle">pedido</h1>
+    <h1 class="battle">Pedido</h1>
 
     <?php
         $itos = $orders['itos'];

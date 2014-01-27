@@ -679,7 +679,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
             $noti = new NotificationCorral;
             $noti->event_id = $event_id;
             $noti->user_id = $attacker->id;
-            $noti->message = ':'.Yii::app()->params->gumbudoClassNames[$gumbudo->class].': Tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' ha caído en una '.Yii::app()->params->trampaNames[$trampa->keyword].'.';
+            $noti->message = ':'.$gumbudo->class.': Tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' ha caído en una '.Yii::app()->params->trampaNames[$trampa->keyword].'.';
             $noti->timestamp = Yii::app()->event->getCurrentDate();
             if (!$noti->save())
                 throw new CHttpException(400, 'Error al guardar la notificación de que un Gumbudo ha caído en trampa.');

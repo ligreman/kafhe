@@ -14,8 +14,10 @@ class RewardSingleton extends CApplicationComponent
 	    $ganadores = explode(',', $aux[1]);
 
 	    foreach($ganadores as $ganador){
-	        $user = User::model()->findByPk($ganador);
-	        $this->giveReward($user, $event_id);
+	        if (!empty($ganador)) {
+	            $user = User::model()->findByPk($ganador);
+	            $this->giveReward($user, $event_id);
+            }
 	    }
 
 	    return true;
@@ -94,7 +96,7 @@ class RewardSingleton extends CApplicationComponent
         $mod->timestamp = Yii::app()->event->getCurrentDate();
 		
 		if (!$mod->save())
-			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwLessFail del usuario '.$user->username.' en evento '.$eventId.'.');
+			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwLessFail del usuario '.$user->username.' en evento '.$eventId.'.'.print_r($mod->getErrors(),true));
 			
 		$msg = 'Por haber luchado con honor y bravura en el anterior evento, te concedo una disminución del '.$mod->value.'% a la pifia durante esta nueva batalla.';
 		return $msg;
