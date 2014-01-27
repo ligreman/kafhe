@@ -288,11 +288,13 @@ class EventController extends Controller
             throw new CHttpException(400, 'Error al guardar el estado del evento '.$event->id.' a '.$event->status.'. ['.print_r($event->getErrors(),true).']');
 
         //Actividad cron para que se calculen y otorguen recompensas
-        $cron = new Cronpile;
-        $cron->operation = 'darRecompensas';
-        $cron->params = $event->id.'##'.implode(',', $ganadores);
-        if (!$cron->save())
-            throw new CHttpException(400, 'Error al guardar en la pila de cron a los del bando ganador. ['.print_r($cron->getErrors(),true).']');
+        if (!empty($ganadores)) {
+            $cron = new Cronpile;
+            $cron->operation = 'darRecompensas';
+            $cron->params = $event->id.'##'.implode(',', $ganadores);
+            if (!$cron->save())
+                throw new CHttpException(400, 'Error al guardar en la pila de cron a los del bando ganador. ['.print_r($cron->getErrors(),true).']');
+        }
 
         //Abro un evento nuevo de desayuno
         $nuevoEvento = new Event;

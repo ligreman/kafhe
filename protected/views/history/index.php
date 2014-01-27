@@ -111,7 +111,7 @@
                         </ul>
                     </div>
 
-                    <div class="tipoPedido">
+                    <div class="tipoPedido borderRight">
                         <h2 class="pedido">pedidos normales</h2>
                         <ul  class="pedido">
                             <li><p class="bebida">bebidas</p>
@@ -130,29 +130,31 @@
                             </li>
                         </ul>
                     </div>
+
+                    <?php if ($individual_orders!==null): ?>
+                    <div class="tipoPedido">
+                        <h2 class="pedido">pedidos individuales</h2>
+                        <?php
+                        //$bebidas = $individual_orders['bebidas'];
+                        //$comidas = $individual_orders['comidas'];
+                        ?>
+                        <ul class="individualOrder">
+                            <?php foreach($individual_orders as $order): ?>
+                                <li>
+                                    <strong><?php  echo Yii::app()->usertools->getAlias($order->user_id);?></strong>:
+                                    <?php if ($order->ito) echo "ITO de ";?>
+                                    <?php if (!empty($order->drink_id)) echo $bebidas[$order->drink_id];?>
+                                    <?php if (!empty($order->drink_id) && !empty($order->meal_id)) echo " y ";?>
+                                    <?php if (!empty($order->meal_id)) echo $comidas[$order->meal_id];?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <?php endif; //individual order ?>
                 </div>
 
 
             <div class="clear"></div>
-
-            <h2>Pedidos individuales</h2>
-                <?php if ($individual_orders!==null): ?>
-                    <?php
-                        //$bebidas = $individual_orders['bebidas'];
-                        //$comidas = $individual_orders['comidas'];
-                    ?>
-                    <ul class="individualOrder">
-                    <?php foreach($individual_orders as $order): ?>
-                        <li>
-                            <strong><?php  echo Yii::app()->usertools->getAlias($order->user_id);?></strong>:
-                            <?php if ($order->ito) echo "ITO de ";?>
-                            <?php if (!empty($order->drink_id)) echo $bebidas[$order->drink_id];?>
-                            <?php if (!empty($order->drink_id) && !empty($order->meal_id)) echo " y ";?>
-                            <?php if (!empty($order->meal_id)) echo $comidas[$order->meal_id];?>
-                        </li>
-                    <?php endforeach; ?>
-                    </ul>
-                <?php endif; //individual order ?>
 
             <?php endif; //orders ?>
 
