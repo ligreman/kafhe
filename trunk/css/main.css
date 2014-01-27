@@ -1690,9 +1690,12 @@ p.bebida{
 
 .tipoPedido{
     float: left;
-    width: 40%;
-    padding-left: 10%;
+    width: 25%;
+    padding-left: 2%;
     min-width: 10em;
+}
+.tipoPedido.borderRight {
+    border-right: 1px solid #333;
 }
 
 .battleTitle .flecha-down {
@@ -2200,6 +2203,9 @@ article.hb .hbhd_result{
 ul.individualOrder {
     list-style: disc;
     padding-left: 4em;
+}
+ul.individualOrder li {
+    margin-bottom: 5px;
 }
 
 h2.pedidoIndividual {
