@@ -94,7 +94,7 @@ INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('initialFame', '50', 'Fama', 'Puntos de fama con que un jugador empieza un un evento.');
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
-  ('lostFameByInactivity', '10', 'Fama', 'Puntos de fama con que un jugador inactivo pierde cada hora.');
+  ('lostFameByInactivity', '1', 'Fama', 'Puntos de fama con que un jugador inactivo pierde cada 10 minutos.');
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('rewardMoreCritic', '5', 'Recompensas', 'Aumento de la probabilidad de crítico por recompensa.');
