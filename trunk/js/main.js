@@ -47,6 +47,26 @@ $(document).ready(function() {
 });
 
 function resizeNavBar(){
+    var main = $('#main'),
+        muro = $('#muro'),
+        corral = $('#corral_notifications'),
+        minalto = 0, muroalto = 0, corralalto = 0;
+
+    minalto = $('#page').innerHeight() - $('header').innerHeight() - $('#userPanel').innerHeight() - $('#skillsUserBlock').innerHeight() + 2;
+
+    muroalto = muro.height();
+    corralalto = corral.height();
+
+    if (muroalto < minalto) muroalto = minalto;
+    if (corralalto < minalto) corralalto = minalto;
+
+    if (muroalto > corralalto) corralalto = muroalto;
+    else muroalto = corralalto;
+
+    muro.css('min-height', muroalto);
+    corral.css('min-height', corralalto);
+
+    /*
     //alert($('#content').children().height()+' y la del contenido '+$('#content').children().innerHeight());
     var main = $('#main'),
         muro = $('#muro'),
@@ -66,7 +86,7 @@ function resizeNavBar(){
     var oldH = $('#vResponsiveContent').height(),
     newH = $(window).height()-($('header').innerHeight()+$('footer').innerHeight());
 
-    if(newH > oldH) $('#guest').height(newH);
+    if(newH > oldH) $('#guest').height(newH);*/
 }
 
 function prepareEnrollmentForm(){

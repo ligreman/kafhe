@@ -203,10 +203,10 @@ a, a:hover{
 .col_tostolar { color: #D9CF0E; }
 
 #main{
-    min-height: 100%;
     background: white;
     width: 80%;
     padding-top: 6.5em;
+
     margin-left: 20%;
 }
 
@@ -425,7 +425,7 @@ article.notification .timestamp{
 
 #muro{
     background: #ffffff url(../images/timeline.png) repeat-y center top;
-    padding: 1em 0 5em;
+    padding: 0;
     position: relative;
     width: 75%;
     float: left;
