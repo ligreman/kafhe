@@ -468,7 +468,7 @@ class CronCommand extends CConsoleCommand {
             if (!$event->save())
                 $this->logCron('** ERROR al guardar el evento ('.$event->id.') poniéndolo en estado Calma.', 'info');
             else {
-                $this->logCron('Evento '.$event->id.' puesto en calma.', 'info');
+                $this->logCron('Evento '.$event->id.' puesto en calma ('.$event->status.').', 'info');
 
                 //Creo la notificación
                 $nota = new Notification;
