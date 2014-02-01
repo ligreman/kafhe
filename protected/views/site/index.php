@@ -42,7 +42,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 				<p class="categoriaNotif"><span>Notificaciones sin leer</span></p>
 				
 				<?php foreach($nuevas as $notification):?>
-					<article data-rel="<?php echo Yii::app()->event->getCurrentDate($notification->timestamp); ?>" class="unread notification <?php echo $notification->type;?> <?php
+					<article data-rel="<?php echo $notification->timestamp; ?>" class="unread notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
 							echo 'first';
 							$last_type = $notification->type;
@@ -59,7 +59,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 						<?php
 							//Calculamos el tiempo que hace
 							//$fecha_noti = date_create($notification->timestamp);
-							$fecha_noti = Yii::app()->event->getCurrentDateTime($notification->timestamp);
+							$fecha_noti = $notification->timestamp;
 							//$intervalo = date_diff(date_create(), $fecha_noti);
                             $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
 							$tiempo = $intervalo->format("%d,%h,%i,%s");
@@ -95,7 +95,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 			if (count($viejas)>0): ?>
 				<p class="categoriaNotif"><span>Notificaciones leídas</span></p>
 				<?php foreach($viejas as $notification): ?>
-					<article data-rel="<?php echo Yii::app()->event->getCurrentDate($notification->timestamp); ?>" class="notification <?php echo $notification->type;?> <?php
+					<article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
 						if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
 							echo 'first';
 							$last_type = $notification->type;
@@ -112,7 +112,7 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 						<?php
 							//Calculamos el tiempo que hace
 							//$fecha_noti = date_create($notification->timestamp);
-                            $fecha_noti = Yii::app()->event->getCurrentDateTime($notification->timestamp);
+                            $fecha_noti = $notification->timestamp;
                             //$intervalo = date_diff(date_create(), $fecha_noti);
                             $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
 							$tiempo = $intervalo->format("%d,%h,%i,%s");
@@ -167,15 +167,15 @@ $pattern = '/:+([a-zA-Z]+):+/i';
         $viejas = $notifications_corral['old'];
         $hay_mas = $notifications_corral['hay_mas'];
         if (count($nuevas)>0): ?>
-            <p class="corralNotif"><span>Notificaciones no leídas</span></p>
+            <p class="corralNotif"><span>Notificaciones sin leer</span></p>
         <?php endif;?>
         <?php foreach ($nuevas as $key => $notif): ?>
-            <article data-rel="<?php echo Yii::app()->event->getCurrentDate($notif->timestamp); ?>">
+            <article data-rel="<?php echo $notif->timestamp; ?>">
                 <?php
                     //Calculamos el tiempo que hace
                     //$fecha_noti = date_create($notif->timestamp);
                     //$intervalo = date_diff(date_create(), $fecha_noti);
-                    $fecha_noti = Yii::app()->event->getCurrentDateTime($notif->timestamp);
+                    $fecha_noti = $notif->timestamp;
                     $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
@@ -207,12 +207,12 @@ $pattern = '/:+([a-zA-Z]+):+/i';
         <p class="corralNotif"><span>Notificaciones leídas</span></p>
         <?php endif;?>
         <?php foreach ($viejas as $key => $notif): ?>
-        <article data-rel="<?php echo Yii::app()->event->getCurrentDate($notif->timestamp); ?>">
+        <article data-rel="<?php echo $notif->timestamp; ?>">
             <?php
                     //Calculamos el tiempo que hace
                     //$fecha_noti = date_create($notif->timestamp);
                     //$intervalo = date_diff(date_create(), $fecha_noti);
-                    $fecha_noti = Yii::app()->event->getCurrentDateTime($notif->timestamp);
+                    $fecha_noti = $notif->timestamp;
                     $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
