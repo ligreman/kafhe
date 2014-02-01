@@ -209,6 +209,9 @@ class EventController extends Controller
         Gungubo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
         Gumbudo::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
 
+        //Elimino notificaciones de corral
+        NotificationCorral::model()->deleteAll(array('condition'=>'event_id=:evento', 'params'=>array(':evento'=>$event->id)));
+
         //Fama de los bandos
         $bandoGanador = '';
         $famaSides = Yii::app()->usertools->calculateSideFames();

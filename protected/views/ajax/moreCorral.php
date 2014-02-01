@@ -1,12 +1,29 @@
 <?php
-    $nombres_tiempo=array('día','hora','minuto','segundo');
-    $pattern = '/:+([a-zA-Z]+):+/i';
-    foreach ($notifications as $key => $notif): ?>
-    <article data-rel="<?php echo Yii::app()->event->getCurrentDate($notif->timestamp); ?>">
+$nombres_tiempo=array('día','hora','minuto','segundo');
+$pattern = '/:+([a-zA-Z]+):+/i';
+$last_read = Yii::app()->currentUser->lastNotificationRead;
+$habiaNoLeidas = null;
+
+    foreach ($notifications as $key => $notif):
+        //Miro a ver si la primera notificación es no leída
+        if ($habiaNoLeidas==null) {
+            if (strtotime($notif->timestamp) > strtotime($last_read))
+                $habiaNoLeidas = true;
+            else $habiaNoLeidas = false;
+        }
+
+        //Si había no leídas y esta notificación está leída, he de meter el separador de a partir de aquí leídas
+        if ($habiaNoLeidas && (strtotime($notif->timestamp) <= strtotime($last_read))) {
+            ?> <p class="corralNotif"><span>Notificaciones leídas</span></p> <?php
+            $habiaNoLeidas = 'none'; //para que no haga nada más, pongo el separador una sola vez
+        }
+
+    ?>
+    <article data-rel="<?php echo $notif->timestamp; ?>">
             <?php
                     //Calculamos el tiempo que hace
                     //$fecha_noti = date_create($notif->timestamp);
-                    $fecha_noti = Yii::app()->event->getCurrentDateTime($notif->timestamp);
+                    $fecha_noti = $notif->timestamp;
                     $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
