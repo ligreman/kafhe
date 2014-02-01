@@ -8,11 +8,27 @@ define('SYSTEM','system');
 
 $nombres_tiempo=array('día','hora','minuto','segundo');
 $aliases = Yii::app()->usertools->getAlias();
+$last_read = Yii::app()->currentUser->lastNotificationRead;
+$habiaNoLeidas = null;
+
 if($notifications != null):
 ?>
 <?php $last_type = trim($type);?>
-    <?php foreach($notifications as $notification):?>
-        <article data-rel="<?php echo Yii::app()->event->getCurrentDate($notification->timestamp); ?>" class="notification <?php echo $notification->type;?> <?php
+    <?php foreach($notifications as $notification):
+        //Miro a ver si la primera notificación es no leída
+        if ($habiaNoLeidas==null) {
+            if (strtotime($notification->timestamp) > strtotime($last_read))
+                $habiaNoLeidas = true;
+            else $habiaNoLeidas = false;
+        }
+
+        //Si había no leídas y esta notificación está leída, he de meter el separador de a partir de aquí leídas
+        if ($habiaNoLeidas && (strtotime($notification->timestamp) <= strtotime($last_read))) {
+            ?> <p class="categoriaNotif"><span>Notificaciones leídas</span></p> <?php
+            $habiaNoLeidas = 'none'; //para que no haga nada más, pongo el separador una sola vez
+        }
+    ?>
+        <article data-rel="<?php echo $notification->timestamp; ?>" class="notification <?php echo $notification->type;?> <?php
             if(strcmp($notification->type,$last_type)!=0 && (strcmp($last_type, KAFHE)==0 || strcmp($last_type,ACHIKHORIA)==0 || strcmp($last_type,"")==0)){
                 echo 'first';
                 $last_type = $notification->type;
@@ -29,7 +45,7 @@ if($notifications != null):
             <?php
                 //Calculamos el tiempo que hace
                 //$fecha_noti = date_create($notification->timestamp);
-                $fecha_noti = Yii::app()->event->getCurrentDateTime($notification->timestamp);
+                $fecha_noti = $notification->timestamp;
                 $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                 $tiempo = $intervalo->format("%d,%h,%i,%s");
                 $t = explode(',',$tiempo);
