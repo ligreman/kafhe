@@ -134,7 +134,7 @@
                 'items'=>array(
                     //Menú principal
                     array('label'=>'Notificaciones', 'url'=>Yii::app()->homeUrl, 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>($this->id=='site' && !isset($this->action->view))?true:false),
-                    array('label'=>'Corral', 'url'=>array('/corral'), 'visible'=>(Yii::app()->user->checkAccess('Usuario')), 'active'=>$this->id=='corral'?true:false),
+                    array('label'=>'Corral', 'url'=>array('/corral'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusCalma || Yii::app()->event->status==Yii::app()->params->statusBatalla)), 'active'=>$this->id=='corral'?true:false),
                     array('label' => ''),
                     array('label'=>'Desayuno', 'url'=>array('/enrollment'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->type=='desayuno' && (Yii::app()->event->status==Yii::app()->params->statusIniciado || Yii::app()->event->status==Yii::app()->params->statusCalma || Yii::app()->event->status==Yii::app()->params->statusBatalla)), 'active'=>$this->id=='enrollment'?true:false),
                     array('label'=>'Batalla', 'url'=>array('/event'), 'visible'=>(Yii::app()->user->checkAccess('Usuario') && isset(Yii::app()->event->model) && Yii::app()->event->status!=Yii::app()->params->statusCerrado), 'active'=>($this->id=='event' && $this->action->id=='index')?true:false),
