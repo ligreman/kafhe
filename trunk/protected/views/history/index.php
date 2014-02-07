@@ -34,9 +34,9 @@
             <!-- LLAMADOR ANTERIOR -->
             <?php
                 $kafheVictory = true;
-                $battleEqual = $event->gungubos_kafhe == $event->gungubos_achikhoria;
-                if($event->gungubos_kafhe < $event->gungubos_achikhoria) $kafheVictory = false;
-                $battleResult = "(".$event->gungubos_kafhe." - ".$event->gungubos_achikhoria.")";
+                $battleEqual = $event->fame_kafhe == $event->fame_achikhoria;
+                if($event->fame_kafhe < $event->fame_achikhoria) $kafheVictory = false;
+                $battleResult = "(".$event->fame_kafhe." - ".$event->fame_achikhoria.")";
                 if($battleEqual){
                     echo '<p id="battleResult">La batalla finalizó en igualdad de condiciones. '.$battleResult.'</p>';
                 }elseif($kafheVictory){
@@ -61,8 +61,8 @@
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Bando', 'Gungubos'],
-                    ['Renunciantes', <?php echo $event->gungubos_achikhoria; ?>],
-                    ['Kafheitas', <?php echo $event->gungubos_kafhe; ?>]
+                    ['Renunciantes', <?php echo $event->fame_achikhoria; ?>],
+                    ['Kafheitas', <?php echo $event->fame_kafhe; ?>]
 
                 ]);
 

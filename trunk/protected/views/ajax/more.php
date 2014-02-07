@@ -44,8 +44,8 @@ if($notifications != null):
             <h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
             <?php
                 //Calculamos el tiempo que hace
-                //$fecha_noti = date_create($notification->timestamp);
-                $fecha_noti = $notification->timestamp;
+                $fecha_noti = date_create($notification->timestamp);
+                //$fecha_noti = $notification->timestamp;
                 $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                 $tiempo = $intervalo->format("%d,%h,%i,%s");
                 $t = explode(',',$tiempo);

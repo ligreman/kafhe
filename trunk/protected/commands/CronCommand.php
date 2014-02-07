@@ -78,34 +78,34 @@
 
 
 #Gumbudos Lifecycle, cada hora de lunes a viernes 10:01, 11:01...
-1 * * * 1-5 /usr/bin/php /home/u931001854/public_html/protected/yiic cron gumbudosLifecycle
+1 * * * 1-5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron gumbudosLifecycle
 
 #Gungubos Lifecycle, cada hora de lunes a viernes 10:00, 11:00...
-0 * * * 1-5 /usr/bin/php /home/u931001854/public_html/protected/yiic cron gungubosLifecycle
+0 * * * 1-5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron gungubosLifecycle
 
 #Cron Pile cada 5 minutos a partir del minuto 4, 10:04, 10:09....
-4-59/5 * * * 1-5 /usr/bin/php /home/u931001854/public_html/protected/yiic cron processCronPile
+4-59/5 * * * 1-5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron processCronPile
 
 #Muerte de gumbudos cada 5 minutos a partir del minuto 3
-3-59/5 * * * 1-5 /usr/bin/php /home/u931001854/public_html/protected/yiic cron gumbudosCheckMuerte
+3-59/5 * * * 1-5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron gumbudosCheckMuerte
 
 #regenerar tueste cada 10 minutos a partir del minuto 3
-3-59/10 * * * 1-5 /usr/bin/php /home/u931001854/public_html/protected/yiic cron regenerarTueste
+3-59/10 * * * 1-5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron regenerarTueste
 
 #Comprobar quemaduras cada 15 minutos a partir del minuto 2
-2-59/15 * * * 1-5 /usr/bin/php /home/u931001854/public_html/protected/yiic cron gungubosCheckQuemados
+2-59/15 * * * 1-5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron gungubosCheckQuemados
 
 #Reducir vida a gungubos por otras cosas (no tener criador, enfermedad...) cada hora 10:30, 11:30...
-30 * * * 1-5 /usr/bin/php /home/u931001854/public_html/protected/yiic cron gungubosReduceHealthExtra
+30 * * * 1-5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron gungubosReduceHealthExtra
 
 #Los viernes a las 10am (el servidor tiene otra hora) pone los eventos en Calma
-0 9 * * 5 /usr/bin/php /home/u931001854/public_html/protected/yiic cron eventosEnCalma
+0 9 * * 5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron eventosEnCalma
 
 #Los lunes a las 9 de la mañana pongo los eventos en Preparativos
-0 8 * * 1 /usr/bin/php /home/u931001854/public_html/protected/yiic cron iniciarEventos
+0 8 * * 1 /usr/bin/php /home/u279194884/public_html/protected/yiic cron iniciarEventos
 
 #Todos los días a las 4 de la mañana hago backup de base de datos
-0 3 * * * sh /home/u931001854/mysql_backup.sh
+0 3 * * * sh /home/u279194884/mysql_backup.sh
 
 
 */

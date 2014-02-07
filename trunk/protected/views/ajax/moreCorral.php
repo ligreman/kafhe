@@ -22,8 +22,8 @@ $habiaNoLeidas = null;
     <article data-rel="<?php echo $notif->timestamp; ?>">
             <?php
                     //Calculamos el tiempo que hace
-                    //$fecha_noti = date_create($notif->timestamp);
-                    $fecha_noti = $notif->timestamp;
+                    $fecha_noti = date_create($notif->timestamp);
+                    //$fecha_noti = $notif->timestamp;
                     $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
                     $tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = explode(',',$tiempo);
