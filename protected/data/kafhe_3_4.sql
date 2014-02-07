@@ -65,7 +65,8 @@ CREATE TABLE IF NOT EXISTS `user_talent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-
+UPDATE `user` SET fame=50 WHERE `group_id`=1;
+UPDATE `user` SET status=1 WHERE `group_id`=1 AND `status`=0;
 
 INSERT INTO `configuration` (`param`, `value`, `category`, `description`) VALUES
   ('tiempoRegeneracionTueste', '600', 'Tueste', 'Intervalo de tiempo, en segundos, entre una regeneración automática de tueste y la siguiente.');
