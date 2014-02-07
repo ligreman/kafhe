@@ -138,7 +138,7 @@ class GumbudosSingleton extends CApplicationComponent
 
 		//Calculo la cantidad de zombies que van a atacar, si no hay ninguno termino el ataque
 		$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'cementerio')));
-Yii::log('Hay '.count($cadaveres).' cadaveres', 'info');
+//Yii::log('Hay '.count($cadaveres).' cadaveres', 'info');
 		//Cada cadáver tiene un % de convertirse en zombie
 		$probabilidadZombie = Yii::app()->config->getParam('gumbudoNigromanteProbabilidadZombie');
 		$probabilidadColera = Yii::app()->config->getParam('gumbudoNigromanteProbabilidadColera');
@@ -149,11 +149,11 @@ Yii::log('Hay '.count($cadaveres).' cadaveres', 'info');
 			$tirada = mt_rand(1,100);
 			if ($tirada <= $probabilidadZombie) {
 				//Zombie!!!!  ¿Será colérico?
-Yii::log('Zombie!!!!', 'info');
+//Yii::log('Zombie!!!!', 'info');
 				$tirada = mt_rand(1,100);
 				if ($tirada <= $probabilidadColera) {
 					//Sí!
-Yii::log('Y es colerico!!!!', 'info');
+//Yii::log('Y es colerico!!!!', 'info');
 					$cadaver->trait = Yii::app()->params->traitColera;
 					$colericos++;
 				}
@@ -164,7 +164,7 @@ Yii::log('Y es colerico!!!!', 'info');
 			if (count($zombies) == Yii::app()->config->getParam('gumbudoNigromanteMaxZombies'))
 				break; //si llego al máximo de zombies que puede convertir, termino de convertir
 		}
-Yii::log('Convierto estos zombies: '.count($zombies), 'info');
+//Yii::log('Convierto estos zombies: '.count($zombies), 'info');
 		if (count($zombies)==0) return true;
 
 		//Sumo la fama por zombies creados, independientemente del resultado
@@ -173,10 +173,10 @@ Yii::log('Convierto estos zombies: '.count($zombies), 'info');
         //Ahora a ver a quién ataco.
         $objetivo = $this->selectTarget($owner, $event_id, $nigromante);
 
-Yii::log('Ataco a '.$objetivo->username.' con '.count($zombies).' zombies', 'info');
+//Yii::log('Ataco a '.$objetivo->username.' con '.count($zombies).' zombies', 'info');
 		//Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
 		$guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
-Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
+//Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
 		//por cada zombie, calculo si se pega con un guardián o no
 		$zombies_atacan = 0;
 		$zombies_muertos_ids = array();
@@ -205,7 +205,7 @@ Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
 			//El zombie original muere (era un cadáver)
 			$zombies_muertos_ids[] = $zombie->id;
 		}
-Yii::log('Al final penetran '.$zombies_atacan.' zombies en el corral', 'info');
+//Yii::log('Al final penetran '.$zombies_atacan.' zombies en el corral', 'info');
 		//Me cargo de una sola consulta a los zombies originales
 		Gungubo::model()->deleteAll('id IN ('.implode(',', $zombies_muertos_ids).')');
 
@@ -215,14 +215,14 @@ Yii::log('Al final penetran '.$zombies_atacan.' zombies en el corral', 'info');
 		$probabilidad = Yii::app()->config->getParam('gunguboZombieProbabilidadZombificar');
 		while ($zombies_atacan_aux > 0) {
 			$tirada = mt_rand(1,100);
-Yii::log(' DATOS: '.$tirada.' // '.$probabilidad, 'info');
+//Yii::log(' DATOS: '.$tirada.' // '.$probabilidad, 'info');
 			if ($tirada <= $probabilidad) {
 				//Convierto uno !!
-Yii::log('  + Zombie convertido!', 'info');
+//Yii::log('  + Zombie convertido!', 'info');
 				$otros_muertos++; //Muere uno más en el corral
 				$zombies_atacan_aux++; //El que convierte no muere y se añade un zombie más
 			} else {
-Yii::log('  - Zombie mueto', 'info');
+//Yii::log('  - Zombie mueto', 'info');
 				//No convierto :S
 				$zombies_atacan_aux--; //El que ataca muere
 			}
@@ -246,7 +246,7 @@ Yii::log('  - Zombie mueto', 'info');
 
 		if ($colericos>0) $txt_colericos = ' ('.$colericos.' de ellos Coléricos)';
 		else $txt_colericos = '';
-Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corral', 'info');
+//Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corral', 'info');
 		//Notificaciones para el atacante
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
@@ -395,7 +395,7 @@ Yii::log('Los zombies mataron en total a '.$cuantos_muertos.' Gungubos del corra
 
 		//Calculo la cantidad de bombas que van a atacar, si no hay ninguno termino el ataque
 		$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'cementerio')));
-Yii::log('Hay '.count($cadaveres).' cadaveres', 'info');
+//Yii::log('Hay '.count($cadaveres).' cadaveres', 'info');
 		//Cada cadáver tiene un % de convertirse en bomba
 		$probabilidadBomba = Yii::app()->config->getParam('gumbudoArtificieroProbabilidadBomba');
 		$bombas = array();
@@ -404,7 +404,7 @@ Yii::log('Hay '.count($cadaveres).' cadaveres', 'info');
 			$tirada = mt_rand(1,100);
 			if ($tirada <= $probabilidadBomba) {
 				//Bomba
-Yii::log('Bomba!!!!', 'info');
+//Yii::log('Bomba!!!!', 'info');
 
 				$bombas[] = $cadaver;
 			}
@@ -412,16 +412,16 @@ Yii::log('Bomba!!!!', 'info');
 			if (count($bombas) == Yii::app()->config->getParam('gumbudoArtificieroMaxBombas'))
 				break; //si llego al máximo de bombas que puede convertir, termino de convertir
 		}
-Yii::log('Convierto estas bombas: '.count($bombas), 'info');
+//Yii::log('Convierto estas bombas: '.count($bombas), 'info');
 		if (count($bombas)==0) return true;
 
         //Ahora a ver a quién ataco.
         $objetivo = $this->selectTarget($owner, $event_id, $artificiero);
 
-Yii::log('Ataco a '.$objetivo->username.' con '.count($bombas).' bombas', 'info');
+//Yii::log('Ataco a '.$objetivo->username.' con '.count($bombas).' bombas', 'info');
 		//Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
 		$guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
-Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
+//Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
 		//por cada bomba, calculo si se pega con un guardián o no
 		$bombas_atacan = 0;
 		$bombas_muertos_ids = array();
@@ -450,7 +450,7 @@ Yii::log('Tiene '.count($guardianes).' guardianes', 'info');
 			//El bomba original muere (era un cadáver)
 			$bombas_muertos_ids[] = $bomba->id;
 		}
-Yii::log('Al final penetran '.$bombas_atacan.' bombas en el corral', 'info');
+//Yii::log('Al final penetran '.$bombas_atacan.' bombas en el corral', 'info');
 		//Me cargo de una sola consulta a los bombas originales
 		Gungubo::model()->deleteAll('id IN ('.implode(',', $bombas_muertos_ids).')');
 
@@ -467,17 +467,17 @@ Yii::log('Al final penetran '.$bombas_atacan.' bombas en el corral', 'info');
 
 		while ($bombas_atacan_aux > 0) {
 			$tirada = mt_rand(1,100);
-Yii::log(' DATOS: '.$tirada.' // '.$probabilidadEstallar, 'info');
+//Yii::log(' DATOS: '.$tirada.' // '.$probabilidadEstallar, 'info');
 			if ($tirada <= $probabilidadEstallar) {
 				//Estalla la bomba !!
-Yii::log('  + ¡Bomba estalla!', 'info');
+//Yii::log('  + ¡Bomba estalla!', 'info');
 				$otros_muertos += mt_rand($minMuertes, $maxMuertes); //Mueren en el corral
 
 				//Miro a ver si quema al estallar
 				$tirada = mt_rand(1,100); //Tiro para ver si quemo o no
 				if ($tirada <= $probabilidadIncendiar) {
 					//Le prendo fuego a otros Gungubos
-Yii::log('  + ¡FUEGO y quemadura!', 'info');
+//Yii::log('  + ¡FUEGO y quemadura!', 'info');
 					$otros_quemados += mt_rand($minIncendiar, $maxIncendiar);
 				}
 			}
@@ -506,7 +506,7 @@ Yii::log('  + ¡FUEGO y quemadura!', 'info');
 
 		if ($cuantos_quemados>0) $txt_quemados = ' y quemado a otros '.$cuantos_quemados;
 		else $txt_quemados = '';
-Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral y quemaron a '.$cuantos_quemados, 'info');
+//Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral y quemaron a '.$cuantos_quemados, 'info');
 		//Notificaciones para el atacante
 		$notiA = new NotificationCorral;
 		$notiA->event_id = $event_id;
@@ -563,7 +563,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
         //Ahora a ver a quién ataco.
         $objetivo = $this->selectTarget($owner, $event_id, $gumbudo);
 
-        Yii::log('Ataco a '.$objetivo->username, 'info');
+        //Yii::log('Ataco a '.$objetivo->username, 'info');
 
         //Miro a ver si incendia y a cuántos quemo en el corral atacado
         $probabilidadIncendiar = Yii::app()->config->getParam('gunguboMolotovProbabilidadIncendiar');
@@ -585,7 +585,7 @@ Yii::log('Las bombas mataron en total a '.$cuantos_muertos.' Gungubos del corral
         if (!$owner->save())
             throw new CHttpException(400, 'Error al guardar la fama del usuario por Ataque de Artificiero en evento '.$event_id.'.');
 
-        Yii::log('Las molotov quemaron a '.$cuantos_quemados, 'info');
+        //Yii::log('Las molotov quemaron a '.$cuantos_quemados, 'info');
         //Notificaciones para el atacante
         $notiA = new NotificationCorral;
         $notiA->event_id = $event_id;
