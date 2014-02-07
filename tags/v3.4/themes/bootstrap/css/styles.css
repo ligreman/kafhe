@@ -1,0 +1,42 @@
+#page {
+    padding-top: 60px;
+}
+
+footer {
+    border-top: 1px solid #EEEEEE;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    padding-top: 1em;
+    text-align: center;
+    color: #AAA;
+    font-style: italic;
+}
+
+
+.flashes div{
+    padding: 1.5em;
+    text-align: center;
+    margin: 1em 3em 0;
+    color: #ffffff;
+    border:1px solid #ffffff;
+}
+
+.flash-critic{
+    background-color: #00924a;
+}
+
+.flash-normal{
+    background-color: #4f77c1;
+}
+
+.flash-fail{
+    background-color: #bf3950;
+}
+
+.flash-error{
+    background-color: #bf3950;
+}
+
+.flash-success{
+    background-color: #00924a;
+}
