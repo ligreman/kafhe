@@ -5,7 +5,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 	public function safeUp()
 	{
 	    //Tablas obsoletas
-        //$this->dropTable('rank');
+        $this->dropTable('rank');
 
         $this->execute('TRUNCATE TABLE skill;');
         $this->execute("TRUNCATE TABLE configuration;");
@@ -16,12 +16,12 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
 	    //Event
         $this->execute('ALTER TABLE event ADD fame_kafhe int(11) NULL DEFAULT NULL AFTER gungubos_kafhe;');
         $this->execute('ALTER TABLE event ADD fame_achikhoria int(11) NULL DEFAULT NULL AFTER gungubos_achikhoria;');
-        //$this->execute('ALTER TABLE event DROP COLUMN gungubos_population;');
-        //$this->execute('ALTER TABLE event DROP COLUMN gungubos_kafhe;');
-        //$this->execute('ALTER TABLE event DROP COLUMN gungubos_achikhoria;');
-        //$this->execute('ALTER TABLE event DROP COLUMN last_gungubos_criadores;');
-        //$this->execute('ALTER TABLE event DROP COLUMN stored_tueste_kafhe;');
-        //$this->execute('ALTER TABLE event DROP COLUMN stored_tueste_achikhoria;');
+        $this->execute('ALTER TABLE event DROP COLUMN gungubos_population;');
+        $this->execute('ALTER TABLE event DROP COLUMN gungubos_kafhe;');
+        $this->execute('ALTER TABLE event DROP COLUMN gungubos_achikhoria;');
+        $this->execute('ALTER TABLE event DROP COLUMN last_gungubos_criadores;');
+        $this->execute('ALTER TABLE event DROP COLUMN stored_tueste_kafhe;');
+        $this->execute('ALTER TABLE event DROP COLUMN stored_tueste_achikhoria;');
 
 	    //User
         $this->execute('ALTER TABLE user ADD fame int(11) NOT NULL DEFAULT 0 AFTER experience;');
