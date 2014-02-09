@@ -15,21 +15,9 @@
 
 	<?php echo $form->textFieldRow($model,'status',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'gungubos_population',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'gungubos_kafhe',array('class'=>'span5')); ?>
-
 	<?php echo $form->textFieldRow($model,'fame_kafhe',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'gungubos_achikhoria',array('class'=>'span5')); ?>
-
 	<?php echo $form->textFieldRow($model,'fame_achikhoria',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'last_gungubos_criadores',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'stored_tueste_kafhe',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'stored_tueste_achikhoria',array('class'=>'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'type',array('class'=>'span5','maxlength'=>8)); ?>
 

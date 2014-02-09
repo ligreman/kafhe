@@ -10,8 +10,6 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('TRUNCATE TABLE skill;');
         $this->execute("TRUNCATE TABLE configuration;");
 
-        //NEW
-        $this->executeFile('data/kafhe_3_4.sql');
 
 	    //Event
         $this->execute('ALTER TABLE event ADD fame_kafhe int(11) NULL DEFAULT NULL AFTER gungubos_kafhe;');
@@ -46,6 +44,9 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE modifier CHANGE `timestamp` `timestamp` timestamp NULL DEFAULT NULL;');
         $this->execute('ALTER TABLE notification CHANGE `timestamp` `timestamp` timestamp NULL DEFAULT NULL;');
         $this->execute('ALTER TABLE notification_corral CHANGE `timestamp` `timestamp` timestamp NULL DEFAULT NULL;');
+
+        //NEW
+        $this->executeFile('data/kafhe_3_4.sql');
 
         // OTEAR
         $this->insert('skill', array(
@@ -873,12 +874,6 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->execute('ALTER TABLE skill CHANGE `description` `description` varchar(255) NOT NULL;');
         $this->execute('ALTER TABLE modifier CHANGE `value` `value` INT(10);');
 
-        $this->delete('skill', "keyword='gumbudoAsaltante'");
-        $this->delete('skill', "keyword='gumbudoGuardian'");
-        $this->delete('configuration', "param='maxGungubosCorral'");
-        $this->delete('configuration', "param='defaultGunguboHelath'");
-
-
         $this->dropTable('gungubo');
         $this->dropTable('gumbudo');
         $this->dropTable('notification_corral');
@@ -887,6 +882,8 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         $this->dropTable('user_talent');
 
         $this->execute("TRUNCATE TABLE cronpile;");
+        $this->execute("TRUNCATE TABLE skill;");
+        $this->execute("TRUNCATE TABLE configuration;");
 		//echo "m131129_182205_kafhe_3_4 does not support migration down.\n";
 		//return false;
 	}
