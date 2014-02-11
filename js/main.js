@@ -353,7 +353,10 @@ function prepareUnreadNotifications(){
 }
 
 function prepareWindowResize(){
+    $("#skillsPanel>ul>li").css("margin-right","-12px");
     $( window ).resize(function() {
-      sly.reload();
+        $("#skillsPanel>ul>li").css("margin-right","0px");
+        sly.reload();
+        $("#skillsPanel>ul>li").css("margin-right","-12px");
     });
 }
