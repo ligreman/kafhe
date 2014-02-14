@@ -20,30 +20,13 @@ $(document).ready(function() {
     $('#LoginForm_username').focus();
     //Uso de Favico
 
+    $("#skillsPanel").owlCarousel({
+        itemsCustom:[[0,2],[479,3],[768,6],[1024,7],[1280,9],[1920,16]]
+    });
 
-    //DESCOMENTAR SI NO SE USA SLY
-    //$('#skillsPanel ul').width($('#skillsPanel ul li').outerWidth()*$('#skillsPanel ul li').size());
-    //DESCOMENTAR SI SE USA SLY
-    var $frame = $('#skillsPanel');
-    sly = new Sly($frame, {
-        horizontal: 1,
-        itemNav: 'centered',
-        activateMiddle: 0,
-        activateOn: null,
-        mouseDragging: 1,
-        touchDragging: 1,
-        releaseSwing: 0,
-        startAt: 0,
-        activatePageOn: null,
-        speed: 400,
-        moveBy: 800,
-        elasticBounds: 1,
-        dragHandle: 1,
-        dynamicHandle: 1,
-        clickBar: 0
-    }).init();
     prepareHabilities();
     prepareWindowResize();
+
 });
 
 function resizeNavBar(){
@@ -353,10 +336,9 @@ function prepareUnreadNotifications(){
 }
 
 function prepareWindowResize(){
-    $("#skillsPanel>ul>li").css("margin-right","-12px");
-    $( window ).resize(function() {
-        $("#skillsPanel>ul>li").css("margin-right","0px");
-        sly.reload();
-        $("#skillsPanel>ul>li").css("margin-right","-12px");
-    });
+    if($(".owl-item").width()*$(".owl-item").size() > $("#skillPanel").width()) {
+        $("#skillsPanel").addClass("more");
+    } else {
+        $("#skillsPanel").removeClass("more");
+    }
 }

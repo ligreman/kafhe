@@ -27,23 +27,25 @@
 $validator = new SkillValidator;
 $prevCategory = '';
 ?>
-<div id="skillsPanel">
-    <ul>
+<div id="skillsPanel" class="owl-carousel">
+    
         <?php foreach($skills as $skill):
             $execCode = $validator->canExecute($skill);
 
             //Se muestra siempre que el bando, estado del jugador, estado del desayuno o talentos adquiridos no sean un requisito.
             if ($execCode < 3 || $execCode == 8):
-
+                $separatorClass = "";
                 //Coloco el separador, si toca
-                if ($prevCategory=='') $prevCategory = $skill->category;
-                elseif ($prevCategory!=$skill->category) {
-                    echo '<li class="separator"></li>';
+                if ($prevCategory=='') {
+                    $prevCategory = $skill->category;
+                }elseif ($prevCategory!=$skill->category) {
+                    //echo '<span class="separator"></span>';
+                    $separatorClass = "separator";
                     $prevCategory = $skill->category;
                 }
                 ?>
 
-                <li><?php
+                <div class="skillIcon <?php echo $separatorClass;?>"><?php
                     $class = 'skillImage';
                     if($execCode != 1) $class .= " grayScale";
                     $img = CHtml::image(Yii::app()->baseUrl."/images/skills/".$skill->keyword.".png",$skill->keyword, array('class' => $class));
@@ -144,10 +146,10 @@ $prevCategory = '';
                         <?php endif; //Fin de if de execCode 1 para mostrar objetivo y botones?>
                         </div>
                     </section>
-                </li>
+                </div>
             <?php endif; ?>
         <?php endforeach; ?>
-    </ul>
+    
 </div>
 <section class="skillDescription">
 </section>
