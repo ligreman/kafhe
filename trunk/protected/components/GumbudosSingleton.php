@@ -77,7 +77,7 @@ class GumbudosSingleton extends CApplicationComponent
 			//Textos de notificaciones
 			$txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Tu Gumbudo Asaltante ha matado '.$cuantos.' Gungubos en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).'.';
 			if ($result===1) $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Asaltante ha superado a tus Guardianes matando a '.$cuantos.' Gungubos en tu corral.';
-            else $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Asaltante ha matado a '.$cuantos.' Gungubos en tu corral.';
+            else $txtD = ':'.Yii::app()->params->gunguboClassDefault.': Un Gumbudo Asaltante ha matado a '.$cuantos.' Gungubos en tu corral.';
 
 			//Fama Asaltante exitoso
             $owner->fame += 2; // 2 de fama por atacar con éxito
@@ -210,7 +210,7 @@ class GumbudosSingleton extends CApplicationComponent
 		Gungubo::model()->deleteAll('id IN ('.implode(',', $zombies_muertos_ids).')');
 
 		//Resuelvo los ataques de los zombies
-		$otros_muertos = 0;
+		$otros_muertos = $cuantos_muertos = 0;
 		$zombies_atacan_aux = $zombies_atacan;
 		$probabilidad = Yii::app()->config->getParam('gunguboZombieProbabilidadZombificar');
 		while ($zombies_atacan_aux > 0) {
@@ -341,10 +341,10 @@ class GumbudosSingleton extends CApplicationComponent
             //Textos de notificaciones
             $txtA = ':'.Yii::app()->params->gumbudoClassPestilente.': Tu Gumbudo Pestilente ha irrumpido en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).' propagando una enfermedad a sus '.$cuantos_infecto.' Gungubos.';
             if ($result===1) $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Pestilente ha superado a tus Guardianes y ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
-            else $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Pestilente ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
+            else $txtD = ':'.Yii::app()->params->gunguboClassDefault.': Un Gumbudo Pestilente ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
         } else {
             //Textos de notificaciones
-            $txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Los Gumbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gumbudo Pestilente.';
+            $txtA = ':'.Yii::app()->params->gumbudoClassPestilente.': Los Gumbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gumbudo Pestilente.';
             $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Tus Gumbudos Guardianes han detenido un ataque de un Pestilente en tu corral.';
         }
 
@@ -455,8 +455,8 @@ class GumbudosSingleton extends CApplicationComponent
 		Gungubo::model()->deleteAll('id IN ('.implode(',', $bombas_muertos_ids).')');
 
 		//Resuelvo los ataques de los bombas al corral (a ver si estallan)
-		$otros_muertos = 0;
-		$otros_quemados = 0;
+		$otros_muertos = $cuantos_muertos = 0;
+		$otros_quemados = $cuantos_quemados = 0;
 		$bombas_atacan_aux = $bombas_atacan;
 		$probabilidadEstallar = Yii::app()->config->getParam('gunguboBombaProbabilidadEstallar');
 		$probabilidadIncendiar = Yii::app()->config->getParam('gunguboBombaProbabilidadIncendiar');
@@ -566,6 +566,7 @@ class GumbudosSingleton extends CApplicationComponent
         //Yii::log('Ataco a '.$objetivo->username, 'info');
 
         //Miro a ver si incendia y a cuántos quemo en el corral atacado
+        $cuantos_quemados = 0;
         $probabilidadIncendiar = Yii::app()->config->getParam('gunguboMolotovProbabilidadIncendiar');
         $minIncendiar = Yii::app()->config->getParam('incendiarMinQuemados');
         $maxIncendiar = Yii::app()->config->getParam('incendiarMaxQuemados');
@@ -651,7 +652,7 @@ class GumbudosSingleton extends CApplicationComponent
             $noti = new NotificationCorral;
             $noti->event_id = $event_id;
             $noti->user_id = $attacker->id;
-            $noti->message = ':'.Yii::app()->params->gumbudoClassNames[$gumbudo->class].': Tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' se ha sentido atraído por un señuelo que había en tu corral.';
+            $noti->message = ':'.$gumbudo->class.': Tu Gumbudo '.Yii::app()->params->gumbudoClassNames[$gumbudo->class].' se ha sentido atraído por un señuelo que había en tu corral.';
             $noti->timestamp = Yii::app()->event->getCurrentDate();
             if (!$noti->save())
                 throw new CHttpException(400, 'Error al guardar la notificación de que un Gumbudo ha caído en señuelo.');
