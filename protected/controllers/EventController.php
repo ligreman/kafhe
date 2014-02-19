@@ -307,9 +307,9 @@ class EventController extends Controller
         $nuevoEvento->gungubos_population = 0; //se inicia vacío el evento //mt_rand(7,13)*100; //mt_rand(5,10)*1000;
         //$nuevoEvento->last_gungubos_repopulation = date('Y-m-d'); //ya he repoblado hoy		
 
-        //$fecha = new DateTime();
-        //$fecha->add(new DateInterval('P7D'));
-		$fecha = strtotime('next Friday');
+        $fecha = new DateTime();
+        $fecha->add(new DateInterval('P7D'));
+		//$fecha = strtotime('next Friday');
         $nuevoEvento->date = date('Y-m-d', $fecha); //$fecha->format('Y-m-d');
 
         if (!$nuevoEvento->save())

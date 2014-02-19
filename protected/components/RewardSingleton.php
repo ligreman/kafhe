@@ -54,7 +54,7 @@ class RewardSingleton extends CApplicationComponent
 			//Creo notificación para él solo
 			$notiA = new Notification;			
 			$notiA->recipient_final = $user->id;
-			$notiA->type = 'omelettus';
+			$notiA->type = 'system';
 			$notiA->message = $result;
             $notiA->timestamp = Yii::app()->event->getCurrentDate();
 			if (!$notiA->save())
