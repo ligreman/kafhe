@@ -124,11 +124,26 @@ class UserToolsSingleton extends CApplicationComponent
 		$diffs = $this->calculateFameDifferentials();		
 		if ($diffs === null) return $probabilidadesRango;
 //print_r($diffs);
-		//Ahora calculo el bruto de la probabilidad según la fama
-		$brutes = array();
-		foreach($diffs as $userId=>$differential) {
-			$brutes[$userId] = max(0, $probabilidadesRango[$userId] - ( $probabilidadesRango[$userId]*$differential / 100 ));
-		}
+
+        //El máximo diferencial, tomados en valores absolutos
+        $maximoDiff = 0;
+        foreach($diffs as $userId=>$differential) {
+            if (abs($differential) > $maximoDiff) $maximoDiff = abs($differential);
+        }
+
+        //Calculo la variación de probabilidad de cada usuario
+        $brutes = array();
+        $maxVariation = Yii::app()->config->getParam('maxVariacionProbabilidadPorFama');
+        foreach($diffs as $userId=>$differential) {
+            //Primero la relación de cada usuario con el máximo de probabilidad que puede variar
+            $relationWithMaxVariation = $differential/$maximoDiff;
+            //Porcentaje a variar
+            $porcVariation = $relationWithMaxVariation * $maxVariation;
+            //echo "User ".$userId." ".$porcVariation."\n";
+            //Probabilidad variada
+            $brutes[$userId] = max(0, $probabilidadesRango[$userId] - ( $probabilidadesRango[$userId]*$porcVariation / 100 ));
+        }
+
 //print_r($brutes);
 		$sumaBrutes = array_sum($brutes);
 //echo "SUMA:".$sumaBrutes;
