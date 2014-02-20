@@ -50,6 +50,11 @@ class TuesteSingleton extends CApplicationComponent
 		    $skillH = Skill::model()->findByAttributes(array('keyword'=>Yii::app()->params->skillHidratar));
             $porcentajePorModificadores += intval($skillH->extra_param); //Este extra param indica el % de regeneración extra
         }
+
+        //Si el usuario es el iluminado y está activo
+        if($user->side=='libre' && $user->active) {
+            $porcentajePorModificadores += 50;
+        }
 		
 		//Si tiene una recompensa		
 		if($recompensaMoreRegen!==false && $user->active) {
