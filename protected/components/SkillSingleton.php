@@ -306,7 +306,7 @@ class SkillSingleton extends CApplicationComponent
 		$cuantos = Gumbudo::model()->updateAll(array('owner_id'=>$user->id), 'event_id=:evento AND class=:clase', array(':evento'=>$event->id, ':clase'=>Yii::app()->params->gumbudoClassAsaltante));
 
         //Doy la fama al jugador
-        $user->fame += $cuantos*1; //1 puntos por convertido
+        $user->fame += $cuantos*Yii::app()->config->getParam('fameWonPerConversionDivina'); //1 puntos por convertido
 
         if (!$user->save())
             throw new CHttpException(400, 'Error al guardar el usuario ('.$user->username.') al darle fama por '.$skill->name.'. ['.print_r($user->getErrors(),true).']');
@@ -338,8 +338,7 @@ class SkillSingleton extends CApplicationComponent
 			$cadaveres = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar', 'params'=>array(':owner'=>$jugador->id, ':evento'=>$event->id, ':lugar'=>'cementerio')));
 			
 			$probabilidadZombie = intval($skill->extra_param);
-			//$zombies = 
-			$zombies_muertos_ids = array();			
+			$zombies_muertos_ids = array();
 
 			foreach($cadaveres as $cadaver) {
 				$tirada = mt_rand(1,100);
@@ -352,21 +351,21 @@ class SkillSingleton extends CApplicationComponent
 			$zombies_atacan = count($zombies_muertos_ids);
 			//Me cargo de una sola consulta a los zombies convertidos
 			Gungubo::model()->deleteAll('id IN ('.implode(',', $zombies_muertos_ids).')');
-    Yii::log(' Atacan '.$zombies_atacan.' al jugador '.$jugador->alias, 'info');
+    //Yii::log(' Atacan '.$zombies_atacan.' al jugador '.$jugador->alias, 'info');
 			//Resuelvo los ataques de los zombies
 			$otros_muertos = 0;
 			$zombies_atacan_aux = $zombies_atacan;
 			$probabilidad = Yii::app()->config->getParam('gunguboZombieProbabilidadZombificar');
 			while ($zombies_atacan_aux > 0) {
 				$tirada = mt_rand(1,100);
-	Yii::log(' DATOS: '.$tirada.' // '.$probabilidad, 'info');
+	//Yii::log(' DATOS: '.$tirada.' // '.$probabilidad, 'info');
 				if ($tirada <= $probabilidad) {
 					//Convierto uno !!
-	Yii::log('  + Zombie convertido!', 'info');
+	///Yii::log('  + Zombie convertido!', 'info');
 					$otros_muertos++; //Muere uno más en el corral
 					$zombies_atacan_aux++; //El que convierte no muere y se añade un zombie más
 				} else {
-	Yii::log('  - Zombie mueto', 'info');
+	//Yii::log('  - Zombie mueto', 'info');
 					//No convierto :S
 					$zombies_atacan_aux--; //El que ataca muere
 				}
@@ -385,7 +384,7 @@ class SkillSingleton extends CApplicationComponent
 				throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Apocalipsis Zombie en evento '.$event->id.'.');
 			
 			if ($zombies_atacan > 0) {
-				$fama_won+=2; //Fama por cada corral atacado
+				$fama_won+=Yii::app()->config->getParam('fameWonPerCorralApocalipsisZombie'); //Fama por cada corral atacado
 				$corrales_atacados++;
 				$total_zombies += $zombies_atacan;
 				$total_otros_muertos += $cuantos_muertos;

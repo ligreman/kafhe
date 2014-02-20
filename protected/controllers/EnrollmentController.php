@@ -143,6 +143,7 @@ class EnrollmentController extends Controller
                     //Si ha cambiado de estado creo la notificación, es decir, si hay mensaje
                     if ($message!="") {
                         $nota = new Notification;
+                        $nota->event_id = Yii::app()->event->id;
                         $nota->recipient_original = Yii::app()->currentUser->id;
                         $nota->recipient_final = Yii::app()->currentUser->id;
                         $nota->message = $message.'.'; //Mensaje para el muro
@@ -184,6 +185,7 @@ class EnrollmentController extends Controller
 					}
 
                     $nota = new Notification;
+                    $nota->event_id = Yii::app()->event->id;
                     $nota->recipient_original = Yii::app()->currentUser->id;
                     $nota->recipient_final = Yii::app()->currentUser->id;
                     $nota->message = $message.'.'; //Mensaje para el muro
