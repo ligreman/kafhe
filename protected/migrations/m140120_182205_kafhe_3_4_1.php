@@ -11,11 +11,13 @@ class m140120_182205_kafhe_3_4_1 extends TXDbMigration
             'description'  =>  'Porcentaje máximo de probabilidad que se puede ganar o perder por la fama al final de un evento.'
         ));
 
+        $this->update('skill', array('require_user_side'=>'kafhe,achikhoria'), 'name=:nam', array(':nam'=>'Hidratar'));
 	}
 
 	public function down()
 	{
         $this->delete('configuration', 'param=:parametro', array(':parametro'=>'maxVariacionProbabilidadPorFama'));
+        $this->update('skill', array('require_user_side'=>null), 'name=:nam', array(':nam'=>'Hidratar'));
 	}
 
 }

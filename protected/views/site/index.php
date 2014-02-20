@@ -58,12 +58,12 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 						<h1><?php echo $nombre; //Yii::app()->usertools->getAlias($notification->recipient_final); ?></h1>
 						<?php
 							//Calculamos el tiempo que hace
-							$fecha_noti = date_create($notification->timestamp);
-							//$fecha_noti = $notification->timestamp;
-							//$intervalo = date_diff(date_create(), $fecha_noti);
-                            $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-							$tiempo = $intervalo->format("%d,%h,%i,%s");
-							$t = explode(',',$tiempo);
+							$fecha_noti = date_create($notification->timestamp); //DateTime de la fecha de la notificación
+                            //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
+                            $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+							//$tiempo = $intervalo->format("%d,%h,%i,%s");
+							$t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
+							//$t = explode(',',$tiempo);
 							$i=0;
 
 							while($i<(count($t)-1) && !$t[$i]){
@@ -112,11 +112,11 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 						<?php
 							//Calculamos el tiempo que hace
 							$fecha_noti = date_create($notification->timestamp);
-                            //$fecha_noti = $notification->timestamp;
-                            //$intervalo = date_diff(date_create(), $fecha_noti);
-                            $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-							$tiempo = $intervalo->format("%d,%h,%i,%s");
-							$t = explode(',',$tiempo);
+                            //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
+                            $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+                            //$tiempo = $intervalo->format("%d,%h,%i,%s");
+                            $t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
+							//$t = explode(',',$tiempo);
 							$i=0;
 
 							while($i<(count($t)-1) && !$t[$i]){
@@ -174,11 +174,11 @@ $pattern = '/:+([a-zA-Z]+):+/i';
                 <?php
                     //Calculamos el tiempo que hace
                     $fecha_noti = date_create($notif->timestamp);
-                    //$intervalo = date_diff(date_create(), $fecha_noti);
-                    //$fecha_noti = $notif->timestamp;
-                    $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-                    $tiempo = $intervalo->format("%d,%h,%i,%s");
-                    $t = explode(',',$tiempo);
+                    //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
+                    $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+                    //$tiempo = $intervalo->format("%d,%h,%i,%s");
+                    $t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
+                    //$t = explode(',',$tiempo);
                     $i=0;
 
                     while($i<(count($t)-1) && !$t[$i]){
@@ -211,11 +211,11 @@ $pattern = '/:+([a-zA-Z]+):+/i';
             <?php
                     //Calculamos el tiempo que hace
                     $fecha_noti = date_create($notif->timestamp);
-                    //$intervalo = date_diff(date_create(), $fecha_noti);
-                    //$fecha_noti = $notif->timestamp;
-                    $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-                    $tiempo = $intervalo->format("%d,%h,%i,%s");
-                    $t = explode(',',$tiempo);
+                    //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
+                    $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+                    //$tiempo = $intervalo->format("%d,%h,%i,%s");
+                    $t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
+                    //$t = explode(',',$tiempo);
                     $i=0;
 
                     while($i<(count($t)-1) && !$t[$i]){

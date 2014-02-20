@@ -23,10 +23,11 @@ $habiaNoLeidas = null;
             <?php
                     //Calculamos el tiempo que hace
                     $fecha_noti = date_create($notif->timestamp);
-                    //$fecha_noti = $notif->timestamp;
-                    $intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-                    $tiempo = $intervalo->format("%d,%h,%i,%s");
-                    $t = explode(',',$tiempo);
+                    //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
+                    $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+                    //$tiempo = $intervalo->format("%d,%h,%i,%s");
+                    $t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
+                    //$t = explode(',',$tiempo);
                     $i=0;
 
                     while($i<(count($t)-1) && !$t[$i]){
