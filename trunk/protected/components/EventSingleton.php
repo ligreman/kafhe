@@ -404,6 +404,40 @@ class EventSingleton extends CApplicationComponent
         return strtotime($date->format('Y-m-d H:i:d'));
     }
 
+    /** Devuelve un array con las diferencias
+     * @param $oldDate DateTime
+     * @param $newDate DateTime
+     * @return array
+     */
+    public function getDateTimeDiff($oldDate, $newDate) {
+        $return = array();
+
+        $Y1 = $oldDate->format('y');
+        $Y2 = $newDate->format('y');
+        $return['years'] = abs($Y2 - $Y1);
+
+        $m1 = $oldDate->format('m');
+        $m2 = $newDate->format('m');
+        $return['months'] = abs($m2 - $m1);
+
+        $d1 = $oldDate->format('d');
+        $d2 = $newDate->format('d');
+        $return['days'] = abs($d2 - $d1);
+
+        $H1 = $oldDate->format('h');
+        $H2 = $newDate->format('h');
+        $return['hours'] = abs($H2 - $H1);
+
+        $i1 = $oldDate->format('i');
+        $i2 = $newDate->format('i');
+        $return['minutes'] = abs($i2 - $i1);
+
+        $s1 = $oldDate->format('s');
+        $s2 = $newDate->format('s');
+        $return['seconds'] = abs($s2 - $s1);
+
+        return $return;
+    }
 
     /** Convierte la fecha del uso horario en que esté a GMT+1
      * @param $fecha Texto con el timestamp de la fecha
