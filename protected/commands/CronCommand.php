@@ -472,6 +472,7 @@ class CronCommand extends CConsoleCommand {
 
                 //Creo la notificación
                 $nota = new Notification;
+                $nota->event_id = Yii::app()->event->id;
                 $nota->message = 'Valientes y valientas, habéis luchado con honor y valor. Descansad ahora a la espera de mi veredicto sobre quién debe llamar.';
                 $nota->type = 'omelettus';
                 $nota->timestamp = Yii::app()->event->getCurrentDate();
@@ -502,6 +503,7 @@ class CronCommand extends CConsoleCommand {
 
                 //Creo la notificación
                 $nota = new Notification;
+                $nota->event_id = Yii::app()->event->id;
                 $nota->message = 'Amados súbditos, un lunes os prometí y un lunes os doy, por lo tanto... ¡comienza la temporada de cría de gungubos!';
                 $nota->type = 'omelettus';
                 $nota->timestamp = Yii::app()->event->getCurrentDate();

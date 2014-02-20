@@ -52,7 +52,8 @@ class RewardSingleton extends CApplicationComponent
             throw new CHttpException(400, 'Error al otorgar la recompensa '.$reward.' al usuario '.$user->username.'.');
 		} else {
 			//Creo notificación para él solo
-			$notiA = new Notification;			
+			$notiA = new Notification;
+			$notiA->event_id = Yii::app()->event->id;
 			$notiA->recipient_final = $user->id;
 			$notiA->type = 'system';
 			$notiA->message = $result;

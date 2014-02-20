@@ -111,6 +111,7 @@ class SkillController extends Controller
 
         //Si no, pues creo la notificación
 		$nota = new Notification;
+		$nota->event_id = Yii::app()->event->id;
         $nota->recipient_original = $skill->originalTarget;
         $nota->recipient_final = $skill->finalTarget;
         $nota->message = $skill->resultMessage; //Mensaje para el muro
