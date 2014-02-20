@@ -235,7 +235,7 @@ class SiteController extends Controller
 
     /******* Funciones auxiliares **********/
     public function loadNotifications() {
-        $notifications = Notification::model()->findAll(array('condition'=>'type!=:type OR (type=:type AND recipient_final=:recipient)', 'params'=>array(':type'=>'system', ':recipient'=>Yii::app()->currentUser->id), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNewNotificacionesMuro')));
+        $notifications = Notification::model()->findAll(array('condition'=>'event_id=:evento AND (type!=:type OR (type=:type AND recipient_final=:recipient))', 'params'=>array(':evento'=>Yii::app()->event->id, ':type'=>'system', ':recipient'=>Yii::app()->currentUser->id), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNewNotificacionesMuro')));
 
         return $notifications;
     }

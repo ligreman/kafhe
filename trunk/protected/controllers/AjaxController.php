@@ -15,7 +15,7 @@ class AjaxController extends Controller
     public function actionLoadMoreNotifications($date,$type) {
         $d = date_parse($date);
         if($d != false){
-            $notifications = Notification::model()->findAll(array('condition'=>'timestamp < :d', 'params'=>array(':d' => $date), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
+            $notifications = Notification::model()->findAll(array('condition'=>'timestamp < :d AND event_id=:evento AND (type!=:type OR (type=:type AND recipient_final=:recipient))', 'params'=>array(':type'=>'system', ':recipient'=>Yii::app()->currentUser->id, ':d' => $date, ':evento'=>Yii::app()->event->id), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
 
             if(count($notifications) < Yii::app()->config->getParam('maxNotificacionesMuro'))
                 $data['hay_mas'] = false;
@@ -30,7 +30,7 @@ class AjaxController extends Controller
     public function actionLoadMoreCorralNotifications($date) {
         $d = date_parse($date);
         if($d != false){
-            $notifications = NotificationCorral::model()->findAll(array('condition'=>'timestamp < :d', 'params'=>array(':d' => $date), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
+            $notifications = NotificationCorral::model()->findAll(array('condition'=>'timestamp < :d AND event_id=:evento AND user_id=:usuario', 'params'=>array(':d' => $date, ':evento'=>Yii::app()->event->id, ':usuario'=>Yii::app()->currentUser->id), 'order'=>'timestamp DESC', 'limit'=>Yii::app()->config->getParam('maxNotificacionesMuro')));
 
             if(count($notifications) < Yii::app()->config->getParam('maxNotificacionesMuro'))
                 $data['hay_mas'] = false;
@@ -45,7 +45,7 @@ class AjaxController extends Controller
 		//Notificaciones nuevas
         $d = date_parse($date);
         if($d != false){
-            $notifications = Notification::model()->count('timestamp > :d', array(':d' => $date));
+            $notifications = Notification::model()->count('timestamp > :d AND event_id=:evento', array(':d' => $date, ':evento'=>Yii::app()->event->id));
 
             $data['notifications'] = $notifications;
             //echo $notifications;
