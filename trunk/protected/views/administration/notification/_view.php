@@ -4,6 +4,10 @@
 	<?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('event_id')); ?>:</b>
+	<?php echo CHtml::encode($data->event_id); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('sender')); ?>:</b>
 	<?php echo CHtml::encode($data->sender); ?>
 	<br />
@@ -24,9 +28,11 @@
 	<?php echo CHtml::encode($data->timestamp); ?>
 	<br />
 
+	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('type')); ?>:</b>
 	<?php echo CHtml::encode($data->type); ?>
 	<br />
 
+	*/ ?>
 
 </div>

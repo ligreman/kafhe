@@ -102,6 +102,7 @@ class UserToolsSingleton extends CApplicationComponent
 
             //Notificación
             $nota = new Notification;
+            $nota->event_id = Yii::app()->event->id;
             $nota->recipient_original = $user->id;
             $nota->recipient_final = $user->id;
             $nota->message = '¡Felicidades! Has aumentado tu conocimiento en los talentos y artes Omelettianas. Ganas un azucarillo.'; //Mensaje para el muro

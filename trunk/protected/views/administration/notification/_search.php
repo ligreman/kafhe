@@ -5,6 +5,8 @@
 
 	<?php echo $form->textFieldRow($model,'id',array('class'=>'span5')); ?>
 
+	<?php echo $form->textFieldRow($model,'event_id',array('class'=>'span5')); ?>
+
 	<?php echo $form->textFieldRow($model,'sender',array('class'=>'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'recipient_original',array('class'=>'span5','maxlength'=>50)); ?>

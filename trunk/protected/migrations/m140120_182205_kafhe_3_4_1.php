@@ -10,14 +10,31 @@ class m140120_182205_kafhe_3_4_1 extends TXDbMigration
             'category'  =>  'Fama',
             'description'  =>  'Porcentaje máximo de probabilidad que se puede ganar o perder por la fama al final de un evento.'
         ));
+        $this->insert('configuration', array(
+            'param'  =>  'fameWonPerCorralApocalipsisZombie',
+            'value'  =>  '5',
+            'category'  =>  'Fama',
+            'description'  =>  'Puntos de fama que ganas por cada corral atacado con el Apocalipsis Zombie.'
+        ));
+        $this->insert('configuration', array(
+            'param'  =>  'fameWonPerConversionDivina',
+            'value'  =>  '2',
+            'category'  =>  'Fama',
+            'description'  =>  'Puntos de fama que ganas por cada Gumbudo Asaltante convertido con Conversión Divina.'
+        ));
 
         $this->update('skill', array('require_user_side'=>'kafhe,achikhoria'), 'name=:nam', array(':nam'=>'Hidratar'));
+
+        $this->execute('ALTER TABLE notification ADD event_id int(11) NOT NULL AFTER id;');
 	}
 
 	public function down()
 	{
         $this->delete('configuration', 'param=:parametro', array(':parametro'=>'maxVariacionProbabilidadPorFama'));
+        $this->delete('configuration', 'param=:parametro', array(':parametro'=>'fameWonPerCorralApocalipsisZombie'));
+        $this->delete('configuration', 'param=:parametro', array(':parametro'=>'fameWonPerConversionDivina'));
         $this->update('skill', array('require_user_side'=>null), 'name=:nam', array(':nam'=>'Hidratar'));
+        $this->execute('ALTER TABLE notification DROP COLUMN event_id;');
 	}
 
 }

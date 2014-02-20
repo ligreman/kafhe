@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'notification':
  * @property integer $id
+ * @property integer $event_id
  * @property integer $sender
  * @property string $recipient_original
  * @property string $recipient_final
@@ -40,14 +41,14 @@ class Notification extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('message, type', 'required'),
-			array('sender', 'numerical', 'integerOnly'=>true),
+			array('event_id, message, type', 'required'),
+			array('event_id, sender', 'numerical', 'integerOnly'=>true),
 			array('recipient_original, recipient_final', 'length', 'max'=>50),
 			array('type', 'length', 'max'=>10),
 			array('timestamp', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, sender, recipient_original, recipient_final, message, timestamp, type', 'safe', 'on'=>'search'),
+			array('id, event_id, sender, recipient_original, recipient_final, message, timestamp, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +70,7 @@ class Notification extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'event_id' => 'Event',
 			'sender' => 'Sender',
 			'recipient_original' => 'Recipient Original',
 			'recipient_final' => 'Recipient Final',
@@ -90,6 +92,7 @@ class Notification extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('event_id',$this->event_id);
 		$criteria->compare('sender',$this->sender);
 		$criteria->compare('recipient_original',$this->recipient_original,true);
 		$criteria->compare('recipient_final',$this->recipient_final,true);
