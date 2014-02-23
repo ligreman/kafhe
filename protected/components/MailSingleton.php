@@ -15,19 +15,19 @@ class MailSingleton extends CApplicationComponent
         //envio mails
         $mail = new YiiMailer();
 
-        /*
+
         $mail->IsSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';  // Specify main and backup server
-        $mail->Port = 465;
+        $mail->Host = 'mx1.hostinger.es';  // Specify main and backup server
+        $mail->Port = 2525;
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = Yii::app()->params->mailServerUsername;                            // SMTP username
         $mail->Password = Yii::app()->params->mailServerPassword;                           // SMTP password
-        $mail->SMTPSecure = 'ssl';                            // Enable encryption, 'ssl' also accepted
-        */
+        //$mail->SMTPSecure = 'ssl';                            // Enable encryption, 'ssl' also accepted
+
 
         //$mail->clearLayout();//if layout is already set in config
         $mail->IsHTML(true);                                  // Set email format to HTML
-        $mail->UseSendmailOptions = false;
+        //$mail->UseSendmailOptions = false;
         $mail->setFrom(Yii::app()->params->adminEmail, 'Omelettus');
 
         $mail->setBcc($data['to']);

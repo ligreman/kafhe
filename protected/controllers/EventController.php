@@ -306,7 +306,7 @@ class EventController extends Controller
         $nuevoEvento->group_id = $event->group_id;
         $nuevoEvento->status = Yii::app()->params->statusPreparativos;
         $nuevoEvento->type = 'desayuno';
-        $nuevoEvento->gungubos_population = 0; //se inicia vacío el evento //mt_rand(7,13)*100; //mt_rand(5,10)*1000;
+        //$nuevoEvento->gungubos_population = 0; //se inicia vacío el evento //mt_rand(7,13)*100; //mt_rand(5,10)*1000;
         //$nuevoEvento->last_gungubos_repopulation = date('Y-m-d'); //ya he repoblado hoy		
 
         $fecha = new DateTime();

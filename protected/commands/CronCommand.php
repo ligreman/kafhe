@@ -101,8 +101,8 @@
 #Los viernes a las 10am (el servidor tiene otra hora) pone los eventos en Calma
 0 9 * * 5 /usr/bin/php /home/u279194884/public_html/protected/yiic cron eventosEnCalma
 
-#Los lunes a las 9 de la mañana pongo los eventos en Preparativos
-0 8 * * 1 /usr/bin/php /home/u279194884/public_html/protected/yiic cron iniciarEventos
+#Los lunes a las 9:01 de la mañana pongo los eventos en Preparativos
+1 8 * * 1 /usr/bin/php /home/u279194884/public_html/protected/yiic cron iniciarEventos
 
 #Todos los días a las 4 de la mañana hago backup de base de datos
 0 3 * * * sh /home/u279194884/mysql_backup.sh
@@ -469,6 +469,9 @@ class CronCommand extends CConsoleCommand {
                 $this->logCron('** ERROR al guardar el evento ('.$event->id.') poniéndolo en estado Calma.', 'info');
             else {
                 $this->logCron('Evento '.$event->id.' puesto en calma ('.$event->status.').', 'info');
+
+                //Elimino del CronPile todo lo que sobra (ataques de gumbudos, )
+                Cronpile::model()->deleteAll('type=:tipo', array(':tipo'=>'gumbudo'));
 
                 //Creo la notificación
                 $nota = new Notification;
