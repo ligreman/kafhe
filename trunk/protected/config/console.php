@@ -44,13 +44,14 @@ return array(
                     'logFile'=>date('Y-m-d').'-console-trace.log',
                     'levels'=>'profile, trace',
                 ),*/
+                //#iniLog
                 array(
                     'class'=>'CFileLogRoute',
                     //'logPath'=>'logs',
                     'logFile'=>date('Y-m-d').'-console-info.log',
                     'levels'=>'info',
                 ),
-                //#iniLog
+
                 array( //debug
                     'class'=>'CFileLogRoute',
                     'levels'=>'trace,log',
@@ -75,7 +76,7 @@ return array(
 		'config'=>array('class'=>'ConfigurationSingleton'),
         'skill'=>array('class'=>'SkillSingleton'),
         'reward'=>array('class'=>'RewardSingleton'),
-        //'mail'=>array('class'=>'MailSingleton'),
+        'mail'=>array('class'=>'MailSingleton'),
 	),
 	
 	'params'=>array(
