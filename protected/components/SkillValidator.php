@@ -284,7 +284,7 @@ class SkillValidator
         if ($skill->keyword!=Yii::app()->params->skillGumbudoAsaltante && $skill->keyword!=Yii::app()->params->skillGumbudoGuardian)
             return true;
         else {
-        Yii::log("Arma: ".$extra_param);
+        //Yii::log("Arma: ".$extra_param);
             if ($extra_param!=Yii::app()->params->gumbudoWeapon1 && $extra_param!=Yii::app()->params->gumbudoWeapon2 && $extra_param!=Yii::app()->params->gumbudoWeapon3) {
                 $this->_lastError = 'No has seleccionado un arma válida para el Gumbudo.';
                 return false;

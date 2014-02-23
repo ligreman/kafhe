@@ -350,7 +350,9 @@ class SkillSingleton extends CApplicationComponent
 
 			$zombies_atacan = count($zombies_muertos_ids);
 			//Me cargo de una sola consulta a los zombies convertidos
-			Gungubo::model()->deleteAll('id IN ('.implode(',', $zombies_muertos_ids).')');
+			if ($zombies_atacan > 0)
+			    Gungubo::model()->deleteAll('id IN ('.implode(',', $zombies_muertos_ids).')');
+
     //Yii::log(' Atacan '.$zombies_atacan.' al jugador '.$jugador->alias, 'info');
 			//Resuelvo los ataques de los zombies
 			$otros_muertos = 0;
