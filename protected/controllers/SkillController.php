@@ -71,7 +71,7 @@ class SkillController extends Controller
                     $hist->target_final = Yii::app()->skill->finalTarget;
                     $hist->result = Yii::app()->skill->result;
                     $hist->event_id = Yii::app()->event->id;
-                    $hist->timestamp = Yii::app()->event->getCurrentDate();
+                    $hist->timestamp = Yii::app()->utils->getCurrentDate();
 
                     if (!$hist->save())
                         throw new CHttpException(400, 'Error al guardar el historial de la ejecución de la habilidad ('.$skill->keyword.'). ['.print_r($hist->getErrors(),true).']');
@@ -116,7 +116,7 @@ class SkillController extends Controller
         $nota->recipient_final = $skill->finalTarget;
         $nota->message = $skill->resultMessage; //Mensaje para el muro
         $nota->type = Yii::app()->currentUser->side;
-        $nota->timestamp = Yii::app()->event->getCurrentDate();
+        $nota->timestamp = Yii::app()->utils->getCurrentDate();
 
         //Si el usuario está impersonando, cambio el objetivo original
         $modifier = Yii::app()->modifier->inModifiers(Yii::app()->params->modifierImpersonando);

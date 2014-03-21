@@ -163,7 +163,7 @@ class CronCommand extends CConsoleCommand {
                 } else {
                     //Compruebo si está inactivo el usuario
                     $user_inactive_time = strtotime($usuario->last_activity) + 25*60*60; //Le sumo 25 horas para ver si ha pasado
-                    if (Yii::app()->event->getCurrentTime() > $user_inactive_time) {
+                    if (Yii::app()->utils->getCurrentTime() > $user_inactive_time) {
                         $usuario->active = 0;
                         $this->logCron('        - Pasa a estar inactivo.', 'info');
                     }
@@ -269,7 +269,7 @@ class CronCommand extends CConsoleCommand {
                     $noti->event_id = $event->id;
                     $noti->user_id = $jugador->id;
                     $noti->message = 'Repoblados '.$a_repoblar.' Gungubos en tu corral.';
-                    $noti->timestamp = Yii::app()->event->getCurrentDate();
+                    $noti->timestamp = Yii::app()->utils->getCurrentDate();
 
                     if (!$noti->save())
                         $this->logCron('** ERROR al guardar la notificación de gungubos repoblados para el jugador '.$jugador->username.' del evento ('.$event->id.').', 'info');
@@ -376,9 +376,9 @@ class CronCommand extends CConsoleCommand {
                 $notiD->event_id = $event->id;
                 $notiD->user_id = $jugador->id;
                 $notiD->message = ':'.Yii::app()->params->gunguboClassDefault.': Han muerto '.$mueren['condicion'].' Gungubos en tu corral a causa de quemaduras, las cuáles se han propagado a otros '.$cuantos_quemados.' Gungubos más. Los muertos reposan ahora en el cementerio.';
-                $notiD->timestamp = Yii::app()->event->getCurrentDate();
+                $notiD->timestamp = Yii::app()->utils->getCurrentDate();
                 if (!$notiD->save())
-                    throw new CHttpException(400, 'Error al guardar la notificación de corral al comprobar quemados en evento '.$event_id.'.');
+                    throw new CHttpException(400, 'Error al guardar la notificación de corral al comprobar quemados en evento '.$event->id.'.');
             }
         }
 
@@ -430,7 +430,7 @@ class CronCommand extends CConsoleCommand {
         if ($events != null) {
             foreach($events as $event) {
                 //Cojo Gumbudos que hayan caducado
-                $now = Yii::app()->event->getCurrentDate();
+                $now = Yii::app()->utils->getCurrentDate();
                 $gumbudos = Gumbudo::model()->findAll(array('condition'=>"'".$now."'>ripdate AND event_id=:evento", 'params'=>array(':evento'=>$event->id)));
 
                 //Mato a los gumbudos que se les haya pasado el arroz
@@ -475,10 +475,10 @@ class CronCommand extends CConsoleCommand {
 
                 //Creo la notificación
                 $nota = new Notification;
-                $nota->event_id = Yii::app()->event->id;
+                $nota->event_id = $event->id;
                 $nota->message = 'Valientes y valientas, habéis luchado con honor y valor. Descansad ahora a la espera de mi veredicto sobre quién debe llamar.';
                 $nota->type = 'omelettus';
-                $nota->timestamp = Yii::app()->event->getCurrentDate();
+                $nota->timestamp = Yii::app()->utils->getCurrentDate();
                 if (!$nota->save())
                     $this->logCron('** ERROR al guardar la notificación de fin de batalla del evento ('.$event->id.').', 'info');
             }
@@ -506,10 +506,10 @@ class CronCommand extends CConsoleCommand {
 
                 //Creo la notificación
                 $nota = new Notification;
-                $nota->event_id = Yii::app()->event->id;
+                $nota->event_id = $event->id;
                 $nota->message = 'Amados súbditos, un lunes os prometí y un lunes os doy, por lo tanto... ¡comienza la temporada de cría de gungubos!';
                 $nota->type = 'omelettus';
-                $nota->timestamp = Yii::app()->event->getCurrentDate();
+                $nota->timestamp = Yii::app()->utils->getCurrentDate();
                 if (!$nota->save())
                     $this->logCron('** ERROR al guardar la notificación de inicio del evento ('.$event->id.').', 'info');
             }
@@ -527,7 +527,7 @@ class CronCommand extends CConsoleCommand {
     public function actionProcessCronPile()
     {		
         $pila = Cronpile::model()->findAll(array('order'=>'due_date ASC'));
-		$now = $init_time = Yii::app()->event->getCurrentTime(); //time();
+		$now = $init_time = Yii::app()->utils->getCurrentTime(); //time();
 
         foreach($pila as $cronjob) {
 			$result = true;
@@ -544,7 +544,7 @@ class CronCommand extends CConsoleCommand {
 
             switch($cronjob->operation) {
                 case 'generateRanking':
-                        $result = Yii::app()->event->generateRanking();
+                        $result = Yii::app()->utils->generateRanking();
                     break;
                 case 'gumbudoAsaltanteAttack':
                         $result = Yii::app()->gumbudos->gumbudoAsaltanteAttack($cronjob->params); //En params va el id del gumbudo que ataca
@@ -573,7 +573,7 @@ class CronCommand extends CConsoleCommand {
             ///TODO volver a activar
             $cronjob->delete();
 
-            $actual_time = Yii::app()->event->getCurrentTime();
+            $actual_time = Yii::app()->utils->getCurrentTime();
             if (($actual_time-$init_time) >= 15)
                 return 0; //No ejecuto más tareas si ya llevo 15 segundos
         }
@@ -658,7 +658,7 @@ class CronCommand extends CConsoleCommand {
     }
 
     public function actionDebugTestCron() {
-        $this->logCron('Probando cron. '.date('Y-m-d H:i:s'));
+        $this->logCron('Probando cron. '.date('Y-m-d H:i:s'), 'warning');
     }
 
 }

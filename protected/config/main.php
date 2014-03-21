@@ -4,6 +4,10 @@
 // Yii::setPathOfAlias('local','path/to/local-folder');
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 
+//Error reporting
+//error_reporting(E_ERROR);
+date_default_timezone_set('Europe/Madrid');
+
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
@@ -97,6 +101,7 @@ return array(
 		//'reward'=>array('class'=>'RewardSingleton'),
 		'historySkill'=>array('class'=>'HistorySkillSingleton'),
         'mail'=>array('class'=>'MailSingleton'),
+        'utils'=>array('class'=>'UtilsSingleton'),
 
 
         'bootstrap'=>array(

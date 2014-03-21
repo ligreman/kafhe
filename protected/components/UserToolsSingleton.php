@@ -107,7 +107,7 @@ class UserToolsSingleton extends CApplicationComponent
             $nota->recipient_final = $user->id;
             $nota->message = '¡Felicidades! Has aumentado tu conocimiento en los talentos y artes Omelettianas. Ganas un azucarillo.'; //Mensaje para el muro
             $nota->type = 'system';
-            $nota->timestamp = Yii::app()->event->getCurrentDate();
+            $nota->timestamp = Yii::app()->utils->getCurrentDate();
 
             if (!$nota->save())
                 throw new CHttpException(400, 'Error al guardar una notificación por subir nivel al usuario ('.$user->id.').');
@@ -137,7 +137,10 @@ class UserToolsSingleton extends CApplicationComponent
         $maxVariation = Yii::app()->config->getParam('maxVariacionProbabilidadPorFama');
         foreach($diffs as $userId=>$differential) {
             //Primero la relación de cada usuario con el máximo de probabilidad que puede variar
-            $relationWithMaxVariation = $differential/$maximoDiff;
+            if ($maximoDiff>0)
+                $relationWithMaxVariation = $differential/$maximoDiff;
+            else
+                $relationWithMaxVariation = 0;
             //Porcentaje a variar
             $porcVariation = $relationWithMaxVariation * $maxVariation;
             //echo "User ".$userId." ".$porcVariation."\n";
