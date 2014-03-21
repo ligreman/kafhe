@@ -85,7 +85,7 @@ class EventController extends Controller
 		$nota->event_id = Yii::app()->event->id;
         $nota->message = ':battle: ¡Que de comienzo la batalla! Nuestro primer llamador es... ¡'.Yii::app()->usertools->getAlias($event->caller_id).'!';
         $nota->type = 'omelettus';
-        $nota->timestamp = Yii::app()->event->getCurrentDate();
+        $nota->timestamp = Yii::app()->utils->getCurrentDate();
 		if (!$nota->save())
 			throw new CHttpException(400, 'Error al guardar la notificación de aviso de inicio de batalla del evento '.$event->id.'. ['.print_r($nota->getErrors(),true).']');
 
@@ -174,7 +174,7 @@ class EventController extends Controller
 				$nota->event_id = Yii::app()->event->id;
 				$nota->message = '¡Oh, amados comensales! '.$name.' ha asumido su destino y procederá a llamar en los próximos minutos.';
 				$nota->type = 'omelettus';
-                $nota->timestamp = Yii::app()->event->getCurrentDate();
+                $nota->timestamp = Yii::app()->utils->getCurrentDate();
 				if (!$nota->save())
 					throw new CHttpException(400, 'Error al guardar la notificación de aviso de asumir llamada del evento '.$event->id.'.  ['.print_r($nota->getErrors(),true).']');
             }
@@ -354,7 +354,7 @@ class EventController extends Controller
 		$nota->event_id = Yii::app()->event->id;
 		$nota->message = 'Queridos seres que habitáis mi comedor, según mi juicio y sabiduría os he asignado vuestro bando para la próxima batalla. Comenzad pues a prepararos para ella.';
 		$nota->type = 'omelettus';
-        $nota->timestamp = Yii::app()->event->getCurrentDate();
+        $nota->timestamp = Yii::app()->utils->getCurrentDate();
 		if (!$nota->save())
 			throw new CHttpException(400, 'Error al guardar la notificación de creación del nuevo evento: '.$nuevoEvento->id.'. ['.print_r($nota->getErrors(),true).']');
 
