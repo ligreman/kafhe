@@ -59,8 +59,8 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 						<?php
 							//Calculamos el tiempo que hace
 							$fecha_noti = date_create($notification->timestamp); //DateTime de la fecha de la notificación
-                            //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-                            $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+                            //$intervalo = date_diff(Yii::app()->utils->getCurrentDateTime(), $fecha_noti);
+                            $intervalo = Yii::app()->utils->getDateTimeDiff($fecha_noti, Yii::app()->utils->getCurrentDateTime());
 							//$tiempo = $intervalo->format("%d,%h,%i,%s");
 							$t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
 							//$t = explode(',',$tiempo);
@@ -112,8 +112,8 @@ $pattern = '/:+([a-zA-Z]+):+/i';
 						<?php
 							//Calculamos el tiempo que hace
 							$fecha_noti = date_create($notification->timestamp);
-                            //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-                            $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+                            //$intervalo = date_diff(Yii::app()->utils->getCurrentDateTime(), $fecha_noti);
+                            $intervalo = Yii::app()->utils->getDateTimeDiff($fecha_noti, Yii::app()->utils->getCurrentDateTime());
                             //$tiempo = $intervalo->format("%d,%h,%i,%s");
                             $t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
 							//$t = explode(',',$tiempo);
@@ -174,8 +174,8 @@ $pattern = '/:+([a-zA-Z]+):+/i';
                 <?php
                     //Calculamos el tiempo que hace
                     $fecha_noti = date_create($notif->timestamp);
-                    //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-                    $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+                    //$intervalo = date_diff(Yii::app()->utils->getCurrentDateTime(), $fecha_noti);
+                    $intervalo = Yii::app()->utils->getDateTimeDiff($fecha_noti, Yii::app()->utils->getCurrentDateTime());
                     //$tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
                     //$t = explode(',',$tiempo);
@@ -211,8 +211,8 @@ $pattern = '/:+([a-zA-Z]+):+/i';
             <?php
                     //Calculamos el tiempo que hace
                     $fecha_noti = date_create($notif->timestamp);
-                    //$intervalo = date_diff(Yii::app()->event->getCurrentDateTime(), $fecha_noti);
-                    $intervalo = Yii::app()->event->getDateTimeDiff($fecha_noti, Yii::app()->event->getCurrentDateTime());
+                    //$intervalo = date_diff(Yii::app()->utils->getCurrentDateTime(), $fecha_noti);
+                    $intervalo = Yii::app()->utils->getDateTimeDiff($fecha_noti, Yii::app()->utils->getCurrentDateTime());
                     //$tiempo = $intervalo->format("%d,%h,%i,%s");
                     $t = array($intervalo['days'], $intervalo['hours'], $intervalo['minutes'], $intervalo['seconds']);
                     //$t = explode(',',$tiempo);

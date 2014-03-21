@@ -180,7 +180,7 @@ class SkillSingleton extends CApplicationComponent
 	    $modificador->keyword = $skill->modifier_keyword;
 	    $modificador->duration = $skill->duration;
 	    $modificador->duration_type = $skill->duration_type;
-	    $modificador->timestamp = Yii::app()->event->getCurrentDate(); //he de ponerlo para cuando se actualiza
+	    $modificador->timestamp = Yii::app()->utils->getCurrentDate(); //he de ponerlo para cuando se actualiza
 
 	    if (!$modificador->save())
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
@@ -249,7 +249,7 @@ class SkillSingleton extends CApplicationComponent
 	    $modificador->value = $skill->extra_param;
 	    $modificador->keyword = $skill->modifier_keyword;	    
 	    $modificador->duration_type = $skill->duration_type;
-		$modificador->timestamp = Yii::app()->event->getCurrentDate(); //he de ponerlo para cuando se actualiza
+		$modificador->timestamp = Yii::app()->utils->getCurrentDate(); //he de ponerlo para cuando se actualiza
 
 	    if (!$modificador->save())
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
@@ -381,7 +381,7 @@ class SkillSingleton extends CApplicationComponent
 			$notiA->event_id = $event->id;
 			$notiA->user_id = $jugador->id;
 			$notiA->message = 'Tu corral se ha visto afectado por un Apocalipsis Zombie, que ha convertido a '.$zombies_atacan.' cadáveres de tu cementerio en Gungubos Zombie, que mataron a '.$cuantos_muertos.' Gungubos del corral.';
-            $notiA->timestamp = Yii::app()->event->getCurrentDate();
+            $notiA->timestamp = Yii::app()->utils->getCurrentDate();
 			if (!$notiA->save())
 				throw new CHttpException(400, 'Error al guardar la notificación A de corral de Ataque Apocalipsis Zombie en evento '.$event->id.'.');
 			
@@ -467,7 +467,7 @@ class SkillSingleton extends CApplicationComponent
         $modificador->keyword = $skill->modifier_keyword;
         $modificador->hidden = $skill->modifier_hidden;
         $modificador->value = $skill->extra_param;
-        $modificador->timestamp = Yii::app()->event->getCurrentDate(); //he de ponerlo para cuando se actualiza
+        $modificador->timestamp = Yii::app()->utils->getCurrentDate(); //he de ponerlo para cuando se actualiza
 
         if (!$modificador->save())
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
@@ -496,7 +496,7 @@ class SkillSingleton extends CApplicationComponent
         $modificador->keyword = $skill->modifier_keyword;
         $modificador->duration = $skill->duration;
         $modificador->duration_type = $skill->duration_type;
-        $modificador->timestamp = Yii::app()->event->getCurrentDate(); //he de ponerlo para cuando se actualiza
+        $modificador->timestamp = Yii::app()->utils->getCurrentDate(); //he de ponerlo para cuando se actualiza
 
         if (!$modificador->save())
             throw new CHttpException(400, 'Error al guardar el modificador ('.$modificador->keyword.'). ['.print_r($modificador->getErrors(),true).']');
@@ -658,7 +658,7 @@ class SkillSingleton extends CApplicationComponent
         //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
-        $fecha = Yii::app()->event->getCurrentDateTime();
+        $fecha = Yii::app()->utils->getCurrentDateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
         $gumbudo->class = Yii::app()->params->gumbudoClassAsaltante;
@@ -699,7 +699,7 @@ class SkillSingleton extends CApplicationComponent
         //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
-        $fecha = Yii::app()->event->getCurrentDateTime();
+        $fecha = Yii::app()->utils->getCurrentDateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
         $gumbudo->class = Yii::app()->params->gumbudoClassGuardian;
@@ -732,7 +732,7 @@ class SkillSingleton extends CApplicationComponent
         //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
-        $fecha = Yii::app()->event->getCurrentDateTime();
+        $fecha = Yii::app()->utils->getCurrentDateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
         $gumbudo->class = Yii::app()->params->gumbudoClassCriador;
@@ -752,7 +752,7 @@ class SkillSingleton extends CApplicationComponent
         //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
-        $fecha = Yii::app()->event->getCurrentDateTime();
+        $fecha = Yii::app()->utils->getCurrentDateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
         $gumbudo->class = Yii::app()->params->gumbudoClassNigromante;
@@ -781,7 +781,7 @@ class SkillSingleton extends CApplicationComponent
         //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
-        $fecha = Yii::app()->event->getCurrentDateTime();
+        $fecha = Yii::app()->utils->getCurrentDateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
         $gumbudo->class = Yii::app()->params->gumbudoClassPestilente;
@@ -820,7 +820,7 @@ class SkillSingleton extends CApplicationComponent
         //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
-        $fecha = Yii::app()->event->getCurrentDateTime();
+        $fecha = Yii::app()->utils->getCurrentDateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
         $gumbudo->class = Yii::app()->params->gumbudoClassArtificiero;
@@ -849,7 +849,7 @@ class SkillSingleton extends CApplicationComponent
         //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
-        $fecha = Yii::app()->event->getCurrentDateTime();
+        $fecha = Yii::app()->utils->getCurrentDateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
         $gumbudo->class = Yii::app()->params->gumbudoClassAsedio;
@@ -878,7 +878,7 @@ class SkillSingleton extends CApplicationComponent
         //Creo un Gumbudo
         $gumbudo = new Gumbudo;
 
-        $fecha = Yii::app()->event->getCurrentDateTime();
+        $fecha = Yii::app()->utils->getCurrentDateTime();
         $fecha->add(DateInterval::createFromDateString($skill->gumbudo_action_duration.' hours')); //Cuando muere
 
         $gumbudo->class = Yii::app()->params->gumbudoClassHippie;
@@ -1133,7 +1133,7 @@ class SkillSingleton extends CApplicationComponent
 		$attack_hours = array();
         
         for($i=1; $i<=$number_attacks; $i++) {
-            $fecha = Yii::app()->event->getCurrentDateTime();
+            $fecha = Yii::app()->utils->getCurrentDateTime();
 			
 			if ($i != $number_attacks) { //Si no es el último ataque, le meto una variable de tiempo			
 				$signo = mt_rand(1,2);

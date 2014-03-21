@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/Madrid');
+
 // This is the configuration for yiic console application.
 // Any writable CConsoleApplication properties can be configured here.
 return array(
@@ -77,6 +79,7 @@ return array(
         'skill'=>array('class'=>'SkillSingleton'),
         'reward'=>array('class'=>'RewardSingleton'),
         'mail'=>array('class'=>'MailSingleton'),
+        'utils'=>array('class'=>'UtilsSingleton'),
 	),
 	
 	'params'=>array(

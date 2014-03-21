@@ -89,7 +89,7 @@ class EnrollmentController extends Controller
                 // validates user input and redirect to previous page if validated
                 if($model->validate())
                 {
-                    $enroll->timestamp = Yii::app()->event->getCurrentDate();
+                    $enroll->timestamp = Yii::app()->utils->getCurrentDate();
                     if (!$enroll->isNewRecord) {
                         //Actualizo (cojo el enroll de antes)
                         $enroll->meal_id = $model->meal_id;
@@ -149,7 +149,7 @@ class EnrollmentController extends Controller
                         $nota->message = $message.'.'; //Mensaje para el muro
                         $nota->type = Yii::app()->currentUser->side;
                         $nota->sender = Yii::app()->currentUser->id;
-                        $nota->timestamp = Yii::app()->event->getCurrentDate();
+                        $nota->timestamp = Yii::app()->utils->getCurrentDate();
 
                         if (!$nota->save())
                             throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Alistado. ['.print_r($nota->getErrors(),true).']');
@@ -191,7 +191,7 @@ class EnrollmentController extends Controller
                     $nota->message = $message.'.'; //Mensaje para el muro
                     $nota->type = Yii::app()->currentUser->side;
                     $nota->sender = Yii::app()->currentUser->id;
-                    $nota->timestamp = Yii::app()->event->getCurrentDate();
+                    $nota->timestamp = Yii::app()->utils->getCurrentDate();
 
                     if (!$nota->save())
                         throw new CHttpException(400, 'Error al notificar el cambio de estado del usuario ('.Yii::app()->currentUser->id.') a Baja. ['.print_r($nota->getErrors(),true).']');

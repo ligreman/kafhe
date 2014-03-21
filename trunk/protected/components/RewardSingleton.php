@@ -57,7 +57,7 @@ class RewardSingleton extends CApplicationComponent
 			$notiA->recipient_final = $user->id;
 			$notiA->type = 'system';
 			$notiA->message = $result;
-            $notiA->timestamp = Yii::app()->event->getCurrentDate();
+            $notiA->timestamp = Yii::app()->utils->getCurrentDate();
 			if (!$notiA->save())
 				throw new CHttpException(400, 'Error al guardar la notificación de dar recompensa '.$reward.' al usuario '.$user->username.' en evento '.$eventId.'.');
 		}
@@ -75,7 +75,7 @@ class RewardSingleton extends CApplicationComponent
 		$mod->value = Yii::app()->config->getParam('rewardMoreCritic');
 		$mod->duration = 1;
 		$mod->duration_type = 'evento'; //Todo el desayuno
-		$mod->timestamp = Yii::app()->event->getCurrentDate();
+		$mod->timestamp = Yii::app()->utils->getCurrentDate();
 		
 		if (!$mod->save())
 			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwMoreCritic del usuario '.$user->username.' en evento '.$eventId.'.');
@@ -94,7 +94,7 @@ class RewardSingleton extends CApplicationComponent
 		$mod->value = Yii::app()->config->getParam('rewardLessFail');
 		$mod->duration = 1;
 		$mod->duration_type = 'evento'; //Todo el desayuno
-        $mod->timestamp = Yii::app()->event->getCurrentDate();
+        $mod->timestamp = Yii::app()->utils->getCurrentDate();
 		
 		if (!$mod->save())
 			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwLessFail del usuario '.$user->username.' en evento '.$eventId.'.'.print_r($mod->getErrors(),true));
@@ -113,7 +113,7 @@ class RewardSingleton extends CApplicationComponent
 		$mod->value = Yii::app()->config->getParam('rewardMinTueste');
 		$mod->duration = 1;
 		$mod->duration_type = 'evento'; //Todo el desayuno
-        $mod->timestamp = Yii::app()->event->getCurrentDate();
+        $mod->timestamp = Yii::app()->utils->getCurrentDate();
 		
 		if (!$mod->save())
 			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwMinTueste del usuario '.$user->username.' en evento '.$eventId.'.');
@@ -132,7 +132,7 @@ class RewardSingleton extends CApplicationComponent
 		$mod->value = Yii::app()->config->getParam('rewardMoreRegen');
 		$mod->duration = 1;
 		$mod->duration_type = 'evento'; //Todo el desayuno
-        $mod->timestamp = Yii::app()->event->getCurrentDate();
+        $mod->timestamp = Yii::app()->utils->getCurrentDate();
 		
 		if (!$mod->save())
 			throw new CHttpException(400, 'Error al guardar el modificador por recompensa rwMoreRegen del usuario '.$user->username.' en evento '.$eventId.'.');
