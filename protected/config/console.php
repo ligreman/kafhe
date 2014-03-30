@@ -12,6 +12,7 @@ return array(
 		'application.models.*',	
 	    'application.components.*',
         'application.components.TXDB.*',
+        'ext.YiiMailer.YiiMailer',
 	),
 
 	// preloading 'log' component
