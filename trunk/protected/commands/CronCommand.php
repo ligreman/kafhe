@@ -662,4 +662,15 @@ class CronCommand extends CConsoleCommand {
         $this->logCron('Probando cron. '.date('Y-m-d H:i:s'), 'warning');
     }
 
+    public function actionDebugTestMail() {
+        $emails = array('omelettus@kafhe.com', 'crystaltales@gmail.com');
+        $sent = Yii::app()->mail->sendEmail(array(
+            'to'=>$emails,
+            'subject'=>'Test de email Kafhe',
+            'body'=>'Esto es una prueba de email de Kafhe.'
+        ));
+        if ($sent !== true)
+            Yii::log($sent, 'error', 'Email test');
+    }
+
 }
