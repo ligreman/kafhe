@@ -70,6 +70,9 @@
                     '---',
                     array('label'=>'HISTÓRICOS'),
                     array('label'=>'Ejecución de habilidades', 'url'=>array('/administration/historySkillExecution'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/historySkillExecution'?true:false),
+                    '---',
+                    array('label'=>'ESTADÍSTICAS'),
+                    array('label'=>'Fama por Gumbudos', 'url'=>array('/administration/fameGumbudos'), 'visible'=>Yii::app()->user->checkAccess('Administrador'), 'active'=>$this->id=='administration/fameGumbudos'?true:false),
                 )),
 
             ),

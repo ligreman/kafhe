@@ -52,7 +52,7 @@ class EventController extends Controller
 		$this->render('index', array('battle'=>$battle, 'users'=>$users));
 	}
 
-    /** Da comienzo a la batalla. Pasa el evento de Iniciado a Batalla
+    /** Da comienzo la batalla (elige primer llamador). Pasa el evento de Iniciado a Batalla
      */
     public function actionStart()
 	{
@@ -89,6 +89,21 @@ class EventController extends Controller
 		if (!$nota->save())
 			throw new CHttpException(400, 'Error al guardar la notificación de aviso de inicio de batalla del evento '.$event->id.'. ['.print_r($nota->getErrors(),true).']');
 
+        // Doy lágrimas
+        $sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibertador.' );';
+        $users = Yii::app()->db->createCommand($sql)->queryAll();
+        if (count($users)>0) {
+            $emails = array();
+            foreach($users as $user) {
+                ///TODO eliminar esto: le doy ptos relance a todos los usuarios
+                $us = User::model()->findByPk($user['id']);
+                $us->ptos_relanzamiento += 4;
+                $us->save();
+
+                if ($user['id'] != $event->caller_id)
+                    $emails[] = $user['email'];
+            }
+        }
 
 		//Aviso al llamador
 		$sent = Yii::app()->mail->sendEmail(array(
@@ -97,33 +112,17 @@ class EventController extends Controller
 		    'body'=>'Ha dado inicio la batalla y el Gran Omelettus ha decidido que te toca llamar. Acepta tu derrota o pásale el marrón a otro.'
 		    ));
 		if ($sent !== true)
-            throw new CHttpException(400, $sent);
+            Yii::log($sent, 'error', 'Email escaqueo');
 
-
-		//Aviso a los demás usuarios alistados en el evento de que se inicia la batalla
-		$sql = 'SELECT u.id,u.email FROM user u, event e WHERE e.id='.$event->id.' AND u.group_id=e.group_id AND (u.status='.Yii::app()->params->statusAlistado.' OR u.status='.Yii::app()->params->statusLibertador.' );';
-        $users = Yii::app()->db->createCommand($sql)->queryAll();
-        if (count($users)>0) {
-            $emails = array();
-            foreach($users as $user) {
-				///TODO eliminar esto: le doy ptos relance a todos los usuarios
-                    $us = User::model()->findByPk($user['id']);
-                    $us->ptos_relanzamiento += 4;
-                    $us->save();
-			
-                if ($user['id'] != $event->caller_id)
-                    $emails[] = $user['email'];
-            }
-
-            if (count($emails)>0) {
-                $sent = Yii::app()->mail->sendEmail(array(
-                    'to'=>$emails,
-                    'subject'=>'¡Comienza la batalla!',
-                    'body'=>'El Gran Omelettus te informa de que se ha iniciado la batalla.'
-                ));
-                if ($sent !== true)
-                    throw new CHttpException(400, $sent);
-            }
+        //Aviso a los demás usuarios alistados en el evento de que se inicia la batalla
+        if (count($emails)>0) {
+            $sent = Yii::app()->mail->sendEmail(array(
+                'to'=>$emails,
+                'subject'=>'¡Comienza la batalla!',
+                'body'=>'El Gran Omelettus te informa de que se ha iniciado la batalla.'
+            ));
+            if ($sent !== true)
+                Yii::log($sent, 'error', 'Email start event');
         }
 
 
@@ -161,14 +160,7 @@ class EventController extends Controller
                 }
 
 				$name = $aliases[$event->caller_id]; //Yii::app()->usertools->getAlias($event->caller_id);
-                $sent = Yii::app()->mail->sendEmail(array(
-                    'to'=>$emails,
-                    'subject'=>$name.' ha aceptado su derrota',
-                    'body'=>$name.' ha asumido los designios del Gran Omelettus y derrotado procederá a llamar en los próximos minutos.'
-                ));
-                if ($sent !== true)
-                    throw new CHttpException(400, $sent);
-					
+
 				//Creo la notificación		
 				$nota = new Notification;
 				$nota->event_id = Yii::app()->event->id;
@@ -177,6 +169,15 @@ class EventController extends Controller
                 $nota->timestamp = Yii::app()->utils->getCurrentDate();
 				if (!$nota->save())
 					throw new CHttpException(400, 'Error al guardar la notificación de aviso de asumir llamada del evento '.$event->id.'.  ['.print_r($nota->getErrors(),true).']');
+
+                //Email
+                $sent = Yii::app()->mail->sendEmail(array(
+                    'to'=>$emails,
+                    'subject'=>$name.' ha aceptado su derrota',
+                    'body'=>$name.' ha asumido los designios del Gran Omelettus y derrotado procederá a llamar en los próximos minutos.'
+                ));
+                if ($sent !== true)
+                    Yii::log($sent, 'error', 'Email finish event');
             }
         }
 		
@@ -312,7 +313,7 @@ class EventController extends Controller
         $fecha = new DateTime();
         $fecha->add(new DateInterval('P7D'));
 		//$fecha = strtotime('next Friday');
-        $nuevoEvento->date = date('Y-m-d', $fecha); //$fecha->format('Y-m-d');
+        $nuevoEvento->date = $fecha->format('Y-m-d'); //date('Y-m-d', $fecha);
 
         if (!$nuevoEvento->save())
             throw new CHttpException(400, 'Error al crear un nuevo evento. ['.print_r($nuevoEvento->getErrors(),true).']');
@@ -366,7 +367,7 @@ class EventController extends Controller
             'body'=>$alias.' ha realizado la pertinente llamada para solicitar las delicias y manjares que has pedido. Por favor, procede a reunirte cuanto antes con el resto de comensales para asistir al banquete.'
         ));
         if ($sent !== true)
-            throw new CHttpException(400, $sent);
+            Yii::log($sent, 'error', 'Email new event');
 
 		Yii::app()->user->setFlash('success', 'Evento finalizado correctamente.');
         $this->redirect(array('site/index'));

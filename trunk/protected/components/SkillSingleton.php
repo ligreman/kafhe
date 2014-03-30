@@ -280,6 +280,8 @@ class SkillSingleton extends CApplicationComponent
 		$user->fame += $fama_quitada;		
 		$this->_privateMessage = 'Has ganado '.$fama_quitada.' puntos de fama.';
 
+        Yii::log('[[FAMA]] Difamar. (Difamador) '.$user->alias.' '.$fama_quitada.'f', 'warning');
+
 	    if (!$user->save())
             throw new CHttpException(400, 'Error al guardar el usuario ('.$user->username.') al darle fama por '.$skill->name.'. ['.print_r($user->getErrors(),true).']');
 
@@ -310,7 +312,9 @@ class SkillSingleton extends CApplicationComponent
 
         if (!$user->save())
             throw new CHttpException(400, 'Error al guardar el usuario ('.$user->username.') al darle fama por '.$skill->name.'. ['.print_r($user->getErrors(),true).']');
-		
+
+        Yii::log('[[FAMA]] Conversion. (Conversor) '.$user->alias.' '.$cuantos*Yii::app()->config->getParam('fameWonPerConversionDivina').'f', 'warning');
+
 		$this->_privateMessage = 'Has ganado el control de '.$cuantos.' Gumbudos Asaltantes.';
 		$this->_publicMessage = 'Se ha hecho con el control de todos los Gumbudos Asaltantes.';
 
@@ -398,7 +402,9 @@ class SkillSingleton extends CApplicationComponent
 		
 		if (!$user->save())
             throw new CHttpException(400, 'Error al guardar el usuario ('.$user->username.') al darle fama por '.$skill->name.'. ['.print_r($user->getErrors(),true).']');
-		
+
+        Yii::log('[[FAMA]] Apocalipsis. (Apocaliptor) '.$user->alias.' '.$fama_won.'f', 'warning');
+
 		$this->_privateMessage = 'Has sembrado el caos en '.$corrales_atacados.' corrales enemigos, convirtiendo '.$total_zombies.' cadáveres en Gungubos Zombie, y matando a otros '.$total_otros_muertos.' Gungubos en el corral.';
 		$this->_publicMessage = 'Ha provocado el caos en los corrales de los jugadores del bando de '.ucfirst($bando_opuesto).'.';
 
