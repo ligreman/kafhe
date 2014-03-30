@@ -25,6 +25,10 @@ class GumbudosSingleton extends CApplicationComponent
 		//Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
 		$guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
 		shuffle($guardianes);
+
+		$debug_fame_owner = 0;
+        $debug_fame_objetivo = 0;
+        $debug_guardian_id = '';
 		
 		$ataque_exitoso = true;
         $result = '';
@@ -35,6 +39,8 @@ class GumbudosSingleton extends CApplicationComponent
             if ($result===0) { //Empate
                 $ataque_exitoso = false;
                 $objetivo->fame += 1; //Uno de fama por detener un ataque con empate, para  el defensor
+                $debug_fame_objetivo = 1;
+                $debug_guardian_id = $guardian->id;
             } elseif ($result===2) { //Defensor wins
                 $ataque_exitoso = false;
 
@@ -45,12 +51,16 @@ class GumbudosSingleton extends CApplicationComponent
 
                 //Fama para el Guardián
                 $objetivo->fame += 2;
+                $debug_fame_objetivo = 1;
+                $debug_guardian_id = $guardian->id;
             } elseif ($result===1) { //Asaltante wins
                 //le cambio de arma al defensor
                 $guardian->weapon = $asaltante->weapon;
 
                 //Famas Guardián por derrota
                 $objetivo->fame = max(0, $objetivo->fame-2);
+                $debug_fame_objetivo = -2;
+                $debug_guardian_id = $guardian->id;
             }
 
             //Quito una acción al defensor
@@ -58,6 +68,8 @@ class GumbudosSingleton extends CApplicationComponent
 
             if (!$guardian->save())
                 throw new CHttpException(400, 'Error al guardar el cambio de arma del gumbudo Guardián '.$guardian->id.'.');
+
+            Yii::app()->utils->logCSV($debug_guardian_id.',Guardián,'.$debug_fame_objetivo.','.date('d-m-Y'));
 
             //Continuo mirando el combate con el siguiente guardián si lo hubiere, siempre que el ataque no haya fallado ya
             if ($ataque_exitoso===false) break;
@@ -81,14 +93,17 @@ class GumbudosSingleton extends CApplicationComponent
 
 			//Fama Asaltante exitoso
             $owner->fame += 2; // 2 de fama por atacar con éxito
+            $debug_fame_owner += 2;
 		} else {
 			//Textos de notificaciones
 			$txtA = ':'.Yii::app()->params->gumbudoClassAsaltante.': Los Gumbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gumbudo Asaltante.';
 			$txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Tus Gumbudos Guardianes han detenido un ataque de un Asaltante en tu corral.';
 
             //Fama según resultado, para el Asaltante si pierde el combate con derrota
-            if ($result===2)
+            if ($result===2) {
                 $owner->fame = max(0, $owner->fame-1);
+                $debug_fame_owner -= 1;
+            }
 		}
 
         //Guardo la fama de ambos usuarios, si no son el mismo por una trampa de Confusion o lo que sea
@@ -98,6 +113,9 @@ class GumbudosSingleton extends CApplicationComponent
 
             if (!$objetivo->save())
                 throw new CHttpException(400, 'Error al guardar la fama del usuario defensor por Ataque Asaltante en evento '.$event_id.'.');
+
+            //Yii::log('[[FAMA]] Ataque de Asaltante. (Asaltante '.$gumbudo_id.') '.$owner->alias.' '.$debug_fame_owner.'f ## (Guardian '.$debug_guardian_id.') '.$objetivo->alias.' '.$debug_fame_objetivo.'f {'.$gumbudo_id.',Asaltante,'.$debug_fame_owner.','.date('d-m-Y')."||".''.$debug_guardian_id.',Guardian,'.$debug_fame_objetivo.','.date('d-m-Y').'}', 'warning');
+            Yii::app()->utils->logCSV($gumbudo_id.',Asaltante,'.$debug_fame_owner.','.date('d-m-Y'));
         }
 		
 		//Notificaciones para el atacante
@@ -145,6 +163,10 @@ class GumbudosSingleton extends CApplicationComponent
 		$zombies = array();
 		$colericos = 0;
 
+		$debug_fame_owner = 0;
+        $debug_fame_objetivo = 0;
+        $debug_guardian_id = '';
+
 		foreach($cadaveres as $cadaver) {
 			$tirada = mt_rand(1,100);
 			if ($tirada <= $probabilidadZombie) {
@@ -169,6 +191,7 @@ class GumbudosSingleton extends CApplicationComponent
 
 		//Sumo la fama por zombies creados, independientemente del resultado
 		$owner->fame += count($zombies);
+		$debug_fame_owner += count($zombies);
 
         //Ahora a ver a quién ataco.
         $objetivo = $this->selectTarget($owner, $event_id, $nigromante);
@@ -193,10 +216,16 @@ class GumbudosSingleton extends CApplicationComponent
 
 				//Fama para el defensor
 				$objetivo->fame += 1;
+                $debug_fame_objetivo = 1;
+
 				$defensorGanaFama = true;
 
+				$debug_guardian_id = $guardian->id;
+
 				if (!$guardian->save())
-					throw new CHttpException(400, 'Error al guardar el cambio de arma del gumbudo Guardián '.$guardian->id.' tras ataque zombie.');
+					throw new CHttpException(400, 'Error al guardar el gumbudo Guardián '.$guardian->id.' tras ataque zombie.');
+
+                Yii::app()->utils->logCSV($debug_guardian_id.',Guardián,'.$debug_fame_objetivo.','.date('d-m-Y'));
 			} else {
 				//El zombie pasa y ataca con éxito
 				$zombies_atacan++;
@@ -233,7 +262,8 @@ class GumbudosSingleton extends CApplicationComponent
 
 		//Doy fama por los convertidos en el corral atacado, si no me he atacado a mí mismo
 		if ($owner->id!==$objetivo->id) {
-		    $owner->fame += 2 * $otros_muertos;
+		    //$owner->fame += 2 * $otros_muertos;
+            //$debug_fame_owner += 2 * $otros_muertos;
 
 		    //Guardo al defensor por haber ganado fama, si lo hizo
             if ($defensorGanaFama && !$objetivo->save())
@@ -243,6 +273,9 @@ class GumbudosSingleton extends CApplicationComponent
 		//Guardo al usuario que atacó
         if (!$owner->save())
             throw new CHttpException(400, 'Error al guardar la fama del usuario por Ataque Zombie en evento '.$event_id.'.');
+
+        //Yii::log('[[FAMA]] Ataque de Nigromante. (Nigromante '.$gumbudo_id.') '.$owner->alias.' '.$debug_fame_owner.'f ## (Guardian '.$debug_guardian_id.') '.$objetivo->alias.' '.$debug_fame_objetivo.'f {'.$gumbudo_id.',Asaltante,'.$debug_fame_owner.','.date('d-m-Y')."||".''.$debug_guardian_id.',Guardian,'.$debug_fame_objetivo.','.date('d-m-Y').'}', 'warning');
+        Yii::app()->utils->logCSV($gumbudo_id.',Nigromante,'.$debug_fame_owner.','.date('d-m-Y'));
 
 		if ($colericos>0) $txt_colericos = ' ('.$colericos.' de ellos Coléricos)';
 		else $txt_colericos = '';
@@ -290,36 +323,38 @@ class GumbudosSingleton extends CApplicationComponent
         //Saco las defensas del objetivo (gumbudos guardianes, mejoras del corral..)
         $guardianes = Gumbudo::model()->findAll(array('condition'=>'event_id=:evento AND owner_id=:owner AND class=:clase AND actions>0', 'params'=>array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':clase'=>Yii::app()->params->gumbudoClassGuardian)));
 
+        $debug_fame_owner = 0;
+        $debug_fame_objetivo = 0;
+        $debug_guardian_id = '';
+
         $ataque_exitoso = true;
         $result = '';
-        foreach($guardianes as $guardian) {
-            $result = $this->resolveCombat($pestilente, $guardian);
 
-            //Si gana el defensor o hay empate se termina todo. Devuelve 0 en empate, 1 en gana atacante y 2 en gana defensor
-            if ($result===0) { //Empate
-                $ataque_exitoso = false;
-                $objetivo->fame += 1; //Uno de fama por detener un ataque con empate, para  el defensor
-            } elseif ($result===2) { //Defensor wins
-                $ataque_exitoso = false;
-                //Fama para el Guardián
-                $objetivo->fame += 2;
-            } elseif ($result===1) { //Asaltante wins
-                //Famas Guardián por derrota
-                $objetivo->fame = max(0, $objetivo->fame-2);
-            }
+        //Si hay guardianes...
+        if (count($guardianes)>0) {
+        	//Se pega contra un guardián
+			$guardian = array_shift($guardianes);
+			if ($guardian===null)
+				throw new CHttpException(400, 'Error al resolver un choque de un Guardián con un Gumbudo Pestilente '.$pestilente->id.'.');
 
-            //Quito una acción al defensor
-            $guardian->actions -= 1;
+			//El guardián tiene una acción menos pues.
+			$guardian->actions -= 1;
 
-            if (!$guardian->save())
-                throw new CHttpException(400, 'Error al guardar el cambio de arma del gumbudo Guardián '.$guardian->id.'.');
+			//Fama para el defensor
+			$objetivo->fame += 1;
+            $debug_fame_objetivo = 1;
+            $debug_guardian_id = $guardian->id;
 
-            //Continuo mirando el combate con el siguiente guardián si lo hubiere, siempre que el ataque no haya fallado ya
-            if ($ataque_exitoso===false) break;
-        }
+			if (!$guardian->save())
+				throw new CHttpException(400, 'Error al guardar el gumbudo Guardián '.$guardian->id.' tras ataque pestilente.');
 
-        //Si el pestilente ha conseguido entrar miro a ver si infecto el corral
-        if ($ataque_exitoso) {
+            Yii::app()->utils->logCSV($debug_guardian_id.',Guardián,'.$debug_fame_objetivo.','.date('d-m-Y'));
+
+            //Textos de notificaciones
+            $txtA = ':'.Yii::app()->params->gumbudoClassPestilente.': Los Gumbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gumbudo Pestilente.';
+            $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Tus Gumbudos Guardianes han detenido un ataque de un Pestilente en tu corral.';
+        } else {
+            //Si el pestilente ha conseguido entrar miro a ver si infecto el corral
             if ($pestilente->trait != Yii::app()->params->traitFetido) {
                 $tirada = mt_rand(1,100);
                 $valor = intval(Yii::app()->config->getParam('gumbudoPestilenteProbabilidadInfectar'));
@@ -336,16 +371,13 @@ class GumbudosSingleton extends CApplicationComponent
 
                 //Fama Pestilente para ataque exitoso
                 $owner->fame += 5; // 5 de fama por infectar con éxito
+                $debug_fame_owner += 5;
             }
 
             //Textos de notificaciones
             $txtA = ':'.Yii::app()->params->gumbudoClassPestilente.': Tu Gumbudo Pestilente ha irrumpido en el corral de '.Yii::app()->usertools->getAlias($objetivo->id).' propagando una enfermedad a sus '.$cuantos_infecto.' Gungubos.';
             if ($result===1) $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Un Gumbudo Pestilente ha superado a tus Guardianes y ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
             else $txtD = ':'.Yii::app()->params->gunguboClassDefault.': Un Gumbudo Pestilente ha propagado una enfermedad en tu corral infectando a '.$cuantos_infecto.' Gungubos.';
-        } else {
-            //Textos de notificaciones
-            $txtA = ':'.Yii::app()->params->gumbudoClassPestilente.': Los Gumbudos Guardianes del corral de '.Yii::app()->usertools->getAlias($objetivo->id).' han detenido el ataque de tu Gumbudo Pestilente.';
-            $txtD = ':'.Yii::app()->params->gumbudoClassGuardian.': Tus Gumbudos Guardianes han detenido un ataque de un Pestilente en tu corral.';
         }
 
         //Guardo la fama de ambos usuarios, si no son el mismo por una trampa de Confusion o lo que sea
@@ -356,6 +388,9 @@ class GumbudosSingleton extends CApplicationComponent
             if (!$objetivo->save())
                 throw new CHttpException(400, 'Error al guardar la fama del usuario defensor por Ataque Pestilente en evento '.$event_id.'.');
         }
+
+        //Yii::log('[[FAMA]] Ataque de Pestilente. (Pestilente '.$gumbudo_id.') '.$owner->alias.' '.$debug_fame_owner.'f ## (Guardian '.$debug_guardian_id.') '.$objetivo->alias.' '.$debug_fame_objetivo.'f {'.$gumbudo_id.',Asaltante,'.$debug_fame_owner.','.date('d-m-Y')."||".''.$debug_guardian_id.',Guardian,'.$debug_fame_objetivo.','.date('d-m-Y').'}', 'warning');
+        Yii::app()->utils->logCSV($gumbudo_id.',Pestilente,'.$debug_fame_owner.','.date('d-m-Y'));
 
         //Notificaciones para el atacante
         $notiA = new NotificationCorral;
@@ -400,6 +435,10 @@ class GumbudosSingleton extends CApplicationComponent
 		$probabilidadBomba = Yii::app()->config->getParam('gumbudoArtificieroProbabilidadBomba');
 		$bombas = array();
 
+		$debug_fame_owner = 0;
+		$debug_fame_objetivo = 0;
+		$debug_guardian_id = '';
+
 		foreach($cadaveres as $cadaver) {
 			$tirada = mt_rand(1,100);
 			if ($tirada <= $probabilidadBomba) {
@@ -438,10 +477,15 @@ class GumbudosSingleton extends CApplicationComponent
 
                 //Fama para el defensor
                 $objetivo->fame += 1;
+                $debug_fame_objetivo = 1;
+                $debug_guardian_id = $guardian->id;
+
                 $defensorGanaFama = true;
 
 				if (!$guardian->save())
 					throw new CHttpException(400, 'Error al guardar el cambio de arma del gumbudo Guardián '.$guardian->id.' tras ataque bomba.');
+
+                Yii::app()->utils->logCSV($debug_guardian_id.',Guardián,'.$debug_fame_objetivo.','.date('d-m-Y'));
 			} else {
 				//El bomba pasa y ataca con éxito
 				$bombas_atacan++;
@@ -488,6 +532,7 @@ class GumbudosSingleton extends CApplicationComponent
 		//Fama por cada muerto directo si no me ataco a mí mismo
 		if ($owner->id!==$objetivo->id){
 		    $owner->fame += $otros_muertos;
+		    $debug_fame_owner += $otros_muertos;
 
             //Guardo al defensor por haber ganado fama, si lo hizo
             if ($defensorGanaFama && !$objetivo->save())
@@ -503,6 +548,9 @@ class GumbudosSingleton extends CApplicationComponent
 
 		//Pongo quemados a los que he quemado, obvio
 		$cuantos_quemados = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionQuemadura, 'attacker_id'=>$artificiero->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar ORDER BY RAND() LIMIT '.$otros_quemados.';', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
+
+        //Yii::log('[[FAMA]] Ataque de Artificiero. (Artificiero '.$gumbudo_id.') '.$owner->alias.' '.$debug_fame_owner.'f ## (Guardian '.$debug_guardian_id.') '.$objetivo->alias.' '.$debug_fame_objetivo.'f {'.$gumbudo_id.',Asaltante,'.$debug_fame_owner.','.date('d-m-Y')."||".''.$debug_guardian_id.',Guardian,'.$debug_fame_objetivo.','.date('d-m-Y').'}', 'warning');
+        Yii::app()->utils->logCSV($gumbudo_id.',Artificiero,'.$debug_fame_owner.','.date('d-m-Y'));
 
 		if ($cuantos_quemados>0) $txt_quemados = ' y quemado a otros '.$cuantos_quemados;
 		else $txt_quemados = '';
@@ -545,6 +593,9 @@ class GumbudosSingleton extends CApplicationComponent
         $afectaHippie = $this->gumbudoAfectadoHippie($gumbudo, $event_id, $owner);
         if ($afectaHippie) return true; //Si me ha afectado un Hippie salgo
 
+        $debug_fame_owner = 0;
+        $debug_guardian_id = '';
+
         //Si no tengo 2 gungubos en el corral mal vamos...
         $gungubitos = Gungubo::model()->findAll(array('condition'=>'owner_id=:owner AND event_id=:evento AND location=:lugar ORDER BY health LIMIT 2', 'params'=>array(':owner'=>$owner->id, ':evento'=>$event_id, ':lugar'=>'corral')));
         if (count($gungubitos)!==2) return true; //Me salgo que no puedo atacar!!!
@@ -559,6 +610,7 @@ class GumbudosSingleton extends CApplicationComponent
 
         //Me quito fama por matar pobres gungubos
         $owner->fame = max(0, $owner->fame-2); //Un punto por gungubo achechinado
+        $debug_fame_owner -= 2;
 
         //Ahora a ver a quién ataco.
         $objetivo = $this->selectTarget($owner, $event_id, $gumbudo);
@@ -580,11 +632,15 @@ class GumbudosSingleton extends CApplicationComponent
 
             //Fama por quemar, :P
             $owner->fame += $cuantos_quemados;
+            $debug_fame_owner += $cuantos_quemados;
         }
 
         //Guardo al usuario que atacó
         if (!$owner->save())
             throw new CHttpException(400, 'Error al guardar la fama del usuario por Ataque de Artificiero en evento '.$event_id.'.');
+
+        //Yii::log('[[FAMA]] Ataque de Asedio. (Asedio '.$gumbudo_id.') '.$owner->alias.' '.$debug_fame_owner.'f {'.$gumbudo_id.',Asaltante,'.$debug_fame_owner.','.date('d-m-Y').'}', 'warning');
+        Yii::app()->utils->logCSV($gumbudo_id.',Asedio,'.$debug_fame_owner.','.date('d-m-Y'));
 
         //Yii::log('Las molotov quemaron a '.$cuantos_quemados, 'info');
         //Notificaciones para el atacante

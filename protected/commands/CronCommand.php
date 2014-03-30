@@ -464,6 +464,7 @@ class CronCommand extends CConsoleCommand {
 
 		foreach($events as $event) {
             $event->status = Yii::app()->params->statusCalma;
+            $event->caller_side = ' ';
 
             if (!$event->save())
                 $this->logCron('** ERROR al guardar el evento ('.$event->id.') poniéndolo en estado Calma.', 'info');
@@ -501,8 +502,8 @@ class CronCommand extends CConsoleCommand {
             else {
                 $this->logCron('Evento '.$event->id.' iniciado.', 'info');
 
-                //Programo la cría de gungubos
-                //Yii::app()->event->scheduleGungubosRepopulation($event->id);
+                //cría de los primeros gungubos de la semana
+                $this->actionGungubosLifecycle();
 
                 //Creo la notificación
                 $nota = new Notification;
