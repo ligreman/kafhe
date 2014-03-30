@@ -558,7 +558,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'generates_notification' => 0           // Bool. Genera notificación en el muro.
         ));
 
-        // GUNBUDO GUARDIAN
+        // GUMBUDO GUARDIAN
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Guardián',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Guardián.<br />Otorga puntos de fama cada vez que defienda con éxito el corral. Pierdes fama en caso de derrota en una defensa.',                  // Descripción de la habilidad
@@ -596,7 +596,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'generates_notification' => 0           // Bool. Genera notificación en el muro.
         ));
 
-        // GUNBUDO CRIADOR
+        // GUMBUDO CRIADOR
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Criador',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Criador.<br />Otorga puntos de fama cada vez que cuida a los Gungubos.',                  // Descripción de la habilidad
@@ -634,7 +634,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'generates_notification' => 0           // Bool. Genera notificación en el muro.
         ));
 		
-		// GUNBUDO NIGROMANTE
+		// GUMBUDO NIGROMANTE
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Nigromante',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Nigromante.<br />Otorga puntos de fama al crear zombies en tu cementerio y al convertirlos en los corrales enemigos.',                  // Descripción de la habilidad
@@ -672,7 +672,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'generates_notification' => 0           // Bool. Genera notificación en el muro.
         ));
 
-        // GUNBUDO PESTILENTE
+        // GUMBUDO PESTILENTE
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Pestilente',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Pestilente.<br />Otorga puntos de fama por cada corral infectado.',                  // Descripción de la habilidad
@@ -710,7 +710,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'generates_notification' => 0           // Bool. Genera notificación en el muro.
         ));
 		
-		// GUNBUDO ARTIFICIERO
+		// GUMBUDO ARTIFICIERO
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Artificiero',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Artificiero.<br />Otorga puntos de fama al matar Gungubos en los corrales enemigos.',                  // Descripción de la habilidad
@@ -748,7 +748,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
             'generates_notification' => 0           // Bool. Genera notificación en el muro.
         ));
 
-        // GUNBUDO de ASEDIO
+        // GUMBUDO de ASEDIO
         $this->insert('skill', array(
             'name'  =>  'Gumbudo de Asedio',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo de Asedio.<br />Otorga puntos de fama al quemar Gungubos en corrales enemigos. Pierdes un punto de fama en cada ataque.',                  // Descripción de la habilidad
@@ -787,7 +787,7 @@ class m131129_182205_kafhe_3_4 extends TXDbMigration
         ));
 
 
-        // GUNBUDO HIPPIE
+        // GUMBUDO HIPPIE
         $this->insert('skill', array(
             'name'  =>  'Gumbudo Hippie',                         // Nombre de la habilidad
             'description'  =>  'Evoluciona un Gungubo en un Gumbudo Hippie.',                  // Descripción de la habilidad
