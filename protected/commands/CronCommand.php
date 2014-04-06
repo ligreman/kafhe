@@ -434,13 +434,17 @@ class CronCommand extends CConsoleCommand {
                 $gumbudos = Gumbudo::model()->findAll(array('condition'=>"'".$now."'>ripdate AND event_id=:evento", 'params'=>array(':evento'=>$event->id)));
 
                 //Mato a los gumbudos que se les haya pasado el arroz
-                $n = Gumbudo::model()->deleteAll(array('condition'=>"'".$now."'>ripdate AND event_id=:evento", 'params'=>array(':evento'=>$event->id)));
-                $this->logCron('    Eliminados '.$n.' Gumbudos caducados en el evento '.$event->id.'.', 'info');
+                //$n = Gumbudo::model()->deleteAll(array('condition'=>"'".$now."'>ripdate AND event_id=:evento", 'params'=>array(':evento'=>$event->id)));
+                //$this->logCron('    Eliminados '.$n.' Gumbudos caducados en el evento '.$event->id.'. Now: '.$now, 'warning');
 
                 //Quito los pilacron de los gumbudos muertos
                 $ids = array();
                 foreach ($gumbudos as $gumbudo) {
                     $ids[] = 'params='.$gumbudo->id;
+
+
+                    $this->logCron('  Eliminado gumbudo '.$gumbudo->id.' tipo '.$gumbudo->class.' con ripdate '.$gumbudo->ripdate.' y actions '.$gumbudo->actions.' en evento '.$event->id.'. Now: '.$now, 'warning');
+                    $gumbudo->delete();
                 }
 
                 if (!empty($ids)) {
@@ -496,6 +500,7 @@ class CronCommand extends CConsoleCommand {
 
         foreach($events as $event) {
             $event->status = Yii::app()->params->statusIniciado;
+            $event->caller_side = ' ';
 
             if (!$event->save())
                 $this->logCron('** ERROR al guardar el evento ('.$event->id.') Iniciandolo.', 'info');
@@ -660,6 +665,7 @@ class CronCommand extends CConsoleCommand {
 
     public function actionDebugTestCron() {
         $this->logCron('Probando cron. '.date('Y-m-d H:i:s'), 'warning');
+
     }
 
     public function actionDebugTestMail() {
