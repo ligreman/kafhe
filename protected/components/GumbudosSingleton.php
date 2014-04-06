@@ -38,8 +38,8 @@ class GumbudosSingleton extends CApplicationComponent
             //Si gana el defensor o hay empate se termina todo. Devuelve 0 en empate, 1 en gana atacante y 2 en gana defensor
             if ($result===0) { //Empate
                 $ataque_exitoso = false;
-                $objetivo->fame += 1; //Uno de fama por detener un ataque con empate, para  el defensor
-                $debug_fame_objetivo = 1;
+                $objetivo->fame += 3; //Uno de fama por detener un ataque con empate, para  el defensor
+                $debug_fame_objetivo = 3;
                 $debug_guardian_id = $guardian->id;
             } elseif ($result===2) { //Defensor wins
                 $ataque_exitoso = false;
@@ -50,8 +50,8 @@ class GumbudosSingleton extends CApplicationComponent
                     throw new CHttpException(400, 'Error al guardar el cambio de arma del Asaltante '.$asaltante->id.'.');
 
                 //Fama para el Guardián
-                $objetivo->fame += 2;
-                $debug_fame_objetivo = 1;
+                $objetivo->fame += 5;
+                $debug_fame_objetivo = 5;
                 $debug_guardian_id = $guardian->id;
             } elseif ($result===1) { //Asaltante wins
                 //le cambio de arma al defensor
@@ -215,8 +215,8 @@ class GumbudosSingleton extends CApplicationComponent
 				$guardian->actions -= 1;
 
 				//Fama para el defensor
-				$objetivo->fame += 1;
-                $debug_fame_objetivo = 1;
+				$objetivo->fame += 5;
+                $debug_fame_objetivo = 5;
 
 				$defensorGanaFama = true;
 
@@ -341,8 +341,8 @@ class GumbudosSingleton extends CApplicationComponent
 			$guardian->actions -= 1;
 
 			//Fama para el defensor
-			$objetivo->fame += 1;
-            $debug_fame_objetivo = 1;
+			$objetivo->fame += 5;
+            $debug_fame_objetivo = 5;
             $debug_guardian_id = $guardian->id;
 
 			if (!$guardian->save())
@@ -476,8 +476,8 @@ class GumbudosSingleton extends CApplicationComponent
 				$guardian->actions -= 1;
 
                 //Fama para el defensor
-                $objetivo->fame += 1;
-                $debug_fame_objetivo = 1;
+                $objetivo->fame += 5;
+                $debug_fame_objetivo = 5;
                 $debug_guardian_id = $guardian->id;
 
                 $defensorGanaFama = true;
@@ -624,6 +624,10 @@ class GumbudosSingleton extends CApplicationComponent
         $maxIncendiar = Yii::app()->config->getParam('incendiarMaxQuemados');
         $tirada = mt_rand(1,100);
         if ($tirada <= $probabilidadIncendiar) {
+            //Fama por ataque exitoso
+            $owner->fame += 5;
+            $debug_fame_owner += 5;
+
             //Incendio!!!
             $cuantos = mt_rand($minIncendiar, $maxIncendiar);
 

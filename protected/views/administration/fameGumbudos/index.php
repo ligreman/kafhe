@@ -386,6 +386,7 @@ if ($flashMessages) {
             <?php
                 if (count($lines)>0) {
                     foreach ($lines as $line) {
+                        if ($line == '') continue;
                         list($id, $name, $fame, $time) = explode(',', $line);
                         echo '<tr><td>'.$id.'</td><td>'.$name.'</td><td>'.$fame.'</td><td>'.$time.'</td></tr>';
                     }

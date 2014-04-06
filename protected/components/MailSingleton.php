@@ -30,7 +30,8 @@ class MailSingleton extends CApplicationComponent
         //$mail->UseSendmailOptions = false;
         $mail->setFrom(Yii::app()->params->adminEmail, 'Omelettus');
 
-        $mail->setBcc($data['to']);
+        //$mail->setBcc($data['to']);
+        $mail->setTo($data['to']);
         $mail->setSubject($data['subject']);
         $mail->setBody($data['body']);
 
