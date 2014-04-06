@@ -38,12 +38,24 @@ class FameGumbudosController extends Controller
     public function actionRead($file)
     {
         $file64 = $file;
-        $file = base64_decode($file64);
-        if (!file_exists(Yii::getPathOfAlias('webroot').'/logs/csv/'.$file)) return false;
+        $filter = "";
 
-        $content = file_get_contents(Yii::getPathOfAlias('webroot').'/logs/csv/'.$file);
-        $lines = explode("\n", $content);
-        $acciones = array();
+        if ($file=='lastWeek') {
+            $lines = $this->groupFiles(5);
+            $filter = $file;
+        } else if ($file=='last2Week') {
+            $lines = $this->groupFiles(10);
+            $filter = $file;
+        } else if ($file=='lastMonth') {
+            $lines = $this->groupFiles(20);
+            $filter = $file;
+        } else {
+            $file = base64_decode($file64);
+            if (!file_exists(Yii::getPathOfAlias('webroot').'/logs/csv/'.$file)) return false;
+
+            $content = file_get_contents(Yii::getPathOfAlias('webroot').'/logs/csv/'.$file);
+            $lines = explode("\n", $content);
+        }
 
         $totalGumbudos = $maxFama = $minFama = $avgFama = $sumaFama = $dataGumbudo = array(
             'Asaltante'=>0,
@@ -54,10 +66,11 @@ class FameGumbudosController extends Controller
             'Pestilente'=>0
         );
 
-        $actGumbudos = array();
+        $actGumbudos = $acciones = array();
 
         if (count($lines)>0) {
             foreach ($lines as $line) {
+                if ($line == '') continue;
                 list($id, $name, $fame, $time) = explode(',', $line);
 
                 $acciones[] = array(
@@ -120,10 +133,10 @@ class FameGumbudosController extends Controller
         //print_r($avgFama);
         //$gridDataProvider = new CArrayDataProvider($final);
 
-        $this->render('index', array('files'=>$this->fileList($file), 'file'=>$file64, 'minFame'=>$minFama, 'maxFame'=>$maxFama, 'totalGumbudos'=>$totalGumbudos, 'avgFame'=>$avgFama, 'sumFame'=>$sumaFama, 'acciones'=>$actGumbudos, 'lines'=>$lines, 'dataGumbudo'=>$dataGumbudo));
+        $this->render('index', array('files'=>$this->fileList($file, $filter), 'file'=>$file64, 'minFame'=>$minFama, 'maxFame'=>$maxFama, 'totalGumbudos'=>$totalGumbudos, 'avgFame'=>$avgFama, 'sumFame'=>$sumaFama, 'acciones'=>$actGumbudos, 'lines'=>$lines, 'dataGumbudo'=>$dataGumbudo));
     }
 
-    private function fileList($active_file='')
+    private function fileList($active_file='', $active_filter='')
     {
         //Saco los ficheros
         $files = CFileHelper::findFiles(Yii::getPathOfAlias('webroot').'/logs/csv', array('exclude'=>array('.htaccess')));
@@ -137,14 +150,24 @@ class FameGumbudosController extends Controller
             if ($file == $active_file)
                 $active = true;
 
-            $csvs[] = array('label'=>$file, 'active'=>$active, 'url'=>Yii::app()->baseUrl.'/administration/fameGumbudos/read?file='.base64_encode($file));
+            $csvs[] = array('label'=>str_replace('-fame.csv','',$file), 'active'=>$active, 'url'=>Yii::app()->baseUrl.'/administration/fameGumbudos/read?file='.base64_encode($file));
         }
 
+        $active_lastWeek = $active_last2Week = $active_lastMonth = false;
+
+        if ($active_filter=='lastWeek') $active_lastWeek=true;
+        if ($active_filter=='last2Week') $active_last2Week=true;
+        if ($active_filter=='lastMonth') $active_lastMonth=true;
 
         $list = array();
 
+        $list[] = array('label'=>'ACUMULATIVAS', 'icon'=>'signal');
+        $list[] = array('label'=>'Últimos 5 días', 'active'=>$active_lastWeek, 'url'=>Yii::app()->baseUrl.'/administration/fameGumbudos/read?file=lastWeek');
+        $list[] = array('label'=>'Últimos 10 días', 'active'=>$active_last2Week, 'url'=>Yii::app()->baseUrl.'/administration/fameGumbudos/read?file=last2Week');
+        $list[] = array('label'=>'Último mes', 'active'=>$active_lastMonth, 'url'=>Yii::app()->baseUrl.'/administration/fameGumbudos/read?file=lastMonth');
+
         if (count($csvs)>0) {
-            $list[] = array('label'=>'ESTADÍSTICAS FAMA', 'icon'=>'signal');
+            $list[] = array('label'=>'DÍA A DÍA', 'icon'=>'calendar');
             foreach ($csvs as $csv) {
                 $list[] = $csv;
             }
@@ -160,5 +183,41 @@ class FameGumbudosController extends Controller
     private function endsWith($haystack, $needle)
     {
         return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+    }
+
+    private function groupFiles($num) {
+        $files = CFileHelper::findFiles(Yii::getPathOfAlias('webroot').'/logs/csv', array('exclude'=>array('.htaccess')));
+        $dataFiles = array();
+
+        foreach ($files as $file) {
+            $file = str_replace(Yii::getPathOfAlias('webroot').'/logs/csv\\', '', $file);
+            $file = str_replace(Yii::getPathOfAlias('webroot').'/logs/csv/', '', $file);
+            $date = str_replace('-fame.csv','',$file);
+            $dataFiles[$date] = $file;
+        }
+
+        //Ordeno el array por fechas
+        krsort($dataFiles);
+
+        $filesTaken = array();
+        //Cojo los $num últimos
+        for($i=1; $i<$num; $i++) {
+            if (count($dataFiles)>0) {
+                $filesTaken[] = array_shift($dataFiles);
+            }
+        }
+
+        //Junto lineas
+        $lineas = array();
+
+        foreach ($filesTaken as $fil) {
+            if (file_exists(Yii::getPathOfAlias('webroot').'/logs/csv/'.$fil)) {
+                $content = file_get_contents(Yii::getPathOfAlias('webroot').'/logs/csv/'.$fil);
+                $lines = explode("\n", $content);
+
+                $lineas = array_merge($lineas, $lines);
+            }
+        }
+        return $lineas;
     }
 }

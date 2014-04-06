@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `gungubo` (
   `trait_value` int(11) NULL DEFAULT NULL,
   `condition_status` varchar(50) NOT NULL DEFAULT 'normal',
   `condition_value` int(11) NULL DEFAULT NULL,
-  `birthdate` timestamp NOT NULL,
+  `birthdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `gumbudo` (
   `trait` varchar(50) NULL DEFAULT NULL,
   `trait_value` int(11) NULL DEFAULT NULL,
   `weapon` varchar(50) NULL DEFAULT NULL,
-  `ripdate` timestamp NOT NULL,
+  `ripdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `notification_corral` (
   `event_id` int(11) NULL DEFAULT NULL,
   `user_id` int(11) NULL DEFAULT NULL,
   `message` text NOT NULL,
-  `timestamp` timestamp NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `notification_id` int(11) NULL DEFAULT NULL,
   `user_id` int(11) NULL DEFAULT NULL,
   `message` text NOT NULL,
-  `timestamp` timestamp NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

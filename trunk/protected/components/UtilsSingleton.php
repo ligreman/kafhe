@@ -206,9 +206,9 @@ class UtilsSingleton extends CApplicationComponent
     public function logCSV($message) {
         $date = $this->getCurrentDate('now', 'Y-m-d');
         $name = $date."-fame.csv";
-        $ruta = Yii::getPathOfAlias('webroot').'/logs/csv/';
+        $ruta = Yii::getPathOfAlias('webroot').'/../logs/csv/';
 
-        file_put_contents($ruta.$name, $message, FILE_APPEND);
+        file_put_contents($ruta.$name, $message."\n", FILE_APPEND);
     }
 }
 
