@@ -124,7 +124,7 @@ class ModifierSingleton extends CApplicationComponent
      */
     public function reduceEventModifiers($eventId)
 	{		
-		$mods = Modifier::model()->findAll(array('condition'=>'event_id=:evento AND duration_type=:tipo', 'params'=>array(':evento'=>$eventId, 'tipo'=>'evento')));
+		$mods = Modifier::model()->findAll(array('condition'=>'event_id=:evento AND duration_type=:tipo', 'params'=>array(':evento'=>$eventId, ':tipo'=>'evento')));
 		
 		if ($mods == null)
 			return false;
