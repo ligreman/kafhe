@@ -38,8 +38,8 @@ class GumbudosSingleton extends CApplicationComponent
             //Si gana el defensor o hay empate se termina todo. Devuelve 0 en empate, 1 en gana atacante y 2 en gana defensor
             if ($result===0) { //Empate
                 $ataque_exitoso = false;
-                $objetivo->fame += 3; //Uno de fama por detener un ataque con empate, para  el defensor
-                $debug_fame_objetivo = 3;
+                $objetivo->fame += 2; //Uno de fama por detener un ataque con empate, para  el defensor
+                $debug_fame_objetivo = 2;
                 $debug_guardian_id = $guardian->id;
             } elseif ($result===2) { //Defensor wins
                 $ataque_exitoso = false;
@@ -50,8 +50,8 @@ class GumbudosSingleton extends CApplicationComponent
                     throw new CHttpException(400, 'Error al guardar el cambio de arma del Asaltante '.$asaltante->id.'.');
 
                 //Fama para el Guardián
-                $objetivo->fame += 5;
-                $debug_fame_objetivo = 5;
+                $objetivo->fame += 2;
+                $debug_fame_objetivo = 4;
                 $debug_guardian_id = $guardian->id;
             } elseif ($result===1) { //Asaltante wins
                 //le cambio de arma al defensor
@@ -215,8 +215,8 @@ class GumbudosSingleton extends CApplicationComponent
 				$guardian->actions -= 1;
 
 				//Fama para el defensor
-				$objetivo->fame += 5;
-                $debug_fame_objetivo = 5;
+				$objetivo->fame += 4;
+                $debug_fame_objetivo = 4;
 
 				$defensorGanaFama = true;
 
@@ -262,8 +262,8 @@ class GumbudosSingleton extends CApplicationComponent
 
 		//Doy fama por los convertidos en el corral atacado, si no me he atacado a mí mismo
 		if ($owner->id!==$objetivo->id) {
-		    //$owner->fame += 2 * $otros_muertos;
-            //$debug_fame_owner += 2 * $otros_muertos;
+		    $owner->fame += max ($otros_muertos, 3);
+            $debug_fame_owner += max ($otros_muertos, 3);
 
 		    //Guardo al defensor por haber ganado fama, si lo hizo
             if ($defensorGanaFama && !$objetivo->save())
@@ -341,8 +341,8 @@ class GumbudosSingleton extends CApplicationComponent
 			$guardian->actions -= 1;
 
 			//Fama para el defensor
-			$objetivo->fame += 5;
-            $debug_fame_objetivo = 5;
+			$objetivo->fame += 4;
+            $debug_fame_objetivo = 4;
             $debug_guardian_id = $guardian->id;
 
 			if (!$guardian->save())
@@ -370,8 +370,8 @@ class GumbudosSingleton extends CApplicationComponent
                 $cuantos_infecto = Gungubo::model()->updateAll(array('condition_status'=>Yii::app()->params->conditionEnfermedad, 'condition_value'=>Yii::app()->config->getParam('gumbudoPestilenteIntensidadEnfermedad'), 'attacker_id'=>$pestilente->owner_id), 'event_id=:evento AND owner_id=:owner AND location=:lugar', array(':evento'=>$event_id, ':owner'=>$objetivo->id, ':lugar'=>'corral'));
 
                 //Fama Pestilente para ataque exitoso
-                $owner->fame += 5; // 5 de fama por infectar con éxito
-                $debug_fame_owner += 5;
+                $owner->fame += 7; // 5 de fama por infectar con éxito
+                $debug_fame_owner += 7;
             }
 
             //Textos de notificaciones
@@ -476,8 +476,8 @@ class GumbudosSingleton extends CApplicationComponent
 				$guardian->actions -= 1;
 
                 //Fama para el defensor
-                $objetivo->fame += 5;
-                $debug_fame_objetivo = 5;
+                $objetivo->fame += 4;
+                $debug_fame_objetivo = 4;
                 $debug_guardian_id = $guardian->id;
 
                 $defensorGanaFama = true;
@@ -625,8 +625,8 @@ class GumbudosSingleton extends CApplicationComponent
         $tirada = mt_rand(1,100);
         if ($tirada <= $probabilidadIncendiar) {
             //Fama por ataque exitoso
-            $owner->fame += 5;
-            $debug_fame_owner += 5;
+            $owner->fame += 4;
+            $debug_fame_owner += 4;
 
             //Incendio!!!
             $cuantos = mt_rand($minIncendiar, $maxIncendiar);

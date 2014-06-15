@@ -85,6 +85,7 @@
 
 	<footer>
 		<ul id="toolsLogin">
+		        <li>Last update: May 2014</li>
                 <li>&copy;2014 Omelettus</li>
                 <li><a target="_blank" href="http://wiki.kafhe.com">Kafhe wiki</a></li>
                 <?php if (!Yii::app()->user->isGuest): ?>
