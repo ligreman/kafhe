@@ -21,9 +21,19 @@
     <p>Dicho todo esto, cualquiera que no cumpla estas normas, será sancionado duramente. Porque es una falta de respeto más que otra cosa. Y no valdrán excusas de "es problema del juego si permite hacer tal cosa".</p>
     <p>Ante la duda de si algo es un fallo o no, usad el sentido común y preguntad primero. No va a pasar nada por decir "oye, que hice esto y esto y mira, saco dinero a expuertas o tueste etc...". Si te callas y te pillamos, es cuando pasará.</p>
     <p>Por último, el equipo de desarrollo se reserva el derecho a retirar cualquier beneficio obtenido por algún desequilibrio, una vez corregido el mismo. Independientemente de que el que encuentre el fallo/desequilibrio sea "culpable" o no (lo reporte o no). En caso de reportarlo no se le sancionará, por supuesto.</p>-->
-    <p>Kafhe es un proyecto opensource desarrollado por los mismos creadores de "Desayuno" y "La Leyenda de Kafhe".</p>
+    <p>Kafhe es un proyecto opensource desarrollado por los mismos creadores de "Desayuno" y "La Leyenda de Kafhe", a saber:</p>
+    <ul>
+        <li>Fernando García</li>
+        <li>Federico Lopez</li>
+        <li>Antonio del Río</li>
+    </ul>
+
+    <h1>Licencia</h1>
+    <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Licencia Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Kafhe</span> está distribuido bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licencia Creative Commons Atribución-NoComercial-SinDerivar 4.0 Internacional</a>.<br />Basada en una obra en <a xmlns:dct="http://purl.org/dc/terms/" href="http://www.kafhe.com/" rel="dct:source">http://www.kafhe.com/</a>.</p>
+
     <h1>Agradecimientos</h1>
     <p>Queremos agradecer especialmente al diseñador <a href="http://smiley-fakemon.deviantart.com/">Smiley-Fakemon</a> que nos haya permitido utilizar sus creaciones en la aplicación, con permiso especial para hacer las modificaciones sobre ellas que creamos convenientes.
         Especial mención merecen los Gungubos, basados en una de sus creaciones: el <a href="http://smiley-fakemon.deviantart.com/">Gurm</a></p>
+
 
 </div>
