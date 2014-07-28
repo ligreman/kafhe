@@ -24,8 +24,6 @@
     <p>Kafhe es un proyecto opensource desarrollado por los mismos creadores de "Desayuno" y "La Leyenda de Kafhe", a saber:</p>
     <ul>
         <li>Fernando García</li>
-        <li>Federico Lopez</li>
-        <li>Antonio del Río</li>
     </ul>
 
     <h1>Licencia</h1>
