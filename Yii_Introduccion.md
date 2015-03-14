@@ -1,0 +1,41 @@
+
+
+# Introducción #
+
+## Crear un sitio web ##
+En línea de comandos ejecutar:
+
+`yiic webapp <carpeta raíz del sitio web a crear>`
+
+## Estructura de carpetas ##
+In terms of files on the server, within the application directory (htdocs, for me), you’ll find:
+  * assets
+  * css
+  * images
+  * index-test.php
+  * index.php
+  * protected
+  * themes
+
+The **assets** folder will be used by the Yii framework primarily for jQuery (the JavaScript framework) integration. The **css** and **images** folders are obvious. The entire site will also be run through one of the two index files (more on this in the next post). The **protected** folder is actually the most important one: you’ll edit code found in that folder to change the look and behavior of the site. And **themes** allows you to create variations on the site’s template, just like themes in a WordPress blog.
+
+La carpeta **protected** se recomienda moverla a una parte no pública del servidor.
+
+El archivo **index.php** es el punto de entrada general de la web (todo pasa por ahí). La aplicación se configura ahí mismo, indicando la ruta al framework, al archivo de configuración (/protected/config/main.php), etc.
+
+El archivo **index-test.php** es idéntico al index.php sólo que utiliza la configuración de /protected/config/test.php. Para realizar pruebas (entorno de desarrollo, etc..).
+
+## Archivo de configuración ##
+En el archivo /protected/config/main.php se encuentra la configuración de Yii. En él se configura:
+  * Nombre de la aplicación: name
+  * Activar Gii (el entorno gráfico para generar MVC)
+  * El gestor de URL (para mostrar url “bonitas”)
+  * Conexión MySQL
+  * Log CWebLogRoute
+
+Se puede definir otros parámetros como qué controlador usaremos por defecto (si no se indica ninguno por url, por defecto va al controlador site, pero podemos definir otro así:
+`'defaultController' => 'login',`
+
+El archivo test.php de configuración lo único que hace es cargar el main y sobrescribir algunas entradas.
+
+El archivo console.php es para definir la configuración a la hora de usar instrucciones de línea de comandos.

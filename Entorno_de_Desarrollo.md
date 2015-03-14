@@ -1,0 +1,95 @@
+# Preparación del entorno de desarrollo #
+
+Para el entorno de desarrollo se puede utilizar cualquier IDE, aunque aquí pongo la configuración de Eclipse y de PHPStorm, que son los que más me convencen junto a NetBeans. Recomiendo PHPStorm por su integración con Yii.
+
+## Requisitos previos ##
+  * Instalar [XAMPP](http://www.apachefriends.org/en/xampp-windows.html#641)
+  * Crear una base de datos llamada _kafhe`_`refactor_ con usuario kafhe y contraseña vacía.
+  * Activar MOD\_REWRITE
+
+## Carga incial de datos ##
+
+Una vez esté instalado XAMPP, creada la base de datos, instalado el entorno de desarrollo y descargado el proyecto del repositorio; hay que proceder a cargar los datos iniciales del proyecto.
+
+Para ello cargamos la migración inicial. En una consola del sistema vamos al directorio protect del proyecto y escribimos:
+`yiic migrate`
+
+Nos pedirá confirmación de la migración inicial. Le damos yes y debería crear toda la estructura en la base de datos.
+
+Nota: Para esto hay que tener el php en la variable de entorno PATH del sistema. Si no está, hay que añadirla, metiendo a la variable de entorno la ruta de la carpeta php dentro de xampp (ejemplo c:/xampp/php)
+
+
+
+## PHPStorm (Recomendado) ##
+
+### Instalación ###
+  * Install PHPStorm trial: http://confluence.jetbrains.com/display/PhpStorm/PhpStorm+Early+Access+Program
+  * Enter license
+  * Install this plugin: http://plugins.jetbrains.com/plugin/7182?pr=phpStorm (Settings -> Plugins -> Install from disk)
+
+### How to configure PHPStorm for Yii ###
+
+  1. Exclude yiilite.php from index:
+    * File → Settings → IDE Settings → File Types.
+    * yiilite.php to Ignore files and folders.
+
+  1. Exclude not used directories, specify resources.
+    * File → Settings → Project settings → Directories.
+    * Mark framework/cli/views, protected/runtime and assets as **excluded**.
+    * Mark website root as **resource root**.
+
+  1. Specify path to your PHP.
+    * File → Settings → Project settings → PHP → PHP Home.
+
+  1. If your project uses common Yii framework folder you need to include it.
+    * File → Settings → Project settings → PHP → PHP Home → Add.
+    * Specify a path to framework directory.
+
+  1. If you are writing unit tests you can include PHPUnit to get code completion:
+    * File → Settings → Project settings → PHP → PHP Home → Add.
+    * Specify a path to PHPUnit.
+
+  1. Activate Yii support in the project settings.
+
+
+#### SVN ####
+
+  * En la ventana de selección de proyecto elegir "checkout from CVS". Seleccionar Subversion.
+  * Como URL poner: https://kafhe.googlecode.com/svn/
+
+**NOTA:** si creas un nuevo fichero sin usar el interface de PHPStorm no se añade al svn automáticamente y por lo tanto no se sube. Lo mejor es usar Tortoise para manejar el SVN independientemente de PHPStorm, o si no pues estar atentos a los ficheros que no están versionados (en PHPStorm salen en rojo) y darle a "add" dentro de la opción subversion.
+
+#### BBDD ####
+  * New DataSource
+  * Driver: MySQL Connector 5.1.22
+  * URL: jdbc:mysql://localhost:3306/{base de datos} -> se puede no poner la base de datos para ver todas
+  * User + password que corresponda
+
+### Tasks y Bug Tracker ###
+No he conseguido configurar Google Code como bug tracker para el proyecto, si alguien lo consigue que escriba aquí cómo.
+
+
+## ECLIPSE ##
+### Instalación ###
+  * [Eclipse Helios para PHP](http://www.eclipse.org/downloads/packages/eclipse-php-developers/heliossr2)
+  * [YiiClipse](http://yiiclipse.maziarz.org/)
+
+### Configurar Eclipse ###
+
+Para instalar plugins, ir a Help ->Install New Software
+
+#### SVN ####
+  * Instalar Subclipse: http://subclipse.tigris.org/update_1.10.x
+  * Botón derecho en el panel de proyectos PHP y dar New -> Other, checkout from SVN.
+  * Use existing repository: https://kafhe.googlecode.com/svn
+  * Seleccionar el directorio raíz (el https://kafhe.googlecode.com/svn)
+  * Seleccionar Checkout as a project in the workspace y poner de nombre kafhe\_3,0, dar siguiente, luego indicar la carpeta htdocs del XAMPP. No hace falta crear una carpeta nueva ya que nos la creará automáticamente.
+
+#### MyLyn (bug tracker de Google Code) ####
+  * Instalar el conector para Google Code. Help -> Install New Software. Repositorio: http://knittig.de/googlecode-mylyn-connector/update/
+  * Abrir ventana de Tasks (Widnow -> Show View -> Other -> MyLyn -> Task Repositories.
+  * Pulsar en Ass Task Repository...
+  * Seleccionar el Google Code
+    * Project URL: https://code.google.com/p/kafhe/
+    * Label: Kafhe 3.0
+    * Usuario y contraseña los de la cuenta de gmail que vayáis a usar.

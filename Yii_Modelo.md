@@ -1,0 +1,118 @@
+
+
+# Modelo (MVC) #
+
+Dentro de un modelo se definen unas funciones para crear reglas (rules), relaciones (relations) y etiquetas (attributeLabels).
+
+## Las reglas: rules() ##
+```
+  public function rules() {
+    return array(
+        array('departmentId, firstName, lastName, email, hireDate', 'required'),
+        array('departmentId, ext', 'numerical', 'integerOnly'=>true),
+        array('firstName', 'length', 'max'=>20),
+        array('lastName', 'length', 'max'=>40),
+        array('email', 'length', 'max'=>60),
+        array('email', 'email'),
+        array('leaveDate', 'safe'),
+        array('id, departmentId, firstName, lastName, email, ext, hireDate, leaveDate', 'safe', 'on'=>'search'),
+    );
+  }
+```
+
+El primer parámetro de los array es el campo/s sobre los que se aplica la regla. Después se indica el tipo de validación a aplicar:
+  * boolean: TRUE o FALSE.
+  * captcha: ensuring is equal to the verification code displayed in aCAPTCHA.
+  * compare: ensuring the attribute is equal to another attribute or constant.
+  * email: ensuring the attribute is a valid email address.
+  * date: ensuring the attribute represents a valid date, time, or datetime value.
+  * default: assigning a default value to the specified attributes.
+  * exist: ensuring the attribute value can be found in the specified table column.
+  * file: ensuring the attribute contains the name of an uploaded file.
+  * filter: transforming the attribute with a filter.
+  * in: ensuring the data is among a pre-specified list of values.
+  * length: ensuring the length of the data is within certain range.
+  * match: ensuring the data matches a regular expression.
+  * numerical: ensuring the data is a valid number.
+  * required: ensuring the attribute is not empty.
+  * safe: para indicar que el campo es seguro, aunque no pasará ninguna validación. Parece que hay que marcar todos los campos con algún tipo de validación o safe.
+  * type: ensuring the attribute is of specific data type.
+  * unique: ensuring the data is unique in a database table column.
+  * url: ensuring the data is a valid URL.
+
+Los siguientes parámetros son opcionales, por ejemplo, definir unos rangos o datos necesarios para la validación, o definir un escenario.
+
+Un escenario sirve para indicar que esta regla se aplicará sólo en dicho escenario. Por ejemplo, un escenario login:
+
+```
+  array('username, password', 'required', 'on'=>'login, register'),
+  array('email', 'required', 'on'=>'register'),
+  
+  // in login scenario
+  $model=new User('login'); //define el escenario
+  if(isset($_POST['User']))
+    $model->attributes=$_POST['User'];
+```
+
+En el escenario login son obligatorios username y password, pero en el escenario register además también es obligatorio email.
+
+Each rule returned by rules() must be of the following format:
+
+> `array('AttributeList', 'Validator', 'on'=>'ScenarioList', ...additional options)`
+
+### Validando según las reglas ###
+Para lanzar la validación se hace lo siguiente:
+```
+  // creates a User model in register scenario. Equivalent to:
+  // $model=new User;
+  // $model->scenario='register';
+  $model=new User('register');
+ 
+  // populates the input values into the model
+  $model->attributes=$_POST['User'];
+ 
+  // performs the validation
+  if($model->validate())   // if the inputs are valid
+    ...
+  else
+    ...
+```
+
+Con  CModel::getErrors() se obtienen los errores.
+
+## Las relaciones: relations() ##
+Por ejemplo, en el modelo Employee:
+```
+   public function relations() {
+     return array('department' => array(self::BELONGS_TO, 'Department', 'departmentId') );
+   }
+```
+
+El array de relaciones tiene primero un parámetro que es un nombre de la relación (podemos poner el que queramos). Después se declara un array con la relación en sí.
+
+La relación indica que el campo departmentId (estamos en el modelo Employee) pertenece a Department.
+
+En el modelo Department tendremos la otra parte de la relación:
+```
+   public function relations() {
+     return array('employees' => array(self::HAS_MANY, 'Employee', 'departmentId') );
+   }
+```
+
+En este caso, un departamento tiene muchos empleados (en el modelo Employee), asociados por el campo departmentId de Department.
+
+## Las etiquetas: attributeLabels() ##
+Con esta función se indica el nombre de las etiquetas de los campos, si se quiere. Si no, Yii los transforma, por ejemplo, firstName => First  Name.
+
+```
+  public function attributeLabels(){
+    return array(
+        'id' => 'Employee ID',
+        'departmentId' => 'Department',
+        'firstName' => 'First Name',
+        'email' => 'Email',
+        'ext' => 'Extension',
+        'leaveDate' => 'Leave Date',
+    );
+  }
+```

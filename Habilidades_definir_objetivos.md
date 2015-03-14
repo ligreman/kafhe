@@ -1,0 +1,46 @@
+# Habilidades: Definición de objetivos #
+
+## Introducción ##
+
+A la hora de diseñar una habilidad una de las cosas a tener en cuenta es a qué objetivo va a afectar. Puede ser un jugador concreto, o puede ser a todo un bando. En este apartado se explica cómo funciona el mecanismo de objetivos de una habilidad, qué campos se ven afectados y qué valores admiten.
+
+
+## Base de datos ##
+
+En base de datos hay dos tablas relacionadas con las habilidades:
+  * skill: que almacena las propias habilidades.
+  * modifier: que almacena los modificadores creados por las habilidades.
+
+Un modificador es el resultado de la ejecución de una habilidad, si es que ésta crea un efecto que perdura en el tiempo y no es instantáneo. Por ejemplo, una habilidad que al ejecutarla te otorga 100 puntos de tueste es instantánea y no crea ningún modificador. Pero una habilidad que haga "durante la próxima hora regeneras más tueste" crea un efecto que perdura un tiempo, y para ello se crea un modificador indicando este efecto.
+
+En la tabla **skill** hay varios campos relacionados con los objetivos. Esta tabla es la definición de una habilidad, y por lo tanto tiene varios campos que indican cuáles son los requisitos para poder ejecutarla. Varios de estos requisitos afectan al tema de objetivos:
+  * require\_target\_user: si requiere elegir a un usuario como objetivo. Es un boolean 0 ó 1.
+  * require\_target\_side: si require elegir un bando concreto como objetivo. Admite los textos: kafhe, achikhoria y libre; y cualquier conjunto de ellos separado por comas.
+
+En la tabla **modifier** tenemos otros campos relacionados con el objetivo, que hacen referencia al objetivo seleccionado al que afecta una habilidad ejecutada:
+  * target\_final: hace referencia al objetivo seleccionado. Puede ser el ID de un jugador, o los textos: kafhe, achikhoria, global (ambos bandos).
+
+
+## Tabla de habilidades (skill) ##
+
+A la hora de establecer los requisitos de la habilidad en la tabla **skill**, se pueden hacer combinaciones de ambos campos:
+| **require\_target\_user** | **require\_target\_side** | **Objetivo válido requerido** |
+|:--------------------------|:--------------------------|:-------------------------------|
+|id\_usuario|NULL|Usuario cualquiera|
+|id\_usuario|bandoA|Usuario cualquiera perteneciente al bandoA|
+|id\_usuario|bandoA,bandoB|Usuario cualquiera perteneciente al bandoA o bandoB|
+|NULL|bandoA|Todo el bandoA|
+|NULL|bandoA,bandoB|Un bando a elegir entre A ó B|
+|NULL|NULL|No requiere ningún objetivo|
+
+
+## Tabla de modificadores (modifier) ##
+
+Al ejecutar una habilidad se procesa el objetivo seleccionado por el usuario, y si ésta genera un modificador se almacena dicho objetivo final en la tabla modifier. Hay que tener en cuenta que el objetivo final puede variar por diversas causas, y no ser el mismo que seleccionó el usuario que lanza la habilidad.
+| **target\_final** | **Significado** |
+|:------------------|:----------------|
+|12|Usuario con id 12|
+|kafhe|Todos los usuarios del bando Kafhe|
+|global|Todos los usuarios de los bandos de Kafhe y Achikhoria|
+
+Nota: el objetivo final no tiene sentido que sea bando "libre" ya que se supone que sólo hay 1 jugador en ese bando siempre, por lo que se apuntaría al ID del jugador en lugar de a "todos los jugadores del bando Libre".
