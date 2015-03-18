@@ -1,4 +1,5 @@
 <?php
+//Generador bootstrap
 $class=get_class($model);
 Yii::app()->clientScript->registerScript('gii.crud',"
 $('#{$class}_controller').change(function(){
