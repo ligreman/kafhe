@@ -4,9 +4,6 @@ This extension is very useful in the development stage of project. It helps you
 to get info about PHP environment, application, queries logs, benchmarking with
 a simple little toolbar at the top of the page.
 
-It is a recreated Symfony's developer toolbar. First idea and very first
-implementation was my, but this version mostly implemented by Eduard Kuleshov.
-
 #Usage
 
 ##Requirements
