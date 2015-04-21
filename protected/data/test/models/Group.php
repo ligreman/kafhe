@@ -21,6 +21,44 @@ class Group extends CActiveRecord
 	}
 
 	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'ID',
+			'name' => 'Name',
+			'type' => 'Type',
+			'ito' => 'Ito',
+		);
+	}
+	
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'ID',
+			'event_id' => 'Event',
+			'user_id' => 'User',
+			'message' => 'Message',
+			'timestamp' => 'Timestamp',
+		);
+	}
+
+	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
