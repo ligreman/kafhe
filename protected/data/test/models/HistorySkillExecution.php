@@ -14,91 +14,111 @@
  */
 class HistorySkillExecution extends CActiveRecord
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return HistorySkillExecution the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return HistorySkillExecution the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'history_skill_execution';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'history_skill_execution';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('event_id, skill_id, caster_id, target_final, result', 'required'),
-			array('event_id, skill_id, caster_id', 'numerical', 'integerOnly'=>true),
-			array('target_final', 'length', 'max'=>50),
-			array('result', 'length', 'max'=>6),
-			array('timestamp', 'safe'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, event_id, skill_id, caster_id, target_final, result, timestamp', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('event_id, skill_id, caster_id, target_final, result', 'required'),
+            array('event_id, skill_id, caster_id', 'numerical', 'integerOnly' => true),
+            array('target_final', 'length', 'max' => 50),
+            array('result', 'length', 'max' => 6),
+            array('timestamp', 'safe'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, event_id, skill_id, caster_id, target_final, result, timestamp', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+    /**
+     * Declares the validation rules.
+     * The rules state that username and password are required,
+     * and password needs to be authenticated.
+     */
+    public function rules2() {
+        return array(
+            // username and password are required
+            array('username, password', 'required'),
+            // rememberMe needs to be a boolean
+            array('rememberMe', 'boolean'),
+            // password needs to be authenticated
+            array('password', 'authenticate'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'event_id' => 'Event',
-			'skill_id' => 'Skill',
-			'caster_id' => 'Caster',
-			'target_final' => 'Target Final',
-			'result' => 'Result',
-			'timestamp' => 'Timestamp',
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array();
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels2() {
+        return array(
+            'id'          => 'ID',
+            'keyword'     => 'Keyword',
+            'required_id' => 'Required',
+        );
+    }
 
-		$criteria=new CDbCriteria;
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id'           => 'ID',
+            'event_id'     => 'Event',
+            'skill_id'     => 'Skill',
+            'caster_id'    => 'Caster',
+            'target_final' => 'Target Final',
+            'result'       => 'Result',
+            'timestamp'    => 'Timestamp',
+        );
+    }
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('event_id',$this->event_id);
-		$criteria->compare('skill_id',$this->skill_id);
-		$criteria->compare('caster_id',$this->caster_id);
-		$criteria->compare('target_final',$this->target_final,true);
-		$criteria->compare('result',$this->result,true);
-		$criteria->compare('timestamp',$this->timestamp,true);
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search() {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id);
+        $criteria->compare('event_id', $this->event_id);
+        $criteria->compare('skill_id', $this->skill_id);
+        $criteria->compare('caster_id', $this->caster_id);
+        $criteria->compare('target_final', $this->target_final, true);
+        $criteria->compare('result', $this->result, true);
+        $criteria->compare('timestamp', $this->timestamp, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 }
