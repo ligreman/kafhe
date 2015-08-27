@@ -20,6 +20,11 @@ class EventController extends Controller
 				'actions'=>array('index'),
 				'roles'=>array('Usuario'),
 			),
+							array('pantuflo', 
+				'actions'=>array('index'),
+				'roles'=>array('Usuario'),
+			),
+
 			array('allow', 
 				'actions'=>array('start'),
 				'roles'=>array('Usuario'),
