@@ -1,0 +1,90 @@
+<html>
+<head>
+<link rel="stylesheet" href="leaflet.css" />
+ <script src="leaflet.js"></script>
+
+ <style>
+	 body {
+	background: #424242;
+ }
+	#mapid {
+		height: 800px;
+		width: 1200px;
+	}
+
+	.leaflet-container {
+    background-color:rgba(255,0,0,0.0);
+}
+table {color:white}
+
+.leaflet-control-attribution {
+display: none;
+}
+ </style>
+</head>
+
+<body>
+ <div id="mapid"></div>
+<p style="color:white">Latitude/Longitude: <table><tr><td id="lat"></td><td id="long"></td></tr></table></p>
+<script>
+	//var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+
+/*
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		maxZoom: 18,
+		id: 'your.mapbox.project.id',
+		accessToken: 'your.mapbox.public.access.token'
+	}).addTo(mymap);
+
+
+	var tms_ne = L.tileLayer('map/{tileset}/{z}/{x}/{y}.png', {
+		tms: true
+	}).addTo(mymap);*/
+
+	var map = L.map('mapid').setView([-70, -80], 3);
+
+
+        L.tileLayer('map/{z}/{x}/{y}.jpg', {
+            minZoom: 3,
+            maxZoom: 6,
+            tms: true
+        })
+
+		.addTo(map);
+/*
+		var marker = L.marker([4.85, -180]).addTo(map);
+		var marker = L.marker([4.85, 45.95]).addTo(map);
+		var marker = L.marker([-79.85, -180]).addTo(map);
+		var marker = L.marker([-79.85, 45.95]).addTo(map);
+		var marker = L.marker([-37.5, 0]).addTo(map);
+		var marker = L.marker([-47.5, 0]).addTo(map);
+		var marker = L.marker([-57.5, 0]).addTo(map);
+		var marker = L.marker([-67.5, 0]).addTo(map);
+		var marker = L.marker([-77.5, 0]).addTo(map);
+		var marker = L.marker([-87.5, 0]).addTo(map);*/
+
+				var marker = L.marker([-52.6, -54.6]).addTo(map);
+				var marker = L.marker([-37.5, 0]).addTo(map);
+		var marker = L.marker([-47.5, 0]).addTo(map);
+		var marker = L.marker([-57.5, 0]).addTo(map);
+		var marker = L.marker([-67.5, 0]).addTo(map);
+		var marker = L.marker([-77.5, 0]).addTo(map);
+		var marker = L.marker([-87.5, 0]).addTo(map);
+
+		map.on('click', function(e) {
+			var lat = e.latlng.lat * 100;
+			lat = Math.round(lat) / 100;
+			var lng = e.latlng.lng * 100;
+			lng = Math.round(lng) / 100;
+
+//			document.getElementById('donde').innerHTML = lat+' / '+lng;
+			document.getElementById('lat').innerHTML = lat;
+						document.getElementById('long').innerHTML = lng;
+			
+		});
+</script>
+
+
+</body>
+</html>
