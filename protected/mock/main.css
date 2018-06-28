@@ -1,0 +1,118 @@
+body {
+    overflow-x: hidden;
+	background: #2E7D32;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.vertical-bottom {
+    vertical-align: text-bottom;
+}
+
+.relative {
+    position: relative;
+}
+
+.container {
+	margin-top: 10em;
+}
+
+.align-stretch {
+    align-self: stretch;
+}
+
+.align-self-right {
+    align-self: flex-end;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+md-tooltip {
+    color: #222;
+}
+
+/* Colores */
+.kafhe-primary {
+    color: #2E7D32 !important;
+}
+
+.kafhe-primary-hue-1 {
+    color: #C8E6C9 !important;
+}
+
+.kafhe-primary-hue-2 {
+    color: #4CAF50 !important;
+}
+
+.kafhe-primary-hue-3 {
+    color: #1B5E20 !important;
+}
+
+.kafhe-accent {
+    color: #9E9E9E;
+}
+
+.kafhe-accent-hue-1 {
+    color: #FAFAFA;
+}
+
+.kafhe-accent-hue-2 {
+    color: #616161;
+}
+
+.kafhe-accent-hue-3 {
+    color: #FDD835;
+}
+
+.kafhe-purple {
+    color: #673AB7 !important;
+}
+
+.kafhe-white-background {
+    background-color: #f5f5f5 !important;
+    color: #222;
+}
+
+.kafhe-warn {
+    color: #F44336 !important;
+}
+
+.white {
+    color: #FFF;
+}
+
+.no-background {
+    background: none;
+}
+
+.btn-mini {
+    /*min-width: auto;*/
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+::-webkit-scrollbar-track {
+    background: #9E9E9E;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1B5E20;
+}
