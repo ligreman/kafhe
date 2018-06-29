@@ -258,7 +258,7 @@ if (rand(4)) {
 
     console.log('Escrito el fichero nuevo: ' + dir + '/' + file);
 
-    uploadToGit();
+    uploadToGit(dir + '/' + file);
 } else {
     // Busco uno de los ficheros
     let fileList = [];
@@ -278,7 +278,7 @@ if (rand(4)) {
     fs.appendFileSync(dir + '/' + file, content);
     console.log('Editado el fichero: ' + dir + '/' + file);
 
-    uploadToGit();
+    uploadToGit(dir + '/' + file);
 }
 
 // Generators
@@ -489,7 +489,7 @@ function rand(num) {
 }
 
 
-function uploadToGit() {
+function uploadToGit(file) {
     const date = new Date();
 
     cmd.get(
@@ -500,14 +500,14 @@ function uploadToGit() {
             console.log(stderr);
 
             cmd.get(
-                'git add *',
+                'git add ' + file,
                 function (err, data, stderr) {
                     console.log(err);
                     console.log(data);
                     console.log(stderr);
 
                     cmd.get(
-                        'git commit -a -m "Updates \' + date.toLocaleString().replace(/\\//g, \'-\') + \'"',
+                        'git commit -a -m "Updates ' + date.toLocaleString().replace(/\//g, '-') + '"',
                         function (err, data, stderr) {
                             console.log(err);
                             console.log(data);
@@ -519,6 +519,7 @@ function uploadToGit() {
                                     console.log(err);
                                     console.log(data);
                                     console.log(stderr);
+                                    console.log('Subido a git');
                                 }
                             );
                         }
@@ -532,5 +533,5 @@ function uploadToGit() {
     /*cmd.run('git add *');
     cmd.run('git commit -a -m "Updates ' + date.toLocaleString().replace(/\//g, '-') + '"');
     cmd.run('git push');*/
-    console.log('Subido a git');
+    // console.log('Subido a git');
 }
