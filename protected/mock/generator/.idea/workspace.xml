@@ -2,32 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7f1331e-801f-4785-b6c5-e527c906cf42" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/ligre.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/generator.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/generator.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/.npmignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/cmd.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/commandline.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/example/basic.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/example/example.created.file" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/example/getPID.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/example/nodePythonTerminal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/licence.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/node-cmd/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../components/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../components/Controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../controllers/MemeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../controllers/MemeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generator.js" beforeDir="false" afterPath="$PROJECT_DIR$/generator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../models/Gumbudo.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../models/Gumbudo.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,8 +20,8 @@
       <file leaf-file-name="generator.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="496" column="19" selection-start-line="496" selection-start-column="19" selection-end-line="496" selection-end-column="19" />
+            <state relative-caret-position="378">
+              <caret line="523" column="25" lean-forward="true" selection-start-line="523" selection-start-column="25" selection-end-line="523" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -56,6 +35,7 @@
       <find>$scope</find>
       <find>upload</find>
       <find>console</find>
+      <find>.js</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -181,12 +161,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1530289280769</updated>
-      <workItem from="1530289282478" duration="6825000" />
+      <workItem from="1530289282478" duration="7256000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6825000" />
+    <option name="totallyTimeSpent" value="7256000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2062" height="848" extended-state="6" />
@@ -234,8 +214,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/generator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="496" column="19" selection-start-line="496" selection-start-column="19" selection-end-line="496" selection-end-column="19" />
+        <state relative-caret-position="378">
+          <caret line="523" column="25" lean-forward="true" selection-start-line="523" selection-start-column="25" selection-end-line="523" selection-end-column="25" />
         </state>
       </provider>
     </entry>

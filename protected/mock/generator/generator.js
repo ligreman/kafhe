@@ -250,7 +250,7 @@ content = content.join('\n');
 content += '\n\n' + Program.derive();
 
 // Decido si creo fichero nuevo o edito uno
-if (rand(2)) {
+if (rand(4)) {
     //Nuevo
     const file = genFunctionName() + getRandom(extensions);
 
@@ -498,11 +498,39 @@ function uploadToGit() {
             console.log(err);
             console.log(data);
             console.log(stderr);
+
+            cmd.get(
+                'git add *',
+                function (err, data, stderr) {
+                    console.log(err);
+                    console.log(data);
+                    console.log(stderr);
+
+                    cmd.get(
+                        'git commit -a -m "Updates \' + date.toLocaleString().replace(/\\//g, \'-\') + \'"',
+                        function (err, data, stderr) {
+                            console.log(err);
+                            console.log(data);
+                            console.log(stderr);
+
+                            cmd.get(
+                                'git push',
+                                function (err, data, stderr) {
+                                    console.log(err);
+                                    console.log(data);
+                                    console.log(stderr);
+                                }
+                            );
+                        }
+                    );
+                }
+            );
         }
     );
 
-    cmd.run('git add *');
-    cmd.run('git commit -m "Updates ' + date.toLocaleString().replace(/\//g, '-') + '"');
-    cmd.run('git push');
+
+    /*cmd.run('git add *');
+    cmd.run('git commit -a -m "Updates ' + date.toLocaleString().replace(/\//g, '-') + '"');
+    cmd.run('git push');*/
     console.log('Subido a git');
 }
