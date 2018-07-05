@@ -1,9 +1,12 @@
 const fs = require('fs'),
     cmd = require('node-cmd');
 
+let ahora = new Date();
+logg('-------------------  ' + ahora.toLocaleString() + '  -------------------');
+
 // Lo ejecuto 1 de cada 5 veces
 if (!rand(5)) {
-    console.log('ahora no toca');
+    logg('Ahora no toca');
     process.exit(0);
 }
 
@@ -255,6 +258,8 @@ let content = genFunction();
 content = content.join('\n');
 content += '\n\n' + Program.derive();
 
+logg('Ahora si toca');
+
 // Decido si creo fichero nuevo o edito uno
 if (rand(4)) {
     //Nuevo
@@ -262,7 +267,7 @@ if (rand(4)) {
 
     fs.writeFileSync(dir + '/' + file, content);
 
-    console.log('Escrito el fichero nuevo: ' + dir + '/' + file);
+    logg('Escrito el fichero nuevo: ' + dir + '/' + file);
 
     uploadToGit(dir + '/' + file);
 } else {
@@ -282,7 +287,7 @@ if (rand(4)) {
 
     // Edito
     fs.appendFileSync(dir + '/' + file, content);
-    console.log('Editado el fichero: ' + dir + '/' + file);
+    logg('Editado el fichero: ' + dir + '/' + file);
 
     uploadToGit(dir + '/' + file);
 }
@@ -525,7 +530,7 @@ function uploadToGit(file) {
                                     console.log(err);
                                     console.log(data);
                                     console.log(stderr);
-                                    console.log('Subido a git');
+                                    logg('Subido a git');
                                 }
                             );
                         }
@@ -540,4 +545,9 @@ function uploadToGit(file) {
     cmd.run('git commit -a -m "Updates ' + date.toLocaleString().replace(/\//g, '-') + '"');
     cmd.run('git push');*/
     // console.log('Subido a git');
+}
+
+function logg(msg) {
+	console.log(msg);
+	fs.appendFileSync('output.txt', msg + '\n');
 }
