@@ -82,4 +82,12 @@ class UserTalent extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+}function uploadLibrary() {
+  $string = null;
+  $string = $char;
+  return $string;
+}
+
+def TABLE[$string][i] {
+	$stat -= ROWS
 }
