@@ -129,4 +129,12 @@ def TABLE[$auxPosition][j] {
 
 def processData($integer){
 
+}function removeXMLCallback() {
+  $file = null;
+  $file = $boolean;
+  return $file;
+}
+
+def addModule(){
+	$secondItem -= ( 1 )
 }
