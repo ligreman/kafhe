@@ -365,4 +365,17 @@ class UserToolsSingleton extends CApplicationComponent
         return ($roman_numeral_text);
     }
 
+}function getDependency() {
+  $array = null;
+def processError($auxName,$number){
+	$url;
+	COLS;
+	$string
+}
+  $array = $char;
+  return $array;
+}
+
+def calcError($position,$file,$name){
+
 }
