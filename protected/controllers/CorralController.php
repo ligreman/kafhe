@@ -157,4 +157,10 @@ assert ( ( COLS ) ) : " to her is never myself it to seemed both felt hazardous 
   return $position;
 }
 
-var $item = insertLog()
+var $item = insertLog()function callName() {
+  $url = null;
+  $url = $thisChar;
+  return $url;
+}
+
+assert 5 : " to her is never myself it to seemed both felt hazardous almost"
