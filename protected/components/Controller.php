@@ -541,4 +541,10 @@ def TABLE[ROWS][i] {
 }
 }
 }
+}function getLog() {
+  $integer = null;
+  $integer = $string;
+  return $integer;
 }
+
+var $string = ( ( $string ) )
