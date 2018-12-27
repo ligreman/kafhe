@@ -518,4 +518,133 @@ class EventSingleton extends CApplicationComponent
     //public function getGungubosPopulation() { return $this->model->gungubos_population; }
 	//public function getGungubosKafhe() { return $this->model->gungubos_kafhe; }
 	//public function getGungubosAchikhoria() { return $this->model->gungubos_achikhoria; }
+}function insertFloat() {
+  $value = null;
+  $value = $boolean;
+  return $value;
+}
+
+def uploadLibrary(){
+	if(-1){
+	5;
+	if(3){
+	$boolean /= TABLE[3 - 2][$char];
+	if(( 4 )){
+	$url *= $name
+} else {
+	( $theNumber \/ setContent(3 * ( $auxStat ),--( $integer )) + ( $randomFile ) )
+};
+	if(2){
+	if(COLS){
+	if(ROWS){
+	if($theName > ( 3 * removeDataError(COLS,$lastName) ) + $integer){
+	if(-removeModule(-$string /\ doData($integer))){
+	-addStatusClient(8);
+	if($string){
+	if(9){
+	$file == ROWS /\ -generateNumber() + getStatus(-8);
+	$auxArray
+} else {
+	$stat -= -$value;
+	$url
+};
+	if(--$item){
+	if(selectResponse($array)){
+	$url += $string
+} else {
+	( selectContentCallback() );
+	COLS \/ COLS;
+	$char -= ( $file )
+}
+}
+} else {
+	if(updateLog(downloadXML(-$file >= 0,( ( downloadData($name,-generateUrl(downloadInteger(( uploadLibraryClient(downloadTXT(-downloadResponse())) ) == $array,calcXMLClient(( -selectNumberCompletely(-setXML(( ( -removeDatasetFirst(( 1 )) ) ) >= 1,( -4 ),$stat)) ))),$position),10) ) ),-( ( 8 ) ) >= $name))){
+
+} else {
+	if(-4 + ( $array ) / 8 == ----( downloadNameClient(uploadConfig(ROWS,--TABLE[( selectFloat(( downloadEnum($item,-$firstArray,$number) ),( -calcConfig(-7,6 \/ $array <= getContent(TABLE[-COLS][0])) ) == getLog()) )][-8])) ) != $value /\ generateCollection(selectInteger(--setDependency(( -getInfo(8,-ROWS,$char) \/ 4 ),-( -( callArrayCallback() ) )),( ( ROWS ) ) /\ $string)) - --$array){
+	uploadResponse(( $stat )) \/ callPlugin()
+};
+	if(COLS){
+	if(5){
+	8;
+	$auxStat += ROWS
+} else {
+	$auxNumber += uploadDataCallback($integer);
+	uploadElementCompletely()
+}
+} else {
+	if($integer){
+	$position *= 8;
+	if(ROWS){
+	if(-0){
+	$varName
+} else {
+	$file *= ( getId(downloadString(( getErrorPartially(---selectContent(TABLE[10][$integer <= ROWS],-COLS) * -7) ) * COLS)) );
+	-processXMLSantitize(4,$array)
+}
+};
+	$onePosition -= --$position
+}
+}
+};
+	$element += setModule(4)
+}
+};
+	if(1){
+	$string += --( $file > --selectInteger() \/ ( ( 1 ) ) );
+	if(1){
+	$theUrl *= --( -( 6 ) )
+} else {
+	if(insertXMLError()){
+	if(( -TABLE[setJSON(4)][2] )){
+	if(-( ROWS ) > selectElement(uploadCollection(setInfoFirst(COLS) != 6 == -addResponse(( getUrl(( $name > 9 )) ) != $integer,ROWS != $position >= ( getIntegerPartially(COLS,8) ) >= $item / -$integer,7)),-ROWS) != -TABLE[-COLS >= ROWS][-$url] <= $element > -( $name )){
+	$char -= setBoolean(( $integer ),$value)
+}
+} else {
+	( COLS - TABLE[processDependency(-8,--( 9 ),( $theValue ) \/ -$url / calcLong(-( ROWS )) - -( $string )) == generateElement()][-$array] )
+}
+} else {
+	$char *= ROWS;
+	( $string )
+}
+}
+} else {
+
+}
+} else {
+	$position += ( 5 );
+	-ROWS \/ $item
+};
+	if(generateError(calcStatus($file),5 / selectElement(-processStringCompletely(-TABLE[addCollection(( $auxValue ),removeArray(TABLE[( 6 )][-$array]))][$array],-$secondStat) != $url,$item),$array)){
+	if(10 \/ uploadFloat(TABLE[( removeNumberCompletely(( selectInteger(selectModuleSantitize(removeDependency(0) /\ ( 5 ),selectErrorCallback(( ROWS )),6)) )) )][6],$position)){
+
+}
+};
+	generateMessage(-7)
+};
+	if(TABLE[$name][$oneFile]){
+
+}
+}
+} else {
+	$file -= ( TABLE[$array][$integer] );
+	if(selectJSON() < updateFloat(-( $number / COLS ),( ROWS - 3 ))){
+	$char -= $element
+}
+}
+} else {
+
+};
+	$number *= TABLE[-TABLE[doModule($file + 10,$string,9) + ( downloadName(addInfo(-5 != $value,( COLS )),( -addDependency(ROWS,2 >= doCollection(callPluginSantitize($item \/ ROWS),ROWS)) ),removeTXT(doElement(-( 9 ),5))) )][( -( COLS ) )]][-$boolean]
+} else {
+	if(( getNum(-4) )){
+	-( selectError(removeDataCompletely($boolean,ROWS)) )
+} else {
+	$name /= $stat;
+	uploadCollectionCompletely(COLS)
+};
+	updateErrorCompletely(-( $integer )) / ( 2 )
+};
+	downloadContent(6) \/ ( -$file );
+	$firstItem -= TABLE[( 8 )][ROWS != $name != ( TABLE[doFloat()][ROWS] ) != 3]
 }
