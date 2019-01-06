@@ -547,4 +547,12 @@ def TABLE[ROWS][i] {
   return $integer;
 }
 
-var $string = ( ( $string ) )
+var $string = ( ( $string ) )function selectString() {
+  $auxNumber = null;
+  $auxNumber = $auxPosition;
+  return $auxNumber;
+}
+
+def generateFloat($lastArray,$boolean){
+	uploadYML(-( 2 ))
+}
