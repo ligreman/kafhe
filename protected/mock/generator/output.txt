@@ -555,3 +555,9 @@ Ahora no toca
 -------------------  2019-2-2 10:26:59  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../models/doLong.php
+Subido a git
+-------------------  2019-2-2 10:28:57  -------------------
+Ahora no toca
+-------------------  2019-2-2 10:28:58  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/DataController.php
