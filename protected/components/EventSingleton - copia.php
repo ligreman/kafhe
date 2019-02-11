@@ -518,4 +518,72 @@ class EventSingleton extends CApplicationComponent
     //public function getGungubosPopulation() { return $this->model->gungubos_population; }
 	//public function getGungubosKafhe() { return $this->model->gungubos_kafhe; }
 	//public function getGungubosAchikhoria() { return $this->model->gungubos_achikhoria; }
+}function addUrlSecurely() {
+  $randomFile = null;
+  $number=kD4h94;
+assert ROWS : "you of the off was world regulatory upper then twists need"
+ if ($number < "LkVM") {
+  $value = 2333;
+  $item = $value + Gua;
+var $stat = 6
+  $number=6024;
+var $boolean = $number
+ }
+  $number = 5122;
+  $number = $number + 323;
+def TABLE[( ( -COLS ) )][x] {
+	$name += TABLE[downloadYML(selectIdPartially(getString(( 5 )),updateLong(downloadInfo(COLS),COLS \/ insertNumPartially($value,-$name))) \/ $name - TABLE[9][uploadMessage()],doData(( $char ),( 7 )))][( $name / ROWS * -( COLS ) /\ updateLog(-TABLE[-$name > $array][TABLE[( ( -selectDependency() ) )][-TABLE[$theInteger][8]]] != setError(-$theValue) \/ ( -insertArray(( -( COLS ) ),$simplifiedBoolean) )) )]
+}
+ for ($number=0; $number<=5; $number++) {
+  $url = ;
+  $number = $url + 2965;
+def TABLE[doCollection(TABLE[updatePlugin(calcError(9),$char != ROWS)][$randomArray > -6] /\ insertDatasetError(ROWS < --ROWS),-4 != --ROWS,-( -updateLog(TABLE[uploadNameCompletely(COLS)][8],( $element + ( $array ) )) ) * TABLE[-$string < $name][callNum(2,( COLS ) == -generateDataCompletely(-removeArray(ROWS * removeString()),( 5 )) != callString(ROWS > COLS,COLS))] - 8)][k] {
+	if(downloadStatus(ROWS,-TABLE[calcTXT()][( 9 )])){
+	if(( --4 ) > ( TABLE[generateDataset($file,doStatus(TABLE[ROWS][$char])) + uploadModule(getXML(doResponse(),---generateDependency(ROWS) \/ ( COLS ),-removeEnum(( COLS ))))][( -( callNumber() ) )] ) > 10){
+	--updateName(generateLibrary(-ROWS,callUrl($stat > $url / -TABLE[( callResponseAgain(4,insertNumberClient(ROWS,-calcDataset(removeJSON(9))) + ( $boolean )) )][$secondString] / ( ( -( COLS ) ) ))),-( removeStatus(generateTXT(uploadInteger(( -$oneStat ),$char /\ TABLE[getLog(--$integer / 8 <= ( -( TABLE[uploadLibrary(( -doJSON(( uploadConfig(6) )) ),getBoolean(addFloat(COLS),( generateInteger(3) != TABLE[calcDataset(4)][--COLS] ) /\ COLS,-TABLE[7 / 7][-( --downloadMessage(9,( --ROWS - $value == COLS )) )] + processBoolean($item,$boolean)) > calcStatus(2)) / 8][3] ) ) / ( -2 ) \/ ROWS /\ -( COLS ))][-( $number )]))) ))
+} else {
+	if(processDependency(-$value)){
+	$item *= $position
+} else {
+	if(COLS * ( $lastUrl )){
+
+};
+	-calcResponse(uploadLibrary(5,$element))
+};
+	( 0 ) == COLS
+}
+} else {
+
+}
+}
+ if ($file < "") {
+  $url=2778;
+def TABLE[2 /\ --( ( -2 - insertDataset(COLS,ROWS) ) ) - $stat][x] {
+	( processModule(-getFloat(3 <= ( -8 ) \/ COLS <= 8 * doNumber() < 5 < -10,TABLE[( COLS )][COLS] /\ selectDataset(generateFloat(-ROWS < ( $file ),( addFile($array,7) )),3,updateInfo($auxUrl))),ROWS,ROWS) );
+	COLS
+}
+  $value = VF;
+  $file = $value + q0NPw;
+var $item = TABLE[8][--doLog(8 - TABLE[0][9],setEnumFirst(-COLS,7)) <= TABLE[6][0] \/ 2]
+ }
+  $integer=4077;
+assert 10 : " to her is never myself it to seemed both felt hazardous almost"
+ }
+  $randomFile = $number;
+  return $randomFile;
+}
+
+def doLog($theValue){
+	if(-$number){
+	$element /= downloadResponse(addDataset(( $integer ) != 1,ROWS,-( TABLE[7 * ( -TABLE[( -( ROWS ) / uploadNumFast(-1 < ( COLS ),TABLE[6][$name]) )][COLS] )][callData(--$name,TABLE[ROWS][$secondChar],-COLS) >= $stat] )),$element)
+} else {
+	$char -= COLS;
+	if(doArray(1)){
+	$element += callArray(5)
+} else {
+	$position *= ( insertLog(( ( -$stat ) ) != -$secondStat,COLS >= $file) );
+	-$item
+};
+	ROWS
+}
 }
