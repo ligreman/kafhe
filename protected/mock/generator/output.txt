@@ -599,3 +599,7 @@ Ahora no toca
 -------------------  2019-2-11 19:19:13  -------------------
 Ahora si toca
 Editado el fichero: ../../components/EventSingleton - copia.php
+Subido a git
+-------------------  2019-2-12 18:51:45  -------------------
+Ahora si toca
+Editado el fichero: ../../models/UserTalent.php
