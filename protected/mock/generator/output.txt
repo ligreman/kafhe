@@ -614,3 +614,10 @@ Ahora no toca
 -------------------  2019-2-16 11:14:10  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/AjaxController.php
+-------------------  2019-2-17 11:03:19  -------------------
+Ahora no toca
+-------------------  2019-2-18 19:13:15  -------------------
+Ahora no toca
+-------------------  2019-2-19 18:51:05  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/HistoryController.php
