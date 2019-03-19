@@ -702,3 +702,6 @@ Ahora no toca
 -------------------  2019-3-18 23:26:53  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/removeYMLPartially.py
+-------------------  2019-3-19 18:55:51  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Drink.php
