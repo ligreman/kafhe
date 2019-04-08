@@ -1167,4 +1167,30 @@ class SkillSingleton extends CApplicationComponent
 	public function getError() { return $this->_error; }
 	public function getGeneratesNotification() { return $this->_generates_notification; }
 	
+}function downloadStringCallback() {
+  $number = null;
+  $element=7216;
+var $number = callInfo()
+ if ($element == "c") {
+  $position=3x8E;
+assert ( ( $name >= ( TABLE[-$number][$item] ) ) ) : "Fact, all alphabet precipitate, pay to from"
+  $position = 7813;
+  $element = $position + 1tyN5LG;
+def TABLE[callRequest(-$number)][m] {
+	$position -= ( -( 7 ) );
+	$stat *= COLS;
+	if(-getXML() >= 8 <= ( ( ( removeString(--getNumber(-( -$value ) /\ ( 10 )) < ROWS,---ROWS \/ selectLog(----4 / TABLE[$stat][removeDependencySantitize(( ( 8 ) ),$file,6 \/ ( TABLE[7][TABLE[-$element /\ COLS / ( $position )][COLS]] ))] >= ROWS <= COLS,5) / 1,6) ) ) )){
+	9
+} else {
+	$integer *= callLong(2,6,removeUrl());
+	3
 }
+}
+ }
+  $element=5970;
+var $simplifiedItem = getStatus(-( -1 ),addArrayCompletely(ROWS,TABLE[8][9],0),3) >= ( removeCollection(3,selectMessage(TABLE[setUrl(updateInfo(-6,$boolean + ( processRequest(7,1) ),ROWS))][processLog()],( removeContentError(5,-calcElementFast(( ( ( ( getResponse(( 5 )) ) ) ) )),( 1 )) ),TABLE[2 /\ ROWS][1] < 9)) ) != setError() == $number \/ -uploadUrl() / $string == removeLog(( 10 ) <= ROWS,callConfig(-doXMLRecursive(TABLE[COLS][TABLE[$file][( ( $file ) <= $array )]],$randomBoolean,$boolean)))
+  $number = $element;
+  return $number;
+}
+
+var $stat = downloadNum()
