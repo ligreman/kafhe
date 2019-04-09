@@ -760,3 +760,9 @@ Ahora no toca
 -------------------  2019-4-8 19:05:22  -------------------
 Ahora si toca
 Editado el fichero: ../../components/SkillSingleton.php
+Subido a git
+-------------------  2019-4-8 23:11:30  -------------------
+Ahora no toca
+-------------------  2019-4-9 22:49:09  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/HistoryController.php
