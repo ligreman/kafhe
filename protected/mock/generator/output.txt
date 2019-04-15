@@ -781,3 +781,6 @@ Ahora no toca
 -------------------  2019-4-14 10:07:45  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Notification.php
+-------------------  2019-4-15 16:33:46  -------------------
+Ahora si toca
+Editado el fichero: ../../components/HistorySkillSingleton.php
