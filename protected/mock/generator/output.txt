@@ -825,3 +825,12 @@ Ahora no toca
 -------------------  2019-5-1 10:45:31  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/InlcudesController.php
+-------------------  2019-5-2 16:36:02  -------------------
+Ahora no toca
+-------------------  2019-5-3 16:27:56  -------------------
+Ahora no toca
+-------------------  2019-5-3 21:05:42  -------------------
+Ahora no toca
+-------------------  2019-5-4 10:12:31  -------------------
+Ahora si toca
+Editado el fichero: ../../models/updateConfig.java
