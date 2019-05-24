@@ -863,3 +863,21 @@ Ahora no toca
 -------------------  2019-5-17 16:40:16  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/MemeController.php
+-------------------  2019-5-18 09:28:52  -------------------
+Ahora no toca
+-------------------  2019-5-19 10:04:28  -------------------
+Ahora no toca
+-------------------  2019-5-20 19:07:14  -------------------
+Ahora si toca
+Editado el fichero: ../../models/uploadLog.java
+-------------------  2019-5-21 19:01:51  -------------------
+Ahora no toca
+-------------------  2019-5-21 22:36:59  -------------------
+Ahora no toca
+-------------------  2019-5-22 16:18:31  -------------------
+Ahora no toca
+-------------------  2019-5-23 17:37:08  -------------------
+Ahora no toca
+-------------------  2019-5-24 17:23:53  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/updateDependency.php
