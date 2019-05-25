@@ -881,3 +881,8 @@ Ahora no toca
 -------------------  2019-5-24 17:23:53  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/updateDependency.php
+-------------------  2019-5-25 10:18:10  -------------------
+Ahora no toca
+-------------------  2019-5-25 17:08:03  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/addInfo.js
