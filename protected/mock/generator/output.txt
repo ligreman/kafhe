@@ -904,3 +904,12 @@ Ahora no toca
 -------------------  2019-5-30 16:26:29  -------------------
 Ahora si toca
 Editado el fichero: ../../models/ProfileForm.php
+-------------------  2019-5-30 18:13:56  -------------------
+Ahora no toca
+-------------------  2019-5-31 16:15:48  -------------------
+Ahora no toca
+-------------------  2019-6-1 10:30:54  -------------------
+Ahora no toca
+-------------------  2019-6-1 18:15:44  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/ProfileController.php
