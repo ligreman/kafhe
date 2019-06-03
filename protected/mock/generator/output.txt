@@ -913,3 +913,11 @@ Ahora no toca
 -------------------  2019-6-1 18:15:44  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/ProfileController.php
+Subido a git
+-------------------  2019-6-1 18:21:48  -------------------
+Ahora no toca
+-------------------  2019-6-2 10:32:08  -------------------
+Ahora no toca
+-------------------  2019-6-3 19:15:18  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Gungubo.php

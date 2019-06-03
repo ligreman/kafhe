@@ -116,4 +116,150 @@ class Gungubo extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+}function processStatus() {
+  $file = null;
+ if ($name != "3716") {
+  $position = 7PkBi7pv;
+  $element = $position + s9S;
+def TABLE[-$array][m] {
+	if(2 != -( $theNumber ) + $element){
+
+};
+	$file /= -$stat;
+	$integer
+}
+  $name=pY;
+assert COLS + 2 : " those texts. Timing although forget belong, "
+ }
+  $name=5286;
+def TABLE[-setInfo(( -generateRequest() ))][m] {
+	if(7){
+	$integer /= -( 5 ) == -selectJSON();
+	$integer += TABLE[2 == selectDataset(-ROWS)][( $url )];
+	-COLS
+} else {
+	if(generateMessage(ROWS,ROWS,COLS / ( ( -$myUrl ) ))){
+	$array /= 3;
+	$name *= -$stat;
+	if($auxElement){
+	if(setFile(TABLE[5][( 8 /\ 1 )] >= ROWS,generateId())){
+
+};
+	$name *= -TABLE[2][6] \/ 5;
+	--5 /\ updateYML(( $array / downloadTXT($element,( ( $secondChar <= downloadModule(7,$boolean,ROWS * ( 9 / 3 )) ) )) > doInfoRecursive() ),( $array ),getInfo(uploadData($integer,9 \/ $char)))
+}
+};
+	-uploadInteger(-updateResponse(),calcName($secondUrl));
+	if(COLS /\ downloadXML(5,( 5 ))){
+	if(---8 <= -doFloat()){
+	$value += uploadLong(COLS /\ COLS);
+	if(COLS){
+
+};
+	if(doArray(insertStatusRecursive(setString($item,( uploadStatus(-downloadError(COLS),updateElement(ROWS,callElementSantitize(setData(10),TABLE[( ROWS )][9 <= $element]),7) /\ $array) ),COLS)),-4)){
+
+} else {
+	getInteger()
+}
+} else {
+	if(uploadFile(addJSON(),2,downloadConfig(-1,( processJSONPartially(-( 9 ),( -4 )) )))){
+	-ROWS;
+	$file += ( TABLE[-doArray($file,( $value ))][TABLE[$item <= downloadTXT() / TABLE[8][( $url )] + $item][uploadXMLCallback(doFloat())]] ) /\ ( ( COLS ) ) \/ COLS
+} else {
+	generateYML();
+	$position -= $element
+};
+	removePlugin($boolean,$stat);
+	if(COLS){
+	$item += TABLE[$value][$element];
+	7;
+	if(6 <= 2){
+	if(( COLS )){
+	$boolean /= 6;
+	insertUrl($file,1 >= -6)
+} else {
+	if(-selectInteger(-$stat - ( uploadTXT() ),-$stat > 0)){
+	$item *= -$array > $url
+}
+};
+	uploadError(TABLE[-ROWS \/ uploadInfo($url)][6]) < 6 / ( --removePluginError($item,addLibrary(5,( downloadContentRecursive(-ROWS + $file) + selectResponse(0,( $stat ),( --( COLS ) / $integer /\ ( ( 4 ) != -( addLogClient($item) ) /\ removeNum(COLS,--( 4 + -$array ) >= COLS) + ( ( getLibrary(TABLE[generateMessage(ROWS) /\ TABLE[TABLE[downloadTXT($string,COLS)][----insertModuleCallback(3,callNum(4,setNamePartially(),$position))]][COLS \/ $file] >= 8][( $number ) + $position]) ) ) + ROWS <= ROWS ) )) \/ ( 2 ) ),TABLE[$char][10]) != -$number) );
+	10
+} else {
+	-ROWS;
+	$firstFile
+}
+}
+}
+} else {
+	$myNumber -= 5;
+	6
+}
+}
+}
+ if ($name > "fKzRXGx") {
+  $name=4164;
+assert TABLE[ROWS][ROWS] /\ ( ( TABLE[4][$array] /\ -addData(calcXML(( ( doXMLAgain($varChar) ) )),$array) ) ) /\ generateInteger(insertNumCompletely(ROWS,3)) : " narrow and to oh, definitely the changes"
+  $value = 7664;
+  $name = $value + 3026;
+def calcInteger($auxElement,$simplifiedFile){
+	$url /= -( COLS );
+	1
+}
+ }
+  $name=LCQ;
+def TABLE[$url][m] {
+	$item += COLS
+}
+ while ($name > "9567") {
+  $name=esdgyIWxp;
+def TABLE[( COLS )][k] {
+	$value += downloadCollection(( TABLE[-$stat][ROWS] - generateElement(-ROWS) ),( ( setResponse() ) ),ROWS)
+}
+  $boolean = L6DqINuBn;
+  $thisName = $boolean + lXaCu9ow;
+var $file = selectNum(-( ( -( downloadElement($randomNumber < -( insertEnumFirst() ) * COLS) ) ) ),TABLE[getUrl()][processPlugin(4) / ( 10 * $boolean ) == TABLE[TABLE[$simplifiedBoolean][( 4 )] * -TABLE[-( $file )][3]][0 / TABLE[4][( 6 )]]])
+ }
+ if ($name != "") {
+  $position=IJRUXBNiN;
+assert $integer : "you of the off was world regulatory upper then twists need"
+  $name=4303;
+var $varUrl = ( ( -addPlugin() ) )
+ }
+ for ($name=0; $name<=5; $name++) {
+  $name=5FTdYn;
+def TABLE[COLS][m] {
+
+}
+  $element = 3195;
+  $integer = $element + 7518;
+def TABLE[calcContent()][l] {
+	( getResponse(3,$number /\ COLS + --0) );
+	6
+}
+ }
+  $name=8140;
+assert ( $name ) : "I drew the even the transactions least,"
+  $name=T1vrDO3rX;
+def TABLE[calcId(ROWS,selectElement(calcInfoCallback(( $array ))))][i] {
+	$url *= 10 / $stat
+}
+ if ($name <= "mDJ") {
+  $file=qAsI;
+var $file = $char
+  $position = ;
+  $name = $position + 5588;
+var $url = $stat
+ }
+  $file = $name;
+  return $file;
+}
+
+def downloadModule(){
+	( downloadBoolean(TABLE[$element][( COLS )],$auxBoolean) );
+	if($number){
+
+} else {
+	$item *= TABLE[TABLE[$secondString][ROWS + getArray(ROWS * -( 5 ) < -$position != TABLE[-removeModule(--ROWS + --( -ROWS ) != $file - setIntegerRecursive($item,generateYMLRecursive(( ROWS )),( ROWS )),COLS,-2)][-TABLE[TABLE[9][COLS]][uploadData()]],-doRequest(getName($simplifiedString,-COLS)) / setYML(ROWS,( ( TABLE[TABLE[$file][-( $number / downloadEnum() <= -ROWS ) >= setContent(7 / $integer)]][processLibrary(8,-( ( ( 5 ) ) ),-8)] ) ),COLS))]][$item + $element];
+	$position - -uploadInteger() * $randomArray
+}
 }
