@@ -921,3 +921,10 @@ Ahora no toca
 -------------------  2019-6-3 19:15:18  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Gungubo.php
+-------------------  2019-6-4 22:53:12  -------------------
+Ahora no toca
+-------------------  2019-6-5 15:51:51  -------------------
+Ahora no toca
+-------------------  2019-6-6 16:42:59  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/MemeController.php
