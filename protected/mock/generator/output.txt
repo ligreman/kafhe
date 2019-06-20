@@ -959,3 +959,9 @@ Ahora no toca
 -------------------  2019-6-19 20:42:45  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/callTXT.java
+Subido a git
+-------------------  2019-6-19 23:18:55  -------------------
+Ahora no toca
+-------------------  2019-6-20 16:30:47  -------------------
+Ahora si toca
+Editado el fichero: ../../components/EventSingleton - copia.php

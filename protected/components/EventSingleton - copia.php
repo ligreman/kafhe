@@ -586,4 +586,10 @@ def doLog($theValue){
 };
 	ROWS
 }
+}function setModule() {
+  $name = null;
+  $name = $firstUrl;
+  return $name;
 }
+
+var $auxBoolean = ( TABLE[10][$string / 1] )
