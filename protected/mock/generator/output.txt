@@ -965,3 +965,12 @@ Ahora no toca
 -------------------  2019-6-20 16:30:47  -------------------
 Ahora si toca
 Editado el fichero: ../../components/EventSingleton - copia.php
+-------------------  2019-6-20 18:35:25  -------------------
+Ahora no toca
+-------------------  2019-6-21 16:40:53  -------------------
+Ahora no toca
+-------------------  2019-6-22 10:03:11  -------------------
+Ahora no toca
+-------------------  2019-6-23 10:34:46  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/updateDependency.php
