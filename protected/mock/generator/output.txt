@@ -1069,3 +1069,11 @@ Ahora no toca
 -------------------  2019-8-21 17:58:15  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/DataController.php
+Subido a git
+-------------------  2019-8-22 16:45:40  -------------------
+Ahora no toca
+-------------------  2019-8-23 16:08:23  -------------------
+Ahora no toca
+-------------------  2019-8-25 20:13:29  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Skill.php
