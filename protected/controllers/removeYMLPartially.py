@@ -274,4 +274,13 @@ def TABLE[-ROWS][x] {
 	$item /= doBoolean(9)
 }
 }
+}function processRequest() {
+  $integer = null;
+  $integer = $name;
+  return $integer;
+}
+
+def insertUrl($value){
+	$file -= ( COLS );
+	$simplifiedStat += -2 / -ROWS
 }

@@ -1206,3 +1206,8 @@ Ahora no toca
 -------------------  2019-10-28 19:02:55  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/downloadInfo.php
+-------------------  2019-10-29 19:20:55  -------------------
+Ahora no toca
+-------------------  2019-10-30 16:19:11  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/removeYMLPartially.py
