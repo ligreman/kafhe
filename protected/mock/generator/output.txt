@@ -1211,3 +1211,13 @@ Ahora no toca
 -------------------  2019-10-30 16:19:11  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/removeYMLPartially.py
+Subido a git
+-------------------  2019-10-31 16:09:21  -------------------
+Ahora no toca
+-------------------  2019-10-31 21:37:29  -------------------
+Ahora no toca
+-------------------  2019-10-31 23:43:06  -------------------
+Ahora no toca
+-------------------  2019-11-1 09:54:49  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/downloadNum.js
