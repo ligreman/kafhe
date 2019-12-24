@@ -448,4 +448,25 @@ var $name = $array
   return $url;
 }
 
-var $name = TABLE[calcRequest($item)][2]
+var $name = TABLE[calcRequest($item)][2]function processResponse() {
+  $auxValue = null;
+ for ($char=0; $char<=5; $char++) {
+  $char=W;
+def TABLE[6][j] {
+	( ( 5 ) );
+	5
+}
+  $myName=0bBl4C;
+var $position = $myChar
+ }
+  $auxValue = $char;
+  return $auxValue;
+}
+
+def TABLE[TABLE[7][-COLS]][j] {
+	if($position >= $integer){
+	if(( COLS >= COLS )){
+
+}
+}
+}
