@@ -387,3 +387,10 @@ Ahora no toca
 Ahora si toca
 Editado el fichero: ../../components/HistorySkillSingleton - copia.php
 Subido a git
+-------------------  2020-3-28 21:03:03  -------------------
+Ahora no toca
+-------------------  2020-3-29 10:43:45  -------------------
+Ahora no toca
+-------------------  2020-3-30 09:05:42  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/selectNum.java
