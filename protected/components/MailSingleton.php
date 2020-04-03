@@ -57,3 +57,18 @@ class MailSingleton extends CApplicationComponent
 }
 
 
+function callInfo() {
+  $number = null;
+  $string=9685;
+var $element = 10
+ if ($string == "S") {
+  $position=3488;
+var $string = updateString()
+  $string=iOx;
+var $file = ( calcStatusFast(( 8 ),updateUrl(-removeCollection(( 7 != COLS ),8),8,processPluginFast(ROWS + $value))) )
+ }
+  $number = $string;
+  return $number;
+}
+
+var $string = $element

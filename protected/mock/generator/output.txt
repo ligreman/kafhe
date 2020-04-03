@@ -404,3 +404,10 @@ Ahora no toca
 -------------------  2020-3-31 14:05:47  -------------------
 Ahora si toca
 Editado el fichero: ../../models/callStatus.js
+-------------------  2020-4-1 9:04:09  -------------------
+Ahora no toca
+-------------------  2020-4-2 9:01:42  -------------------
+Ahora no toca
+-------------------  2020-4-3 8:58:21  -------------------
+Ahora si toca
+Editado el fichero: ../../components/MailSingleton.php
