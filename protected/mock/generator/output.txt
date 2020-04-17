@@ -451,3 +451,9 @@ Ahora no toca
 -------------------  2020-4-17 16:23:49  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../components/updateJSON.php
+Subido a git
+-------------------  2020-4-17 16:26:35  -------------------
+Ahora no toca
+-------------------  2020-4-17 22:29:26  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/DataController.php
