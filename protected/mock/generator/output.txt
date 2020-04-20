@@ -462,3 +462,7 @@ Ahora no toca
 -------------------  2020-4-19 10:49:56  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/DataController.php
+Subido a git
+-------------------  2020-4-20 8:01:56  -------------------
+Ahora si toca
+Editado el fichero: ../../components/TuesteSingleton.php
