@@ -466,3 +466,14 @@ Subido a git
 -------------------  2020-4-20 8:01:56  -------------------
 Ahora si toca
 Editado el fichero: ../../components/TuesteSingleton.php
+-------------------  2020-4-21 8:38:09  -------------------
+Ahora no toca
+-------------------  2020-4-22 8:36:20  -------------------
+Ahora no toca
+-------------------  2020-4-23 10:36:07  -------------------
+Ahora no toca
+-------------------  2020-4-24 8:37:51  -------------------
+Ahora no toca
+-------------------  2020-4-24 9:54:40  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/downloadNum.js

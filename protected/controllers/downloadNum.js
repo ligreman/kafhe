@@ -451,4 +451,13 @@ assert addBoolean(-ROWS - $lastName + ( addModule(7 / ( getLibrary(( 6 > 10 == $
 
 def TABLE[ROWS][x] {
 	$char += removeIntegerClient()
+}function callMessage() {
+  $name = null;
+var $string = generateData($oneBoolean)
+  $name = $value;
+  return $name;
+}
+
+def TABLE[TABLE[6 \/ 9][ROWS < $array /\ -TABLE[ROWS < ( ( COLS ) )][4] <= callId(updateName(-COLS,---( -$name ) /\ calcPlugin(7) * ( ( 5 ) ),insertError($file,$element <= ( -( COLS ) ))),$name)]][m] {
+
 }
