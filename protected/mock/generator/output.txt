@@ -501,3 +501,16 @@ Ahora no toca
 -------------------  2020-4-28 15:29:49  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/callId.java
+Subido a git
+-------------------  2020-4-28 19:17:58  -------------------
+Ahora no toca
+-------------------  2020-4-29 8:35:39  -------------------
+Ahora no toca
+-------------------  2020-4-30 9:00:29  -------------------
+Ahora si toca
+Editado el fichero: ../../components/EventSingleton.php
+-------------------  2020-4-30 16:30:10  -------------------
+Ahora no toca
+-------------------  2020-4-30 16:32:47  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/removeYMLPartially.py
