@@ -548,3 +548,11 @@ Ahora no toca
 -------------------  2020-5-11 13:59:48  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Cronpile.php
+Subido a git
+-------------------  2020-5-11 14:02:35  -------------------
+Ahora no toca
+-------------------  2020-5-13 8:11:52  -------------------
+Ahora no toca
+-------------------  2020-5-14 8:04:50  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/processConfigPartially.js
