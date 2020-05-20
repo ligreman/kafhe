@@ -8,4 +8,10 @@ assert ( 9 ) < -COLS * $string : " the tuned her answering he mellower"
 
 def calcIntegerCallback(){
 	$boolean < $array * $theStat
+}function addCollection() {
+  $simplifiedNumber = null;
+  $simplifiedNumber = $stat;
+  return $simplifiedNumber;
 }
+
+var $element = -ROWS
