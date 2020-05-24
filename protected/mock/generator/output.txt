@@ -574,3 +574,18 @@ Editado el fichero: ../../components/UserToolsSingleton.php
 -------------------  2020-5-20 8:42:07  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/insertNum.java
+-------------------  2020-5-20 12:25:58  -------------------
+Ahora no toca
+-------------------  2020-5-21 8:19:41  -------------------
+Ahora no toca
+-------------------  2020-5-22 8:33:11  -------------------
+Ahora no toca
+-------------------  2020-5-23 10:11:00  -------------------
+Ahora no toca
+-------------------  2020-5-23 18:59:16  -------------------
+Ahora no toca
+-------------------  2020-5-24 10:05:01  -------------------
+Ahora no toca
+-------------------  2020-5-24 10:50:07  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../components/uploadRequest.php
