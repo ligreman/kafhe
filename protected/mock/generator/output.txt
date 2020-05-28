@@ -593,3 +593,11 @@ Subido a git
 -------------------  2020-5-25 8:36:36  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/updateArray.js
+Subido a git
+-------------------  2020-5-26 8:40:46  -------------------
+Ahora no toca
+-------------------  2020-5-27 8:38:35  -------------------
+Ahora no toca
+-------------------  2020-5-28 8:15:51  -------------------
+Ahora si toca
+Editado el fichero: ../../components/SkillSingleton.php
