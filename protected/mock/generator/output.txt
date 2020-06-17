@@ -649,3 +649,4 @@ Ahora no toca
 -------------------  2020-6-17 8:49:27  -------------------
 Ahora si toca
 Editado el fichero: ../../components/SkillValidator.php
+Subido a git

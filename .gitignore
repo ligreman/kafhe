@@ -1,3 +1,4 @@
 /protected/mock/**
 .idea
 .git
+/protected/mock/
