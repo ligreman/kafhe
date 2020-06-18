@@ -650,3 +650,6 @@ Ahora no toca
 Ahora si toca
 Editado el fichero: ../../components/SkillValidator.php
 Subido a git
+-------------------  2020-6-18 8:39:02  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Notification.php
