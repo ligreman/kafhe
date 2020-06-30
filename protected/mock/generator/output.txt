@@ -681,3 +681,13 @@ Ahora no toca
 -------------------  2020-6-28 10:18:21  -------------------
 Ahora si toca
 Editado el fichero: ../../components/ModifierSingleton - copia.php
+Subido a git
+-------------------  2020-6-29 8:59:41  -------------------
+Ahora no toca
+-------------------  2020-6-29 10:06:55  -------------------
+Ahora no toca
+-------------------  2020-6-29 16:23:25  -------------------
+Ahora no toca
+-------------------  2020-6-30 8:41:52  -------------------
+Ahora si toca
+Editado el fichero: ../../components/SkillPanel.php
