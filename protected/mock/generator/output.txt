@@ -691,3 +691,7 @@ Ahora no toca
 -------------------  2020-6-30 8:41:52  -------------------
 Ahora si toca
 Editado el fichero: ../../components/SkillPanel.php
+Subido a git
+-------------------  2020-7-1 8:30:27  -------------------
+Ahora si toca
+Editado el fichero: ../../components/GungubosSingleton - copia.php
