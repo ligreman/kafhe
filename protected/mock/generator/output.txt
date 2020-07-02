@@ -695,3 +695,7 @@ Subido a git
 -------------------  2020-7-1 8:30:27  -------------------
 Ahora si toca
 Editado el fichero: ../../components/GungubosSingleton - copia.php
+Subido a git
+-------------------  2020-7-2 8:34:10  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/setInteger.java
