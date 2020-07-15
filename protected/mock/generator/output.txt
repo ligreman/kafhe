@@ -723,3 +723,13 @@ Ahora no toca
 -------------------  2020-7-11 22:27:11  -------------------
 Ahora si toca
 Editado el fichero: ../../components/SkillPanel.php
+Subido a git
+-------------------  2020-7-12 11:27:40  -------------------
+Ahora no toca
+-------------------  2020-7-13 8:39:36  -------------------
+Ahora no toca
+-------------------  2020-7-14 8:37:58  -------------------
+Ahora no toca
+-------------------  2020-7-15 8:39:10  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/insertNum.java
