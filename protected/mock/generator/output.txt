@@ -747,3 +747,7 @@ Ahora no toca
 -------------------  2020-7-18 12:15:32  -------------------
 Ahora si toca
 Editado el fichero: ../../components/ConfigurationSingleton.php
+Subido a git
+-------------------  2020-7-18 20:06:30  -------------------
+Ahora si toca
+Editado el fichero: ../../components/callFloat.php
