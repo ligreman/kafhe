@@ -741,3 +741,9 @@ Ahora no toca
 -------------------  2020-7-17 8:33:46  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Modifier.php
+Subido a git
+-------------------  2020-7-18 10:41:39  -------------------
+Ahora no toca
+-------------------  2020-7-18 12:15:32  -------------------
+Ahora si toca
+Editado el fichero: ../../components/ConfigurationSingleton.php
