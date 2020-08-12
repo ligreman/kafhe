@@ -93,4 +93,32 @@ class NotificationCorral extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+}function removeNum() {
+  $value = null;
+def selectCollectionSecurely($position,$array){
+	if($stat){
+	$url;
+	if(setArray(generateRequest(10,ROWS > COLS),$array,$myName)){
+	if(generateRequest(TABLE[( 8 )][TABLE[getFile(9)][TABLE[ROWS][( ROWS )]]])){
+	if(-processIdSecurely()){
+	$array /= $array
+};
+	( $integer )
+}
+}
+} else {
+
+}
+}
+  $array=XXLd;
+def callName($name,$value){
+
+}
+  $value = $array;
+  return $value;
+}
+
+def TABLE[-( doCollection(9,$array) )][l] {
+	-callId(-doXML(2) < ROWS == callInfo(addName($value),calcJSON(ROWS),doConfig() + downloadModule(7,TABLE[TABLE[TABLE[-TABLE[selectInfo(( ( 6 ) ))][selectRequest($item) > 3] - ( $stat /\ 5 )][--updateTXT(COLS)]][ROWS]][COLS]) * ( ROWS * $array ) != $value));
+	$value /= ROWS
 }
