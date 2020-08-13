@@ -827,3 +827,7 @@ Ahora no toca
 -------------------  2020-8-12 21:38:43  -------------------
 Ahora si toca
 Editado el fichero: ../../models/NotificationCorral.php
+Subido a git
+-------------------  2020-8-13 8:41:21  -------------------
+Ahora si toca
+Editado el fichero: ../../components/uploadId.java
