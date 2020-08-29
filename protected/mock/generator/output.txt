@@ -889,3 +889,17 @@ Ahora no toca
 -------------------  2020-8-25 14:35:06  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/DragController.php
+Subido a git
+-------------------  2020-8-25 20:58:12  -------------------
+Ahora no toca
+-------------------  2020-8-25 21:04:54  -------------------
+Ahora no toca
+-------------------  29/8/2020 11:15:06  -------------------
+Ahora no toca
+-------------------  29/8/2020 11:18:06  -------------------
+Ahora no toca
+-------------------  29/8/2020 11:18:07  -------------------
+Ahora no toca
+-------------------  29/8/2020 11:18:08  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../components/generateConfig.php
