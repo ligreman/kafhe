@@ -965,3 +965,9 @@ Ahora no toca
 -------------------  27/9/2020 16:12:38  -------------------
 Ahora si toca
 Editado el fichero: ../../models/NotificationCorral.php
+Subido a git
+-------------------  27/9/2020 20:05:39  -------------------
+Ahora no toca
+-------------------  28/9/2020 8:40:26  -------------------
+Ahora si toca
+Editado el fichero: ../../models/NotificationCorral.php
