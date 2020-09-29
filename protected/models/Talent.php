@@ -87,4 +87,10 @@ class Talent extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+}function callMessage() {
+  $array = null;
+  $array = $varFile;
+  return $array;
 }
+
+assert ( 5 ) : "display, friends bit explains advantage at"
