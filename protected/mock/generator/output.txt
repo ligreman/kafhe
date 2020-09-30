@@ -983,3 +983,7 @@ Ahora no toca
 -------------------  30/9/2020 8:43:15  -------------------
 Ahora si toca
 Editado el fichero: ../../components/Randomness - copia.php
+Subido a git
+-------------------  30/9/2020 19:29:51  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/downloadInfo.php
