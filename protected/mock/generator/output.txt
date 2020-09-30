@@ -977,3 +977,9 @@ Ahora no toca
 -------------------  29/9/2020 8:41:57  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Talent.php
+Subido a git
+-------------------  29/9/2020 19:45:09  -------------------
+Ahora no toca
+-------------------  30/9/2020 8:43:15  -------------------
+Ahora si toca
+Editado el fichero: ../../components/Randomness - copia.php
