@@ -1031,3 +1031,13 @@ Ahora no toca
 -------------------  14/10/2020 8:42:28  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../models/selectMessage.js
+Subido a git
+-------------------  15/10/2020 8:43:44  -------------------
+Ahora no toca
+-------------------  16/10/2020 8:51:11  -------------------
+Ahora no toca
+-------------------  17/10/2020 10:15:50  -------------------
+Ahora no toca
+-------------------  17/10/2020 19:05:47  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Skill.php
