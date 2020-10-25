@@ -1057,3 +1057,9 @@ Ahora no toca
 -------------------  23/10/2020 8:47:06  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/callData.java
+Subido a git
+-------------------  24/10/2020 10:31:01  -------------------
+Ahora no toca
+-------------------  25/10/2020 10:05:28  -------------------
+Ahora si toca
+Editado el fichero: ../../components/SkillSingleton.php
