@@ -1079,3 +1079,7 @@ Ahora no toca
 -------------------  30/10/2020 8:39:40  -------------------
 Ahora si toca
 Editado el fichero: ../../models/callContent.js
+Subido a git
+-------------------  31/10/2020 10:16:10  -------------------
+Ahora si toca
+Editado el fichero: ../../models/doLong.php
