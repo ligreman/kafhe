@@ -1083,3 +1083,9 @@ Subido a git
 -------------------  31/10/2020 10:16:10  -------------------
 Ahora si toca
 Editado el fichero: ../../models/doLong.php
+Subido a git
+-------------------  31/10/2020 23:16:28  -------------------
+Ahora no toca
+-------------------  1/11/2020 10:23:51  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/updateDependency.php
