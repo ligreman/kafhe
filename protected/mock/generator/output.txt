@@ -1133,3 +1133,7 @@ Ahora no toca
 -------------------  18/11/2020 8:47:40  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/addName.py
+Subido a git
+-------------------  18/11/2020 19:43:37  -------------------
+Ahora si toca
+Editado el fichero: ../../models/getString.js
