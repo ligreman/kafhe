@@ -1137,3 +1137,13 @@ Subido a git
 -------------------  18/11/2020 19:43:37  -------------------
 Ahora si toca
 Editado el fichero: ../../models/getString.js
+Subido a git
+-------------------  19/11/2020 8:43:45  -------------------
+Ahora no toca
+-------------------  20/11/2020 8:30:14  -------------------
+Ahora no toca
+-------------------  20/11/2020 18:24:28  -------------------
+Ahora no toca
+-------------------  20/11/2020 20:09:27  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/downloadMessage.py
