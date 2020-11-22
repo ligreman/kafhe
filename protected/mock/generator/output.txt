@@ -1147,3 +1147,9 @@ Ahora no toca
 -------------------  20/11/2020 20:09:27  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/downloadMessage.py
+Subido a git
+-------------------  21/11/2020 10:11:37  -------------------
+Ahora no toca
+-------------------  22/11/2020 10:14:08  -------------------
+Ahora si toca
+Editado el fichero: ../../components/ConfigurationSingleton.php
