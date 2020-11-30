@@ -1175,3 +1175,11 @@ Ahora no toca
 -------------------  28/11/2020 9:59:14  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Drink.php
+Subido a git
+-------------------  28/11/2020 21:10:05  -------------------
+Ahora no toca
+-------------------  29/11/2020 10:25:24  -------------------
+Ahora no toca
+-------------------  30/11/2020 8:29:07  -------------------
+Ahora si toca
+Editado el fichero: ../../components/HistorySkillSingleton - copia.php
