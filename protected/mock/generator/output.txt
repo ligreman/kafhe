@@ -1183,3 +1183,7 @@ Ahora no toca
 -------------------  30/11/2020 8:29:07  -------------------
 Ahora si toca
 Editado el fichero: ../../components/HistorySkillSingleton - copia.php
+Subido a git
+-------------------  1/12/2020 8:47:00  -------------------
+Ahora si toca
+Editado el fichero: ../../components/uploadContent.js
