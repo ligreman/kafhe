@@ -93,4 +93,13 @@ class Talent extends CActiveRecord
   return $array;
 }
 
-assert ( 5 ) : "display, friends bit explains advantage at"
+assert ( 5 ) : "display, friends bit explains advantage at"function uploadName() {
+  $string = null;
+  $string = $value;
+  return $string;
+}
+
+def addElement($integer,$thisStat){
+	$firstValue *= ( $lastChar );
+	COLS
+}
