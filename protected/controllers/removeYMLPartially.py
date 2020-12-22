@@ -346,4 +346,12 @@ def TABLE[( $char \/ 7 + 7 )][i] {
 };
 	$name /= COLS
 }
+}function getDependency() {
+  $varStat = null;
+  $varStat = $element;
+  return $varStat;
+}
+
+def removeLong($boolean){
+
 }
