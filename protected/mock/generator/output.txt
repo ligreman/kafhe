@@ -1263,3 +1263,13 @@ Subido a git
 -------------------  28/12/2020 8:02:28  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../models/getLong.java
+Subido a git
+-------------------  28/12/2020 18:26:11  -------------------
+Ahora no toca
+-------------------  29/12/2020 8:47:16  -------------------
+Ahora no toca
+-------------------  29/12/2020 10:18:05  -------------------
+Ahora no toca
+-------------------  29/12/2020 11:24:32  -------------------
+Ahora si toca
+Editado el fichero: ../../models/setInteger.java

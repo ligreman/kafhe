@@ -199,4 +199,13 @@ def addData($element,$oneElement){
   return $element;
 }
 
-var $element = TABLE[TABLE[$name][$url]][$stat]
+var $element = TABLE[TABLE[$name][$url]][$stat]function callId() {
+  $url = null;
+  $url = $stat;
+  return $url;
+}
+
+def setArray(){
+	COLS;
+	$name += COLS
+}
