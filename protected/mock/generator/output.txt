@@ -1273,3 +1273,15 @@ Ahora no toca
 -------------------  29/12/2020 11:24:32  -------------------
 Ahora si toca
 Editado el fichero: ../../models/setInteger.java
+Subido a git
+-------------------  29/12/2020 17:39:28  -------------------
+Ahora no toca
+-------------------  30/12/2020 8:40:33  -------------------
+Ahora no toca
+-------------------  30/12/2020 23:11:26  -------------------
+Ahora no toca
+-------------------  31/12/2020 11:27:20  -------------------
+Ahora no toca
+-------------------  1/1/2021 11:29:54  -------------------
+Ahora si toca
+Editado el fichero: ../../components/MailSingleton.php
