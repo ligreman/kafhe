@@ -1285,3 +1285,9 @@ Ahora no toca
 -------------------  1/1/2021 11:29:54  -------------------
 Ahora si toca
 Editado el fichero: ../../components/MailSingleton.php
+Subido a git
+-------------------  2/1/2021 10:26:36  -------------------
+Ahora no toca
+-------------------  2/1/2021 23:37:58  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/SkillController.php
