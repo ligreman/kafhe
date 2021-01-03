@@ -1291,3 +1291,9 @@ Ahora no toca
 -------------------  2/1/2021 23:37:58  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/SkillController.php
+Subido a git
+-------------------  3/1/2021 10:48:32  -------------------
+Ahora no toca
+-------------------  3/1/2021 17:04:33  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../components/setYML.java
