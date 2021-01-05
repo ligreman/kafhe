@@ -1297,3 +1297,9 @@ Ahora no toca
 -------------------  3/1/2021 17:04:33  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../components/setYML.java
+Subido a git
+-------------------  4/1/2021 8:57:48  -------------------
+Ahora no toca
+-------------------  5/1/2021 8:49:02  -------------------
+Ahora si toca
+Editado el fichero: ../../components/GumbudosSingleton.php
