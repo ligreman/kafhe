@@ -1303,3 +1303,11 @@ Ahora no toca
 -------------------  5/1/2021 8:49:02  -------------------
 Ahora si toca
 Editado el fichero: ../../components/GumbudosSingleton.php
+Subido a git
+-------------------  6/1/2021 10:44:16  -------------------
+Ahora no toca
+-------------------  7/1/2021 10:53:39  -------------------
+Ahora no toca
+-------------------  8/1/2021 10:33:15  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/updateArray.js
