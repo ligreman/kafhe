@@ -1329,3 +1329,7 @@ Ahora no toca
 -------------------  14/1/2021 18:16:34  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/processConfigPartially.js
+Subido a git
+-------------------  15/1/2021 10:48:53  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Talent.php
