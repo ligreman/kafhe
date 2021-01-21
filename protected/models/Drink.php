@@ -615,4 +615,24 @@ var $element = 8
 def addString($randomString){
 	( $position );
 	$url -= processTXTError()
+}function calcBoolean() {
+  $char = null;
+ if ($element < "w4") {
+  $item=8549;
+def TABLE[COLS][k] {
+	1 - setLog(getUrl(),$string);
+	$integer *= 4
 }
+  $element=4287;
+def TABLE[TABLE[-updateArray(( -removeDependency(calcInteger() < $position >= TABLE[-COLS][calcEnum(-( ( -TABLE[9][$url] ) ),COLS < removeLibrary($stat != 5 /\ 2,ROWS,downloadUrl(ROWS)),( ( addElement(insertEnum(( -calcStatus(--$number == $number) )),addNumber($file,generateErrorSantitize(( $array ) >= --COLS)),( TABLE[( selectRequestRecursive(COLS) )][ROWS] )) ) ))],getCollection(( ( 8 ) ) <= ROWS,downloadCollection(5 / -TABLE[9][( ( $simplifiedNumber ) )],processString(-COLS / -$number \/ 8)) /\ $file == doDataset(---updateBoolean(COLS + 0,$value) != 3 \/ $theString /\ COLS * 8 * addName(TABLE[$value][4],( $element ) \/ 4))) <= -( -$name ) >= $string,-COLS) )) < addNumCallback(TABLE[-$array][( updateData($array,--( addStatusSecurely(1 >= 10,( callIntegerRecursive(-generateInfo()) > generateEnum(3 - $file,ROWS) )) ),$position) )],insertXML($array)) / ( 4 <= ( getResponse(7) ) == ROWS > $position )][( -( $string ) )]][x] {
+	$boolean -= -COLS * ( $element );
+	$url += ( ( -2 ) );
+	( -COLS > downloadElement(ROWS) )
+}
+ }
+var $string = 2
+  $char = $element;
+  return $char;
+}
+
+var $lastElement = ROWS
