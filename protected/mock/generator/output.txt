@@ -1359,3 +1359,7 @@ Ahora no toca
 -------------------  21/1/2021 23:35:24  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Drink.php
+Subido a git
+-------------------  22/1/2021 10:52:31  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/generateContent.java
