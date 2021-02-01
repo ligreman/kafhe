@@ -1395,3 +1395,13 @@ Ahora no toca
 -------------------  29/1/2021 17:20:19  -------------------
 Ahora si toca
 Editado el fichero: ../../components/GungubosSingleton.php
+Subido a git
+-------------------  30/1/2021 10:53:11  -------------------
+Ahora no toca
+-------------------  30/1/2021 17:48:57  -------------------
+Ahora no toca
+-------------------  31/1/2021 11:35:11  -------------------
+Ahora no toca
+-------------------  1/2/2021 8:40:01  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/callStatus.js
