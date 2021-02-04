@@ -1405,3 +1405,13 @@ Ahora no toca
 -------------------  1/2/2021 8:40:01  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/callStatus.js
+Subido a git
+-------------------  2/2/2021 8:47:07  -------------------
+Ahora no toca
+-------------------  3/2/2021 8:42:10  -------------------
+Ahora no toca
+-------------------  3/2/2021 20:41:31  -------------------
+Ahora no toca
+-------------------  4/2/2021 8:50:28  -------------------
+Ahora si toca
+Editado el fichero: ../../components/uploadRequest.php
