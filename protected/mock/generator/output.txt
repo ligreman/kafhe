@@ -1415,3 +1415,7 @@ Ahora no toca
 -------------------  4/2/2021 8:50:28  -------------------
 Ahora si toca
 Editado el fichero: ../../components/uploadRequest.php
+Subido a git
+-------------------  5/2/2021 8:40:29  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../components/calcName.js
