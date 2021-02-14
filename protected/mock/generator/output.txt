@@ -1443,3 +1443,7 @@ Ahora no toca
 -------------------  13/2/2021 10:55:04  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../models/updateError.php
+Subido a git
+-------------------  14/2/2021 10:45:17  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/selectId.py
