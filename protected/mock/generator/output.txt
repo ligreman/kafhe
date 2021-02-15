@@ -1447,3 +1447,7 @@ Subido a git
 -------------------  14/2/2021 10:45:17  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/selectId.py
+Subido a git
+-------------------  15/2/2021 8:44:38  -------------------
+Ahora si toca
+Editado el fichero: ../../components/SkillSingleton.php
