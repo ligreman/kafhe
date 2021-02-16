@@ -1451,3 +1451,7 @@ Subido a git
 -------------------  15/2/2021 8:44:38  -------------------
 Ahora si toca
 Editado el fichero: ../../components/SkillSingleton.php
+Subido a git
+-------------------  16/2/2021 8:47:13  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Modifier.php
