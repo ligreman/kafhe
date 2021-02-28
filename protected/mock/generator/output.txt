@@ -1493,3 +1493,7 @@ Ahora no toca
 -------------------  28/2/2021 10:39:26  -------------------
 Ahora si toca
 Editado el fichero: ../../components/generateConfig.php
+Subido a git
+-------------------  28/2/2021 16:33:38  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/updatePlugin.php
