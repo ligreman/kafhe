@@ -1481,3 +1481,15 @@ Ahora no toca
 -------------------  25/2/2021 8:05:13  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../models/getLong.java
+Subido a git
+-------------------  25/2/2021 13:35:16  -------------------
+Ahora no toca
+-------------------  26/2/2021 8:42:11  -------------------
+Ahora no toca
+-------------------  27/2/2021 10:49:14  -------------------
+Ahora no toca
+-------------------  27/2/2021 23:09:38  -------------------
+Ahora no toca
+-------------------  28/2/2021 10:39:26  -------------------
+Ahora si toca
+Editado el fichero: ../../components/generateConfig.php
