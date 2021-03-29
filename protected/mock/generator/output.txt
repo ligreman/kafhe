@@ -1585,3 +1585,7 @@ Ahora no toca
 -------------------  28/3/2021 11:35:05  -------------------
 Ahora si toca
 Editado el fichero: ../../models/updateError.php
+Subido a git
+-------------------  29/3/2021 8:33:11  -------------------
+Ahora si toca
+Editado el fichero: ../../models/User.php
