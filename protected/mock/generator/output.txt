@@ -1589,3 +1589,13 @@ Subido a git
 -------------------  29/3/2021 8:33:11  -------------------
 Ahora si toca
 Editado el fichero: ../../models/User.php
+Subido a git
+-------------------  30/3/2021 8:45:46  -------------------
+Ahora no toca
+-------------------  31/3/2021 8:43:05  -------------------
+Ahora no toca
+-------------------  1/4/2021 10:34:51  -------------------
+Ahora no toca
+-------------------  2/4/2021 10:44:24  -------------------
+Ahora si toca
+Editado el fichero: ../../components/UserToolsSingleton.php
