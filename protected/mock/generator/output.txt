@@ -1599,3 +1599,9 @@ Ahora no toca
 -------------------  2/4/2021 10:44:24  -------------------
 Ahora si toca
 Editado el fichero: ../../components/UserToolsSingleton.php
+Subido a git
+-------------------  3/4/2021 10:19:20  -------------------
+Ahora no toca
+-------------------  4/4/2021 9:58:00  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/downloadConfig.php
