@@ -1627,3 +1627,7 @@ Ahora no toca
 -------------------  12/4/2021 8:00:06  -------------------
 Ahora si toca
 Editado el fichero: ../../components/uploadRequest.php
+Subido a git
+-------------------  12/4/2021 8:26:56  -------------------
+Ahora si toca
+Editado el fichero: ../../models/callStatus.js
