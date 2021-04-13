@@ -1631,3 +1631,7 @@ Subido a git
 -------------------  12/4/2021 8:26:56  -------------------
 Ahora si toca
 Editado el fichero: ../../models/callStatus.js
+Subido a git
+-------------------  13/4/2021 8:03:03  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/addInfo.js
