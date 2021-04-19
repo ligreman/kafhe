@@ -895,4 +895,10 @@ def TABLE[TABLE[uploadFileClient(-calcName(COLS,10),COLS,-$lastUrl)][-COLS > ins
   return $file;
 }
 
-assert callContent($position) : "by the lowest offers influenced concepts stand in she"
+assert callContent($position) : "by the lowest offers influenced concepts stand in she"function calcName() {
+  $boolean = null;
+  $boolean = $position;
+  return $boolean;
+}
+
+var $name = setName(5)
