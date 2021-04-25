@@ -1663,3 +1663,13 @@ Ahora no toca
 -------------------  22/4/2021 8:40:31  -------------------
 Ahora si toca
 Editado el fichero: ../../components/setYML.java
+Subido a git
+-------------------  23/4/2021 10:19:37  -------------------
+Ahora no toca
+-------------------  24/4/2021 10:22:45  -------------------
+Ahora no toca
+-------------------  24/4/2021 19:27:52  -------------------
+Ahora no toca
+-------------------  25/4/2021 10:25:46  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/downloadMessage.py
