@@ -1681,3 +1681,11 @@ Ahora no toca
 -------------------  28/4/2021 8:30:45  -------------------
 Ahora si toca
 Editado el fichero: ../../models/selectNum.java
+Subido a git
+-------------------  29/4/2021 8:41:37  -------------------
+Ahora no toca
+-------------------  30/4/2021 8:38:34  -------------------
+Ahora no toca
+-------------------  30/4/2021 21:31:54  -------------------
+Ahora si toca
+Editado el fichero: ../../models/calcIdSantitize.php
