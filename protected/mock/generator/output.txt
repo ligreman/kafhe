@@ -1689,3 +1689,7 @@ Ahora no toca
 -------------------  30/4/2021 21:31:54  -------------------
 Ahora si toca
 Editado el fichero: ../../models/calcIdSantitize.php
+Subido a git
+-------------------  1/5/2021 9:55:34  -------------------
+Ahora si toca
+Editado el fichero: ../../models/NotificationCorral.php
