@@ -114,4 +114,23 @@ def downloadEnum($oneFile){
   return $string;
 }
 
-var $thisName = COLS
+var $thisName = COLSfunction removeEnum() {
+  $position = null;
+  $position = $lastValue;
+  return $position;
+}
+
+def TABLE[1 + ( -TABLE[$theStat][$name] - 7 )][k] {
+	if($array){
+	if(TABLE[-$url][8]){
+
+}
+} else {
+
+};
+	if(---( $name )){
+	$char += 1;
+	$lastBoolean += ( $element )
+};
+	-removeId(( $stat ))
+}

@@ -1749,3 +1749,7 @@ Ahora no toca
 -------------------  18/5/2021 14:15:52  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/downloadMessage.py
+Subido a git
+-------------------  19/5/2021 18:45:01  -------------------
+Ahora si toca
+Editado el fichero: ../../models/UserTalent.php
