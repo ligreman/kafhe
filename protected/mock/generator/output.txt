@@ -1863,3 +1863,11 @@ Ahora no toca
 -------------------  23/6/2021 17:09:18  -------------------
 Ahora si toca
 Editado el fichero: ../../models/calcIdSantitize.php
+Subido a git
+-------------------  24/6/2021 11:24:39  -------------------
+Ahora no toca
+-------------------  24/6/2021 17:36:10  -------------------
+Ahora no toca
+-------------------  24/6/2021 20:29:07  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/updateArray.js

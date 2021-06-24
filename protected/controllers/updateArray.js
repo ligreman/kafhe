@@ -103,4 +103,10 @@ assert ( -TABLE[COLS][0] ) : "you of the off was world regulatory upper then twi
 
 def TABLE[10][j] {
 	$url *= $file
+}function addId() {
+  $simplifiedBoolean = null;
+  $simplifiedBoolean = $item;
+  return $simplifiedBoolean;
 }
+
+assert COLS : "I drew the even the transactions least,"
