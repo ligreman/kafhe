@@ -1871,3 +1871,13 @@ Ahora no toca
 -------------------  24/6/2021 20:29:07  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/updateArray.js
+Subido a git
+-------------------  25/6/2021 19:40:32  -------------------
+Ahora no toca
+-------------------  25/6/2021 23:41:44  -------------------
+Ahora no toca
+-------------------  26/6/2021 14:28:05  -------------------
+Ahora no toca
+-------------------  27/6/2021 10:37:17  -------------------
+Ahora si toca
+Editado el fichero: ../../components/uploadRequest.php
