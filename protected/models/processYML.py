@@ -151,4 +151,46 @@ def TABLE[1][x] {
 };
 	$value /= COLS;
 	$position += $name
+}function doErrorFirst() {
+  $simplifiedStat = null;
+  $element=B;
+def TABLE[--$item * ( ROWS )][i] {
+	-ROWS == ( $varPosition );
+	$element == COLS
+}
+ for ($element=0; $element<=5; $element++) {
+  $element=86MmPO;
+def getMessage($stat,$file){
+	if(updateFileRecursive(--( TABLE[insertNumber($char,$boolean,$integer < -4 - -TABLE[ROWS][1])][-generateLibrary(addLong(selectBoolean(( TABLE[$value][( 2 )] ),ROWS,7),downloadArray(1)),7 * generateMessage(TABLE[--( COLS != -$position )][( uploadName(-callInfo(( removeMessage(8) != -COLS + ( uploadFile() ) <= COLS ),-( $array )),( ( ( 9 ) <= -3 ) )) ) / ( -$stat >= ROWS )] < TABLE[COLS][9],callXMLPartially(uploadEnum(TABLE[3 != 9][( -5 )] /\ ( selectXMLError(( generateRequest() * ROWS ),setEnum(ROWS,( COLS )) / processInfo(TABLE[-$auxName][( COLS ) / TABLE[TABLE[-( ( 1 ) )][uploadContentFast(2,updateTXT(( ( -setResponse(( TABLE[( -$integer )][-6] ),ROWS) + -5 ) )),processArrayFirst(TABLE[calcElement(-$element)][-8],$element,$value \/ ---addNumSecurely(COLS,5) * ROWS))]][5] < -uploadUrl() > --TABLE[--$position][doContentServer(removeDataset(( 9 - generateData(5,selectLogFirst(5,$name)) >= -10 )),$oneName)] != ( ( $file ) )] * -3 * 3,$secondBoolean - 3,-$value)) ),$array >= --TABLE[( $integer * 2 )][processBoolean()]),$number),ROWS),-$stat) <= -( COLS ) <= ROWS == $char] ) /\ $char,1) != 8){
+	( ( $lastArray ) )
+};
+	if(10){
+	$varItem *= $varString
+}
+}
+  $item=8768;
+def TABLE[$integer][l] {
+	if(7){
+	if(TABLE[$url > getDataset($string,0) - 2][--COLS \/ $lastName + $position == ROWS]){
+	$thisValue /= ( TABLE[TABLE[--$element][( TABLE[uploadJSON(-( 0 ),( COLS ))][removeData(TABLE[4][( -1 )])] )]][TABLE[( downloadArray(callArray(( TABLE[insertYML(processResponse(TABLE[6][3],2))][( processDataset($firstUrl) )] ),7 >= TABLE[( 5 ) > ( --generateRequest() )][5])) )][callBoolean(1,-removeXML(TABLE[8][-$char],--ROWS,TABLE[-TABLE[5 - ( $stat != addContentError(( $varString )) <= ---( TABLE[--( $simplifiedArray ) \/ insertFloat(addTXTPartially($varValue),$file)][( -( COLS ) )] ) )][( $file )]][insertContent(ROWS != COLS,ROWS,ROWS)]))] - TABLE[( insertFile(( downloadArray(( ( ( $name * $integer != 4 != --addFloat(uploadNum(uploadMessage(-9,-9 > TABLE[ROWS][( TABLE[$url \/ -4 + 4 >= $name][updateName() < insertNum(( TABLE[$file][-$item > ROWS] ))] / 3 - TABLE[4][-generateConfig(5,addIdCallback(7))] > 5 ) * ( setJSONError(-$element) ) >= TABLE[$boolean][-$integer] == ( $boolean ) <= $value != downloadXML(downloadArray(addNum(calcArray(TABLE[4][$file],$url))),4,-processRequest(8,$name))]),uploadXML(10)),9,-$char) ) ) ) + 7) ),calcStatusServer(ROWS,$position - $item)) )][-doLog() * ( COLS )]] );
+	$lastElement -= 8 \/ ( ( 4 - -TABLE[( 7 )][( TABLE[COLS][ROWS >= ROWS < $number] )] * $varStat ) - downloadDataset() );
+	$char *= 1
+} else {
+	( selectUrlRecursive($file) );
+	if(( 6 / ROWS )){
+	addRequest() < -$stat;
+	-TABLE[( ( ( 4 ) ) )][--3];
+	$url *= $oneName
+}
+};
+	doPlugin(( -ROWS ))
+}
+}
+ }
+  $simplifiedStat = $element;
+  return $simplifiedStat;
+}
+
+def uploadUrl(){
+
 }
