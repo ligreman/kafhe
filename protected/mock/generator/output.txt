@@ -2069,3 +2069,11 @@ Ahora no toca
 -------------------  23/8/2021 19:07:08  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../components/addNum.py
+Subido a git
+-------------------  24/8/2021 18:48:20  -------------------
+Ahora no toca
+-------------------  25/8/2021 19:57:42  -------------------
+Ahora no toca
+-------------------  26/8/2021 19:49:18  -------------------
+Ahora si toca
+Editado el fichero: ../../components/GumbudosSingleton - copia.php
