@@ -2089,3 +2089,7 @@ Ahora no toca
 -------------------  29/8/2021 17:34:24  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/SiteController.php
+Subido a git
+-------------------  31/8/2021 9:07:48  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/addInfo.js
