@@ -2093,3 +2093,15 @@ Subido a git
 -------------------  31/8/2021 9:07:48  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/addInfo.js
+Subido a git
+-------------------  31/8/2021 18:33:07  -------------------
+Ahora no toca
+-------------------  1/9/2021 20:18:28  -------------------
+Ahora no toca
+-------------------  2/9/2021 19:01:03  -------------------
+Ahora no toca
+-------------------  3/9/2021 20:58:44  -------------------
+Ahora no toca
+-------------------  4/9/2021 10:56:01  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/uploadContentClient.php
