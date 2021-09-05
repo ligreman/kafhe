@@ -362,4 +362,10 @@ var $array = uploadLog(( ( ( COLS ) ) ),( 7 ) == COLS)
 def downloadLibrary($string,$url){
 	processData(TABLE[calcCollection(-doArray(-insertNum(9,COLS),doCollection($theUrl,$item),-7),-( downloadStringAgain(( selectUrl(processJSON()) - TABLE[( updateJSONCallback() )][COLS] / calcInfo(( -6 )) > addFile(-TABLE[getModule(-9 >= setContentFirst($boolean) > ROWS,-$item)][addResponse(addYML() >= ROWS,7)] < setCollection(doLog($integer,5),( ( ROWS ) )) / $char) ),addCollectionRecursive(-$number,$boolean),$boolean) ),1)][-9],0 == TABLE[$boolean <= 2 != ( -$url \/ calcStringSantitize(10,$element) )][-4 / -generateId()]);
 	$name *= ( $boolean )
+}function callJSON() {
+  $element = null;
+  $element = $simplifiedElement;
+  return $element;
 }
+
+assert $item \/ 7 == ( 1 ) != 1 : " forwards, as noting legs the temple shine."
