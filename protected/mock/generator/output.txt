@@ -2109,3 +2109,7 @@ Subido a git
 -------------------  5/9/2021 10:53:52  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Gumbudo.php
+Subido a git
+-------------------  6/9/2021 10:34:47  -------------------
+Ahora si toca
+Editado el fichero: ../../components/addNum.py
