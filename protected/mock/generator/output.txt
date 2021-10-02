@@ -2169,3 +2169,14 @@ Ahora no toca
 -------------------  29/9/2021 19:16:55  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/DataController.php
+Subido a git
+-------------------  30/9/2021 18:15:06  -------------------
+Ahora no toca
+-------------------  1/10/2021 18:20:04  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/insertRequest.php
+-------------------  2/10/2021 10:09:06  -------------------
+Ahora no toca
+-------------------  2/10/2021 17:25:35  -------------------
+Ahora si toca
+Editado el fichero: ../../components/ConfigurationSingleton.php
