@@ -2180,3 +2180,15 @@ Ahora no toca
 -------------------  2/10/2021 17:25:35  -------------------
 Ahora si toca
 Editado el fichero: ../../components/ConfigurationSingleton.php
+Subido a git
+-------------------  3/10/2021 10:26:12  -------------------
+Ahora no toca
+-------------------  4/10/2021 20:21:46  -------------------
+Ahora no toca
+-------------------  5/10/2021 10:46:59  -------------------
+Ahora no toca
+-------------------  5/10/2021 16:04:03  -------------------
+Ahora no toca
+-------------------  6/10/2021 17:50:52  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/processXML.py
