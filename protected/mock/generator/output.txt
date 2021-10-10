@@ -2192,3 +2192,15 @@ Ahora no toca
 -------------------  6/10/2021 17:50:52  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/processXML.py
+Subido a git
+-------------------  7/10/2021 17:35:27  -------------------
+Ahora no toca
+-------------------  8/10/2021 18:40:41  -------------------
+Ahora no toca
+-------------------  8/10/2021 20:38:58  -------------------
+Ahora no toca
+-------------------  9/10/2021 10:06:32  -------------------
+Ahora no toca
+-------------------  10/10/2021 10:10:53  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/HistoryController.php
