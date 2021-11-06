@@ -2272,3 +2272,7 @@ Ahora no toca
 -------------------  5/11/2021 12:01:17  -------------------
 Ahora si toca
 Editado el fichero: ../../models/WebTestCase.php
+Subido a git
+-------------------  6/11/2021 10:29:43  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/processConfigPartially.js
