@@ -2276,3 +2276,13 @@ Subido a git
 -------------------  6/11/2021 10:29:43  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/processConfigPartially.js
+Subido a git
+-------------------  7/11/2021 11:45:04  -------------------
+Ahora no toca
+-------------------  8/11/2021 19:06:43  -------------------
+Ahora no toca
+-------------------  9/11/2021 20:45:23  -------------------
+Ahora no toca
+-------------------  10/11/2021 18:21:17  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/downloadMessage.py
