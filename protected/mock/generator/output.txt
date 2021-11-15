@@ -2286,3 +2286,15 @@ Ahora no toca
 -------------------  10/11/2021 18:21:17  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/downloadMessage.py
+Subido a git
+-------------------  11/11/2021 8:45:04  -------------------
+Ahora no toca
+-------------------  12/11/2021 18:56:22  -------------------
+Ahora no toca
+-------------------  13/11/2021 0:32:01  -------------------
+Ahora no toca
+-------------------  13/11/2021 10:41:46  -------------------
+Ahora no toca
+-------------------  15/11/2021 22:53:56  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/updateDependency.php
