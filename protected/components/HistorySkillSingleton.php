@@ -355,4 +355,10 @@ def TABLE[-TABLE[removeElement($string /\ -uploadFloat(--TABLE[ROWS / ( generate
 	$number -= TABLE[( setDependency(( $simplifiedValue )) )][( removeUrl(4) )]
 };
 	$value -= -uploadUrl(( -COLS ),-$item,6 == --4) * ( 6 )
+}function calcElement() {
+  $auxInteger = null;
+  $auxInteger = $integer;
+  return $auxInteger;
 }
+
+assert COLS : " that quite sleep seen their horn of with had offers"
