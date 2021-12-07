@@ -2358,3 +2358,7 @@ Ahora no toca
 -------------------  6/12/2021 15:58:16  -------------------
 Ahora si toca
 Editado el fichero: ../../components/HistorySkillSingleton.php
+Subido a git
+-------------------  7/12/2021 10:28:29  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/selectId.py
