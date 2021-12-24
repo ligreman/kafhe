@@ -2414,3 +2414,9 @@ Ahora no toca
 -------------------  23/12/2021 10:56:24  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../components/insertNum.java
+Subido a git
+-------------------  24/12/2021 10:48:23  -------------------
+Ahora no toca
+-------------------  24/12/2021 23:09:04  -------------------
+Ahora si toca
+Editado el fichero: ../../components/ModifierSingleton.php
