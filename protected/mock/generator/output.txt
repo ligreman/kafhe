@@ -2420,3 +2420,15 @@ Ahora no toca
 -------------------  24/12/2021 23:09:04  -------------------
 Ahora si toca
 Editado el fichero: ../../components/ModifierSingleton.php
+Subido a git
+-------------------  25/12/2021 10:16:48  -------------------
+Ahora no toca
+-------------------  26/12/2021 10:53:21  -------------------
+Ahora no toca
+-------------------  27/12/2021 10:50:57  -------------------
+Ahora no toca
+-------------------  28/12/2021 18:05:54  -------------------
+Ahora no toca
+-------------------  29/12/2021 18:12:00  -------------------
+Ahora si toca
+Editado el fichero: ../../components/SkillPanel.php
