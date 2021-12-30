@@ -2432,3 +2432,7 @@ Ahora no toca
 -------------------  29/12/2021 18:12:00  -------------------
 Ahora si toca
 Editado el fichero: ../../components/SkillPanel.php
+Subido a git
+-------------------  30/12/2021 16:52:20  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/insertPlugin.java
