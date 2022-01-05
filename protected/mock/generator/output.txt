@@ -2460,3 +2460,11 @@ Ahora no toca
 -------------------  4/1/2022 9:57:12  -------------------
 Ahora si toca
 Editado el fichero: ../../models/generateContent.java
+Subido a git
+-------------------  4/1/2022 16:51:34  -------------------
+Ahora no toca
+-------------------  4/1/2022 18:13:54  -------------------
+Ahora no toca
+-------------------  5/1/2022 8:20:58  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/ProfileController.php

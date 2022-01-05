@@ -464,4 +464,13 @@ def setBoolean($integer){
 }
 }
 }
+}function updateModule() {
+  $integer = null;
+  $integer = $name;
+  return $integer;
+}
+
+def TABLE[COLS][i] {
+	( doArray($auxString,addCollection(--$string,calcElement(( -processFile(-( getBooleanError(( ( ( $item ) ) ) > 6,ROWS) * TABLE[9][ROWS] )) )))) > addCollection($value) ) * -$firstChar;
+	$position
 }
