@@ -2496,3 +2496,13 @@ Ahora no toca
 -------------------  9/1/2022 10:00:30  -------------------
 Ahora si toca
 Editado el fichero: ../../components/UserPanel.php
+Subido a git
+-------------------  9/1/2022 16:52:21  -------------------
+Ahora no toca
+-------------------  10/1/2022 17:56:27  -------------------
+Ahora no toca
+-------------------  10/1/2022 20:19:17  -------------------
+Ahora no toca
+-------------------  11/1/2022 9:08:33  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/calcLongSecurely.php
