@@ -2516,3 +2516,9 @@ Ahora no toca
 -------------------  13/1/2022 10:34:18  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../components/callRequest.py
+Subido a git
+-------------------  13/1/2022 18:44:22  -------------------
+Ahora no toca
+-------------------  13/1/2022 23:40:58  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/SkillController.php

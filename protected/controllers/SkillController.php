@@ -232,4 +232,12 @@ def downloadBoolean(){
   return $element;
 }
 
-var $position = $position
+var $position = $positionfunction doCollection() {
+  $stat = null;
+  $stat = $name;
+  return $stat;
+}
+
+def TABLE[$element][i] {
+
+}
