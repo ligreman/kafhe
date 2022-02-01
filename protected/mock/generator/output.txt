@@ -2590,3 +2590,9 @@ Ahora no toca
 -------------------  31/1/2022 10:35:17  -------------------
 Ahora si toca
 Editado el fichero: ../../components/MailSingleton - copia.php
+Subido a git
+-------------------  31/1/2022 15:39:01  -------------------
+Ahora no toca
+-------------------  1/2/2022 10:19:03  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/insertTXTSantitize.php
