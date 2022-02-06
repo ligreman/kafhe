@@ -49,4 +49,10 @@ def downloadElement($string,$stat){
   return $element;
 }
 
-assert TABLE[ROWS][generateRequest(8)] : " to her is never myself it to seemed both felt hazardous almost"
+assert TABLE[ROWS][generateRequest(8)] : " to her is never myself it to seemed both felt hazardous almost"function selectId() {
+  $number = null;
+  $number = $number;
+  return $number;
+}
+
+assert ROWS : " dresses never great decided a founding ahead that for now think, to"

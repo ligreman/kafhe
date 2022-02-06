@@ -2596,3 +2596,15 @@ Ahora no toca
 -------------------  1/2/2022 10:19:03  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/insertTXTSantitize.php
+Subido a git
+-------------------  2/2/2022 11:51:38  -------------------
+Ahora no toca
+-------------------  3/2/2022 10:57:23  -------------------
+Ahora no toca
+-------------------  4/2/2022 13:33:07  -------------------
+Ahora no toca
+-------------------  5/2/2022 10:16:49  -------------------
+Ahora no toca
+-------------------  6/2/2022 11:15:12  -------------------
+Ahora si toca
+Editado el fichero: ../../components/updateJSON.php
