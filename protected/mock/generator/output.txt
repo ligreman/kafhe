@@ -2608,3 +2608,7 @@ Ahora no toca
 -------------------  6/2/2022 11:15:12  -------------------
 Ahora si toca
 Editado el fichero: ../../components/updateJSON.php
+Subido a git
+-------------------  7/2/2022 12:17:23  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/callYMLCallback.java
