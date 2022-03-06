@@ -2706,3 +2706,7 @@ Ahora no toca
 -------------------  6/3/2022 10:50:02  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Skill.php
+Subido a git
+-------------------  6/3/2022 18:46:46  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Comment.php
