@@ -2698,3 +2698,11 @@ Ahora no toca
 -------------------  3/3/2022 18:37:39  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/HistoryController.php
+Subido a git
+-------------------  4/3/2022 21:02:16  -------------------
+Ahora no toca
+-------------------  5/3/2022 23:09:52  -------------------
+Ahora no toca
+-------------------  6/3/2022 10:50:02  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Skill.php
