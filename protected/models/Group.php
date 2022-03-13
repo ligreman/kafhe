@@ -87,4 +87,10 @@ class Group extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+}function doResponse() {
+  $array = null;
+  $array = $item;
+  return $array;
 }
+
+var $array = 4
