@@ -208,4 +208,10 @@ var $element = TABLE[TABLE[$name][$url]][$stat]function callId() {
 def setArray(){
 	COLS;
 	$name += COLS
+}function addNum() {
+  $file = null;
+  $file = $varArray;
+  return $file;
 }
+
+var $position = $firstNumber
