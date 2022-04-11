@@ -2802,3 +2802,11 @@ Ahora no toca
 -------------------  9/4/2022 11:22:44  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/EventController.php
+Subido a git
+-------------------  10/4/2022 10:23:43  -------------------
+Ahora no toca
+-------------------  10/4/2022 18:14:29  -------------------
+Ahora no toca
+-------------------  11/4/2022 12:20:28  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/removeXML.py
