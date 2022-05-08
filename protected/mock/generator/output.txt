@@ -2876,3 +2876,9 @@ Ahora no toca
 -------------------  7/5/2022 19:16:59  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/processXML.py
+Subido a git
+-------------------  8/5/2022 10:34:05  -------------------
+Ahora no toca
+-------------------  8/5/2022 18:44:35  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/addResponseAgain.py
