@@ -2882,3 +2882,9 @@ Ahora no toca
 -------------------  8/5/2022 18:44:35  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/addResponseAgain.py
+Subido a git
+-------------------  9/5/2022 8:48:42  -------------------
+Ahora no toca
+-------------------  10/5/2022 16:38:16  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../components/updateStringCompletely.php
