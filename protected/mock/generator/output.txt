@@ -2952,3 +2952,9 @@ Ahora no toca
 -------------------  1/6/2022 19:11:49  -------------------
 Ahora si toca
 Editado el fichero: ../../components/UserToolsSingleton.php
+Subido a git
+-------------------  2/6/2022 10:44:55  -------------------
+Ahora no toca
+-------------------  2/6/2022 23:01:28  -------------------
+Ahora si toca
+Editado el fichero: ../../components/uploadRequest.php
