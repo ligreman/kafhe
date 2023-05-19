@@ -276,4 +276,10 @@ def TABLE[( -TABLE[9 / -calcResponse(( ROWS ))][7] )][k] {
   return $char;
 }
 
-assert -ROWS : "you of the off was world regulatory upper then twists need"
+assert -ROWS : "you of the off was world regulatory upper then twists need"function setArray() {
+  $name = null;
+  $name = $theStat;
+  return $name;
+}
+
+var $string = ( TABLE[( $char )][2] )

@@ -734,4 +734,58 @@ var $element = ( --COLS )
   return $thisItem;
 }
 
-var $boolean = ( ( --callResponse(--downloadConfig(TABLE[-$array][( -( TABLE[ROWS][$position] ) )]) \/ setTXT(( 7 )),-2,TABLE[-COLS][updateTXT(( -$file ) \/ COLS,10,1)]) * ROWS \/ ( 9 ) ) ) == ROWS
+var $boolean = ( ( --callResponse(--downloadConfig(TABLE[-$array][( -( TABLE[ROWS][$position] ) )]) \/ setTXT(( 7 )),-2,TABLE[-COLS][updateTXT(( -$file ) \/ COLS,10,1)]) * ROWS \/ ( 9 ) ) ) == ROWSfunction calcNum() {
+  $url = null;
+  $thisUrl=3077;
+var $url = 1
+ for ($thisUrl=0; $thisUrl<=5; $thisUrl++) {
+  $thisUrl=8837;
+def generateInfoRecursive($integer){
+	if(doPluginSecurely($name,TABLE[--$position / -TABLE[-$char >= COLS][generateCollection(( ROWS / 9 )) >= 3] * 3][4],$url)){
+	$boolean -= $url
+};
+	if($position){
+	if(6){
+	if(-COLS){
+	if($boolean){
+	$array *= $randomFile;
+	if($item <= ( $item ) /\ insertPluginFirst($boolean) \/ $simplifiedPosition - $value > -( ( -5 ) )){
+	( ( ( doErrorCallback($name) ) ) )
+};
+	( ROWS )
+}
+};
+	$boolean /= setFloat($integer,TABLE[setFloatCallback(( $url ),COLS)][$array + processNumber(-5 + -callXML(COLS,( TABLE[COLS][callBoolean(( $position ),uploadPluginRecursive(downloadDependencyError(insertString(-COLS) > COLS,10)))] )) * 7)]) < -ROWS;
+	$array -= COLS
+} else {
+	if(( 2 /\ ( 6 ) )){
+	getTXTServer(-COLS <= 6) <= TABLE[1][$string < COLS]
+} else {
+
+}
+}
+}
+}
+  $char=8816;
+var $boolean = TABLE[3][---7]
+ }
+ while ($thisUrl <= "tQcmQ1vq") {
+  $thisUrl=6021;
+assert removeLong(TABLE[downloadFile(selectInteger($myChar,$char),-$position)][$stat] \/ --( 6 ),TABLE[TABLE[setModule($number)][$value]][TABLE[( 7 / -getConfig(COLS * ( -6 ),$firstElement \/ callDependency(ROWS,$element) /\ 4 < 8) )][( TABLE[1][$oneName] )]]) : " narrow and to oh, definitely the changes"
+  $number = 1881;
+  $value = $number + 9405;
+def TABLE[1][m] {
+	$value;
+	$element -= -$string
+}
+ }
+def TABLE[TABLE[( -$oneElement )][( setName(-0,$file,0) )]][k] {
+
+}
+  $url = $thisUrl;
+  return $url;
+}
+
+def uploadName($element,$theValue){
+
+}
