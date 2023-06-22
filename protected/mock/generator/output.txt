@@ -4030,3 +4030,13 @@ Ahora no toca
 -------------------  19/6/2023, 8:38:07  -------------------
 Ahora si toca
 Editado el fichero: ../../components/removeXMLFast.js
+Subido a git
+-------------------  19/6/2023, 10:39:26  -------------------
+Ahora no toca
+-------------------  20/6/2023, 10:10:36  -------------------
+Ahora no toca
+-------------------  21/6/2023, 14:11:44  -------------------
+Ahora no toca
+-------------------  22/6/2023, 18:30:19  -------------------
+Ahora si toca
+Editado el fichero: ../../components/SkillSingleton.php
