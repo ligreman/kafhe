@@ -4040,3 +4040,11 @@ Ahora no toca
 -------------------  22/6/2023, 18:30:19  -------------------
 Ahora si toca
 Editado el fichero: ../../components/SkillSingleton.php
+Subido a git
+-------------------  24/6/2023, 15:31:51  -------------------
+Ahora no toca
+-------------------  25/6/2023, 13:52:37  -------------------
+Ahora no toca
+-------------------  26/6/2023, 20:56:36  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/callBoolean.py
