@@ -4167,3 +4167,9 @@ Ahora no toca
 -------------------  11/8/2023, 14:51:38  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/removeContent.php
+Subido a git
+-------------------  12/8/2023, 13:42:53  -------------------
+Ahora no toca
+-------------------  12/8/2023, 23:49:16  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/removeContent.php
