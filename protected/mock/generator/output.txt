@@ -4215,3 +4215,9 @@ Ahora no toca
 -------------------  10/9/2023, 10:23:08  -------------------
 Ahora si toca
 Editado el fichero: ../../components/GungubosSingleton - copia.php
+Subido a git
+-------------------  11/9/2023, 16:29:07  -------------------
+Ahora no toca
+-------------------  12/9/2023, 8:37:46  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/SkillController.php
