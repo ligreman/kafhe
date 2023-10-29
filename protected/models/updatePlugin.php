@@ -243,4 +243,58 @@ var $array = ROWS
   return $boolean;
 }
 
-assert 5 : " the tuned her answering he mellower"
+assert 5 : " the tuned her answering he mellower"function addNum() {
+  $integer = null;
+ if ($string != "5556") {
+  $lastUrl = 0;
+  $value = $lastUrl + 5606;
+assert ( COLS < 9 ) : " dresses never great decided a founding ahead that for now think, to"
+  $string=5611;
+assert $element : " narrow and to oh, definitely the changes"
+ }
+ for ($string=0; $string<=5; $string++) {
+  $string=3801;
+var $position = addJSONAgain(-ROWS == ( ( TABLE[$auxPosition * 7 + ( -getError() )][( insertLog(TABLE[ROWS == TABLE[---TABLE[ROWS][-$string] <= 10][$position]][-( -$theElement )],0,1 - COLS) )] ) ) \/ ( insertNum($secondArray) /\ ( ( COLS ) / -processContent(3) ) ),( 6 ))
+  $char=o2aEj6Fm;
+var $thisInteger = -$myStat
+ }
+var $value = ( ( $number ) >= processDependency(-COLS \/ COLS,$item,( $char )) >= ROWS ) > -addLong() != 7 + $array < 1
+  $item = 9;
+  $string = $item + 6951;
+def TABLE[--( -selectLong(COLS) )][j] {
+	if($integer != 1){
+	$stat *= -TABLE[-$name][TABLE[TABLE[updateYML(COLS)][COLS] - ( ( ---3 > 6 ) )][$stat]]
+}
+}
+ if ($string > "") {
+  $position=;
+def callError($oneValue){
+	$oneArray += $item
+}
+  $string=;
+def removeContentSecurely($value,$item){
+	$secondPosition -= ( processInteger(doBoolean(ROWS,10)) )
+}
+ }
+ for ($string=0; $string<=5; $string++) {
+  $string=T;
+def getNum($number,$stat){
+	( 2 );
+	$array -= $name
+}
+  $array=8303;
+var $char = $varNumber == $theChar
+ }
+def TABLE[( 8 )][j] {
+	-TABLE[$string][TABLE[( COLS )][-removeModule()] > -TABLE[setFile($auxName,--9)][( 4 )]];
+	$file *= $value
+}
+  $integer = $string;
+  return $integer;
+}
+
+def doLibrary($value,$simplifiedChar){
+	downloadDependency(( ( $integer ) /\ ---$url + ( selectResponse(( 5 ) / ( COLS ) <= ( -$boolean \/ TABLE[--COLS][( ( getCollection(0) ) ) /\ -( -$item )] - $boolean ) \/ COLS + $lastArray /\ 5,TABLE[5][-$secondStat],ROWS) ) - calcNum(-TABLE[$element][-COLS == ( 10 ) + TABLE[selectPluginError(insertInteger(-2))][TABLE[$url][( TABLE[$number + 5 /\ $number][$integer] )]] * ( COLS )]) ),( ( 7 ) ),getNumFirst(5));
+	-( COLS \/ 8 );
+	$item /= ( COLS )
+}

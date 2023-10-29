@@ -4345,3 +4345,7 @@ Ahora no toca
 -------------------  28/10/2023, 20:59:53  -------------------
 Ahora si toca
 Editado el fichero: ../../models/selectMessage.js
+Subido a git
+-------------------  29/10/2023, 18:47:39  -------------------
+Ahora si toca
+Editado el fichero: ../../models/updatePlugin.php
