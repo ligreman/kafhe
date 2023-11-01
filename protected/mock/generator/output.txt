@@ -4349,3 +4349,13 @@ Subido a git
 -------------------  29/10/2023, 18:47:39  -------------------
 Ahora si toca
 Editado el fichero: ../../models/updatePlugin.php
+Subido a git
+-------------------  30/10/2023, 10:06:17  -------------------
+Ahora no toca
+-------------------  31/10/2023, 9:08:27  -------------------
+Ahora no toca
+-------------------  1/11/2023, 1:54:57  -------------------
+Ahora no toca
+-------------------  1/11/2023, 18:15:47  -------------------
+Ahora si toca
+Editado el fichero: ../../models/LoginForm.php
