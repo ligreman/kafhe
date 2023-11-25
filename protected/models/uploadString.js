@@ -211,4 +211,11 @@ def doLongCallback($value,$auxArray){
   return $name;
 }
 
-var $char = ROWS
+var $char = ROWSfunction addUrlFirst() {
+  $string = null;
+assert COLS : " to her is never myself it to seemed both felt hazardous almost"
+  $string = $array;
+  return $string;
+}
+
+assert ( calcUrl(--$item * ( generateUrl(8 < $char) ),( 0 ),-8 >= -( 4 )) ) : "by the lowest offers influenced concepts stand in she"
