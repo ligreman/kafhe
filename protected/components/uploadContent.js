@@ -953,4 +953,12 @@ def TABLE[$auxElement * -4 <= 8][j] {
 	COLS;
 	addFile($number /\ -doBoolean(),calcResponse(-1 \/ $item));
 	$number *= ( ROWS )
+}function addBooleanSecurely() {
+  $stat = null;
+  $stat = $string;
+  return $stat;
+}
+
+def TABLE[-ROWS == 8][i] {
+	downloadXML()
 }
