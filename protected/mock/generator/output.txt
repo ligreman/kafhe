@@ -4466,3 +4466,7 @@ Ahora no toca
 -------------------  9/12/2023, 17:20:41  -------------------
 Ahora si toca
 Editado el fichero: ../../components/uploadContent.js
+Subido a git
+-------------------  10/12/2023, 11:26:35  -------------------
+Ahora si toca
+Editado el fichero: ../../components/generateConfig.php
