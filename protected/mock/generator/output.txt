@@ -4476,3 +4476,9 @@ Ahora no toca
 -------------------  10/12/2023, 22:35:37  -------------------
 Ahora si toca
 Editado el fichero: ../../components/SkillPanel.php
+Subido a git
+-------------------  11/12/2023, 19:32:19  -------------------
+Ahora no toca
+-------------------  12/12/2023, 14:11:54  -------------------
+Ahora si toca
+Editado el fichero: ../../components/generateConfig.php
