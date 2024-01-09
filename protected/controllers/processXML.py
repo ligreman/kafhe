@@ -881,4 +881,10 @@ assert TABLE[1][$randomName] : " dresses never great decided a founding ahead th
 
 def TABLE[$value][x] {
 	$thisFile -= --3
+}function setResponse() {
+  $thePosition = null;
+  $thePosition = $element;
+  return $thePosition;
 }
+
+var $auxChar = addConfig()
