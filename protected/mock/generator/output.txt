@@ -4584,3 +4584,7 @@ Ahora no toca
 -------------------  15/1/2024, 13:16:21  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Talent.php
+Subido a git
+-------------------  16/1/2024, 18:37:08  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/addModuleRecursive.js
