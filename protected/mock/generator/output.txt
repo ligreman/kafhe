@@ -4651,3 +4651,13 @@ Ahora no toca
 -------------------  7/2/2024, 18:07:59  -------------------
 Ahora si toca
 Editado el fichero: ../../models/Configuration.php
+Subido a git
+-------------------  8/2/2024, 17:46:03  -------------------
+Ahora no toca
+-------------------  9/2/2024, 18:05:56  -------------------
+Ahora no toca
+-------------------  10/2/2024, 11:13:09  -------------------
+Ahora no toca
+-------------------  10/2/2024, 16:35:44  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/insertInteger.java
