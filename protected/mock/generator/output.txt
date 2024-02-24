@@ -4699,3 +4699,9 @@ Ahora no toca
 -------------------  23/2/2024, 17:03:30  -------------------
 Ahora si toca
 Editado el fichero: ../../components/TuesteSingleton.php
+Subido a git
+-------------------  24/2/2024, 10:38:33  -------------------
+Ahora no toca
+-------------------  24/2/2024, 17:20:37  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/insertLong.py
