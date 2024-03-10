@@ -4755,3 +4755,7 @@ Ahora no toca
 -------------------  10/3/2024, 11:05:44  -------------------
 Ahora si toca
 Editado el fichero: ../../components/getLogServer.java
+Subido a git
+-------------------  10/3/2024, 17:17:43  -------------------
+Ahora si toca
+Editado el fichero: ../../components/uploadContent.js
