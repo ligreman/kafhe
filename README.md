@@ -128,7 +128,4 @@ Note: For this you must have the php in the system PATH environment variable. If
 
 ## Other documentation
 
-[Code of Conduct](https://github.com/ligreman/kafhe/edit/master/CODE_OF_CONDUCT.md)
-
-
-
+[Code of Conduct](https://github.com/ligreman/kafhe/blob/master/CODE_OF_CONDUCT.md)
