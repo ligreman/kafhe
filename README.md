@@ -9,7 +9,7 @@
 
 Kafhe is a game web app made to gamify the organization of the costs of breakfasts, meals, and events among friends. 
 
-Suppose that next weekend you are going to eat with your friends, and someone has to take care of reserving a restaurant. You're tired of always being the one in charge of doing it. Kafhe is here to help you!
+Suppose that next weekend you are going to eat with your friends, and someone has to take care of booking a restaurant. You're tired of always being the one in charge of doing it. Kafhe is here to help you!
 
 You and your friend will play to decide whose turn it is to organize the meal this time.
 
