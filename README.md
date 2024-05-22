@@ -85,7 +85,7 @@ There are more than 20 different skills.
 
 ## Installation
 
-Kafhe is made with [Yii Framework|https://www.yiiframework.com/]. You need two components to install it:
+Kafhe is made with [Yii Framework](https://www.yiiframework.com/). You need two components to install it:
 
 	* Apache + PHP
 	* MySQL
@@ -128,7 +128,7 @@ Note: For this you must have the php in the system PATH environment variable. If
 
 ## Other documentation
 
-[Code of Conduct|https://github.com/ligreman/kafhe/edit/master/CODE_OF_CONDUCT.md]
+[Code of Conduct](https://github.com/ligreman/kafhe/edit/master/CODE_OF_CONDUCT.md)
 
 
 
