@@ -5013,3 +5013,7 @@ Ahora no toca
 -------------------  3/6/2024, 8:35:39  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../controllers/calcCollection.java
+Subido a git
+-------------------  4/6/2024, 8:09:08  -------------------
+Ahora si toca
+Editado el fichero: ../../models/insertInteger.java
