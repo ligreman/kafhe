@@ -5023,3 +5023,7 @@ Ahora no toca
 -------------------  6/6/2024, 17:41:36  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../models/generateError.php
+Subido a git
+-------------------  7/6/2024, 8:05:52  -------------------
+Ahora si toca
+Editado el fichero: ../../models/removeData.java
