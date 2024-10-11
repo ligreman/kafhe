@@ -5343,3 +5343,15 @@ Ahora no toca
 -------------------  6/10/2024, 9:54:42  -------------------
 Ahora si toca
 Editado el fichero: ../../components/uploadContent.js
+Subido a git
+-------------------  7/10/2024, 8:42:50  -------------------
+Ahora no toca
+-------------------  8/10/2024, 17:49:16  -------------------
+Ahora no toca
+-------------------  9/10/2024, 16:48:57  -------------------
+Ahora no toca
+-------------------  10/10/2024, 9:03:09  -------------------
+Ahora no toca
+-------------------  11/10/2024, 9:09:18  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../controllers/callStatus.php
