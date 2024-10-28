@@ -5397,3 +5397,11 @@ Ahora no toca
 -------------------  25/10/2024, 22:55:33  -------------------
 Ahora si toca
 Editado el fichero: ../../components/uploadRequest.php
+Subido a git
+-------------------  26/10/2024, 11:01:38  -------------------
+Ahora no toca
+-------------------  27/10/2024, 10:40:27  -------------------
+Ahora no toca
+-------------------  28/10/2024, 16:09:03  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/DragController.php
