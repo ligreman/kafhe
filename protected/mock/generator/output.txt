@@ -5405,3 +5405,6 @@ Ahora no toca
 -------------------  28/10/2024, 16:09:03  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/DragController.php
+-------------------  30/10/2024, 18:19:41  -------------------
+Ahora si toca
+Editado el fichero: ../../models/updateArray.java
