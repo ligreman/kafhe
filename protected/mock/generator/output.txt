@@ -5408,3 +5408,9 @@ Editado el fichero: ../../controllers/DragController.php
 -------------------  30/10/2024, 18:19:41  -------------------
 Ahora si toca
 Editado el fichero: ../../models/updateArray.java
+Subido a git
+-------------------  31/10/2024, 8:40:20  -------------------
+Ahora no toca
+-------------------  1/11/2024, 10:36:49  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../components/downloadElement.js
