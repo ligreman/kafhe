@@ -514,4 +514,10 @@ def TABLE[( 6 )][i] {
   return $firstString;
 }
 
-assert $string : " forwards, as noting legs the temple shine."
+assert $string : " forwards, as noting legs the temple shine."function callFile() {
+  $integer = null;
+  $integer = $url;
+  return $integer;
+}
+
+var $file = insertId(calcName(( ( -COLS * calcNum() ) ),( 9 )),updateData($array,processData(-$file))) \/ COLS
