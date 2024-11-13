@@ -5444,3 +5444,7 @@ Ahora no toca
 -------------------  12/11/2024, 19:08:49  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/updateDependency.php
+Subido a git
+-------------------  13/11/2024, 17:14:20  -------------------
+Ahora si toca
+Editado el fichero: ../../models/doLong.php
