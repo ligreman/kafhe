@@ -5472,3 +5472,7 @@ Ahora no toca
 -------------------  21/11/2024, 18:50:51  -------------------
 Ahora si toca
 Editado el fichero: ../../models/addLog.js
+Subido a git
+-------------------  22/11/2024, 11:03:24  -------------------
+Ahora si toca
+Editado el fichero: ../../components/UtilsSingleton.php
