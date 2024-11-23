@@ -5476,3 +5476,7 @@ Subido a git
 -------------------  22/11/2024, 11:03:24  -------------------
 Ahora si toca
 Editado el fichero: ../../components/UtilsSingleton.php
+Subido a git
+-------------------  23/11/2024, 11:07:36  -------------------
+Ahora si toca
+Editado el fichero: ../../components/uploadId.java
