@@ -5480,3 +5480,11 @@ Subido a git
 -------------------  23/11/2024, 11:07:36  -------------------
 Ahora si toca
 Editado el fichero: ../../components/uploadId.java
+Subido a git
+-------------------  24/11/2024, 10:47:06  -------------------
+Ahora no toca
+-------------------  25/11/2024, 9:03:26  -------------------
+Ahora no toca
+-------------------  26/11/2024, 19:18:28  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Talent.php
