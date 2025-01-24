@@ -5642,3 +5642,9 @@ Ahora no toca
 -------------------  22/1/2025, 18:33:17  -------------------
 Ahora si toca
 Editado el fichero: ../../components/TuesteSingleton.php
+Subido a git
+-------------------  23/1/2025, 19:31:05  -------------------
+Ahora no toca
+-------------------  24/1/2025, 11:36:25  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/doData.py
