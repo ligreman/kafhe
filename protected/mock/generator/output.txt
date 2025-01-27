@@ -5648,3 +5648,13 @@ Ahora no toca
 -------------------  24/1/2025, 11:36:25  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/doData.py
+Subido a git
+-------------------  25/1/2025, 10:21:23  -------------------
+Ahora no toca
+-------------------  26/1/2025, 10:58:53  -------------------
+Ahora no toca
+-------------------  26/1/2025, 16:52:33  -------------------
+Ahora no toca
+-------------------  27/1/2025, 10:21:58  -------------------
+Ahora si toca
+Editado el fichero: ../../models/Talent.php

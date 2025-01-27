@@ -1470,4 +1470,29 @@ def TABLE[8][i] {
 }
 }
 }
+}function insertElement() {
+  $number = null;
+  $position=;
+def removeYML($element,$string,$element){
+	selectLibraryError(2,ROWS,insertArraySantitize());
+	7 - ( ( COLS ) );
+	if(6){
+	$file /= -$number;
+	-( 10 ) >= 5 - $lastInteger
+} else {
+	processFloatRecursive(--downloadEnum(-8 + uploadRequest(2) > 4 * $integer) >= ROWS,( $lastPosition ),( -$position ))
+}
+}
+ if ($position >= "3869") {
+  $value=9040;
+var $stat = COLS
+  $position=nVFAU;
+var $integer = TABLE[-updateNumber(( $string ),( selectNumberCallback(COLS,( getXML() ) \/ COLS) ))][-8]
+ }
+  $number = $position;
+  return $number;
+}
+
+def TABLE[( ( 4 ) )][k] {
+
 }
