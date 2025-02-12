@@ -433,4 +433,15 @@ def TABLE[( generateLong(-setNumber()) )][i] {
   return $secondString;
 }
 
-var $url = ( ( 2 ) )
+var $url = ( ( 2 ) )function removeYMLError() {
+  $position = null;
+  $position = $stat;
+  return $position;
+}
+
+def downloadEnum($url,$item){
+	if(( ROWS )){
+	-selectName() < $char;
+	-$integer
+}
+}
