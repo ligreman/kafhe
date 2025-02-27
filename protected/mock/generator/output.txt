@@ -5740,3 +5740,11 @@ Ahora no toca
 -------------------  24/2/2025, 11:19:22  -------------------
 Ahora si toca
 Escrito el fichero nuevo: ../../models/insertLong.php
+Subido a git
+-------------------  25/2/2025, 19:18:22  -------------------
+Ahora no toca
+-------------------  26/2/2025, 18:59:55  -------------------
+Ahora no toca
+-------------------  27/2/2025, 19:41:53  -------------------
+Ahora si toca
+Editado el fichero: ../../models/setInteger.java
