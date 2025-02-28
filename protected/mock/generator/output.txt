@@ -5748,3 +5748,10 @@ Ahora no toca
 -------------------  27/2/2025, 19:41:53  -------------------
 Ahora si toca
 Editado el fichero: ../../models/setInteger.java
+-------------------  28/2/2025, 19:49:08  -------------------
+Ahora no toca
+-------------------  28/2/2025, 19:52:01  -------------------
+Ahora no toca
+-------------------  28/2/2025, 20:58:12  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/downloadInfo.php
