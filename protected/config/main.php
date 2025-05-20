@@ -261,6 +261,11 @@ return array(
 		'skillGumbudoHippie' => 'gumbudoHippie',
         'skillGumbudoPestilente' => 'gumbudoPestilente',
         'skillGumbudoAsedio' => 'gumbudoAsedio',
+		
+        'skillGumbudoAttack' => 'gumbudoAttack',
+        'skillGumbudoAttack2' => 'gumbudoAttack2',
+        'skillGumbudoAttack3' => 'gumbudoAttack3',
+        'skillGumbudoAttack4' => 'gumbudoAttack4',
 
 
         //Gumbudos

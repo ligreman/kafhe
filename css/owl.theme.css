@@ -77,3 +77,18 @@
 	min-height: 150px;
 	background: url(AjaxLoader.gif) no-repeat center center
 }
+
+.owl-static {
+	padding: 2px 10px;
+	font-size: 12px;
+}
+
+
+.owl-static p {
+	opacity: 0.6;	
+}
+
+
+.owl-static ul {
+	margin-left:5px;
+}

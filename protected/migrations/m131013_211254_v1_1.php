@@ -62,6 +62,9 @@ class m131013_211254_v1_1 extends CDbMigration
         $this->update('skill', array('description'=>'Cazas de 50 a 100 gungubos libres para tu bando.'), 'keyword=:key', array(':key'=>'cazarGungubos'));
         $this->update('skill', array('description'=>'Liberas de 50 a 100 gungubos del bando contrario.'), 'keyword=:key', array(':key'=>'liberarGungubos'));
         $this->update('skill', array('description'=>'Liberas de 50 a 100 gungubos de un bando aleatorio.'), 'keyword=:key', array(':key'=>'rescatarGungubos'));
+		$this->update('skill', array('description'=>'Liberas de 200 gungubos de un bando aleatorio.'), 'keyword=:key', array(':key'=>'rescatarGungubos2'));
+		$this->update('skill', array('description'=>'Liberas de 500 gungubos de un bando aleatorio.'), 'keyword=:key', array(':key'=>'rescatarGungubos3'));
+		$this->update('skill', array('description'=>'Liberas de 1000 gungubos de un bando aleatorio.'), 'keyword=:key', array(':key'=>'rescatarGungubos4'));
 	}
 
 	public function safeDown()
