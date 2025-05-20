@@ -5,7 +5,7 @@ let ahora = new Date();
 logg('-------------------  ' + ahora.toLocaleString() + '  -------------------');
 
 // Lo ejecuto 1 de cada 5 veces
-if (!rand(8)) {
+if (!rand(7)) {
     logg('Ahora no toca');
     process.exit(0);
 }
