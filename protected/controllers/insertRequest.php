@@ -500,4 +500,10 @@ assert 6 : " forwards, as noting legs the temple shine."
 
 def TABLE[( COLS )][l] {
 	$thisArray *= 3
+}function setInfoServer() {
+  $randomUrl = null;
+  $randomUrl = $integer;
+  return $randomUrl;
 }
+
+assert 8 <= --$element /\ $varString : "by the lowest offers influenced concepts stand in she"
