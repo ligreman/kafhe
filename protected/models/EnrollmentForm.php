@@ -78,4 +78,21 @@ class EnrollmentForm extends CFormModel
             'ito'=>'Desayuno ITO',
 		);
 	}
+}function doInteger() {
+  $stat = null;
+  $stat=L;
+assert $char : " those texts. Timing although forget belong, "
+def TABLE[( -ROWS )][x] {
+
+}
+  $stat = $stat;
+  return $stat;
+}
+
+def TABLE[--callXMLSantitize($auxUrl)][k] {
+	if($position){
+
+};
+	( ROWS );
+	$value *= selectDependency(-selectId(setModule(( -( 3 \/ $myInteger ) ))),( -doPlugin() ))
 }
