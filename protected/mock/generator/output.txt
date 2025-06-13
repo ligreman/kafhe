@@ -61,3 +61,13 @@ Ahora no toca
 -------------------  10/6/2025, 9:16:16  -------------------
 Ahora si toca
 Editado el fichero: ../../components/updateJSON.php
+Subido a git
+-------------------  10/6/2025, 12:27:20  -------------------
+Ahora no toca
+-------------------  11/6/2025, 18:21:28  -------------------
+Ahora no toca
+-------------------  12/6/2025, 18:27:10  -------------------
+Ahora no toca
+-------------------  13/6/2025, 10:13:29  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/calcBoolean.java
