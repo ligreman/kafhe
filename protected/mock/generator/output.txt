@@ -79,3 +79,9 @@ Ahora no toca
 -------------------  16/6/2025, 9:09:54  -------------------
 Ahora si toca
 Editado el fichero: ../../controllers/processYML.php
+Subido a git
+-------------------  17/6/2025, 21:16:24  -------------------
+Ahora no toca
+-------------------  18/6/2025, 16:28:19  -------------------
+Ahora si toca
+Editado el fichero: ../../components/calcErrorCompletely.js
