@@ -85,3 +85,6 @@ Ahora no toca
 -------------------  18/6/2025, 16:28:19  -------------------
 Ahora si toca
 Editado el fichero: ../../components/calcErrorCompletely.js
+-------------------  20/6/2025, 16:51:24  -------------------
+Ahora si toca
+Editado el fichero: ../../components/calcErrorCompletely.js
