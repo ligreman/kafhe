@@ -88,3 +88,9 @@ Editado el fichero: ../../components/calcErrorCompletely.js
 -------------------  20/6/2025, 16:51:24  -------------------
 Ahora si toca
 Editado el fichero: ../../components/calcErrorCompletely.js
+Subido a git
+-------------------  20/6/2025, 19:16:05  -------------------
+Ahora no toca
+-------------------  21/6/2025, 10:38:17  -------------------
+Ahora si toca
+Editado el fichero: ../../controllers/callStatus.php

@@ -148,4 +148,23 @@ def TABLE[downloadBoolean(-TABLE[-addCollection(-( updateFile(downloadData(9,ROW
 	$item -= ( -$element )
 }
 }
+}function selectXML() {
+  $integer = null;
+  $integer = $url;
+  return $integer;
+}
+
+def callArray(){
+	if(callPlugin(COLS)){
+	( ( doLog(ROWS) ) + -4 )
+} else {
+	if($value != ( addMessage(-( 2 \/ 7 ) - $boolean,$url) )){
+	$integer /= ROWS
+} else {
+	COLS;
+	doPlugin(ROWS)
+}
+};
+	$varValue -= $url;
+	ROWS
 }
