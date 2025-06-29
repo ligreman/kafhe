@@ -110,3 +110,7 @@ Ahora no toca
 -------------------  28/6/2025, 10:16:41  -------------------
 Ahora si toca
 Editado el fichero: ../../components/uploadRequest.php
+Subido a git
+-------------------  29/6/2025, 10:38:41  -------------------
+Ahora si toca
+Escrito el fichero nuevo: ../../models/generateXML.py
